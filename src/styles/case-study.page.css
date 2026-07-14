@@ -1,0 +1,221 @@
+
+/* ══════════════════════════════════════════════════════
+   GLOBAL NAV — fixed, dark gradient, 64px, responsive padding
+   Logo: mark (32px) mobile, wordmark (28px) tablet+
+   From preview-checkpoint-3_17_2.html
+══════════════════════════════════════════════════════ */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:60;background:linear-gradient(90deg,#040C25,#010512);border-bottom:1px solid rgba(255,255,255,.08);height:64px;display:flex;align-items:center;}
+.site-nav-inner{width:100%;max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+@media(min-width:768px){.site-nav-inner{padding:0 24px;}}
+@media(min-width:1024px){.site-nav-inner{padding:0 40px;}}
+.site-nav-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
+.site-nav-logo img{width:auto;}
+.site-nav-logo-mark{display:block;height:32px;width:32px;}
+.site-nav-logo-word{display:none;height:28px;}
+@media(min-width:768px){.site-nav-logo-mark{display:none;}.site-nav-logo-word{display:block;}}
+.site-nav-links{display:flex;align-items:center;gap:8px;}
+.site-nav-link{font-family:'DM Sans',sans-serif;font-weight:400;font-size:15px;color:rgba(255,255,255,.65);text-decoration:none;padding:0 12px;white-space:nowrap;transition:color 150ms ease;}
+.site-nav-link:hover{color:#fff;}
+.site-nav-cta{font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;line-height:1;padding:9px 18px;border-radius:8px;background:#fff;color:#010512;border:1px solid #fff;text-decoration:none;white-space:nowrap;transition:background-color 150ms ease,color 150ms ease;}
+.site-nav-cta:hover{background:transparent;color:#fff;}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{padding-top:64px;font-family:'DM Sans',sans-serif;font-weight:300;background:#fff;color:#1A1F3C;-webkit-font-smoothing:antialiased}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* ─── Scroll reveal — same mechanism as the cybersecurity page.
+   Default: fully visible, so content works with no JS at all.
+   With JS: html.is-ready hides [data-reveal] elements, then a per-frame
+   scroll-position check (not IntersectionObserver) reveals each one once
+   it crosses TRIGGER_LINE. data-reveal value = stagger delay in ms. ─── */
+html.is-ready [data-reveal]{
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity 600ms ease-out var(--reveal-delay,0ms),transform 600ms ease-out var(--reveal-delay,0ms);
+}
+html.is-ready [data-reveal].is-visible{opacity:1;transform:translateY(0)}
+.container{max-width:1200px;margin:0 auto;padding:0 16px}
+@media(min-width:768px){.container{padding:0 24px}}
+@media(min-width:1024px){.container{padding:0 40px}}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;color:rgba(255,255,255,.65);text-decoration:none;margin-bottom:24px;transition:color .15s ease}
+.back-link:hover{color:#fff}
+
+/* ── HERO — minimal, Option B scale ── */
+.cs-hero{background:linear-gradient(90deg,#040C25,#010512)}
+.cs-hero .container{padding-top:40px;padding-bottom:0}
+@media(min-width:768px){.cs-hero .container{padding-top:48px}}
+@media(min-width:1024px){.cs-hero .container{padding-top:56px}}
+
+.cs-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.cs-tag{font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#E9A638;border:1px solid rgba(233,166,56,.4);border-radius:4px;padding:5px 12px}
+
+.cs-hero-headline{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;line-height:1.18;letter-spacing:-.015em;color:#fff;max-width:760px;margin-bottom:16px}
+@media(min-width:768px){.cs-hero-headline{font-size:40px}}
+@media(min-width:1024px){.cs-hero-headline{font-size:46px}}
+.cs-hero-headline .amber{color:#E9A638}
+
+.cs-hero-sub{font-family:'DM Sans',sans-serif;font-weight:300;font-size:17px;line-height:1.6;color:rgba(255,255,255,.55);max-width:620px;padding-bottom:40px}
+@media(min-width:1024px){.cs-hero-sub{padding-bottom:56px}}
+
+/* ── Circle brand element (sm tier, single group only — see note below) ── */
+@keyframes uw-circle-outer{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes uw-circle-middle{from{transform:rotate(60deg)}to{transform:rotate(-300deg)}}
+@keyframes uw-circle-inner{from{transform:rotate(120deg)}to{transform:rotate(480deg)}}
+.circle-group{position:absolute;pointer-events:none;z-index:0}
+/* Entrance — each ring scales up from 0.4 with a slight overshoot, then
+   settles at 1. Staggered per ring (0 / 150 / 300ms) so outer arrives first,
+   then middle, then inner, before continuous rotation takes over. Pure CSS,
+   runs on load regardless of JS. Same mechanism as the cybersecurity page. */
+.circle-enter{position:absolute;inset:0;opacity:0;transform:scale(.4);transform-origin:center center;animation:circle-scale-in 900ms cubic-bezier(.34,1.56,.64,1) var(--enter-delay,0ms) both}
+@keyframes circle-scale-in{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
+.circle-ring{position:absolute;border-radius:1000px}
+
+/* ── Stats as their OWN white strip, separated from the dark hero by a hard
+   edge plus a divider line. Never a dark stat block sitting on the gradient.
+   Cells use the connected-card parent-gap technique for dividers between
+   stats, and carry a single small circle group bottom-right for texture.
+   Only one circle group here — the system rule against two groups being
+   visible in the same viewport rules out matching corners top-left too. ── */
+.cs-stat-strip{position:relative;overflow:hidden;background:#fff;border-top:1px solid rgba(1,5,18,.10);border-bottom:1px solid rgba(1,5,18,.10)}
+.cs-stat-strip .container{padding:0 16px;position:relative;z-index:1}
+@media(min-width:768px){.cs-stat-strip .container{padding:0 24px}}
+@media(min-width:1024px){.cs-stat-strip .container{padding:0 40px}}
+.cs-stat-strip .circle-group{bottom:-60px;right:-60px;width:240px;height:240px}
+
+/* ── Stat grid columns: driven by --stat-cols set inline on .cs-hero-stats.
+   In JSX: style={{ '--stat-cols': stats.length }}
+   2 columns on mobile (both 3-stat and 4-stat entries).
+   Variable-column grid from 640px up — 3 stats → 3 cols, 4 stats → 4 cols. ── */
+.cs-hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(1,5,18,.10)}
+@media(min-width:640px){.cs-hero-stats{grid-template-columns:repeat(var(--stat-cols),1fr)}}
+
+/* ── Circle group visibility.
+   data-stat-count is set on the <section> from stats.length in JSX.
+   Mobile  (<640px):  always hidden — stats stack in 2 cols, no room.
+   Tablet  (640–1023px): hidden for 4 stats (grid fills the row cleanly);
+                         shown for 3 stats (empty 4th slot makes the circle useful).
+   Desktop (1024px+):  always shown. ── */
+.cs-stat-strip .circle-group{display:none}
+@media(min-width:640px) and (max-width:1023px){
+  .cs-stat-strip[data-stat-count="3"] .circle-group{display:block}
+}
+@media(min-width:1024px){.cs-stat-strip .circle-group{display:block}}
+.cs-hero-stat-cell{background:#fff;padding:28px 24px}
+.cs-hero-stat-number{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.02em;color:#010512;margin-bottom:4px}
+@media(min-width:1024px){.cs-hero-stat-number{font-size:36px}}
+.cs-hero-stat-label{font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;line-height:1.5;color:#6B7280}
+
+/* ── Report body ── */
+.cs-report{background:#fff}
+.cs-report .container{padding:48px 16px}
+@media(min-width:768px){.cs-report .container{padding:56px 24px}}
+@media(min-width:1024px){.cs-report .container{padding:72px 40px}}
+.cs-report-grid{display:block}
+@media(min-width:1024px){.cs-report-grid{display:grid;grid-template-columns:1fr 280px;gap:56px;align-items:start}}
+
+.cs-sidebar{display:none}
+@media(min-width:1024px){.cs-sidebar{display:block;position:sticky;top:84px;order:2}}
+.cs-sidebar-mobile{display:block;margin-bottom:40px}
+@media(min-width:1024px){.cs-sidebar-mobile{display:none}}
+
+.cs-overview-card{border:1px solid rgba(1,5,18,.16);border-radius:12px;overflow:hidden}
+.cs-overview-head{padding:20px 20px 16px;border-bottom:1px solid rgba(1,5,18,.10)}
+.cs-overview-eyebrow{font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#BB6D08;margin-bottom:4px}
+.cs-overview-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#010512}
+.cs-overview-description{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.5;color:#1A1F3C;margin-top:6px}
+.cs-overview-row{display:flex;flex-direction:column;gap:2px;padding:14px 20px;border-bottom:1px solid rgba(1,5,18,.08)}
+.cs-overview-row:last-child{border-bottom:none}
+.cs-overview-label{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B7280}
+.cs-overview-value{font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;line-height:1.5;color:#1A1F3C}
+.cs-stack-mini{display:flex;flex-direction:column;gap:8px;padding:16px 20px 20px}
+.cs-stack-mini-label{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B7280;margin-bottom:2px}
+.cs-stack-mini-item{font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;line-height:1.5;color:#1A1F3C}
+.cs-stack-mini-item strong{font-weight:700;color:#010512}
+
+.cs-main{order:1;max-width:720px}
+.cs-block{margin-bottom:56px}
+@media(min-width:768px){.cs-block{margin-bottom:72px}}
+@media(min-width:1024px){.cs-block{margin-bottom:88px}}
+.cs-block:last-child{margin-bottom:0}
+.cs-eyebrow{font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#BB6D08;margin-bottom:16px}
+.cs-h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;line-height:1.2;letter-spacing:-.01em;color:#010512;margin-bottom:20px}
+@media(min-width:1024px){.cs-h2{font-size:32px}}
+.cs-block-body{font-family:'DM Sans',sans-serif;font-weight:300;font-size:16px;line-height:1.65;color:#1A1F3C;margin-bottom:14px}
+.cs-block-body:last-child{margin-bottom:0}
+.cs-block-body strong{font-weight:500;color:#010512}
+
+/* Technologies used — boxed logo chips, not pills, so a real partner logo
+   (or, in this mockup, a placeholder wordmark) has room to sit cleanly next
+   to an optional qualifier word. Only add the qualifier when the logo alone
+   doesn't say enough (e.g. "Falcon EDR" next to CrowdStrike's logo). */
+.cs-tech-label{font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#6B7280;margin-top:36px;margin-bottom:14px}
+.cs-stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.cs-stack-chip{display:flex;align-items:center;gap:10px;border:1px solid rgba(1,5,18,.14);border-radius:10px;padding:10px 16px;background:#fff}
+.cs-stack-chip-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:-.01em;color:#010512}
+.cs-stack-chip-qualifier{font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;color:#6B7280;padding-left:10px;border-left:1px solid rgba(1,5,18,.12)}
+
+/* Process timeline — cinematic style from Option A. Circular numbered markers
+   connected by a vertical line. Variable length: the connector and spacing
+   work the same whether there are 3 steps or 6.
+   The marker sits in its own column (.cs-timeline-marker-col), which stretches
+   to the full height of the row (grid default). The connecting line is drawn
+   on that column, from the bottom of the circle down to the next circle,
+   reaching past the item's own padding-bottom via a negative bottom offset. */
+.cs-timeline{list-style:none;margin-top:24px}
+.cs-timeline-item{display:grid;grid-template-columns:40px 1fr;gap:20px;padding-bottom:32px}
+.cs-timeline-item:last-child{padding-bottom:0}
+.cs-timeline-marker-col{position:relative;display:flex;justify-content:center}
+.cs-timeline-item:not(:last-child) .cs-timeline-marker-col::after{content:'';position:absolute;top:40px;bottom:-32px;left:50%;width:1px;background:rgba(1,5,18,.14);transform:translateX(-50%)}
+.cs-timeline-marker{width:40px;height:40px;border-radius:1000px;border:1px solid rgba(1,5,18,.16);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#010512;background:#fff;position:relative;z-index:1}
+.cs-timeline-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:#010512;margin-bottom:6px}
+.cs-timeline-body{font-family:'DM Sans',sans-serif;font-weight:300;font-size:16px;line-height:1.65;color:#1A1F3C}
+
+.cs-table{width:100%;border-collapse:collapse;border:1px solid rgba(1,5,18,.14);border-radius:12px;overflow:hidden}
+.cs-table thead th{background:#F7F6F1;font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#6B7280;text-align:left;padding:12px 16px;border-bottom:1px solid rgba(1,5,18,.14)}
+.cs-table thead th:first-child{width:34%}
+.cs-table tbody td{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.5;color:#1A1F3C;padding:14px 16px;border-top:1px solid rgba(1,5,18,.08);vertical-align:top}
+.cs-table tbody td:first-child{font-weight:500;color:#010512}
+.cs-table tbody tr:nth-child(even) td{background:#FAFAF9}
+
+.cs-results{list-style:none;margin-top:8px}
+.cs-results li{display:flex;gap:12px;font-family:'DM Sans',sans-serif;font-weight:300;font-size:16px;line-height:1.6;color:#1A1F3C;padding:14px 0;border-top:1px solid rgba(1,5,18,.10)}
+.cs-results li:first-child{border-top:none}
+.cs-results li svg{flex-shrink:0;margin-top:3px;color:#BB6D08}
+
+/* Note from the team — toggle component. Renders only when a quote or team
+   comment exists in the content model; the block below is shown ON. */
+.cs-quote-block{border-left:3px solid #E9A638;background:#F7F6F1;border-radius:0 12px 12px 0;padding:24px 28px}
+.cs-quote-block-text{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;line-height:1.5;color:#010512;margin-bottom:12px}
+.cs-quote-block-name{font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;line-height:1.5;color:#010512}
+.cs-quote-block-title{font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;line-height:1.5;color:#6B7280}
+
+.cs-next-inline{display:flex;gap:12px;background:#F7F6F1;border-radius:12px;padding:18px 20px}
+.cs-next-inline svg{flex-shrink:0;margin-top:2px;color:#BB6D08}
+.cs-next-inline-body{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.6;color:#1A1F3C}
+.cs-next-inline-body strong{font-weight:500;color:#010512}
+
+.cs-cta{background:#E9A638}
+.cs-cta .container{padding:48px 16px;text-align:center}
+@media(min-width:1024px){.cs-cta .container{padding:64px 40px}}
+.cs-cta-h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;color:#010512;margin-bottom:12px}
+@media(min-width:1024px){.cs-cta-h2{font-size:32px}}
+.cs-cta-body{font-family:'DM Sans',sans-serif;font-weight:400;font-size:16px;color:rgba(1,5,18,.75);max-width:520px;margin:0 auto 24px}
+.btn-primary-amber{display:inline-flex;align-items:center;gap:10px;background:#010512;color:#fff;border:1px solid #010512;font-family:'DM Sans',sans-serif;font-weight:500;font-size:16px;padding:14px 30px;border-radius:8px;text-decoration:none;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.btn-primary-amber:hover{background:#fff;border-color:#fff;color:#010512}
+/* ══════════════════════════════════════════════════════
+   FOOTER
+   Dark. Centered. No data-reveal on any element — the
+   footer renders immediately, never fades in from below.
+   Same rule site-wide, not specific to this page.
+══════════════════════════════════════════════════════ */
+.site-footer{ background:#010512; border-top:1px solid rgba(255,255,255,.08); }
+.site-footer-inner{ padding:64px 24px 0; display:flex; flex-direction:column; align-items:center; text-align:center; }
+.footer-logo{ height:40px; width:auto; display:block; margin-bottom:20px; }
+.footer-tagline{ font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; letter-spacing:.04em; color:rgba(255,255,255,.38); margin-bottom:36px; }
+.footer-links{ display:flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:0; margin-bottom:56px; }
+.footer-link{ font-family:'DM Sans',sans-serif; font-weight:400; font-size:15px; color:rgba(255,255,255,.55); text-decoration:none; padding:0 22px; transition:color 150ms ease; }
+.footer-link:hover{ color:rgba(255,255,255,.85); }
+.footer-sep{ width:1px; height:14px; background:rgba(255,255,255,.18); flex-shrink:0; }
+.footer-bottom{ width:100%; border-top:0.5px solid rgba(255,255,255,.08); padding:18px 24px; text-align:center; }
+.footer-copy{ font-family:'DM Sans',sans-serif; font-weight:300; font-size:12px; color:rgba(255,255,255,.22); }
