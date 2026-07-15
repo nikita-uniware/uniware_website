@@ -292,73 +292,71 @@ html.is-ready [data-reveal].is-visible {
   color: #fff;
 }
 
-/* ── Shared footer (no data-reveal) ── */
+/* ── Shared footer (no data-reveal) — matches reference chrome ── */
 .site-footer {
-  background: #010512;
+  background: linear-gradient(90deg, #040c25, #010512);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   color: #fff;
-  padding: 64px 16px 32px;
-}
-@media (min-width: 768px) {
-  .site-footer {
-    padding: 72px 24px 40px;
-  }
-}
-@media (min-width: 1024px) {
-  .site-footer {
-    padding: 80px 40px 40px;
-  }
 }
 .site-footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 64px 24px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 16px;
 }
 .footer-logo {
-  height: 36px;
+  height: 40px;
   width: auto;
+  display: block;
+  margin-bottom: 20px;
 }
 .footer-tagline {
   font-family: var(--font-dm-sans), sans-serif;
   font-weight: 300;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.55);
-  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.38);
+  margin: 0 0 36px;
 }
 .footer-links {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px 24px;
-  margin-top: 8px;
+  gap: 0;
+  margin: 0 0 56px;
 }
-.footer-links a {
+.footer-link {
   font-family: var(--font-dm-sans), sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.55);
   text-decoration: none;
+  padding: 0 22px;
   transition: color 150ms ease;
 }
-.footer-links a:hover {
-  color: #fff;
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+.footer-sep {
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.18);
+  flex-shrink: 0;
 }
 .footer-bottom {
-  max-width: 1200px;
-  margin: 40px auto 0;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+  padding: 18px 24px;
   text-align: center;
 }
-.footer-bottom p {
+.footer-copy {
   margin: 0;
   font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.22);
 }
 
 .container {

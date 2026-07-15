@@ -338,16 +338,7 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
    Dark. Centered. No data-reveal on any element — the
    footer renders immediately, never fades in from below.
 ══════════════════════════════════════════════════════ */
-.site-footer{ background:linear-gradient(90deg, #040C25, #010512); border-top:1px solid rgba(255,255,255,.08); }
-.site-footer-inner{ padding:64px 24px 0; display:flex; flex-direction:column; align-items:center; text-align:center; }
-.footer-logo{ height:40px; width:auto; display:block; margin-bottom:20px; }
-.footer-tagline{ font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; letter-spacing:.04em; color:rgba(255,255,255,.38); margin-bottom:36px; }
-.footer-links{ display:flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:0; margin-bottom:56px; }
-.footer-link{ font-family:'DM Sans',sans-serif; font-weight:400; font-size:15px; color:rgba(255,255,255,.55); text-decoration:none; padding:0 22px; transition:color 150ms ease; }
-.footer-link:hover{ color:rgba(255,255,255,.85); }
-.footer-sep{ width:1px; height:14px; background:rgba(255,255,255,.18); flex-shrink:0; }
-.footer-bottom{ width:100%; border-top:0.5px solid rgba(255,255,255,.08); padding:18px 24px; text-align:center; }
-.footer-copy{ font-family:'DM Sans',sans-serif; font-weight:300; font-size:12px; color:rgba(255,255,255,.22); }
+/* Footer chrome lives in globals.css + SiteFooter (layout) — omit page duplicates */
 
 /* ══════════════════════════════════════════════════════
    HERO
@@ -355,7 +346,7 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 .hero{background:linear-gradient(90deg,#040C25,#010512);position:relative;overflow:hidden}
 .hero .container{position:relative;z-index:2;padding-top:48px;padding-bottom:64px}
 @media(min-width:768px) {.hero .container{padding-top:64px; padding-bottom:80px}}
-.hero{ padding-top:64px; } /* compensate for fixed 64px nav */
+/* Nav clearance is body padding-top:64px in globals.css — do not add another 64px here */
 @media(min-width:1024px){.hero .container{padding-top:96px;padding-bottom:96px}}
 
 .hero-eyebrow{font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#E9A638;margin-bottom:20px}
