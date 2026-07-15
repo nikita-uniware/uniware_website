@@ -191,7 +191,7 @@ fontSize: {
 - Cards on light surfaces: `1px solid rgba(1,5,18,0.16)`
 - Cards on dark surfaces: `1px solid rgba(255,255,255,0.10)`
 - Section divider lines: `1px solid rgba(1,5,18,0.10)` — between consecutive white sections only, not as card borders.
-- No drop shadows anywhere. Borders do all the separation work.
+- No box shadows anywhere, on any element. No drop shadows. Borders and background color do all separation and hover work. This is an absolute rule — no exceptions.
 
 ### Connected card groups — parent-gap technique
 
@@ -766,10 +766,33 @@ import { ShieldCheck, CloudArrowUp, HardDrive } from '@phosphor-icons/react';
 ```
 
 **Rules:**
-- Regular weight by default. Fill is permitted for active and selected states, or where an icon needs more visual weight. Duotone is permitted for larger illustrative contexts where the icon is a focal point. Bold, Thin, and Light weights are never used.
+- Regular weight by default. Fill is permitted for active and selected states, hover states on cards, or where an icon needs more visual weight. Duotone is permitted for larger illustrative contexts where the icon is a focal point. Bold, Thin, and Light weights are never used.
 - White on dark surfaces. `#010512` on light surfaces. `#BB6D08` as accent on light only.
 - Every icon must convey meaning. No decorative icons.
 - Never mix Phosphor with any other icon library.
+
+### Icon hover rule (all cards)
+
+On any card hover — whether the card is clickable or not — the icon transitions from Regular (outline) weight to Fill weight. The icon color stays the same as at rest. No scale change.
+
+**Implementation pattern (HTML/JSX):** Place two icon instances inside the icon wrapper. Default shows Regular; hover shows Fill. Use CSS `display` toggling, not opacity.
+
+```jsx
+{/* In JSX — swap weight prop */}
+<div className="icon-wrapper group">
+  <ShieldCheck size={16} weight="regular" className="group-hover:hidden" />
+  <ShieldCheck size={16} weight="fill"    className="hidden group-hover:block" />
+</div>
+```
+
+```css
+/* In the HTML prototype — two-SVG swap */
+.ti-fill { display: none; }
+.card:hover .ti-stroke { display: none; }
+.card:hover .ti-fill   { display: block; }
+```
+
+**What does NOT change on icon hover for non-clickable cards:** card border color, card background color. Only the icon weight changes. This signals focus without implying the card is a link.
 
 ---
 
@@ -925,10 +948,86 @@ Detailed per-component specs are produced in individual build sessions. This is 
 - Amber gradient outside the logo mark.
 - Dark gradient in print materials.
 
-### Cards and borders
+### Cards, borders, and shadows
+- Box shadows anywhere, on any element, ever. No exceptions. Borders and background color do all separation and hover work.
 - Drop shadows anywhere. Borders only.
 - Card-level borders in connected groups — use the parent-gap technique.
 - Stacked or doubled borders — they compound in opacity and create inconsistent joins.
+
+---
+
+## Yellow Card Colour Palette
+
+Whenever a card uses the amber-yellow card background (`#FBF0DA`), headings and body copy use the same dark system colors as on white backgrounds. The warm-brown family is reserved for small accent elements only: eyebrow labels, tags, pill text, and icon boxes.
+
+### Card count rule
+
+| Cards in the group | Permitted card surface |
+|---|---|
+| 1–2 cards | Amber-yellow (`#FBF0DA`) background permitted |
+| 3 or more cards | White cards only — see White Card Accent Pattern below |
+
+This applies site-wide. A yellow card background used across a 3+ card grid creates visual heaviness. The amber accent must instead come from eyebrow labels, icon box colors, and amber-bordered tag pills.
+
+### Text on yellow cards
+
+| Role | Value | Notes |
+|---|---|---|
+| Heading / primary text | `#010512` | Same as heading on white. Not brown. |
+| Body / secondary text | `#1A1F3C` | Same as body on white. Not brown. |
+| Eyebrow / tag / accent label | `#8A5209` | Only these small accent elements use the warm-brown family. |
+
+### Icon box (on yellow cards)
+
+| Property | Value |
+|---|---|
+| Background | `rgba(187, 109, 8, 0.08)` |
+| Border | `rgba(187, 109, 8, 0.22)` |
+| Icon color at rest | `rgba(92, 74, 18, 0.55)` |
+| Icon color on hover | `#5C4A12` (full opacity, fill weight — see icon hover rule in Section 09) |
+
+### Pills / tag chips (on yellow cards)
+
+| Property | Value |
+|---|---|
+| Background | `rgba(187, 109, 8, 0.07)` |
+| Border | `rgba(187, 109, 8, 0.20)` |
+| Text | `#5C4A12` |
+
+### Yellow card border and hover rules
+
+| State | Rule |
+|---|---|
+| At rest — non-clickable card | `1px solid rgba(1, 5, 18, 0.08)` |
+| At rest — clickable card | `1px solid rgba(1, 5, 18, 0.10)` |
+| On hover — non-clickable card | No border change. No background change. Icon fills only (see Section 09). |
+| On hover — clickable card | Background → `#FEF7EC` (lighter yellow). Border → `#F0BD52`. Icon fills. No box shadow. |
+
+The hover state for clickable yellow cards — lighter background `#FEF7EC` + amber border `#F0BD52` — is visually distinct from the non-clickable active/selected state, which keeps the default `#FBF0DA` background and gains the same `#F0BD52` border. The background difference is what separates "this is responding to your cursor" from "this is the currently selected item."
+
+### White Card Accent Pattern (3+ card grids)
+
+When 3 or more cards are shown in a grid on a white section, card backgrounds must be white (`#FFFFFF`). Warmth and brand presence come from:
+
+- Icon box: `rgba(187,109,8,0.08)` background, `rgba(187,109,8,0.22)` border, `#BB6D08` icon color
+- Eyebrow / tag label: `#BB6D08`
+- Tag pills: `rgba(187,109,8,0.07)` background, `rgba(187,109,8,0.20)` border, `#5C4A12` text
+- Card headings: `#010512`
+- Card body copy: `#1A1F3C`
+
+The Prevention tile carousel is the documented reference for this pattern.
+
+### White card hover rules
+
+| State | Rule |
+|---|---|
+| At rest | `1px solid rgba(1,5,18,0.16)` border, white background |
+| On hover — non-clickable | No border change. No background change. Icon fills only (same icon color as at rest: `#010512`). |
+| On hover — clickable | Background → `#FEF7EC`. Border → `#F0BD52`. Icon fills. No box shadow. |
+
+Same hover direction as yellow clickable cards: warmth, amber border, lighter yellow wash. Whether the card starts white or yellow, hovering a clickable card always resolves to the same visual state.
+
+
 
 ### Circles
 - Two circle groups visible in the same viewport at the same time.

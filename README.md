@@ -36,7 +36,7 @@ npm run dev
 
 ## Design rules (locked)
 
-See `Uniware_Website_Design_System_v1_1.md`. Case study hero/stat type scales intentionally differ from the main site (Appendix E).
+See `Uniware_Website_Design_System_v1_3.md`. Case study hero/stat type scales intentionally differ from the main site (Appendix E).
 
 ## Next
 

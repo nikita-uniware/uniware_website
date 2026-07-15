@@ -16,6 +16,10 @@
   --group-dark: rgba(255, 255, 255, 0.1);
   --circle-dark: rgba(255, 255, 255, 0.32);
   --circle-light: rgba(1, 5, 18, 0.32);
+  --uw-yellow-card: #FBF0DA;
+  --uw-yellow-card-hover: #FEF7EC;
+  --uw-amber-border: #F0BD52;
+  --uw-dark-gradient: linear-gradient(90deg, #040C25, #010512);
 }
 
 @theme inline {
@@ -31,6 +35,9 @@
   --color-section-divider: rgba(1, 5, 18, 0.1);
   --color-group-light: rgba(1, 5, 18, 0.16);
   --color-group-dark: rgba(255, 255, 255, 0.1);
+  --color-uw-yellow-card: #FBF0DA;
+  --color-uw-yellow-card-hover: #FEF7EC;
+  --color-uw-amber-border: #F0BD52;
   --font-display: var(--font-space-grotesk), sans-serif;
   --font-body: var(--font-dm-sans), sans-serif;
   --text-display: 64px;

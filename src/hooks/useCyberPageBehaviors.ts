@@ -173,6 +173,21 @@ export function useCyberPageBehaviors() {
       arrowHandlers.push({ btn, handler });
     });
 
+    // Logo marquee — clone LTR row into a second RTL track (ref HTML script).
+    const marqueeCol = document.querySelector(".pf-marquee-col");
+    const firstTrack = marqueeCol?.querySelector(".pf-marquee-track");
+    if (marqueeCol && firstTrack && marqueeCol.querySelectorAll(".pf-marquee-track").length === 1) {
+      const secondTrack = firstTrack.cloneNode(true) as HTMLElement;
+      secondTrack.style.marginTop = "0";
+      const row = secondTrack.querySelector(".pf-marquee-row");
+      if (row) {
+        row.classList.remove("pf-marquee-row--ltr");
+        row.classList.add("pf-marquee-row--rtl");
+      }
+      (firstTrack as HTMLElement).style.marginBottom = "0";
+      marqueeCol.appendChild(secondTrack);
+    }
+
     return () => {
       observers.forEach((o) => o.disconnect());
       crossObs.disconnect();

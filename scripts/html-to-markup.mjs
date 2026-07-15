@@ -1,9 +1,10 @@
 import fs from "fs";
+import { applyUrlAudit } from "./apply-url-audit.mjs";
 
 /**
  * Keep page subnav. Only strip global chrome owned by the root layout.
  */
-import { applyUrlAudit } from "./apply-url-audit.mjs";
+function stripChrome(html) {
   return html
     .replace(/<script>[\s\S]*?<\/script>/g, "")
     .replace(/<header class="site-nav"[\s\S]*?<\/header>\s*/g, "")
