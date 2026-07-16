@@ -1,0 +1,164 @@
+How to carry context to your work Cursor account
+Open the same project folder on the new account: d:\Desktop\Projects\Uniware_website
+Git is your source of truth — all code lives in the repo; uncommitted work is still on disk
+Paste the handoff below as your first chat message, or save it to .cursor/rules/uniware-handoff.mdc (or similar)
+Optional: In Cursor Settings → Rules, add a project rule with this content so every new chat has context
+Past chat transcript (if you need exact wording):
+C:\Users\ADMIN\.cursor\projects\d-Desktop-Projects-Uniware-website\agent-transcripts\8e20cd16-281d-4701-a3fa-a98ca8bcedc1\8e20cd16-281d-4701-a3fa-a98ca8bcedc1.jsonl
+Copy-paste starter prompt (for new Cursor account)
+I'm Srimathi, implementing Niki's approved HTML designs into the Uniware website (Next.js 15).
+Project: d:\Desktop\Projects\Uniware_website
+Repo: https://github.com/nikita-uniware/uniware_website
+Production: global.uniware.net (Vercel)
+Workflow: Niki (design) → approved HTML → I implement in Next.js → PR review → main
+## Already on main (committed)
+- Design system v1.3
+- /solutions/cybersecurity
+- /resources/case-studies/ransomware-recovery-chemical-manufacturing
+- URL redirects (next.config.ts, URL audit v1)
+- Hero/footer double-padding fix
+- Sanity schemas in repo (not wired)
+## Implemented locally — NOT YET COMMITTED
+Contact page + booking panel per Niki's contact-and-panel (3).html:
+### /contact
+- src/app/contact/page.tsx — route + metadata, ?sent=1 support
+- src/components/pages/ContactPage.tsx — page + form JS
+- src/styles/contact.page.css — from Niki's HTML
+- Hero: linear-gradient(90deg, #040C25, #010512)
+- Grid: 7fr form left, 5fr offices right
+- Yellow card: bg-uw-yellow-card, --uw-yellow-card-border
+- NO padding-top:64px on .contact-page (body clears fixed nav)
+- NO booking panel on contact page
+- Placeholder offices + info@uniware.net
+### Booking panel (global)
+- src/components/BookingPanel.tsx
+- src/styles/booking-panel.css
+- src/types/booking-panel.d.ts — window.openBookingPanel / closeBookingPanel
+- Mounted in src/app/layout.tsx
+- Triggered from cybersecurity CTAs only, NOT nav or contact
+### Cybersecurity CTAs (4) — src/content/cybersecurity-markup.ts
+All: onclick="window.openBookingPanel(); return false;" + href="/contact"
+1. Hero "Book a Security Review"
+2. Recovery "Book a Security Review"
+3. WTS "get in touch" inline link
+4. Get Started "Book a review"
+Note: "Talk to us about your environment" → /contact WITHOUT panel
+### Nav & footer
+- SiteNav: Cybersecurity, Case studies, Get in touch → /contact (no panel)
+- SiteFooter: contact → /contact
+- next.config.ts: /company/contact → /contact
+### Design tokens (globals.css)
+--uw-yellow-card-border: rgba(1, 5, 18, 0.08)
+--uw-amber-accent: #8A5209
+### API + middleware
+- POST /api/contact → src/app/api/contact/route.ts
+- POST /api/contact/book-call → src/app/api/contact/book-call/route.ts
+- src/middleware.ts rewrites POST /contact → /api/contact (App Router can't have page+route same segment)
+- With JS: fetch POST → JSON {ok:true} → inline success
+- No JS: form POST → 303 → /contact?sent=1 or ?booked=1
+- Storage: console.info only — no Supabase/email yet
+### Scroll reveal fix — src/hooks/useReveal.ts
+- On load: check(1) — trigger line = full viewport (fixes blank band under short heroes)
+- On scroll: TRIGGER_LINE = 0.65
+## Git status (as of handoff)
+Last commit on main: dd91e7e "Fix hero and footer spacing from double padding."
+Contact work is UNCOMMITTED — modified + untracked files on disk.
+## Open questions for Niki
+1. Supabase for contact + booking submissions?
+2. WTS concentric rings — no-JS fallback? (JS-only via useCyberPageBehaviors.ts)
+3. Nav "Get in touch" on /contact — active/muted state?
+## Known gaps
+- WTS rings: no default is-current in markup for no-JS
+- Nav CTA: no current-page styling on /contact
+- Forms log only — need backend decision
+- Homepage / still redirects to cybersecurity (temporary)
+## Dev
+npm install && npm run dev
+Homepage / → /solutions/cybersecurity
+Reference: contact-and-panel (3).html, Uniware_Website_Design_System_v1_3.md
+## Next steps
+1. Commit + push contact work
+2. Get Niki answers on Supabase, WTS no-JS, nav UX
+3. Wire form submission once decided
+Project at a glance
+Item	Detail
+Workspace
+d:\Desktop\Projects\Uniware_website
+Repo
+https://github.com/nikita-uniware/uniware_website
+Stack
+Next.js 15 (App Router), TypeScript, Tailwind v4, Space Grotesk + DM Sans
+Production
+Vercel — global.uniware.net
+Roles
+Niki = design/HTML · Srimathi = Next.js implementation · PR before main
+Git state (important)
+Last commit on main: dd91e7e — Fix hero and footer spacing from double padding.
+
+Contact + booking work is local only — not committed:
+
+Status	Files
+Modified
+next.config.ts, globals.css, layout.tsx, SiteNav.tsx, SiteFooter.tsx, cybersecurity-markup.ts, useReveal.ts, CaseStudyPage.tsx, case-study-markup.ts
+New (untracked)
+src/app/contact/, src/app/api/contact/, src/middleware.ts, BookingPanel.tsx, ContactPage.tsx, contact.page.css, booking-panel.css, booking-panel.d.ts, contact-and-panel (3).html
+Before switching accounts, either commit and push this work, or confirm the files are still on disk when you reopen the project.
+
+Architecture decisions (do not undo without asking Niki)
+Booking panel is global in layout.tsx, opened via window.openBookingPanel() — not on /contact
+Contact forms use middleware rewrite so action="/contact" works without co-locating page.tsx + route.ts
+No Supabase yet — API routes only console.info
+Homepage temporarily redirects / → /solutions/cybersecurity
+Scroll reveal uses 1.0 on load, 0.65 on scroll (Niki fix for short heroes)
+File map
+src/app/
+  layout.tsx              # BookingPanel mounted globally
+  contact/page.tsx        # /contact route
+  api/contact/route.ts    # Contact form POST
+  api/contact/book-call/route.ts
+  globals.css             # Tokens, nav, reveal, footer
+src/middleware.ts         # POST rewrites for forms
+src/components/
+  BookingPanel.tsx
+  SiteNav.tsx, SiteFooter.tsx
+  pages/ContactPage.tsx, CybersecurityPage.tsx, CaseStudyPage.tsx
+src/content/
+  cybersecurity-markup.ts # 4 panel CTAs
+  case-study-markup.ts
+src/hooks/
+  useReveal.ts            # 1.0 load / 0.65 scroll
+  useCyberPageBehaviors.ts # WTS rings, carousels, spine
+src/styles/
+  contact.page.css, booking-panel.css, cybersecurity.page.css
+next.config.ts            # Redirects (URL audit v1)
+contact-and-panel (3).html  # Niki reference (not in app)
+Testing checklist
+/solutions/cybersecurity — stats visible without scrolling (reveal fix)
+All 4 cyber CTAs open booking panel (with JS)
+/contact — form, offices, no panel
+Contact form → success (JS) or ?sent=1 (no JS)
+Booking panel form → success
+Nav: Cybersecurity, Case studies, Get in touch
+/company/contact → /contact
+Draft questions for Niki
+Should contact + booking submissions go to Supabase (or another backend)?
+WTS concentric rings — need a no-JS fallback, or JS-only is fine?
+On /contact, should “Get in touch” in the nav look inactive/muted?
+What’s done vs not done
+Done (per Niki)	Not done (later / TBD)
+Contact page, booking panel, 4 cyber CTAs
+Supabase / real email delivery
+Nav, footer, redirects, tokens
+Real office addresses
+API routes, no-JS fallbacks
+Sanity wiring
+Scroll reveal fix
+Homepage
+Placeholder content
+Services dropdown in nav
+Local dev
+cd d:\Desktop\Projects\Uniware_website
+npm install
+npm run dev
+Port may vary (e.g. 3003) — check terminal output. The bottom-left “N” badge is Next.js dev mode, not part of the design.
+

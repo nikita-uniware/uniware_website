@@ -13,7 +13,8 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
       No prevention is guaranteed. When an attack gets through, recovery is what
       keeps the business running.
     </p>
-    <a href="/company/contact" class="btn-hero" data-reveal="240">
+    <a href="/contact" class="btn-hero" data-reveal="240"
+       onclick="window.openBookingPanel(); return false;">
       Book a Security Review
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
         <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -345,7 +346,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
       <p class="ot-body">
         Working in a factory or industrial environment? OT and IoT security requires a different approach. We have experience protecting operational technology and connected industrial systems alongside standard IT, using Armis and Versa.
       </p>
-      <a href="/company/contact" class="ghost-link ghost-link-w ghost-link-sm">
+      <a href="/contact" class="ghost-link ghost-link-w ghost-link-sm">
         Talk to us about your environment
         <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
       </a>
@@ -437,7 +438,8 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 
     <!-- Recovery CTA: question first, action second -->
     <p class="sec-cta-question-d" data-reveal="0">Want to talk about your recovery position?</p>
-    <a href="/company/contact" class="sec-cta-btn-d" data-reveal="80">
+    <a href="/contact" class="sec-cta-btn-d" data-reveal="80"
+       onclick="window.openBookingPanel(); return false;">
       Book a Security Review
       <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
     </a>
@@ -509,7 +511,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <div class="wts-connector wts-connector--spacer" aria-hidden="true"></div>
 
         <div class="wts-bridge" data-reveal="0">
-          <p>Not sure where you fit? <a href="/solutions/cybersecurity/security-assessment/">Take the Cyber Readiness Assessment</a> for a clear answer in 3 to 5 minutes, or <a href="/company/contact">get in touch</a> to talk it through with our team.</p>
+          <p>Not sure where you fit? <a href="/solutions/cybersecurity/security-assessment/">Take the Cyber Readiness Assessment</a> for a clear answer in 3 to 5 minutes, or <a href="/contact" onclick="window.openBookingPanel(); return false;">get in touch</a> to talk it through with our team.</p>
         </div>
 
       </div><!-- /wts-cards -->
@@ -660,7 +662,8 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <p class="gs-block-label">Ready to talk</p>
         <h3 class="gs-block-heading">Book a security review</h3>
         <p class="gs-block-body">A structured conversation with one of our engineers. We look at your environment, identify your biggest risks, and tell you what to fix first. No obligation.</p>
-        <a href="/company/contact/" class="btn-primary-l">Book a review</a>
+        <a href="/contact" class="btn-primary-l"
+           onclick="window.openBookingPanel(); return false;">Book a review</a>
       </div>
 
     </div>

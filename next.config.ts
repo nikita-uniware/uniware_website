@@ -13,15 +13,15 @@ const nextConfig: NextConfig = {
         destination: "/solutions/cybersecurity",
         permanent: false, // 307
       },
-      // Old paths → permanent IA paths
+      // Old /company/contact → /contact (Niki contact page ship)
       {
-        source: "/contact",
-        destination: "/company/contact",
+        source: "/company/contact",
+        destination: "/contact",
         permanent: true,
       },
       {
-        source: "/contact/",
-        destination: "/company/contact",
+        source: "/company/contact/",
+        destination: "/contact",
         permanent: true,
       },
       {

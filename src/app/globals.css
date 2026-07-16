@@ -18,6 +18,8 @@
   --circle-light: rgba(1, 5, 18, 0.32);
   --uw-yellow-card: #FBF0DA;
   --uw-yellow-card-hover: #FEF7EC;
+  --uw-yellow-card-border: rgba(1, 5, 18, 0.08);
+  --uw-amber-accent: #8A5209;
   --uw-amber-border: #F0BD52;
   --uw-dark-gradient: linear-gradient(90deg, #040C25, #010512);
 }
@@ -37,6 +39,8 @@
   --color-group-dark: rgba(255, 255, 255, 0.1);
   --color-uw-yellow-card: #FBF0DA;
   --color-uw-yellow-card-hover: #FEF7EC;
+  --color-uw-yellow-card-border: rgba(1, 5, 18, 0.08);
+  --color-uw-amber-accent: #8A5209;
   --color-uw-amber-border: #F0BD52;
   --font-display: var(--font-space-grotesk), sans-serif;
   --font-body: var(--font-dm-sans), sans-serif;

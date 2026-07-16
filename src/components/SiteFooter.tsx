@@ -26,7 +26,7 @@ export function SiteFooter() {
             Case studies
           </Link>
           <span className="footer-sep" aria-hidden="true" />
-          <Link href="/company/contact" className="footer-link">
+          <Link href="/contact" className="footer-link">
             Contact
           </Link>
           <span className="footer-sep" aria-hidden="true" />

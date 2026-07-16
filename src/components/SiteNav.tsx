@@ -23,10 +23,13 @@ export function SiteNav() {
           />
         </Link>
         <nav className="site-nav-links" aria-label="Main navigation">
+          <Link href="/solutions/cybersecurity" className="site-nav-link">
+            Cybersecurity
+          </Link>
           <Link href="/resources/case-studies" className="site-nav-link">
             Case studies
           </Link>
-          <Link href="/company/contact" className="site-nav-cta">
+          <Link href="/contact" className="site-nav-cta">
             Get in touch
           </Link>
         </nav>

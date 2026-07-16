@@ -1,0 +1,171 @@
+/* ══════════════════════════════════════════════════
+   PANEL OVERLAY
+   rgba(1,5,18,0.6). Fades in/out. Click to close.
+══════════════════════════════════════════════════ */
+.panel-overlay{
+  position:fixed;inset:0;z-index:90;
+  background:rgba(1,5,18,.60);
+  opacity:0;pointer-events:none;
+  transition:opacity 300ms ease;
+}
+.panel-overlay.is-open{opacity:1;pointer-events:all}
+
+/* ══════════════════════════════════════════════════
+   BOOKING PANEL
+   Dark gradient. Right-anchored. Full height.
+   width: 100vw mobile | 480px tablet | 520px desktop.
+   Slide in from right: translateX(100%) → translateX(0).
+   300ms ease. Overlay fades in/out simultaneously.
+══════════════════════════════════════════════════ */
+.booking-panel{
+  position:fixed;top:0;right:0;bottom:0;z-index:100;
+  width:100vw;
+  background:linear-gradient(90deg,#040C25,#010512);
+  border-left:1px solid rgba(255,255,255,.08);
+  transform:translateX(100%);
+  transition:transform 300ms ease;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+@media(min-width:768px){.booking-panel{width:480px}}
+@media(min-width:1024px){.booking-panel{width:520px}}
+.booking-panel.is-open{transform:translateX(0)}
+
+/* X close button — absolute top-right of panel */
+.panel-close{
+  position:absolute;top:20px;right:20px;z-index:110;
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.60);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:background-color 150ms ease,border-color 150ms ease,color 150ms ease;
+}
+.panel-close:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);color:#fff}
+.panel-close:focus-visible{outline:2px solid #E9A638;outline-offset:2px}
+
+/* Scrollable panel interior */
+.panel-content{
+  flex:1;overflow-y:auto;padding:64px 28px 48px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent;
+}
+@media(min-width:768px){.panel-content{padding:64px 36px 48px}}
+.panel-content::-webkit-scrollbar{width:4px}
+.panel-content::-webkit-scrollbar-track{background:transparent}
+.panel-content::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+
+/* Panel header */
+.panel-eyebrow{
+  font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;
+  letter-spacing:.12em;text-transform:uppercase;color:#E9A638;margin-bottom:12px;
+}
+.panel-heading{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:26px;line-height:1.15;letter-spacing:-.015em;
+  color:#fff;margin-bottom:12px;
+}
+@media(min-width:1024px){.panel-heading{font-size:30px}}
+.panel-sub{
+  font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.65;
+  color:rgba(255,255,255,.55);margin-bottom:32px;
+}
+
+/* Panel form fields — dark surface */
+.panel-field-group{display:flex;flex-direction:column;gap:18px}
+.panel-field-item{display:flex;flex-direction:column;gap:6px}
+.panel-field-label{
+  font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;
+  letter-spacing:.04em;color:rgba(255,255,255,.65);
+}
+.panel-field-optional{font-weight:300;color:rgba(255,255,255,.32)}
+.panel-input,
+.panel-select,
+.panel-textarea{
+  font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.5;
+  color:#fff;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.16);border-radius:8px;
+  padding:11px 14px;width:100%;
+  transition:border-color 150ms ease,background-color 150ms ease;
+  -webkit-appearance:none;appearance:none;
+}
+.panel-input::placeholder,.panel-textarea::placeholder{color:rgba(255,255,255,.28);font-weight:300}
+.panel-input:focus,.panel-select:focus,.panel-textarea:focus{
+  outline:none;border-color:#E9A638;background:rgba(255,255,255,.09);
+}
+.panel-textarea{resize:vertical;min-height:96px}
+/* Panel select — custom chevron */
+.panel-select-wrap{position:relative}
+.panel-select-wrap::after{
+  content:'';position:absolute;right:14px;top:50%;
+  transform:translateY(-50%);pointer-events:none;
+  width:0;height:0;
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-top:6px solid rgba(255,255,255,.45);margin-top:2px;
+}
+.panel-select{cursor:pointer}
+.panel-select option{color:#010512;background:#fff}
+
+/* ── Pill checkboxes (Preferred time) ──────────
+   CSS-only toggle. No JavaScript.
+   Input is visually hidden (accessible via keyboard).
+   :checked on the input drives the pill visual state
+   via the adjacent-sibling selector: input:checked + label.
+   Multi-select is natively supported (checkboxes).
+─────────────────────────────────────────────── */
+.pills-track{display:flex;flex-wrap:wrap;gap:8px;position:relative;margin-top:2px}
+.pill-input{
+  /* Visually hidden but keyboard/screen-reader accessible */
+  position:absolute;opacity:0;
+  width:1px;height:1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;
+  border:0;margin:0;padding:0;pointer-events:none;
+}
+.pill-label{
+  display:inline-flex;align-items:center;
+  padding:8px 18px;
+  border:1px solid rgba(255,255,255,.25);border-radius:100px;
+  font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;
+  color:rgba(255,255,255,.68);
+  cursor:pointer;user-select:none;
+  transition:border-color 150ms ease,background-color 150ms ease,color 150ms ease;
+}
+.pill-label:hover{border-color:rgba(255,255,255,.50);color:#fff}
+/* CSS-only checked state — no JS */
+.pill-input:checked + .pill-label{
+  border-color:#F0BD52;
+  background:rgba(240,189,82,.15);
+  color:#fff;
+}
+.pill-input:focus-visible + .pill-label{outline:2px solid #F0BD52;outline-offset:2px}
+
+/* Panel submit button — amber fill on dark surface */
+.btn-panel-submit{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-family:'DM Sans',sans-serif;font-weight:500;font-size:15px;line-height:1;
+  padding:14px 28px;border-radius:8px;
+  background:#E9A638;color:#010512;border:1px solid #E9A638;
+  cursor:pointer;width:100%;margin-top:8px;
+  transition:background-color 150ms ease,border-color 150ms ease,color 150ms ease;
+}
+.btn-panel-submit:hover{background:transparent;border-color:#E9A638;color:#E9A638}
+.btn-panel-submit:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+/* Panel success state */
+.panel-success{display:none;padding:24px 0}
+.panel-success-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(240,189,82,.12);border:1px solid rgba(240,189,82,.30);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;color:#E9A638;
+}
+.panel-success-heading{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:22px;line-height:1.20;color:#fff;margin-bottom:12px;
+}
+.panel-success-body{
+  font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.65;
+  color:rgba(255,255,255,.65);margin-bottom:8px;
+}
+.panel-success-body a{color:#E9A638;text-decoration:none}
+.panel-success-body a:hover{text-decoration:underline;text-underline-offset:3px}
+.panel-success-body a:focus-visible{outline:2px solid #E9A638;outline-offset:2px;border-radius:2px}
