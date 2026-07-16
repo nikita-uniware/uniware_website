@@ -87,7 +87,7 @@ export function BookingPanel() {
 
       <aside
         id="booking-panel"
-        className={`booking-panel${open ? " is-open" : ""}`}
+        className={`booking-panel bg-linear-90 from-uw-dark-blue to-uw-black${open ? " is-open" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label="Book a call with Uniware"

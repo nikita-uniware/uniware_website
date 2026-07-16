@@ -6,7 +6,6 @@
   --uw-black: #010512;
   --uw-dark-blue: #040c25;
   --uw-white: #ffffff;
-  --uw-dark-gradient: var(--uw-dark-gradient);
   --uw-surface-off-white: #fafaf9;
   --surface-overlay: rgba(1, 5, 18, 0.6);
   --surface-light-subtle: rgba(1, 5, 18, 0.03);
@@ -337,7 +336,7 @@ html.is-ready [data-reveal].is-visible {
   left: 0;
   right: 0;
   z-index: 60;
-  background: var(--uw-dark-gradient);
+  /* Background: Tailwind bg-linear-90 from-uw-dark-blue to-uw-black on the element */
   border-bottom: 1px solid var(--border-chrome);
   height: 64px;
   display: flex;
@@ -425,10 +424,21 @@ html.is-ready [data-reveal].is-visible {
   background: transparent;
   color: var(--uw-white);
 }
+/* Secondary (active on /contact) — design system dark-surface secondary */
+.site-nav-cta--secondary {
+  background: transparent;
+  color: var(--uw-white);
+  border-color: var(--border-chrome-intense);
+}
+.site-nav-cta--secondary:hover {
+  background: var(--uw-white);
+  color: var(--uw-black);
+  border-color: var(--uw-white);
+}
 
 /* ── Shared footer (no data-reveal) — matches reference chrome ── */
 .site-footer {
-  background: var(--uw-dark-gradient);
+  /* Background: Tailwind bg-linear-90 from-uw-dark-blue to-uw-black on the element */
   border-top: 1px solid var(--border-chrome);
   color: var(--uw-white);
 }

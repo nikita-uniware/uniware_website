@@ -4,7 +4,7 @@
    Logo: mark (32px) mobile, wordmark (28px) tablet+
    From preview-checkpoint-3_17_2.html
 ══════════════════════════════════════════════════════ */
-.site-nav{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--uw-dark-gradient);border-bottom:1px solid var(--border-chrome);height:64px;display:flex;align-items:center;}
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:60;/* background: Tailwind on SiteNav */border-bottom:1px solid var(--border-chrome);height:64px;display:flex;align-items:center;}
 .site-nav-inner{width:100%;max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
 @media(min-width:768px){.site-nav-inner{padding:0 24px;}}
 @media(min-width:1024px){.site-nav-inner{padding:0 40px;}}
@@ -18,6 +18,8 @@
 .site-nav-link:hover{color:var(--uw-white);}
 .site-nav-cta{font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body-sm);line-height:1;padding:9px 18px;border-radius:8px;background:var(--uw-white);color:var(--uw-black);border:1px solid var(--uw-white);text-decoration:none;white-space:nowrap;transition:background-color 150ms ease,color 150ms ease;}
 .site-nav-cta:hover{background:transparent;color:var(--uw-white);}
+.site-nav-cta--secondary{background:transparent;color:var(--uw-white);border-color:var(--border-chrome-intense);}
+.site-nav-cta--secondary:hover{background:var(--uw-white);color:var(--uw-black);border-color:var(--uw-white);}
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -42,7 +44,7 @@ html.is-ready [data-reveal].is-visible{opacity:1;transform:translateY(0)}
 .back-link:hover{color:var(--uw-white)}
 
 /* ── HERO — minimal, Option B scale ── */
-.cs-hero{background:var(--uw-dark-gradient)}
+.cs-hero{background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black))}
 .cs-hero .container{padding-top:40px;padding-bottom:0}
 @media(min-width:768px){.cs-hero .container{padding-top:48px}}
 @media(min-width:1024px){.cs-hero .container{padding-top:56px}}

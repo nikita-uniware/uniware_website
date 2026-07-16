@@ -8,6 +8,51 @@ type ContactPageProps = {
   initialSent?: boolean;
 };
 
+const OFFICES = [
+  {
+    city: "Chennai, India",
+    hq: true,
+    addressLines: [
+      "1178D, 58th Street, TVS Colony, Anna Nagar West Extension,",
+      "Chennai, Tamil Nadu 600101, India",
+    ],
+    contactName: "Nirmal",
+    phoneDisplay: "+91 98408 61475",
+    phoneHref: "tel:+919840861475",
+  },
+  {
+    city: "Kerala, India",
+    hq: false,
+    addressLines: [
+      "No. 13/412-A, First Floor, Pandoth Road,",
+      "Maradu, Ernakulam 682304, India",
+    ],
+    contactName: "Anish",
+    phoneDisplay: "+91 89393 91816",
+    phoneHref: "tel:+918939391816",
+  },
+  {
+    city: "Hyderabad, India",
+    hq: false,
+    addressLines: [
+      "8th Floor, SLN Terminus, Survey No. 133,",
+      "Beside Botanical Gardens, Gachibowli,",
+      "Hyderabad, Telangana 500032, India",
+    ],
+    contactName: "Vijay",
+    phoneDisplay: "+91 73580 35443",
+    phoneHref: "tel:+917358035443",
+  },
+  {
+    city: "Delaware, USA",
+    hq: false,
+    addressLines: ["8 The Green, Suite A", "Dover, DE 19901-3618"],
+    contactName: "Nikita",
+    phoneDisplay: "+44 79563 65550",
+    phoneHref: "tel:+447956365550",
+  },
+] as const;
+
 /**
  * Contact page — port of contact-and-panel HTML (panel lives in root layout).
  */
@@ -45,7 +90,10 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
 
   return (
     <div id="main-content" className="contact-page">
-      <section className="contact-intro" aria-labelledby="contact-heading">
+      <section
+        className="contact-intro bg-linear-90 from-uw-dark-blue to-uw-black"
+        aria-labelledby="contact-heading"
+      >
         <div className="container">
           <p className="contact-eyebrow" data-reveal="0">
             Contact
@@ -54,8 +102,10 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
             Talk to our team.
           </h1>
           <p className="contact-subtext" data-reveal="160">
-            We work with businesses across India, the US, and the UK. Write to us
-            below, or give us a call directly. We&rsquo;re happy to talk.
+            We work with businesses across India, the US, and the UK. Send us a
+            message below, or email us directly at{" "}
+            <a href="mailto:sales@uniware.net">sales@uniware.net</a>. You could
+            even give us a call, we&rsquo;re happy to talk.
           </p>
         </div>
       </section>
@@ -93,9 +143,9 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
                   </div>
                   <p className="contact-success-heading">Message sent.</p>
                   <p className="contact-success-body">
-                    We&rsquo;ll be in touch within one business day. If
-                    you&rsquo;d prefer to reach us directly, write to us at{" "}
-                    <a href="mailto:info@uniware.net">info@uniware.net</a>.
+                    Thanks for reaching out. We&rsquo;ll get back to you within
+                    1 business day. For urgent inquiries, call us directly at{" "}
+                    <a href="tel:+919840861475">+91 98408 61475</a>.
                   </p>
                 </div>
 
@@ -225,92 +275,34 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
                 Our offices
               </p>
               <div className="loc-list" data-reveal="80">
-                <div className="loc-item">
-                  <div className="loc-city-row">
-                    <p className="loc-city">Chennai, India</p>
-                    <span className="loc-hq-badge">Headquarters</span>
+                {OFFICES.map((office) => (
+                  <div className="loc-item" key={office.city}>
+                    <div className="loc-city-row">
+                      <p className="loc-city">{office.city}</p>
+                      {office.hq ? (
+                        <span className="loc-hq-badge">Headquarters</span>
+                      ) : null}
+                    </div>
+                    <p className="loc-address">
+                      {office.addressLines.map((line, i) => (
+                        <span key={line}>
+                          {i > 0 ? <br /> : null}
+                          {line}
+                        </span>
+                      ))}
+                    </p>
+                    <p className="loc-person">
+                      <span className="loc-person-name">{office.contactName}</span>
+                      <span className="loc-person-sep" aria-hidden="true">
+                        {" "}
+                        |{" "}
+                      </span>
+                      <a href={office.phoneHref} className="loc-phone">
+                        {office.phoneDisplay}
+                      </a>
+                    </p>
                   </div>
-                  <p className="loc-address">
-                    14 Rajiv Gandhi Salai, Perungudi
-                    <br />
-                    Chennai, Tamil Nadu 600096
-                  </p>
-                  <a href="tel:+914445678901" className="loc-phone">
-                    +91 44 4567 8901
-                  </a>
-                </div>
-
-                <div className="loc-item">
-                  <div className="loc-city-row">
-                    <p className="loc-city">Kerala, India</p>
-                  </div>
-                  <p className="loc-address">
-                    3rd Floor, Aster Centre, MG Road
-                    <br />
-                    Kochi, Kerala 682016
-                  </p>
-                  <a href="tel:+914842345678" className="loc-phone">
-                    +91 484 234 5678
-                  </a>
-                </div>
-
-                <div className="loc-item">
-                  <div className="loc-city-row">
-                    <p className="loc-city">Hyderabad, India</p>
-                  </div>
-                  <p className="loc-address">
-                    Plot 15, Cyberspace Building, HITEC City
-                    <br />
-                    Hyderabad, Telangana 500081
-                  </p>
-                  <a href="tel:+914067890123" className="loc-phone">
-                    +91 40 6789 0123
-                  </a>
-                </div>
-
-                <div className="loc-item">
-                  <div className="loc-city-row">
-                    <p className="loc-city">Delaware, USA</p>
-                  </div>
-                  <p className="loc-address">
-                    251 Little Falls Drive, Suite 4
-                    <br />
-                    Wilmington, Delaware 19808
-                  </p>
-                  <a href="tel:+13025550147" className="loc-phone">
-                    +1 302 555 0147
-                  </a>
-                </div>
-
-                <div className="loc-item">
-                  <div className="loc-city-row">
-                    <p className="loc-city">London</p>
-                  </div>
-                  <p className="loc-soon">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <circle
-                        cx="8"
-                        cy="8"
-                        r="6.5"
-                        stroke="#BB6D08"
-                        strokeWidth="1.2"
-                      />
-                      <path
-                        d="M8 5v3.5L10 10"
-                        stroke="#BB6D08"
-                        strokeWidth="1.3"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                    Opening soon
-                  </p>
-                </div>
+                ))}
               </div>
             </div>
           </div>

@@ -20,9 +20,12 @@ const FILES = [
 /** Longest-first string replacements (colors, gradients, families). */
 const STRING_REPLACEMENTS = [
   // Gradients
-  ["linear-gradient(90deg, #040C25, #010512)", "var(--uw-dark-gradient)"],
-  ["linear-gradient(90deg,#040C25,#010512)", "var(--uw-dark-gradient)"],
-  ["linear-gradient(90deg, #040c25, #010512)", "var(--uw-dark-gradient)"],
+  // Dark backgrounds use Tailwind: bg-linear-90 from-uw-dark-blue to-uw-black
+  // or CSS: linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black))
+  // Do NOT introduce --uw-dark-gradient again.
+  ["linear-gradient(90deg, #040C25, #010512)", "linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black))"],
+  ["linear-gradient(90deg,#040C25,#010512)", "linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black))"],
+  ["linear-gradient(90deg, #040c25, #010512)", "linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black))"],
   ["linear-gradient(to right,transparent,#FFFFFF)", "linear-gradient(to right,transparent,var(--uw-white))"],
   ["linear-gradient(to right,transparent,#010512)", "linear-gradient(to right,transparent,var(--uw-black))"],
 

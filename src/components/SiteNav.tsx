@@ -1,8 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function SiteNav() {
+  const pathname = usePathname();
+  const onContact =
+    pathname === "/contact" || pathname.startsWith("/contact/");
+
   return (
-    <header className="site-nav" role="banner">
+    <header
+      className="site-nav bg-linear-90 from-uw-dark-blue to-uw-black"
+      role="banner"
+    >
       <div className="site-nav-inner">
         <Link href="/" className="site-nav-logo" aria-label="Uniware Systems — home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -29,7 +39,13 @@ export function SiteNav() {
           <Link href="/resources/case-studies" className="site-nav-link">
             Case studies
           </Link>
-          <Link href="/contact" className="site-nav-cta">
+          <Link
+            href="/contact"
+            className={
+              onContact ? "site-nav-cta site-nav-cta--secondary" : "site-nav-cta"
+            }
+            aria-current={onContact ? "page" : undefined}
+          >
             Get in touch
           </Link>
         </nav>

@@ -7,7 +7,7 @@
 ══════════════════════════════════════════════════════ */
 .site-nav{
   position:fixed; top:0; left:0; right:0; z-index:60;
-  background:var(--uw-dark-gradient);
+  /* background: Tailwind bg-linear-90 from-uw-dark-blue to-uw-black on SiteNav */
   border-bottom:1px solid var(--border-chrome);
   height:64px; display:flex; align-items:center;
 }
@@ -44,6 +44,12 @@
   transition:background-color 150ms ease, color 150ms ease;
 }
 .site-nav-cta:hover{ background:transparent; color:var(--uw-white); }
+.site-nav-cta--secondary{
+  background:transparent; color:var(--uw-white); border-color:var(--border-chrome-intense);
+}
+.site-nav-cta--secondary:hover{
+  background:var(--uw-white); color:var(--uw-black); border-color:var(--uw-white);
+}
 
 /* ─── Reset ──────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -164,10 +170,13 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 .wts-ring-1 .wts-ring-label{ font-size:var(--text-caption-xs); top:50%; transform:translate(-50%,-50%); }
 .wts-ring-1.is-current .wts-ring-label{ color:var(--uw-wts-ring-current); }
 
-/* ── Cards: shared between desktop (right column) and tablet/mobile (full width, connected) ── */
+/* ── Cards: shared between desktop (right column) and tablet/mobile (full width, connected) ──
+   No-JS fallback (Niki): all cards use the yellow active treatment so nothing is deprioritised.
+   With JS (html.is-ready): cards reset to white; only .is-current stays yellow. Rings stay grey
+   until JS adds .is-current (no amber without JS). */
 .wts-cards{ display:flex; flex-direction:column; }
 .wts-card{
-  background:var(--uw-white); border:1px solid var(--border-light-subtle); border-radius:12px;
+  background:var(--uw-yellow-card); border:1px solid var(--uw-amber-border); border-radius:12px;
   padding:24px 28px; max-width:640px;
   transition:background-color 500ms ease, border-color 500ms ease;
 }
@@ -176,24 +185,31 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
   .wts-card:last-child{ margin-bottom:0; }
 }
 /* Eyebrow: 13px DM Sans 500, 0.12em tracking — matches sec-eyebrow-l exactly */
-.wts-card-eyebrow{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-light); margin-bottom:12px; transition:color 500ms ease; }
+.wts-card-eyebrow{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-accent); margin-bottom:12px; transition:color 500ms ease; }
 .wts-card-heading{ font-family:var(--font-display); font-weight:var(--font-weight-semibold); font-size:var(--text-h4-sm); line-height:1.25; color:var(--uw-black); margin-bottom:10px; transition:color 500ms ease; }
 @media(min-width:1024px){ .wts-card-heading{ font-size:var(--text-h4); } }
 /* Body: 16px DM Sans 300 per design system */
 .wts-card-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-body-text); margin-bottom:10px; transition:color 500ms ease; }
-.wts-card-footer{ margin-top:16px; padding-top:16px; border-top:1px solid var(--border-light-muted); transition:border-color 500ms ease; }
-.wts-card-footer-label{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-caption-xs); letter-spacing:.08em; text-transform:uppercase; color:var(--uw-amber-light); margin-bottom:4px; transition:color 500ms ease; }
+.wts-card-footer{ margin-top:16px; padding-top:16px; border-top:1px solid var(--amber-card-footer-border); transition:border-color 500ms ease; }
+.wts-card-footer-label{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-caption-xs); letter-spacing:.08em; text-transform:uppercase; color:var(--uw-amber-accent); margin-bottom:4px; transition:color 500ms ease; }
 /* Audience text: text-body-sm per design system — 14px, DM Sans 400, line-height 1.50 */
 .wts-card-audience{ font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-body-sm); line-height:1.50; color:var(--uw-body-text); transition:color 500ms ease; }
-.wts-card.is-current .wts-card-footer{ border-color:var(--amber-card-footer-border); }
-.wts-card.is-current .wts-card-footer-label{ color:var(--uw-amber-accent); }
-.wts-card.is-current .wts-card-audience{ color:var(--uw-body-text); }
 
-/* Selected state — desktop only, light amber tint matching the ring, dark text throughout */
-.wts-card.is-current{ background:var(--uw-yellow-card); border-color:var(--uw-amber-border); }
-.wts-card.is-current .wts-card-eyebrow{ color:var(--uw-amber-accent); }
-.wts-card.is-current .wts-card-heading{ color:var(--uw-black); }
-.wts-card.is-current .wts-card-body{ color:var(--uw-body-text); }
+/* With JS: inactive cards until scroll sets .is-current */
+html.is-ready .wts-card{
+  background:var(--uw-white); border-color:var(--border-light-subtle);
+}
+html.is-ready .wts-card-eyebrow{ color:var(--uw-amber-light); }
+html.is-ready .wts-card-footer{ border-color:var(--border-light-muted); }
+html.is-ready .wts-card-footer-label{ color:var(--uw-amber-light); }
+
+html.is-ready .wts-card.is-current{ background:var(--uw-yellow-card); border-color:var(--uw-amber-border); }
+html.is-ready .wts-card.is-current .wts-card-eyebrow{ color:var(--uw-amber-accent); }
+html.is-ready .wts-card.is-current .wts-card-heading{ color:var(--uw-black); }
+html.is-ready .wts-card.is-current .wts-card-body{ color:var(--uw-body-text); }
+html.is-ready .wts-card.is-current .wts-card-footer{ border-color:var(--amber-card-footer-border); }
+html.is-ready .wts-card.is-current .wts-card-footer-label{ color:var(--uw-amber-accent); }
+html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text); }
 
 /* Connector line between cards — tablet/mobile only. 48px gives breathing room to read each card before the next appears. */
 .wts-connector{ width:1px; height:48px; background:var(--border-light-medium); margin:0 0 0 28px; }
@@ -297,7 +313,7 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
    stat is always RECOVERY speed (never attack speed) to
    avoid the two numbers being read as the same category.
 ══════════════════════════════════════════════════════ */
-.cs { background:var(--uw-dark-gradient); }
+.cs { background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black)); }
 .cs .container { padding-top:48px; padding-bottom:48px; }
 @media(min-width:768px){ .cs .container{ padding-top:64px; padding-bottom:64px; } }
 @media(min-width:1024px){ .cs .container{ padding-top:96px; padding-bottom:96px; } }
@@ -343,7 +359,7 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 /* ══════════════════════════════════════════════════════
    HERO
 ══════════════════════════════════════════════════════ */
-.hero{background:var(--uw-dark-gradient);position:relative;overflow:hidden}
+.hero{background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));position:relative;overflow:hidden}
 .hero .container{position:relative;z-index:2;padding-top:48px;padding-bottom:64px}
 @media(min-width:768px) {.hero .container{padding-top:64px; padding-bottom:80px}}
 /* Nav clearance is body padding-top:64px in globals.css — do not add another 64px here */
@@ -415,7 +431,7 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
    the viewport (see reveal system note above — not a
    true 50% trigger despite the section's original intent).
 ══════════════════════════════════════════════════════ */
-.our-approach{background:var(--uw-dark-gradient);border-bottom:1px solid var(--border-chrome-muted)}
+.our-approach{background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));border-bottom:1px solid var(--border-chrome-muted)}
 .our-approach .container{padding-top:48px;padding-bottom:48px}
 @media(min-width:768px){.our-approach .container{padding-top:64px;padding-bottom:64px}}
 @media(min-width:1024px){.our-approach .container{padding-top:96px;padding-bottom:96px}}
@@ -533,7 +549,7 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
   border-bottom: 1px solid var(--section-divider);
 }
 .recovery {
-  background: var(--uw-dark-gradient);
+  background: linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));
   border-bottom: 1px solid var(--border-chrome-muted);
 }
 .prevention .container { padding-top:48px; padding-bottom:48px; }
