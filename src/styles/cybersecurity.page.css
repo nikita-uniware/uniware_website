@@ -269,8 +269,8 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 /* The marquee column is now the whole section width */
 .pf-marquee-col{ display:block; padding:0; }
 .pf-marquee-fill{ display:flex; flex-direction:column; }
-.pf-marquee-col .pf-marquee-track:first-child { padding-bottom: 8px; border-bottom:1px solid rgba(1,5,18,.10); }
-.pf-marquee-col .pf-marquee-track + .pf-marquee-track{ margin-top:8px; }
+.pf-marquee-col .pf-marquee-track:first-child { border-bottom:1px solid rgba(1,5,18,.10); }
+.pf-marquee-col .pf-marquee-track + .pf-marquee-track{ margin-top:0; }
 .pf-marquee-track{ position:relative; overflow:hidden;
   -webkit-mask-image:linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
   mask-image:linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); }
