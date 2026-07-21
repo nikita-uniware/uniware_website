@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase/server";
 
 function wantsJson(req: NextRequest) {
   return (req.headers.get("accept") ?? "").includes("application/json");
@@ -28,7 +29,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(new URL("/contact", req.url), 303);
   }
 
-  console.info("[contact]", payload);
+  const { error } = await supabaseAdmin.from("contact_submissions").insert({
+    name: payload.name,
+    email: payload.email,
+    company: payload.company || null,
+    about: payload.about,
+    message: payload.message,
+  });
+
+  if (error) {
+    console.error("[contact] supabase insert failed:", error);
+    if (wantsJson(req)) {
+      return NextResponse.json({ ok: false, error: "db_insert_failed" }, { status: 500 });
+    }
+    return NextResponse.redirect(new URL("/contact", req.url), 303);
+  }
 
   if (wantsJson(req)) {
     return NextResponse.json({ ok: true });
