@@ -1,6 +1,24 @@
 import type { NextConfig } from "next";
+import path from "path";
+
+const reactShimPath = path.resolve("./src/lib/react-shim.ts");
 
 const nextConfig: NextConfig = {
+  // Sanity Studio v6 needs React 19.2's useEffectEvent; Next 15 ships an older compiled React.
+  transpilePackages: ["sanity", "@sanity/vision", "next-sanity"],
+  webpack: (config, { isServer, webpack }) => {
+    if (!isServer) {
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(/^react$/, (resource) => {
+          const ctx = resource.context.replace(/\\/g, "/");
+          if (/node_modules\/(@sanity|sanity|next-sanity)/.test(ctx)) {
+            resource.request = reactShimPath;
+          }
+        })
+      );
+    }
+    return config;
+  },
   /**
    * URL audit v1 (Niki) — Section 4 redirect rules.
    * Living document: add rows as new pages ship.

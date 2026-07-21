@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 5000",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "sanity": "sanity",
     "sanity:dev": "sanity dev",
-    "sanity:deploy": "sanity deploy"
+    "sanity:deploy": "sanity deploy --verbose",
+    "sanity:deploy:hosted": "node --env-file=.env.local scripts/deploy-studio.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
@@ -17,10 +18,12 @@
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^6.5.0",
     "next": "15.5.20",
+    "next-sanity": "^9.12.3",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "sanity": "^6.5.0",
-    "styled-components": "^6.4.4"
+    "styled-components": "^6.4.4",
+    "use-effect-event": "^2.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

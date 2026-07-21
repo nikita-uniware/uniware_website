@@ -1,0 +1,27 @@
+name: Deploy Sanity Studio
+
+# Manual trigger — deploys to https://uniware.sanity.studio
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy Studio
+        run: npx sanity deploy --yes --verbose
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+          SANITY_TELEMETRY_DISABLED: "1"
