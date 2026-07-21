@@ -9,12 +9,15 @@ const nextConfig: NextConfig = {
   webpack: (config, { isServer, webpack }) => {
     if (!isServer) {
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(/^react$/, (resource) => {
+        new webpack.NormalModuleReplacementPlugin(
+          /^react$/,
+          (resource: { context: string; request: string }) => {
           const ctx = resource.context.replace(/\\/g, "/");
           if (/node_modules\/(@sanity|sanity|next-sanity)/.test(ctx)) {
             resource.request = reactShimPath;
           }
-        })
+          }
+        )
       );
     }
     return config;
