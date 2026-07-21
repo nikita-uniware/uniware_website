@@ -30,8 +30,8 @@ Project: `ubaw4uif` · Dataset: `production`
 
 ## Shareable Studio link (for your team)
 
-**Target URL:** **https://uniware.sanity.studio**  
-**Status:** Not live yet until you deploy once (404 until then).
+**Target URL:** **https://uniware.sanity.studio/** (note trailing slash)  
+If you see 404 at the root, try **https://uniware.sanity.studio/studio** until the next deploy (basePath fix).
 
 `localhost:3333` and `localhost:5000/studio` are **only on your machine** — not shareable.
 

@@ -25,3 +25,4 @@ jobs:
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
           SANITY_TELEMETRY_DISABLED: "1"
+          SANITY_STUDIO_BASE_PATH: "/"

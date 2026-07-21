@@ -11,7 +11,7 @@ export default defineConfig({
   title: "Uniware Website",
   projectId,
   dataset,
-  basePath: "/studio",
+  basePath: process.env.SANITY_STUDIO_BASE_PATH || "/studio",
   plugins: [structureTool(), visionTool()],
   schema: {
     types: schemaTypes,
