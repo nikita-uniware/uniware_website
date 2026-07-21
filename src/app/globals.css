@@ -151,6 +151,56 @@
 
   /* Layout */
   --max-width-content: 1200px;
+
+  /* ── Spacing — Tailwind-aligned scale (DS §04 / spacing audit Option B) ── */
+  --space-1: 4px;
+  --space-1_5: 6px;
+  --space-2: 8px;
+  --space-2_5: 10px;
+  --space-3: 12px;
+  --space-3_5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  /* Off-scale values used on cybersecurity (audit 🆕) */
+  --space-px-3: 3px;
+  --space-px-5: 5px;
+  --space-18: 18px;
+  --space-22: 22px;
+  --space-60: 60px;
+  --space-72: 72px;
+
+  /* Section vertical padding — 48 / 64 / 96 (= Tailwind py-12 / md:py-16 / lg:py-24) */
+  --section-pad-sm: var(--space-12);
+  --section-pad-md: var(--space-16);
+  --section-pad-lg: var(--space-24);
+
+  /* Header → content gap (Prevention / Recovery / Client Stories / Get Started) */
+  --section-head-gap: var(--space-7);
+
+  /* Button padding — Design System button table */
+  --btn-py-sm: 7px;
+  --btn-px-sm: 14px;
+  --btn-py-md: 11px;
+  --btn-px-md: 22px;
+  --btn-py-lg: 14px;
+  --btn-px-lg: 30px;
+  --text-button-sm: 13px;
+
+  /* Structural layout constants (nav + subnav formulas — Niki approved) */
+  --uw-nav-height: 64px;
+  --uw-subnav-height: 52px; /* .subnav-list height */
+  --uw-scroll-offset: 116px; /* nav 64 + subnav 52 — section scroll-margin-top */
+  --uw-sticky-rings-top: 132px; /* nav 64 + subnav 52 + 16 clearance — .wts-rings top */
 }
 
 @theme inline {
@@ -211,7 +261,7 @@ html {
 
 body {
   margin: 0;
-  padding-top: 64px;
+  padding-top: var(--uw-nav-height);
   font-family: var(--font-body);
   font-weight: var(--font-weight-light);
   background: var(--uw-white);
@@ -338,7 +388,7 @@ html.is-ready [data-reveal].is-visible {
   z-index: 60;
   /* Background: Tailwind bg-linear-90 from-uw-dark-blue to-uw-black on the element */
   border-bottom: 1px solid var(--border-chrome);
-  height: 64px;
+  height: var(--uw-nav-height);
   display: flex;
   align-items: center;
 }
@@ -407,24 +457,27 @@ html.is-ready [data-reveal].is-visible {
 .site-nav-cta {
   font-family: var(--font-body);
   font-weight: var(--font-weight-medium);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-button-sm);
   line-height: 1;
-  padding: 9px 18px;
+  padding: var(--btn-py-sm) var(--btn-px-sm);
   border-radius: 8px;
-  background: var(--uw-white);
-  color: var(--uw-black);
-  border: 1px solid var(--uw-white);
+  /* Secondary on dark — does not compete with primary CTAs on the page */
+  background: transparent;
+  color: var(--uw-white);
+  border: 1px solid var(--border-chrome-intense);
   text-decoration: none;
   white-space: nowrap;
   transition:
     background-color 150ms ease,
-    color 150ms ease;
+    color 150ms ease,
+    border-color 150ms ease;
 }
 .site-nav-cta:hover {
-  background: transparent;
-  color: var(--uw-white);
+  background: var(--uw-white);
+  color: var(--uw-black);
+  border-color: var(--uw-white);
 }
-/* Secondary (active on /contact) — design system dark-surface secondary */
+/* Active on /contact — same secondary size; hover stays filled */
 .site-nav-cta--secondary {
   background: transparent;
   color: var(--uw-white);
@@ -443,7 +496,7 @@ html.is-ready [data-reveal].is-visible {
   color: var(--uw-white);
 }
 .site-footer-inner {
-  padding: 64px 24px 0;
+  padding: var(--space-16) var(--space-6) 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -453,7 +506,7 @@ html.is-ready [data-reveal].is-visible {
   height: 40px;
   width: auto;
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5);
 }
 .footer-tagline {
   font-family: var(--font-body);
@@ -461,7 +514,7 @@ html.is-ready [data-reveal].is-visible {
   font-size: var(--text-body-sm);
   letter-spacing: 0.04em;
   color: var(--uw-text-on-dark-tagline);
-  margin: 0 0 36px;
+  margin: 0 0 var(--space-9);
 }
 .footer-links {
   display: flex;
@@ -469,7 +522,7 @@ html.is-ready [data-reveal].is-visible {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0;
-  margin: 0 0 56px;
+  margin: 0 0 var(--space-14);
 }
 .footer-link {
   font-family: var(--font-body);
@@ -477,7 +530,7 @@ html.is-ready [data-reveal].is-visible {
   font-size: var(--text-button);
   color: var(--uw-text-on-dark);
   text-decoration: none;
-  padding: 0 22px;
+  padding: 0 var(--space-22);
   transition: color 150ms ease;
 }
 .footer-link:hover {
@@ -485,14 +538,14 @@ html.is-ready [data-reveal].is-visible {
 }
 .footer-sep {
   width: 1px;
-  height: 14px;
+  height: var(--space-3_5);
   background: var(--border-chrome-medium);
   flex-shrink: 0;
 }
 .footer-bottom {
   width: 100%;
   border-top: 0.5px solid var(--border-chrome);
-  padding: 18px 24px;
+  padding: var(--space-18) var(--space-6);
   text-align: center;
 }
 .footer-copy {

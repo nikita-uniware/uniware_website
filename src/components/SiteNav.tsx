@@ -41,9 +41,7 @@ export function SiteNav() {
           </Link>
           <Link
             href="/contact"
-            className={
-              onContact ? "site-nav-cta site-nav-cta--secondary" : "site-nav-cta"
-            }
+            className="site-nav-cta site-nav-cta--secondary"
             aria-current={onContact ? "page" : undefined}
           >
             Get in touch

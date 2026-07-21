@@ -1,17 +1,45 @@
-# Sanity schemas for Uniware (content model v3)
+# Uniware Sanity Studio
 
-These files define the Case Study and Technology documents for Sanity Studio.
-They are **not wired** to the Next.js pages yet. Pages currently use hardcoded
-content from `src/content/`.
+## Docs
 
-## Seed technologies (set up before first real entry)
+| Doc | Purpose |
+|-----|---------|
+| [SANITY_CASE_STUDY_SCHEMA.md](./SANITY_CASE_STUDY_SCHEMA.md) | **← Schema documentation** — fields, dropdowns, reorder, website mapping |
+| [../case-study-content-model-v3.md](../case-study-content-model-v3.md) | Product content model (source of truth for what editors should enter) |
 
-CrowdStrike, Fortinet, Veeam, Dell, AWS, Microsoft 365, Commvault, Nutanix,
-VMware, Azure, Google Cloud — logos from each vendor's official brand kit.
+## Why `npx sanity dev` failed before
 
-## When wiring up
+`ProjectRootNotFoundError` means Sanity CLI could not find `sanity.cli.ts` /
+`sanity.config.ts`. Those files are now in the repo root.
 
-1. Create a Sanity project / Studio
-2. Import `schemaTypes` from `./schemas`
-3. Replace hardcoded case study data with `sanityClient.fetch` queries
-4. Keep CTA and footer as global site components (not per-entry fields)
+## Run Studio locally
+
+```powershell
+cd d:\Desktop\Projects\Uniware_website
+npm install
+npm run sanity:dev
+```
+
+Opens **http://localhost:3333** (login with your Sanity account).
+
+You should see:
+- **Technology**
+- **Case Study**
+
+Project: `ubaw4uif` · Dataset: `production`
+
+## Deploy hosted Studio (optional)
+
+```powershell
+npm run sanity:deploy
+```
+
+Creates something like `https://uniware.sanity.studio` (hostname set in `sanity.cli.ts`).
+
+## Website vs Studio
+
+| Command | What it starts |
+|---------|----------------|
+| `npm run dev` | Next.js website (port 3000) |
+| `npm run sanity:dev` | Sanity Studio (port 3333) |
+| `node --env-file=.env.local scripts/test-sanity.mjs` | API connection test |

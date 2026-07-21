@@ -66,10 +66,12 @@ export type CaseStudy = {
   seo: {
     title: string;
     description: string;
+    /** Absolute CDN URL when set in Studio; omit for platform default. */
+    ogImageUrl?: string;
   };
 };
 
-/** Chemical Manufacturing — Totale (anonymized). Hardcoded until Sanity is wired. */
+/** Chemical Manufacturing — Totale (anonymized). Local fallback if Sanity has no published entry. */
 export const chemicalManufacturingCaseStudy: CaseStudy = {
   slug: "ransomware-recovery-chemical-manufacturing",
   categoryTags: ["Cybersecurity", "Data Protection", "Infrastructure"],

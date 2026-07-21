@@ -594,46 +594,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
      separators. Real logos embedded as base64 SVG/PNG.
      Partner accreditations (Dell/AWS/Commvault) move to the footer.
 ═══════════════════════════════════════════════════════════════ -->
-<section class="pf" aria-label="Technology ecosystem partners">
-  <div class="pf-marquee-col">
-    <div class="pf-marquee-track">
-      <div class="pf-marquee-row pf-marquee-row--ltr">
-        <div class="pf-logo-item"><img src="/partners/logo-1.svg" alt="Fortinet" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-2.svg" alt="CrowdStrike" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-3.svg" alt="Sophos" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-4.svg" alt="Netskope" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-5.svg" alt="Tenable" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-6.svg" alt="Versa" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-7.svg" alt="Armis" height="44"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-8.svg" alt="F5" height="28" style="width:28px"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
-      </div>
-    </div>
-  </div>
-</section>
+<!--PARTNER_LOGO_STRIP-->
 
 <!-- ═══════════════════════════════════════════════════════════════
      GET STARTED — Final CTA section. White. Two side-by-side blocks.

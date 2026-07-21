@@ -1,10 +1,22 @@
 /**
  * Sanity schema definitions for the Uniware website.
- * Not wired to the frontend yet — pages use hardcoded content.
- * Drop these into a Sanity Studio project when ready to connect.
+ * Used by Studio (`sanity.config.ts`) and documented in content model v3.
  *
  * Source: case-study-content-model-v3.md
+ * Handoff: sanity/SANITY_CASE_STUDY_SCHEMA.md
  */
+
+type PortableChild = { text?: string };
+type PortableBlock = { children?: PortableChild[] };
+
+/** Plain-text length of bold-only portable text (for max-char validation). */
+function portableTextLength(blocks: PortableBlock[] | undefined) {
+  if (!Array.isArray(blocks)) return 0;
+  return blocks
+    .map((b) => (b.children ?? []).map((c) => c.text ?? "").join(""))
+    .join("")
+    .trim().length;
+}
 
 const CATEGORY_TAGS = [
   { title: "Cloud", value: "Cloud" },
@@ -94,7 +106,21 @@ export const caseStudy = {
       ],
       description:
         "1–2 sentences. This is the anonymized description of the client, confirmed with them, never their real name.",
-      validation: (Rule: { required: () => unknown }) => Rule.required(),
+      validation: (Rule: {
+        required: () => {
+          custom: (
+            fn: (
+              value: PortableBlock[] | undefined
+            ) => true | string
+          ) => unknown;
+        };
+      }) =>
+        Rule.required().custom((value: PortableBlock[] | undefined) => {
+          const len = portableTextLength(value);
+          if (len === 0) return "Required";
+          if (len > 220) return `Keep under 220 characters (currently ${len})`;
+          return true;
+        }),
     },
     {
       name: "stats",
@@ -160,7 +186,23 @@ export const caseStudy = {
               },
             },
           ],
-          validation: (Rule: { required: () => unknown }) => Rule.required(),
+          description:
+            "1 sentence describing who they are — can repeat the hero subtext if that already says it well.",
+          validation: (Rule: {
+            required: () => {
+              custom: (
+                fn: (
+                  value: PortableBlock[] | undefined
+                ) => true | string
+              ) => unknown;
+            };
+          }) =>
+            Rule.required().custom((value: PortableBlock[] | undefined) => {
+              const len = portableTextLength(value);
+              if (len === 0) return "Required";
+              if (len > 200) return `Keep under 200 characters (currently ${len})`;
+              return true;
+            }),
         },
         {
           name: "location",
@@ -247,7 +289,30 @@ export const caseStudy = {
             },
           ],
           description: "1–3 paragraphs. Bold one detail per paragraph max.",
-          validation: (Rule: { required: () => unknown }) => Rule.required(),
+          validation: (Rule: {
+            required: () => {
+              custom: (
+                fn: (
+                  value: PortableBlock[] | undefined
+                ) => true | string
+              ) => unknown;
+            };
+          }) =>
+            Rule.required().custom((value: PortableBlock[] | undefined) => {
+              if (!Array.isArray(value) || value.length === 0) {
+                return "Add 1–3 paragraphs";
+              }
+              if (value.length > 3) return "Use at most 3 paragraphs";
+              for (const block of value) {
+                const len = (block.children ?? [])
+                  .map((c) => c.text ?? "")
+                  .join("").length;
+                if (len > 500) {
+                  return `Each paragraph must be under 500 characters (found ${len})`;
+                }
+              }
+              return true;
+            }),
         },
       ],
     },
@@ -294,6 +359,28 @@ export const caseStudy = {
           type: "array",
           hidden: ({ parent }: { parent?: { showSteps?: boolean } }) =>
             !parent?.showSteps,
+          description:
+            "Add stages in order. Drag to reorder. Required when Show steps is on.",
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: unknown,
+                context: { parent?: { showSteps?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                steps: unknown,
+                context: { parent?: { showSteps?: boolean } }
+              ) => {
+                if (!context.parent?.showSteps) return true;
+                if (!Array.isArray(steps) || steps.length < 1) {
+                  return "Add at least one step when Show steps is on";
+                }
+                return true;
+              }
+            ),
           of: [
             {
               type: "object",
@@ -302,16 +389,18 @@ export const caseStudy = {
                   name: "title",
                   title: "Title",
                   type: "string",
-                  validation: (Rule: { max: (n: number) => unknown }) =>
-                    Rule.max(30),
+                  validation: (Rule: {
+                    required: () => { max: (n: number) => unknown };
+                  }) => Rule.required().max(30),
                 },
                 {
                   name: "body",
                   title: "Body",
                   type: "text",
                   rows: 3,
-                  validation: (Rule: { max: (n: number) => unknown }) =>
-                    Rule.max(300),
+                  validation: (Rule: {
+                    required: () => { max: (n: number) => unknown };
+                  }) => Rule.required().max(300),
                 },
               ],
               preview: { select: { title: "title", subtitle: "body" } },
@@ -330,6 +419,28 @@ export const caseStudy = {
           type: "array",
           hidden: ({ parent }: { parent?: { showTechnologies?: boolean } }) =>
             !parent?.showTechnologies,
+          description:
+            "Pick from the Technology list. Drag to reorder. Required when Show technologies is on.",
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: unknown,
+                context: { parent?: { showTechnologies?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                techs: unknown,
+                context: { parent?: { showTechnologies?: boolean } }
+              ) => {
+                if (!context.parent?.showTechnologies) return true;
+                if (!Array.isArray(techs) || techs.length < 1) {
+                  return "Add at least one technology when Show technologies is on";
+                }
+                return true;
+              }
+            ),
           of: [
             {
               type: "object",
@@ -339,6 +450,8 @@ export const caseStudy = {
                   title: "Technology",
                   type: "reference",
                   to: [{ type: "technology" }],
+                  validation: (Rule: { required: () => unknown }) =>
+                    Rule.required(),
                 },
                 {
                   name: "type",
@@ -406,7 +519,15 @@ export const caseStudy = {
           name: "outcomes",
           title: "Outcomes",
           type: "array",
-          of: [{ type: "string" }],
+          of: [
+            {
+              type: "string",
+              validation: (Rule: { max: (n: number) => unknown }) =>
+                Rule.max(100),
+            },
+          ],
+          description:
+            "One outcome per line. Drag to reorder. Start with the result, not the process.",
           validation: (Rule: {
             required: () => { min: (n: number) => unknown };
           }) => Rule.required().min(2),
@@ -440,6 +561,24 @@ export const caseStudy = {
               { title: "A note from our team", value: "team" },
             ],
           },
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: unknown,
+                context: { document?: { showNote?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                value: unknown,
+                context: { document?: { showNote?: boolean } }
+              ) => {
+                if (!context.document?.showNote) return true;
+                if (!value) return "Choose client or team when note is shown";
+                return true;
+              }
+            ),
         },
         {
           name: "quote",
@@ -456,10 +595,97 @@ export const caseStudy = {
               },
             },
           ],
+          description: "Keep to 2–3 sentences. Max ~300 characters.",
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: PortableBlock[] | undefined,
+                context: { document?: { showNote?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                value: PortableBlock[] | undefined,
+                context: { document?: { showNote?: boolean } }
+              ) => {
+                if (!context.document?.showNote) return true;
+                const len = portableTextLength(value);
+                if (len === 0) return "Quote is required when note is shown";
+                if (len > 300) return `Keep under 300 characters (currently ${len})`;
+                return true;
+              }
+            ),
         },
-        { name: "name", title: "Name", type: "string" },
-        { name: "designation", title: "Designation", type: "string" },
-        { name: "company", title: "Company", type: "string" },
+        {
+          name: "name",
+          title: "Name",
+          type: "string",
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: unknown,
+                context: { document?: { showNote?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                value: unknown,
+                context: { document?: { showNote?: boolean } }
+              ) => {
+                if (!context.document?.showNote) return true;
+                if (!value) return "Name is required when note is shown";
+                return true;
+              }
+            ),
+        },
+        {
+          name: "designation",
+          title: "Designation",
+          type: "string",
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: unknown,
+                context: { document?: { showNote?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                value: unknown,
+                context: { document?: { showNote?: boolean } }
+              ) => {
+                if (!context.document?.showNote) return true;
+                if (!value) return "Designation is required when note is shown";
+                return true;
+              }
+            ),
+        },
+        {
+          name: "company",
+          title: "Company",
+          type: "string",
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: unknown,
+                context: { document?: { showNote?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                value: unknown,
+                context: { document?: { showNote?: boolean } }
+              ) => {
+                if (!context.document?.showNote) return true;
+                if (!value) return "Company is required when note is shown";
+                return true;
+              }
+            ),
+        },
       ],
     },
     {
@@ -477,7 +703,7 @@ export const caseStudy = {
       type: "string",
       group: "seo",
       description:
-        "Under 60 characters. What shows in Google and the browser tab.",
+        "Under 60 characters. Shows in Google and the browser tab (not on the page). Tip: ask an AI — 'Write an SEO title under 60 characters for a case study about: [one sentence]. Clear and factual, important words near the front.'",
       validation: (Rule: {
         required: () => { max: (n: number) => unknown };
       }) => Rule.required().max(60),
@@ -488,7 +714,8 @@ export const caseStudy = {
       type: "text",
       rows: 3,
       group: "seo",
-      description: "Under 155 characters. Preview under the title in Google.",
+      description:
+        "Under 155 characters. Preview under the title in Google. Tip: ask an AI — 'Write a meta description under 155 characters for a case study about: [same summary]. Natural, include the key result.'",
       validation: (Rule: {
         required: () => { max: (n: number) => unknown };
       }) => Rule.required().max(155),
@@ -499,6 +726,8 @@ export const caseStudy = {
       type: "slug",
       group: "seo",
       options: { source: "headline" },
+      description:
+        "Public URL: /resources/case-studies/[slug]. Lowercase, numbers, hyphens only. Examples: ransomware-recovery-chemical-manufacturing · cloud-migration-mid-market-retail. Usually fine auto-generated from the headline — edit only if awkward or too long.",
       validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
     {
@@ -507,7 +736,7 @@ export const caseStudy = {
       type: "image",
       group: "seo",
       description:
-        "Optional. If blank, a default Uniware image is used instead.",
+        "Optional. LinkedIn / WhatsApp share image. If blank, platforms fall back to a generic preview (no custom image).",
     },
   ],
   preview: {
