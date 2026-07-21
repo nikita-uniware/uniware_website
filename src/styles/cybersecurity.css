@@ -298,11 +298,24 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 @keyframes pf-scroll-ltr{ from{ transform:translateX(-25%); } to{ transform:translateX(0); } }
 @keyframes pf-scroll-rtl{ from{ transform:translateX(0); } to{ transform:translateX(-25%); } }
 
-/* Logo items: vertical separators only, no top/bottom rail on individual items */
-.pf-logo-item{ display:flex; align-items:center; justify-content:center;
-  height:var(--space-20); padding:0 var(--space-7); flex-shrink:0; }
+/* Logo items: fixed cell + equal padding so mixed aspect ratios align visually */
+.pf-logo-item{
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  width:168px;
+  height:var(--space-20);
+  padding:var(--space-5) var(--space-6);
+  box-sizing:border-box;
+}
 .pf-logo-item + .pf-logo-item{ border-left:1px solid var(--section-divider); }
-.pf-logo-item img{ height:28px; width:auto; display:block; }
+.pf-logo-item img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:28px;
+  object-fit:contain;
+}
 
 
 

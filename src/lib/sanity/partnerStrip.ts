@@ -24,22 +24,12 @@ function escapeAttr(value: string) {
     .replace(/>/g, "&gt;");
 }
 
-function logoHeight(slug: string) {
-  return slug === "armis" ? 44 : 28;
-}
-
-function logoStyle(slug: string) {
-  return slug === "f5" ? ' style="width:28px"' : "";
-}
-
 function buildLogoItems(technologies: TechnologyLogo[], decorative: boolean) {
   return technologies
     .map((tech) => {
-      const height = logoHeight(tech.slug);
-      const style = logoStyle(tech.slug);
       const aria = decorative ? ' aria-hidden="true"' : "";
       const alt = decorative ? "" : escapeAttr(tech.name);
-      return `<div class="pf-logo-item"${aria}><img src="${escapeAttr(tech.logoUrl)}" alt="${alt}" height="${height}"${style}></div>`;
+      return `<div class="pf-logo-item"${aria}><img src="${escapeAttr(tech.logoUrl)}" alt="${alt}"></div>`;
     })
     .join("\n        ");
 }
