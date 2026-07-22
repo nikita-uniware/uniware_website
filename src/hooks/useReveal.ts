@@ -13,6 +13,10 @@ type UseRevealOptions = {
  * Position-based scroll reveal (not IntersectionObserver).
  * Progressive enhancement: without JS, content stays visible (no opacity:0 default).
  * Hero always reveals on load. Footer should never carry data-reveal.
+ *
+ * On first paint, anything already in the viewport (trigger = 1.0) reveals
+ * immediately so short heroes don't leave a blank band below. Scroll/resize
+ * checks keep TRIGGER_LINE = 0.65.
  */
 export function useReveal({ heroSelector = ".hero" }: UseRevealOptions = {}) {
   useEffect(() => {
@@ -32,9 +36,9 @@ export function useReveal({ heroSelector = ".hero" }: UseRevealOptions = {}) {
     );
     let ticking = false;
 
-    function check() {
+    function check(lineRatio = TRIGGER_LINE) {
       ticking = false;
-      const line = window.innerHeight * TRIGGER_LINE;
+      const line = window.innerHeight * lineRatio;
       revealEls = revealEls.filter((el) => {
         const rect = el.getBoundingClientRect();
         if (rect.top > line) return true;
@@ -48,12 +52,15 @@ export function useReveal({ heroSelector = ".hero" }: UseRevealOptions = {}) {
     function onScroll() {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(check);
+      requestAnimationFrame(() => check());
     }
+
+    // On load: reveal everything currently in the viewport
+    check(1);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
-    check();
+    check(); // subsequent checks use 0.65
 
     return () => {
       window.removeEventListener("scroll", onScroll);

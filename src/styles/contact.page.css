@@ -1,0 +1,173 @@
+/* ══════════════════════════════════════════════════
+   CONTACT PAGE
+══════════════════════════════════════════════════ */
+.contact-page{background:var(--uw-white)}
+
+.contact-intro{
+  padding-top:48px;padding-bottom:48px;
+  /* Background: Tailwind bg-linear-90 from-uw-dark-blue to-uw-black on the element */
+}
+@media(min-width:768px){.contact-intro{padding-top:64px;padding-bottom:64px}}
+@media(min-width:1024px){.contact-intro{padding-top:96px;padding-bottom:96px}}
+
+.contact-eyebrow{
+  font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-eyebrow);
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--uw-amber-dark);margin-bottom:12px;
+}
+.contact-h1{
+  font-family:var(--font-display);font-weight:var(--font-weight-bold);
+  font-size:var(--text-h2-sm);line-height:1.15;letter-spacing:-.015em;
+  color:var(--uw-white);margin-bottom:16px;
+}
+@media(min-width:768px){.contact-h1{font-size:var(--text-display-sm)}}
+@media(min-width:1024px){.contact-h1{font-size:var(--text-h2)}}
+.contact-subtext{
+  font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-lg-sm);line-height:1.65;
+  color:var(--uw-text-on-dark-secondary);max-width:560px;
+}
+.contact-subtext a{
+  color:var(--uw-amber-dark);text-decoration:underline;text-underline-offset:2px;
+}
+.contact-subtext a:hover{color:var(--uw-white)}
+@media(min-width:1024px){.contact-subtext{font-size:var(--text-body-lg)}}
+
+.contact-body{padding-top:48px;padding-bottom:64px}
+@media(min-width:768px){.contact-body{padding-top:64px;padding-bottom:80px}}
+@media(min-width:1024px){.contact-body{padding-top:80px;padding-bottom:96px}}
+
+.contact-grid{display:grid;grid-template-columns:1fr;gap:48px}
+@media(min-width:768px){.contact-grid{grid-template-columns:1.5fr 1fr;gap:48px;align-items:start}}
+@media(min-width:1024px){.contact-grid{grid-template-columns:7fr 5fr;gap:64px}}
+
+
+/* ── Office list — dividers, no cards ── */
+.loc-eyebrow{
+  font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-eyebrow);
+  letter-spacing:.12em;text-transform:uppercase;color:var(--uw-amber-light);
+  padding-bottom:16px;border-bottom:1px solid var(--border-light-muted);margin-bottom:0;
+}
+.loc-list{display:flex;flex-direction:column}
+.loc-item{
+  padding:20px 0;
+  border-bottom:1px solid var(--section-divider);
+}
+.loc-item:last-child{border-bottom:none}
+.loc-city-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:6px;
+}
+.loc-city{
+  font-family:var(--font-display);font-weight:var(--font-weight-semibold);
+  font-size:var(--text-loc-city);line-height:1.25;color:var(--uw-black);
+}
+@media(min-width:1024px){.loc-city{font-size:var(--text-body-lg-sm)}}
+.loc-hq-badge{
+  display:inline-flex;align-items:center;flex-shrink:0;
+  font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-caption-xs);
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--uw-amber-light);background:var(--amber-tint-bg);border:1px solid var(--amber-tint-border);
+  border-radius:4px;padding:2px 8px;
+}
+.loc-address{
+  font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-sm);
+  line-height:1.65;color:var(--uw-muted);margin-bottom:6px;
+}
+.loc-phone{
+  font-family:var(--font-body);font-weight:var(--font-weight-regular);font-size:var(--text-body-sm);
+  color:var(--uw-body-text);text-decoration:none;display:inline;
+  transition:color 150ms ease;
+}
+.loc-phone:hover{color:var(--uw-amber-light)}
+.loc-person{
+  margin:0;font-family:var(--font-body);font-weight:var(--font-weight-regular);
+  font-size:var(--text-body-sm);color:var(--uw-body-text);
+}
+.loc-person-name{font-weight:var(--font-weight-medium)}
+.loc-person-sep{color:var(--uw-muted)}
+.loc-soon{
+  font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-eyebrow);
+  color:var(--uw-amber-light);display:inline-flex;align-items:center;gap:6px;
+}
+
+/* ── Form card wrapper — amber fill card (design system: pale fill #FBF0DA, border #F0BD52) ── */
+.contact-form-box{
+  border:1px solid var(--uw-yellow-card-border);border-radius:12px;
+  padding:28px 24px;background:var(--uw-yellow-card);
+}
+@media(min-width:768px){.contact-form-box{padding:32px 36px}}
+
+
+/* ── Form column ── */
+.contact-form-heading{
+  font-family:var(--font-display);font-weight:var(--font-weight-bold);
+  font-size:var(--text-h3-sm);line-height:1.20;letter-spacing:-.01em;
+  color:var(--uw-black);margin-bottom:28px;
+}
+@media(min-width:1024px){.contact-form-heading{font-size:var(--text-h2-sm)}}
+
+/* Form field system — light surface */
+.field-group{display:flex;flex-direction:column;gap:18px}
+.field-item{display:flex;flex-direction:column;gap:6px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:480px){.field-row{grid-template-columns:1fr}}
+.field-label{
+  font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-eyebrow);
+  letter-spacing:.04em;color:var(--uw-body-text);
+}
+.field-input,
+.field-select,
+.field-textarea{
+  font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body);line-height:1.5;
+  color:var(--uw-black);background:var(--uw-white);
+  border:1px solid var(--border-light-medium);border-radius:8px;
+  padding:11px 14px;width:100%;
+  transition:border-color 150ms ease;
+  -webkit-appearance:none;appearance:none;
+}
+.field-input::placeholder,.field-textarea::placeholder{color:var(--uw-placeholder);font-weight:var(--font-weight-light)}
+.field-input:focus,.field-select:focus,.field-textarea:focus{
+  outline:none;border-color:var(--uw-amber-light);
+}
+.field-textarea{resize:vertical;min-height:140px}
+/* Select — custom chevron (CSS-only, no JS) */
+.field-select-wrap{position:relative}
+.field-select-wrap::after{
+  content:'';position:absolute;right:14px;top:50%;
+  transform:translateY(-50%);pointer-events:none;
+  width:0;height:0;
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-top:6px solid var(--uw-muted);margin-top:2px;
+}
+.field-select{cursor:pointer}
+.field-select option{color:var(--uw-black);background:var(--uw-white)}
+/* Primary button — light surface. Dark fill, white text. Hover: amber fill */
+.btn-submit-l{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body);line-height:1;
+  padding:14px 28px;border-radius:8px;
+  background:var(--uw-black);color:var(--uw-white);border:1px solid var(--uw-black);
+  cursor:pointer;text-decoration:none;width:100%;
+  transition:background-color 150ms ease,border-color 150ms ease,color 150ms ease;
+}
+@media(min-width:640px){.btn-submit-l{width:auto}}
+.btn-submit-l:hover{background:var(--uw-amber-dark);border-color:var(--uw-amber-dark);color:var(--uw-black)}
+/* Contact success */
+.contact-success{display:none;padding:8px 0 28px;}
+.contact-success-icon{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--amber-fill-success);border:1px solid var(--amber-border-highlight-ring);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;color:var(--uw-amber-accent);
+}
+.contact-success-heading{
+  font-family:var(--font-display);font-weight:var(--font-weight-bold);
+  font-size:var(--text-h4-sm);line-height:1.20;color:var(--uw-black);margin-bottom:10px;
+}
+.contact-success-body{
+  font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body);line-height:1.65;
+  color:var(--uw-body-text);
+}
+.contact-success-body a{color:var(--uw-amber-accent);text-decoration:none}
+.contact-success-body a:hover{text-decoration:underline;text-underline-offset:3px}

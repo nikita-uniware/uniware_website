@@ -6,7 +6,10 @@ import Link from "next/link";
  */
 export function SiteFooter() {
   return (
-    <footer className="site-footer" role="contentinfo">
+    <footer
+      className="site-footer bg-linear-90 from-uw-dark-blue to-uw-black"
+      role="contentinfo"
+    >
       <div className="site-footer-inner">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -26,7 +29,7 @@ export function SiteFooter() {
             Case studies
           </Link>
           <span className="footer-sep" aria-hidden="true" />
-          <Link href="/company/contact" className="footer-link">
+          <Link href="/contact" className="footer-link">
             Contact
           </Link>
           <span className="footer-sep" aria-hidden="true" />

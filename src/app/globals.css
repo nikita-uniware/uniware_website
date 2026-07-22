@@ -1,25 +1,156 @@
 @import "tailwindcss";
 
-/* ── Design tokens (Design System v1) ── */
+/* ── Design tokens (Design System v1.3 — Appendix A/B) ── */
 :root {
+  /* Backgrounds */
   --uw-black: #010512;
   --uw-dark-blue: #040c25;
   --uw-white: #ffffff;
+  --uw-surface-off-white: #fafaf9;
+  --surface-overlay: rgba(1, 5, 18, 0.6);
+  --surface-light-subtle: rgba(1, 5, 18, 0.03);
+  --surface-light-muted: rgba(1, 5, 18, 0.06);
+  --surface-light-faint: rgba(1, 5, 18, 0.08);
+  --surface-light-pill: rgba(1, 5, 18, 0.05);
+  --surface-dark-card: rgba(255, 255, 255, 0.04);
+  --surface-dark-card-hover: rgba(255, 255, 255, 0.07);
+  --surface-dark-subtle: rgba(255, 255, 255, 0.06);
+  --surface-dark-muted: rgba(255, 255, 255, 0.08);
+  --surface-dark-light: rgba(255, 255, 255, 0.14);
+  --surface-dark-input-focus: rgba(255, 255, 255, 0.09);
+
+  /* Text */
   --uw-body-text: #1a1f3c;
   --uw-muted: #6b7280;
+  --uw-placeholder: #9ca3af;
+  --uw-text-on-dark: rgba(255, 255, 255, 0.55);
+  --uw-text-on-dark-secondary: rgba(255, 255, 255, 0.65);
+  --uw-text-on-dark-muted: rgba(255, 255, 255, 0.48);
+  --uw-text-on-dark-subtle: rgba(255, 255, 255, 0.42);
+  --uw-text-on-dark-faint: rgba(255, 255, 255, 0.4);
+  --uw-text-on-dark-dim: rgba(255, 255, 255, 0.5);
+  --uw-text-on-dark-ghost: rgba(255, 255, 255, 0.25);
+  --uw-text-on-dark-whisper: rgba(255, 255, 255, 0.22);
+  --uw-text-on-dark-caption: rgba(255, 255, 255, 0.45);
+  --uw-text-on-dark-placeholder: rgba(255, 255, 255, 0.28);
+  --uw-text-on-dark-pill: rgba(255, 255, 255, 0.68);
+  --uw-text-on-dark-hover: rgba(255, 255, 255, 0.85);
+  --uw-text-on-dark-bright: rgba(255, 255, 255, 0.95);
+  --uw-text-on-light-muted: rgba(1, 5, 18, 0.55);
+  --uw-text-on-light-faint: rgba(1, 5, 18, 0.25);
+  --uw-text-on-light-ghost: rgba(1, 5, 18, 0.5);
+  --uw-text-on-light-dim: rgba(1, 5, 18, 0.85);
+  --uw-text-on-light-strong: rgba(1, 5, 18, 0.75);
+  --uw-text-on-dark-tagline: rgba(255, 255, 255, 0.38);
+  --uw-tooltip-bg: rgba(255, 255, 255, 0.96);
+  --uw-tooltip-bg-text: rgba(255, 255, 255, 0.96);
+
+  /* Amber (surface-specific) */
   --uw-amber-dark: #e9a638;
   --uw-amber-light: #bb6d08;
+  --uw-amber-accent: #8a5209;
+  --uw-amber-border: #f0bd52;
+  --uw-yellow-card: #fbf0da;
+  --uw-yellow-card-hover: #fef7ec;
+  --uw-yellow-card-border: rgba(1, 5, 18, 0.08);
+  --amber-tint-bg: rgba(187, 109, 8, 0.08);
+  --amber-tint-border: rgba(187, 109, 8, 0.2);
+  --amber-tint-bg-strong: rgba(187, 109, 8, 0.07);
+  --amber-tint-border-strong: rgba(187, 109, 8, 0.22);
+  --amber-icon-tint: rgba(92, 74, 18, 0.55);
+  --amber-card-footer-border: rgba(58, 44, 5, 0.2);
+  --amber-fill-selected: rgba(240, 189, 82, 0.15);
+  --amber-fill-success: rgba(240, 189, 82, 0.22);
+  --amber-fill-success-icon: rgba(240, 189, 82, 0.12);
+  --amber-border-highlight: rgba(240, 189, 82, 0.1);
+  --amber-border-highlight-strong: rgba(240, 189, 82, 0.25);
+  --amber-border-highlight-focus: rgba(240, 189, 82, 0.3);
+  --amber-border-highlight-ring: rgba(240, 189, 82, 0.5);
+  --border-amber-tag: rgba(233, 166, 56, 0.4);
+
+  /* WTS diagram */
+  --uw-wts-ring-label: #8a6e1e;
+  --uw-wts-ring-current: #5c4a12;
+  --uw-wts-ring-4: #e9e7e1;
+  --uw-wts-ring-3: #f0eee8;
+  --uw-wts-ring-2: #f7f6f1;
+  --uw-wts-ring-inner-border: rgba(1, 5, 18, 0.06);
+
+  /* Borders */
   --border-light: rgba(1, 5, 18, 0.16);
   --border-dark: rgba(255, 255, 255, 0.1);
+  --border-dark-input: rgba(255, 255, 255, 0.16);
   --section-divider: rgba(1, 5, 18, 0.1);
+  --border-light-muted: rgba(1, 5, 18, 0.12);
+  --border-light-subtle: rgba(1, 5, 18, 0.14);
+  --border-light-medium: rgba(1, 5, 18, 0.2);
+  --border-light-strong: rgba(1, 5, 18, 0.28);
+  --border-chrome: rgba(255, 255, 255, 0.08);
+  --border-chrome-muted: rgba(255, 255, 255, 0.06);
+  --border-chrome-light: rgba(255, 255, 255, 0.12);
+  --border-chrome-medium: rgba(255, 255, 255, 0.18);
+  --border-chrome-strong: rgba(255, 255, 255, 0.22);
+  --border-chrome-heavy: rgba(255, 255, 255, 0.24);
+  --border-chrome-intense: rgba(255, 255, 255, 0.35);
+  --border-chrome-max: rgba(255, 255, 255, 0.4);
+  --border-chrome-bright: rgba(255, 255, 255, 0.7);
+  --border-chrome-panel: rgba(255, 255, 255, 0.28);
+  --border-chrome-pill: rgba(255, 255, 255, 0.25);
+  --border-chrome-half: rgba(255, 255, 255, 0.5);
+  --border-chrome-pill-idle: rgba(255, 255, 255, 0.14);
+  --border-chrome-scrollbar: rgba(255, 255, 255, 0.15);
   --group-light: rgba(1, 5, 18, 0.16);
   --group-dark: rgba(255, 255, 255, 0.1);
   --circle-dark: rgba(255, 255, 255, 0.32);
   --circle-light: rgba(1, 5, 18, 0.32);
-  --uw-yellow-card: #FBF0DA;
-  --uw-yellow-card-hover: #FEF7EC;
-  --uw-amber-border: #F0BD52;
-  --uw-dark-gradient: linear-gradient(90deg, #040C25, #010512);
+
+  /* Typography — Space Grotesk scale */
+  --text-display: 64px;
+  --text-display-md: 52px;
+  --text-display-sm: 40px;
+  --text-h2: 48px;
+  --text-h2-sm: 28px;
+  --text-h3: 32px;
+  --text-h3-md: 30px;
+  --text-h3-sm: 22px;
+  --text-h4: 24px;
+  --text-h4-sm: 20px;
+  --text-eyebrow: 13px;
+  --text-stat: 72px;
+  --text-stat-lg: 56px;
+  --text-stat-md: 48px;
+  --text-stat-sm: 40px;
+  --text-stat-xs: 32px;
+  --text-cs-hero-lg: 46px;
+  --text-cs-stat-lg: 36px;
+  --text-hiw-stat-md: 38px;
+  --text-hiw-stat-sm: 30px;
+  --text-panel-heading: 26px;
+  --text-loc-city: 17px;
+
+  /* Typography — DM Sans scale */
+  --text-body-lg: 20px;
+  --text-body-lg-sm: 18px;
+  --text-body: 16px;
+  --text-body-sm: 14px;
+  --text-button: 15px;
+  --text-caption: 12px;
+  --text-caption-xs: 11px;
+  --text-caption-xxs: 10.5px;
+
+  /* Font weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Font families */
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-dm-sans), sans-serif;
+
+  /* Layout */
+  --max-width-content: 1200px;
 }
 
 @theme inline {
@@ -37,6 +168,8 @@
   --color-group-dark: rgba(255, 255, 255, 0.1);
   --color-uw-yellow-card: #FBF0DA;
   --color-uw-yellow-card-hover: #FEF7EC;
+  --color-uw-yellow-card-border: rgba(1, 5, 18, 0.08);
+  --color-uw-amber-accent: #8A5209;
   --color-uw-amber-border: #F0BD52;
   --font-display: var(--font-space-grotesk), sans-serif;
   --font-body: var(--font-dm-sans), sans-serif;
@@ -79,8 +212,8 @@ html {
 body {
   margin: 0;
   padding-top: 64px;
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 300;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
   background: var(--uw-white);
   color: var(--uw-body-text);
   -webkit-font-smoothing: antialiased;
@@ -203,15 +336,15 @@ html.is-ready [data-reveal].is-visible {
   left: 0;
   right: 0;
   z-index: 60;
-  background: linear-gradient(90deg, #040c25, #010512);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  /* Background: Tailwind bg-linear-90 from-uw-dark-blue to-uw-black on the element */
+  border-bottom: 1px solid var(--border-chrome);
   height: 64px;
   display: flex;
   align-items: center;
 }
 .site-nav-inner {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--max-width-content);
   margin: 0 auto;
   padding: 0 16px;
   display: flex;
@@ -259,28 +392,28 @@ html.is-ready [data-reveal].is-visible {
   gap: 8px;
 }
 .site-nav-link {
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-button);
+  color: var(--uw-text-on-dark-secondary);
   text-decoration: none;
   padding: 0 12px;
   white-space: nowrap;
   transition: color 150ms ease;
 }
 .site-nav-link:hover {
-  color: #fff;
+  color: var(--uw-white);
 }
 .site-nav-cta {
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 500;
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-body-sm);
   line-height: 1;
   padding: 9px 18px;
   border-radius: 8px;
-  background: #fff;
-  color: #010512;
-  border: 1px solid #fff;
+  background: var(--uw-white);
+  color: var(--uw-black);
+  border: 1px solid var(--uw-white);
   text-decoration: none;
   white-space: nowrap;
   transition:
@@ -289,14 +422,25 @@ html.is-ready [data-reveal].is-visible {
 }
 .site-nav-cta:hover {
   background: transparent;
-  color: #fff;
+  color: var(--uw-white);
+}
+/* Secondary (active on /contact) — design system dark-surface secondary */
+.site-nav-cta--secondary {
+  background: transparent;
+  color: var(--uw-white);
+  border-color: var(--border-chrome-intense);
+}
+.site-nav-cta--secondary:hover {
+  background: var(--uw-white);
+  color: var(--uw-black);
+  border-color: var(--uw-white);
 }
 
 /* ── Shared footer (no data-reveal) — matches reference chrome ── */
 .site-footer {
-  background: linear-gradient(90deg, #040c25, #010512);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  color: #fff;
+  /* Background: Tailwind bg-linear-90 from-uw-dark-blue to-uw-black on the element */
+  border-top: 1px solid var(--border-chrome);
+  color: var(--uw-white);
 }
 .site-footer-inner {
   padding: 64px 24px 0;
@@ -312,11 +456,11 @@ html.is-ready [data-reveal].is-visible {
   margin-bottom: 20px;
 }
 .footer-tagline {
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 300;
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
+  font-size: var(--text-body-sm);
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.38);
+  color: var(--uw-text-on-dark-tagline);
   margin: 0 0 36px;
 }
 .footer-links {
@@ -328,39 +472,39 @@ html.is-ready [data-reveal].is-visible {
   margin: 0 0 56px;
 }
 .footer-link {
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-button);
+  color: var(--uw-text-on-dark);
   text-decoration: none;
   padding: 0 22px;
   transition: color 150ms ease;
 }
 .footer-link:hover {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--uw-text-on-dark-hover);
 }
 .footer-sep {
   width: 1px;
   height: 14px;
-  background: rgba(255, 255, 255, 0.18);
+  background: var(--border-chrome-medium);
   flex-shrink: 0;
 }
 .footer-bottom {
   width: 100%;
-  border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-top: 0.5px solid var(--border-chrome);
   padding: 18px 24px;
   text-align: center;
 }
 .footer-copy {
   margin: 0;
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 300;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.22);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
+  font-size: var(--text-caption);
+  color: var(--uw-text-on-dark-whisper);
 }
 
 .container {
-  max-width: 1200px;
+  max-width: var(--max-width-content);
   margin: 0 auto;
   padding: 0 16px;
 }

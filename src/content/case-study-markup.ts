@@ -192,7 +192,7 @@ export const caseStudyMarkup = `<nav class="subnav" aria-label="Page sections">
   <div class="container">
     <h2 class="cs-cta-h2" data-reveal="0">Facing something similar?</h2>
     <p class="cs-cta-body" data-reveal="80">Talk to the Uniware team about ransomware recovery and prevention, before an attack forces the conversation.</p>
-    <a href="/company/contact" class="btn-primary-amber" data-reveal="160">
+    <a href="/contact" class="btn-primary-amber" data-reveal="160">
       Book a Security Review
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>

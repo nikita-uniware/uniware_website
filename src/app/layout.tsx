@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { spaceGrotesk, dmSans } from "./fonts";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
+import { BookingPanel } from "@/components/BookingPanel";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
         <SiteNav />
         <main>{children}</main>
         <SiteFooter />
+        <BookingPanel />
       </body>
     </html>
   );
