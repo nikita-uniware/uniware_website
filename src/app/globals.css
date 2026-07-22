@@ -151,6 +151,25 @@
 
   /* Layout */
   --max-width-content: 1200px;
+
+  /* Cyber Readiness Assessment — result tiers */
+  --tier-good-border: #22a84a;
+  --tier-good-badge-bg: rgba(34, 168, 74, 0.1);
+  --tier-good-badge-text: #177a37;
+  --tier-some-border: #e8920a;
+  --tier-some-badge-bg: rgba(232, 146, 10, 0.1);
+  --tier-some-badge-text: #a56208;
+  --tier-attention-border: #d63b3b;
+  --tier-attention-badge-bg: rgba(214, 59, 59, 0.1);
+  --tier-attention-badge-text: #a32525;
+
+  /* Cyber Readiness Assessment — domain status bars */
+  --status-strong: #22a84a;
+  --status-strong-text: #177a37;
+  --status-developing: #f5a623;
+  --status-developing-text: #a56208;
+  --status-attention: #d63b3b;
+  --status-attention-text: #a32525;
 }
 
 @theme inline {

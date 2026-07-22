@@ -354,7 +354,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 
     <!-- Prevention CTA: question first, action second -->
     <p class="sec-cta-question-l" data-reveal="0">Not sure how your security measures up?</p>
-    <a href="/solutions/cybersecurity/security-assessment/" class="sec-cta-link-l" data-reveal="80">
+    <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="sec-cta-link-l" data-reveal="80">
       Take the Cyber Readiness Assessment
       <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
     </a>
@@ -513,7 +513,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <div class="wts-connector wts-connector--spacer" aria-hidden="true"></div>
 
         <div class="wts-bridge" data-reveal="0">
-          <p>Not sure where you fit? <a href="/solutions/cybersecurity/security-assessment/">Take the Cyber Readiness Assessment</a> for a clear answer in 3 to 5 minutes, or <a href="/contact" onclick="window.openBookingPanel(); return false;">get in touch</a> to talk it through with our team.</p>
+          <p>Not sure where you fit? <a href="/solutions/cybersecurity/cyber-readiness-assessment">Take the Cyber Readiness Assessment</a> for a clear answer in 3 to 5 minutes, or <a href="/contact" onclick="window.openBookingPanel(); return false;">get in touch</a> to talk it through with our team.</p>
         </div>
 
       </div><!-- /wts-cards -->
@@ -661,7 +661,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <p class="gs-block-label">Not sure where you fit</p>
         <h3 class="gs-block-heading">Take the Cyber Readiness Assessment</h3>
         <p class="gs-block-body">Answer 15 questions about your current setup. Get a clear picture of where you stand and what to prioritise. Takes 3 to 5 minutes.</p>
-        <a href="/solutions/cybersecurity/security-assessment/" class="btn-primary-l">Take the assessment</a>
+        <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="btn-primary-l">Take the assessment</a>
       </div>
 
       <div class="gs-block" data-reveal="80">
