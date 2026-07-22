@@ -456,9 +456,11 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
   <div class="container">
 
     <div class="wts-head">
-      <p class="sec-eyebrow-l" data-reveal="0">Where to start</p>
-      <h2 class="sec-heading-l" id="wts-heading" data-reveal="0">Four levels. Each one right for a different situation.</h2>
-      <p class="sec-sub-l" data-reveal="0">Security is not one size fits all. The right level depends on your risk exposure, your industry, and your budget. Each level builds on the one below it.</p>
+      <div class="section-header-block">
+        <p class="sec-eyebrow-l" data-reveal="0">Where to start</p>
+        <h2 class="sec-heading-l" id="wts-heading" data-reveal="0">Four levels. Each one right for a different situation.</h2>
+        <p class="sec-sub-l" data-reveal="0">Security is not one size fits all. The right level depends on your risk exposure, your industry, and your budget. Each level builds on the one below it.</p>
+      </div>
     </div>
 
     <div class="wts-layout">
@@ -524,9 +526,11 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
   <div class="container">
 
     <div data-reveal="0">
-      <p class="sec-eyebrow-d">Client stories</p>
-      <h2 class="sec-heading-d" id="cs-heading">What this looks like for real businesses.</h2>
-      <p class="sec-sub-d">Two businesses. Two very different situations. The same outcome: fully operational on the other side.</p>
+      <div class="section-header-block">
+        <p class="sec-eyebrow-d">Client stories</p>
+        <h2 class="sec-heading-d" id="cs-heading">What this looks like for real businesses.</h2>
+        <p class="sec-sub-d">Two businesses. Two very different situations. The same outcome: fully operational on the other side.</p>
+      </div>
     </div>
 
     <div class="cs-grid">
@@ -645,8 +649,10 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
   <div class="container">
 
     <div class="gs-head" data-reveal="0">
-      <p class="sec-eyebrow-l">Get started</p>
-      <h2 class="sec-heading-l" id="gs-heading">Two ways in.</h2>
+      <div class="section-header-block">
+        <p class="sec-eyebrow-l">Get started</p>
+        <h2 class="sec-heading-l" id="gs-heading">Two ways in.</h2>
+      </div>
     </div>
 
     <div class="gs-grid">
