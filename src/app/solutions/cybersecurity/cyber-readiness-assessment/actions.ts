@@ -1,6 +1,7 @@
 "use server";
 
 import type { AnswerValue, TierId } from "@/content/cyber-readiness-assessment-data";
+import { notifyAssessmentSubmission } from "@/lib/notifyAssessmentSubmission";
 
 export type AssessmentSubmission = {
   firstName: string;
@@ -14,13 +15,17 @@ export type AssessmentSubmission = {
 };
 
 /**
- * TODO(dev): replace with the real email send to sales@uniware.net.
- * Must include every field on AssessmentSubmission — the raw per-question
- * answers are required for the specialist follow-up review, not just the tier.
+ * Persist/notify assessment submission.
+ * Email is best-effort: SMTP failure is logged and does not fail the user flow.
  */
 export async function submitAssessment(
   submission: AssessmentSubmission,
 ): Promise<{ ok: true }> {
-  console.log("submitAssessment stub — wire up email send", submission);
+  try {
+    await notifyAssessmentSubmission(submission);
+  } catch (error) {
+    console.error("[submitAssessment] email notification failed:", error);
+  }
+
   return { ok: true };
 }
