@@ -354,7 +354,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 
     <!-- Prevention CTA: question first, action second -->
     <p class="sec-cta-question-l" data-reveal="0">Not sure how your security measures up?</p>
-    <a href="/solutions/cybersecurity/security-assessment/" class="sec-cta-link-l" data-reveal="80">
+    <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="sec-cta-link-l" data-reveal="80">
       Take the Cyber Readiness Assessment
       <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
     </a>
@@ -456,9 +456,11 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
   <div class="container">
 
     <div class="wts-head">
-      <p class="sec-eyebrow-l" data-reveal="0">Where to start</p>
-      <h2 class="sec-heading-l" id="wts-heading" data-reveal="0">Four levels. Each one right for a different situation.</h2>
-      <p class="sec-sub-l" data-reveal="0">Security is not one size fits all. The right level depends on your risk exposure, your industry, and your budget. Each level builds on the one below it.</p>
+      <div class="section-header-block">
+        <p class="sec-eyebrow-l" data-reveal="0">Where to start</p>
+        <h2 class="sec-heading-l" id="wts-heading" data-reveal="0">Four levels. Each one right for a different situation.</h2>
+        <p class="sec-sub-l" data-reveal="0">Security is not one size fits all. The right level depends on your risk exposure, your industry, and your budget. Each level builds on the one below it.</p>
+      </div>
     </div>
 
     <div class="wts-layout">
@@ -511,7 +513,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <div class="wts-connector wts-connector--spacer" aria-hidden="true"></div>
 
         <div class="wts-bridge" data-reveal="0">
-          <p>Not sure where you fit? <a href="/solutions/cybersecurity/security-assessment/">Take the Cyber Readiness Assessment</a> for a clear answer in 3 to 5 minutes, or <a href="/contact" onclick="window.openBookingPanel(); return false;">get in touch</a> to talk it through with our team.</p>
+          <p>Not sure where you fit? <a href="/solutions/cybersecurity/cyber-readiness-assessment">Take the Cyber Readiness Assessment</a> for a clear answer in 3 to 5 minutes, or <a href="/contact" onclick="window.openBookingPanel(); return false;">get in touch</a> to talk it through with our team.</p>
         </div>
 
       </div><!-- /wts-cards -->
@@ -524,9 +526,11 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
   <div class="container">
 
     <div data-reveal="0">
-      <p class="sec-eyebrow-d">Client stories</p>
-      <h2 class="sec-heading-d" id="cs-heading">What this looks like for real businesses.</h2>
-      <p class="sec-sub-d">Two businesses. Two very different situations. The same outcome: fully operational on the other side.</p>
+      <div class="section-header-block">
+        <p class="sec-eyebrow-d">Client stories</p>
+        <h2 class="sec-heading-d" id="cs-heading">What this looks like for real businesses.</h2>
+        <p class="sec-sub-d">Two businesses. Two very different situations. The same outcome: fully operational on the other side.</p>
+      </div>
     </div>
 
     <div class="cs-grid">
@@ -606,8 +610,10 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
   <div class="container">
 
     <div class="gs-head" data-reveal="0">
-      <p class="sec-eyebrow-l">Get started</p>
-      <h2 class="sec-heading-l" id="gs-heading">Two ways in.</h2>
+      <div class="section-header-block">
+        <p class="sec-eyebrow-l">Get started</p>
+        <h2 class="sec-heading-l" id="gs-heading">Two ways in.</h2>
+      </div>
     </div>
 
     <div class="gs-grid">
@@ -616,7 +622,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <p class="gs-block-label">Not sure where you fit</p>
         <h3 class="gs-block-heading">Take the Cyber Readiness Assessment</h3>
         <p class="gs-block-body">Answer 15 questions about your current setup. Get a clear picture of where you stand and what to prioritise. Takes 3 to 5 minutes.</p>
-        <a href="/solutions/cybersecurity/security-assessment/" class="btn-primary-l">Take the assessment</a>
+        <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="btn-primary-l">Take the assessment</a>
       </div>
 
       <div class="gs-block" data-reveal="80">

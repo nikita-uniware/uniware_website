@@ -589,6 +589,7 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 @media(min-width:1024px){
   .sec-sub-l,.sec-sub-d { font-size:var(--text-h4-sm); }
 }
+.section-header-block { margin-bottom: 28px; }
 
 /* ── Carousel wrapper ── */
 .carousel-wrap { position:relative; overflow:hidden; margin-bottom:var(--space-6); }
@@ -744,9 +745,6 @@ html.is-ready .crossbar-reveal.is-visible { opacity: 1; transform: translateY(0)
   flex: 1;
   min-width: 0;
 }
-/* Subtext inside flex header: no extra bottom margin */
-.sec-header-flex .sec-sub-l,
-.sec-header-flex .sec-sub-d { margin-bottom: 0; }
 
 /* ══ CAROUSEL ARROWS ══ */
 /* Hidden until JS is available (clicking does nothing without it) */

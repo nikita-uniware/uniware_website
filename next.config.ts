@@ -57,12 +57,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/incident-readiness/assessment",
-        destination: "/solutions/cybersecurity/security-assessment",
+        destination: "/solutions/cybersecurity/cyber-readiness-assessment",
         permanent: true,
       },
       {
         source: "/incident-readiness/assessment/",
-        destination: "/solutions/cybersecurity/security-assessment",
+        destination: "/solutions/cybersecurity/cyber-readiness-assessment",
         permanent: true,
       },
       // Interim dev routes from Phase 1 build

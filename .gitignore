@@ -47,3 +47,6 @@ next-env.d.ts
 # local extract scratch
 /_extract
 /case-study-body-temp.txt
+
+# local npm cache (workaround for root-owned global cache)
+.npm-cache/
