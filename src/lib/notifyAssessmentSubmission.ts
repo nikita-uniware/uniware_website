@@ -23,7 +23,9 @@ const TO = "sales@uniware.net";
 const CC = ["srimathi.s@uniware.net"];
 
 function answerLabel(value: AnswerValue) {
-  return answerOptions.find((option) => option.value === value)?.label ?? String(value);
+  return (
+    answerOptions.find((option) => option.value === value)?.label ?? String(value)
+  );
 }
 
 function escapeHtml(value: string) {
@@ -34,9 +36,11 @@ function escapeHtml(value: string) {
     .replace(/"/g, "&quot;");
 }
 
-function buildBodies(payload: AssessmentEmailPayload) {
+function buildBodies(payload: AssessmentEmailPayload, ref: string) {
   const tier = tierCopy[payload.tier];
-  const rows: { label: string; value: string }[] = [
+
+  const summaryRows: { label: string; value: string }[] = [
+    { label: "Reference", value: ref },
     { label: "First name", value: payload.firstName },
     { label: "Company", value: payload.company },
     { label: "Email", value: payload.email },
@@ -46,38 +50,57 @@ function buildBodies(payload: AssessmentEmailPayload) {
   ];
 
   payload.domainScores.forEach((score, index) => {
-    rows.push({
-      label: `Domain ${index + 1}: ${domains[index]?.name ?? `Domain ${index + 1}`}`,
+    summaryRows.push({
+      label: domains[index]?.name ?? `Domain ${index + 1}`,
       value: `${score} / 6`,
     });
   });
 
-  questions.forEach((question, index) => {
+  const answerLines = questions.map((question, index) => {
     const answer = payload.answers[index];
-    rows.push({
-      label: `Q${index + 1}. ${question.text}`,
-      value: answer === undefined ? "—" : answerLabel(answer),
-    });
+    const label = answer === undefined ? "—" : answerLabel(answer);
+    return `Q${index + 1} [${domains[question.domainIndex]?.name ?? "Domain"}] ${label}\n   ${question.text}`;
   });
+
+  const signOff = ["", "Thanks,", "Uniware team"].join("\n");
 
   const text = [
     "New Uniware Cyber Readiness Assessment submission",
+    `Reference: ${ref}`,
     "",
-    ...rows.map((row) => `${row.label}: ${row.value}`),
+    ...summaryRows.map((row) => `${row.label}: ${row.value}`),
+    "",
+    "Answers:",
+    ...answerLines,
+    signOff,
   ].join("\n");
 
-  const htmlRows = rows
+  const htmlSummary = summaryRows
     .map(
       (row) =>
-        `<tr><td style="padding:8px 12px;border:1px solid #ddd;vertical-align:top;"><strong>${escapeHtml(row.label)}</strong></td><td style="padding:8px 12px;border:1px solid #ddd;vertical-align:top;">${escapeHtml(row.value)}</td></tr>`,
+        `<tr><td style="padding:6px 10px;border:1px solid #ddd;"><strong>${escapeHtml(row.label)}</strong></td><td style="padding:6px 10px;border:1px solid #ddd;">${escapeHtml(row.value)}</td></tr>`,
     )
     .join("");
 
+  const htmlAnswers = questions
+    .map((question, index) => {
+      const answer = payload.answers[index];
+      const label = answer === undefined ? "—" : answerLabel(answer);
+      return `<li style="margin-bottom:8px;"><strong>Q${index + 1} (${escapeHtml(domains[question.domainIndex]?.name ?? "Domain")}):</strong> ${escapeHtml(label)}<br/><span style="color:#555;">${escapeHtml(question.text)}</span></li>`;
+    })
+    .join("");
+
   const html = `
-    <p><strong>New Uniware Cyber Readiness Assessment submission</strong></p>
-    <table style="border-collapse:collapse;width:100%;max-width:720px;font-family:Arial,sans-serif;font-size:14px;">
-      ${htmlRows}
-    </table>
+    <div style="font-family:Arial,sans-serif;font-size:14px;color:#111;line-height:1.5;">
+      <p style="margin:0 0 12px;"><strong>New Uniware Cyber Readiness Assessment</strong></p>
+      <p style="margin:0 0 16px;">Reference: <code>${escapeHtml(ref)}</code></p>
+      <table style="border-collapse:collapse;width:100%;max-width:640px;margin-bottom:16px;">
+        ${htmlSummary}
+      </table>
+      <p style="margin:0 0 8px;"><strong>Answers</strong></p>
+      <ol style="font-size:13px;padding-left:20px;margin:0 0 24px;">${htmlAnswers}</ol>
+      <p style="margin:0;">Thanks,<br/>Uniware team</p>
+    </div>
   `;
 
   return { text, html };
@@ -91,7 +114,7 @@ export async function notifyAssessmentSubmission(payload: AssessmentEmailPayload
   const host = process.env.SMTP_HOST?.trim();
   const portRaw = process.env.SMTP_PORT?.trim();
   const user = process.env.SMTP_USER?.trim();
-  const password = process.env.SMTP_PASSWORD;
+  const password = process.env.SMTP_PASSWORD?.replace(/^['"]|['"]$/g, "");
   const from = process.env.SMTP_FROM?.trim();
   const secureEnv = process.env.SMTP_SECURE?.trim().toLowerCase();
 
@@ -111,8 +134,9 @@ export async function notifyAssessmentSubmission(payload: AssessmentEmailPayload
   const secure =
     secureEnv === "true" || secureEnv === "1" || (!secureEnv && port === 465);
 
-  const { text, html } = buildBodies(payload);
-  const subject = `New Uniware Cyber Readiness Assessment - ${payload.company}`;
+  const ref = `CRA-${Date.now().toString(36).toUpperCase()}`;
+  const { text, html } = buildBodies(payload, ref);
+  const subject = `[Uniware] Cyber readiness assessment (${ref}) - ${payload.company}`;
 
   const transporter = nodemailer.createTransport({
     host,
@@ -125,9 +149,12 @@ export async function notifyAssessmentSubmission(payload: AssessmentEmailPayload
 
   await transporter.verify();
 
+  // Put both mailboxes in `to` as well as keeping CC — some filters drop CC-only copies.
+  const recipients = [TO, ...CC];
+
   const info = await transporter.sendMail({
     from,
-    to: TO,
+    to: recipients,
     cc: CC,
     replyTo: payload.email,
     subject,
@@ -135,13 +162,16 @@ export async function notifyAssessmentSubmission(payload: AssessmentEmailPayload
     html,
     envelope: {
       from: user,
-      to: [TO, ...CC],
+      to: recipients,
     },
   });
 
   console.info("[notifyAssessmentSubmission] sent", {
+    ref,
+    subject,
     messageId: info.messageId,
     accepted: info.accepted,
     rejected: info.rejected,
+    response: info.response,
   });
 }
