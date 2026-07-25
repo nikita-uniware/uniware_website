@@ -103,10 +103,7 @@ html.is-ready .crossbar-dr{
 html.is-ready .crossbar-dl.line-visible,
 html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 
-/* ─── Circle keyframes ───────────────────────────────── */
-@keyframes uw-circle-outer  {from{transform:rotate(0deg)}   to{transform:rotate(360deg)}}
-@keyframes uw-circle-middle {from{transform:rotate(60deg)}  to{transform:rotate(-300deg)}}
-@keyframes uw-circle-inner  {from{transform:rotate(120deg)} to{transform:rotate(480deg)}}
+/* ─── Circle layout (keyframes live in globals.css) ──── */
 .uw-circles-xl{transform-origin:bottom right;transform:scale(.6)}
 @media(min-width:768px) {.uw-circles-xl{transform:scale(.65)}}
 @media(min-width:1024px){.uw-circles-xl{transform:scale(1)}}
@@ -390,7 +387,6 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 
 .circle-group{position:absolute;bottom:-120px;right:-120px;width:480px;height:480px;pointer-events:none;z-index:0}
 .circle-enter{position:absolute;inset:0;opacity:0;transform:scale(.4);transform-origin:center center;animation:circle-scale-in 900ms cubic-bezier(.34,1.56,.64,1) var(--enter-delay,0ms) both;}
-@keyframes circle-scale-in{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
 .circle-ring{position:absolute;border-radius:1000px;border-style:solid;border-color:var(--circle-dark)}
 .circle-outer {width:480px;height:480px;top:0;left:0;      border-left-width:2px;border-top-width:1px;border-right-width:1px;border-bottom-width:0; animation:uw-circle-outer  14s linear infinite}
 .circle-middle{width:320px;height:320px;top:80px;left:80px;  border-left-width:1px;border-top-width:2px;border-right-width:0;border-bottom-width:1px;animation:uw-circle-middle 20s linear infinite}

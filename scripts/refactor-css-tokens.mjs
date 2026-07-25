@@ -10,9 +10,7 @@ const GLOBALS = path.resolve("src/app/globals.css");
 
 const FILES = [
   "cybersecurity.page.css",
-  "cybersecurity.css",
   "case-study.page.css",
-  "case-study.css",
   "contact.page.css",
   "booking-panel.css",
 ];

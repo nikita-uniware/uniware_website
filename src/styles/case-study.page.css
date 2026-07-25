@@ -60,17 +60,14 @@ html.is-ready [data-reveal].is-visible{opacity:1;transform:translateY(0)}
 .cs-hero-sub{font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-loc-city);line-height:1.6;color:var(--uw-text-on-dark);max-width:620px;padding-bottom:40px}
 @media(min-width:1024px){.cs-hero-sub{padding-bottom:56px}}
 
-/* ── Circle brand element (sm tier, single group only — see note below) ── */
-@keyframes uw-circle-outer{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes uw-circle-middle{from{transform:rotate(60deg)}to{transform:rotate(-300deg)}}
-@keyframes uw-circle-inner{from{transform:rotate(120deg)}to{transform:rotate(480deg)}}
+/* ── Circle brand element (sm tier, single group only — see note below)
+   Rotation keyframes (uw-circle-*) and circle-scale-in live in globals.css. ── */
 .circle-group{position:absolute;pointer-events:none;z-index:0}
 /* Entrance — each ring scales up from 0.4 with a slight overshoot, then
    settles at 1. Staggered per ring (0 / 150 / 300ms) so outer arrives first,
    then middle, then inner, before continuous rotation takes over. Pure CSS,
    runs on load regardless of JS. Same mechanism as the cybersecurity page. */
 .circle-enter{position:absolute;inset:0;opacity:0;transform:scale(.4);transform-origin:center center;animation:circle-scale-in 900ms cubic-bezier(.34,1.56,.64,1) var(--enter-delay,0ms) both}
-@keyframes circle-scale-in{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
 .circle-ring{position:absolute;border-radius:1000px}
 
 /* ── Stats as their OWN white strip, separated from the dark hero by a hard

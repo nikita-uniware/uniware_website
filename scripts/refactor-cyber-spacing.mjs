@@ -8,7 +8,6 @@ import fs from "node:fs";
 
 const FILES = [
   "src/styles/cybersecurity.page.css",
-  "src/styles/cybersecurity.css",
 ];
 
 /** Longer / more specific first where needed */
