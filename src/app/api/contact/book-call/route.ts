@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { notifyBookingRequest } from "@/lib/notifyBookingRequest";
 import { supabaseAdmin } from "@/lib/supabase/server";
 
 function wantsJson(req: NextRequest) {
@@ -7,10 +8,8 @@ function wantsJson(req: NextRequest) {
 
 /**
  * Booking panel form handler.
- * Native HTML POST → 303 redirect to /contact?booked=1.
- * Fetch with Accept: application/json → { ok: true }.
- *
- * Delivery (email/CRM) to be wired when credentials are available.
+ * 1) Save to Supabase booking_requests
+ * 2) Best-effort SMTP email to sales (failure does not fail the request)
  */
 export async function POST(req: NextRequest) {
   const form = await req.formData();
@@ -48,6 +47,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "db_insert_failed" }, { status: 500 });
     }
     return NextResponse.redirect(new URL("/contact", req.url), 303);
+  }
+
+  try {
+    await notifyBookingRequest({
+      ...payload,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (emailError) {
+    console.error("[book-call] email notification failed:", emailError);
   }
 
   if (wantsJson(req)) {

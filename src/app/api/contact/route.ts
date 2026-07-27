@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { notifyContactSubmission } from "@/lib/notifyContactSubmission";
 import { supabaseAdmin } from "@/lib/supabase/server";
 
 function wantsJson(req: NextRequest) {
@@ -7,10 +8,8 @@ function wantsJson(req: NextRequest) {
 
 /**
  * Contact form handler.
- * Native HTML POST → 303 redirect to /contact?sent=1.
- * Fetch with Accept: application/json → { ok: true }.
- *
- * Delivery (email/CRM) to be wired when credentials are available.
+ * 1) Save to Supabase contact_submissions
+ * 2) Best-effort SMTP email to sales (failure does not fail the request)
  */
 export async function POST(req: NextRequest) {
   const form = await req.formData();
@@ -43,6 +42,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "db_insert_failed" }, { status: 500 });
     }
     return NextResponse.redirect(new URL("/contact", req.url), 303);
+  }
+
+  try {
+    await notifyContactSubmission({
+      ...payload,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (emailError) {
+    console.error("[contact] email notification failed:", emailError);
   }
 
   if (wantsJson(req)) {
