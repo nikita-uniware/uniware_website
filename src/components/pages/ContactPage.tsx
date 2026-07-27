@@ -245,7 +245,7 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
                       <div>
                         <button
                           type="submit"
-                          className="btn-submit-l"
+                          className="btn-size-lg btn-surface-light btn-submit-l-layout"
                           disabled={submitting}
                         >
                           Send message

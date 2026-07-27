@@ -54,7 +54,7 @@
 }
 .loc-item:last-child{border-bottom:none}
 .loc-city-row{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  display:flex;align-items:center;justify-content:flex-start;gap:12px;
   margin-bottom:6px;
 }
 .loc-city{
@@ -76,7 +76,7 @@
 .loc-phone{
   font-family:var(--font-body);font-weight:var(--font-weight-regular);font-size:var(--text-body-sm);
   color:var(--uw-body-text);text-decoration:none;display:inline;
-  transition:color 150ms ease;
+  transition:color var(--uw-transition-hover) ease;
 }
 .loc-phone:hover{color:var(--uw-amber-light)}
 .loc-person{
@@ -142,17 +142,8 @@
 }
 .field-select{cursor:pointer}
 .field-select option{color:var(--uw-black);background:var(--uw-white)}
-/* Primary button — light surface. Dark fill, white text. Hover: amber fill */
-.btn-submit-l{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body);line-height:1;
-  padding:14px 28px;border-radius:8px;
-  background:var(--uw-black);color:var(--uw-white);border:1px solid var(--uw-black);
-  cursor:pointer;text-decoration:none;width:100%;
-  transition:background-color 150ms ease,border-color 150ms ease,color 150ms ease;
-}
-@media(min-width:640px){.btn-submit-l{width:auto}}
-.btn-submit-l:hover{background:var(--uw-amber-dark);border-color:var(--uw-amber-dark);color:var(--uw-black)}
+.btn-submit-l-layout { width: 100%; }
+@media (min-width: 640px) { .btn-submit-l-layout { width: auto; } }
 /* Contact success */
 .contact-success{display:none;padding:8px 0 28px;}
 .contact-success-icon{

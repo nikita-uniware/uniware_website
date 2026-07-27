@@ -63,7 +63,7 @@ export function Button({
 
   const classes = [
     "inline-flex items-center justify-center gap-2 font-body font-medium rounded-lg border",
-    "transition-[background-color,border-color,color] duration-150 ease-in-out",
+    "transition-[background-color,border-color,color] duration-hover ease-in-out",
     sizeClasses[size],
     surfaceClasses(surface, variant),
     className,

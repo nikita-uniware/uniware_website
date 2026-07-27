@@ -32,24 +32,9 @@
 .site-nav-link{
   font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-button);
   color:var(--uw-text-on-dark-secondary); text-decoration:none; padding:0 12px; white-space:nowrap;
-  transition:color 150ms ease;
+  transition:color var(--uw-transition-hover) ease;
 }
 .site-nav-link:hover{ color:var(--uw-white); }
-/* Primary CTA in nav — white fill, dark text on dark surface; hover: transparent + white text */
-.site-nav-cta{
-  font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-body-sm); line-height:1;
-  padding:9px 18px; border-radius:8px;
-  background:var(--uw-white); color:var(--uw-black); border:1px solid var(--uw-white);
-  text-decoration:none; white-space:nowrap;
-  transition:background-color 150ms ease, color 150ms ease;
-}
-.site-nav-cta:hover{ background:transparent; color:var(--uw-white); }
-.site-nav-cta--secondary{
-  background:transparent; color:var(--uw-white); border-color:var(--border-chrome-intense);
-}
-.site-nav-cta--secondary:hover{
-  background:var(--uw-white); color:var(--uw-black); border-color:var(--uw-white);
-}
 
 /* ─── Reset ──────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -103,10 +88,6 @@ html.is-ready .crossbar-dr{
 html.is-ready .crossbar-dl.line-visible,
 html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 
-/* ─── Circle keyframes ───────────────────────────────── */
-@keyframes uw-circle-outer  {from{transform:rotate(0deg)}   to{transform:rotate(360deg)}}
-@keyframes uw-circle-middle {from{transform:rotate(60deg)}  to{transform:rotate(-300deg)}}
-@keyframes uw-circle-inner  {from{transform:rotate(120deg)} to{transform:rotate(480deg)}}
 .uw-circles-xl{transform-origin:bottom right;transform:scale(.6)}
 @media(min-width:768px) {.uw-circles-xl{transform:scale(.65)}}
 @media(min-width:1024px){.uw-circles-xl{transform:scale(1)}}
@@ -116,6 +97,18 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 @media(min-width:768px) {.container{padding:0 24px}}
 @media(min-width:1024px){.container{padding:0 40px}}
 .scrollbar-none::-webkit-scrollbar{display:none}
+
+/* ─── Card overlay link ──────────────────────────────────
+   Reusable pattern: for cards with exactly one CTA where the
+   whole card should be clickable, but hover feedback stays
+   scoped to the CTA. Add an empty <a class="card-overlay-link">
+   as the card's first child — it stretches to fill the card
+   (its nearest position:relative ancestor) and sits above
+   everything (z-index:1), while the visible CTA keeps its own
+   :hover styling since it isn't covered by anything higher.
+────────────────────────────────────────────────────────── */
+.card-overlay-link{ position:absolute; inset:0; z-index:1; border-radius:12px; }
+.card-cta{ position:relative; z-index:2; }
 
 
 /* ══════════════════════════════════════════════════════
@@ -223,18 +216,6 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .wts-bridge a:hover{ color:var(--uw-amber-accent); }
 
 
-/* Primary button — light surface (white/off-white backgrounds).
-   Design system: Medium size (16px), dark fill (#010512), white text. */
-.btn-primary-l{
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-body); line-height:1;
-  padding:11px 22px; border-radius:8px;
-  background:var(--uw-black); color:var(--uw-white); border:1px solid var(--uw-black);
-  text-decoration:none; cursor:pointer;
-  transition:background-color 150ms ease, border-color 150ms ease;
-}
-.btn-primary-l:hover{ background:var(--uw-amber-dark); border-color:var(--uw-amber-dark); color:var(--uw-black); }
-
 /* ══════════════════════════════════════════════════════
    GET STARTED — Final CTA. White. Two side-by-side blocks.
    Assessment route (self-serve) + Book a review (direct).
@@ -246,30 +227,26 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .gs-grid { display:grid; grid-template-columns:1fr; gap:20px; }
 @media(min-width:768px){ .gs-grid{ grid-template-columns:1fr 1fr; gap:24px; } }
 
-.gs-block{ background:var(--uw-yellow-card); border:1px solid var(--section-divider); border-radius:12px; padding:36px; display:flex; flex-direction:column; position:relative; cursor:pointer; transition:border-color 200ms ease, background-color 200ms ease; }
+.gs-block{ background:var(--uw-yellow-card); border:1px solid var(--section-divider); border-radius:12px; padding:36px; display:flex; flex-direction:column; position:relative; overflow:hidden; cursor:pointer; transition:border-color var(--uw-transition-hover) ease, background-color var(--uw-transition-hover) ease; }
 .gs-block:hover{ border-color:var(--uw-amber-border); background:var(--uw-yellow-card-hover); }
-/* Button also fires its hover state on card hover — the whole card is one action */
-.gs-block:hover .btn-primary-l{ background:var(--uw-amber-dark); border-color:var(--uw-amber-dark); color:var(--uw-black); }
-/* Stretched link — ::after on the <a> expands to fill gs-block (the nearest position:relative ancestor) */
-.gs-block .btn-primary-l::after{ content:''; position:absolute; inset:0; z-index:1; border-radius:12px; }
 .gs-block-label{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-light); margin-bottom:12px; }
 /* H4 spec: 24px desktop / 20px mobile, Space Grotesk 600, line-height 1.30 */
 .gs-block-heading{ font-family:var(--font-display); font-weight:var(--font-weight-semibold); font-size:var(--text-h4-sm); line-height:1.30; letter-spacing:0; color:var(--uw-black); margin-bottom:14px; }
 @media(min-width:1024px){ .gs-block-heading{ font-size:var(--text-h4); } }
 /* text-body-lg: 16px DM Sans 300, line-height 1.65 */
 .gs-block-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-body-text); margin-bottom:28px; flex:1; }
-.gs-block .btn-primary-l{ align-self:flex-start; }
+.gs-block .btn-size-lg{ align-self:flex-start; }
 
-/* Primary button — documented spec, Medium (16px).
-   White/light surface: dark fill, white text. Hover → amber fill, dark text. */
-.btn-primary{
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-body); line-height:1;
-  padding:11px 22px; border-radius:8px; border:1px solid var(--uw-black);
-  background:var(--uw-black); color:var(--uw-white); text-decoration:none;
-  cursor:pointer; transition:background-color 150ms ease, border-color 150ms ease, color 150ms ease;
-}
-.btn-primary:hover{ background:var(--uw-amber-dark); border-color:var(--uw-amber-dark); color:var(--uw-black); }
+/* gs-block circle decoration — sm tier (240/160/80, bleed 60px), amber surface.
+   Negative z-index puts it behind gs-block's in-flow content (label, heading,
+   body, card-cta), which paint ahead of any z-index:0+ positioned sibling
+   regardless of DOM order — z-index:0 alone would render on top of them. */
+.gs-circle-group{ position:absolute; bottom:-104px; right:-104px; width:240px; height:240px; pointer-events:none; z-index:-1; opacity:0; transition:opacity 300ms ease; }
+.gs-block:hover .gs-circle-group{ opacity:1; }
+.gs-circle-group .circle-ring{ border-color:var(--circle-light); }
+.gs-circle-outer { width:240px; height:240px; top:0;   left:0;   border-left-width:2px; border-top-width:1px; border-right-width:1px; border-bottom-width:0; animation:uw-circle-outer  3s linear infinite; }
+.gs-circle-middle{ width:160px; height:160px; top:40px; left:40px; border-left-width:1px; border-top-width:2px; border-right-width:0; border-bottom-width:1px; animation:uw-circle-middle 4s linear infinite; }
+.gs-circle-inner { width:80px;  height:80px;  top:80px; left:80px; border-left-width:1px; border-top-width:0; border-right-width:0; border-bottom-width:2px; animation:uw-circle-inner   5s linear infinite; }
 
 /* ══════════════════════════════════════════════════════
    PRE-FOOTER — Technology ecosystem logo marquee.
@@ -277,13 +254,13 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
    horizontal rail lines and vertical logo separators.
    overflow:hidden prevents marquee bleeding the viewport.
 ══════════════════════════════════════════════════════ */
-.pf { background:var(--uw-white); border-top:1px solid var(--section-divider); overflow:hidden; }
+.pf { background:var(--uw-white); overflow:hidden; }
 
 /* The marquee column is now the whole section width */
 .pf-marquee-col{ display:block; padding:0; }
 .pf-marquee-fill{ display:flex; flex-direction:column; }
-.pf-marquee-col .pf-marquee-track:first-child { padding-bottom: 8px; border-bottom:1px solid var(--section-divider); }
-.pf-marquee-col .pf-marquee-track + .pf-marquee-track{ margin-top:8px; }
+.pf-marquee-col .pf-marquee-track:first-child { border-bottom:1px solid var(--section-divider); }
+.pf-marquee-col .pf-marquee-track + .pf-marquee-track{ margin-top:0; }
 .pf-marquee-track{ position:relative; overflow:hidden;
   -webkit-mask-image:linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
   mask-image:linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); }
@@ -320,18 +297,16 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .cs-card{
   background:var(--surface-dark-card); border:1px solid var(--border-chrome-light); border-radius:12px;
   padding:28px 28px 24px; display:flex; flex-direction:column; position:relative; cursor:pointer;
-  transition:background-color 200ms ease, border-color 200ms ease;
+  transition:background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease;
 }
 .cs-card:hover{
   background:var(--surface-dark-card-hover); border-color:var(--border-chrome-heavy);
 }
-/* On card hover, fire the ghost-link arrow-swap and underline */
-.cs-card:hover .ghost-link-d{ text-decoration:underline; text-underline-offset:3px; }
-.cs-card:hover .gl-arrow-default{ display:none; }
-.cs-card:hover .gl-arrow-hover{ display:inline-block; }
-/* Stretched link — ::after expands to fill cs-card (nearest position:relative ancestor) */
-.cs-card .ghost-link::after{ content:''; position:absolute; inset:0; z-index:1; border-radius:12px; }
-.cs-badge{ width:44px; height:44px; border-radius:10px; background:var(--surface-dark-muted); border:1px solid var(--border-chrome-pill); display:flex; align-items:center; justify-content:center; margin-bottom:16px; color:var(--uw-white); transition:background-color 200ms ease, border-color 200ms ease, color 200ms ease; }
+/* On card hover, fire the link-text arrow-swap and underline */
+.cs-card .link-text-dark:hover{ text-decoration:underline; text-underline-offset:3px; }
+.cs-card .link-text-dark:hover .link-text-arrow-default{ display:none; }
+.cs-card .link-text-dark:hover .link-text-arrow-hover{ display:inline-block; }
+.cs-badge{ width:44px; height:44px; border-radius:10px; background:var(--surface-dark-muted); border:1px solid var(--border-chrome-pill); display:flex; align-items:center; justify-content:center; margin-bottom:16px; color:var(--uw-white); transition:background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease; }
 .cs-card:hover .cs-badge{ background:var(--surface-dark-light); border-color:var(--border-chrome-max); }
 .cs-badge-fill{ display:none; }
 .cs-card:hover .cs-badge-stroke{ display:none; }
@@ -369,16 +344,14 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .hero-headline .amber{color:var(--uw-amber-dark)}
 .hero-subtext{font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-lg-sm);line-height:1.65;color:var(--uw-text-on-dark);margin-bottom:36px;max-width:640px}
 @media(min-width:1024px){.hero-subtext{font-size:var(--text-body-lg)}}
-.btn-hero{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body-lg-sm);line-height:1;padding:14px 30px;border-radius:8px;border:1px solid var(--uw-white);background:var(--uw-white);color:var(--uw-black);text-decoration:none;cursor:pointer;transition:background-color 150ms ease,color 150ms ease}
-.btn-hero:hover{background:transparent;color:var(--uw-white)}
 
 .circle-group{position:absolute;bottom:-120px;right:-120px;width:480px;height:480px;pointer-events:none;z-index:0}
 .circle-enter{position:absolute;inset:0;opacity:0;transform:scale(.4);transform-origin:center center;animation:circle-scale-in 900ms cubic-bezier(.34,1.56,.64,1) var(--enter-delay,0ms) both;}
 @keyframes circle-scale-in{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
 .circle-ring{position:absolute;border-radius:1000px;border-style:solid;border-color:var(--circle-dark)}
-.circle-outer {width:480px;height:480px;top:0;left:0;      border-left-width:2px;border-top-width:1px;border-right-width:1px;border-bottom-width:0; animation:uw-circle-outer  14s linear infinite}
-.circle-middle{width:320px;height:320px;top:80px;left:80px;  border-left-width:1px;border-top-width:2px;border-right-width:0;border-bottom-width:1px;animation:uw-circle-middle 20s linear infinite}
-.circle-inner {width:160px;height:160px;top:160px;left:160px;border-left-width:1px;border-top-width:0;border-right-width:0;border-bottom-width:2px; animation:uw-circle-inner   9s linear infinite}
+.circle-outer {width:480px;height:480px;top:0;left:0;      border-left-width:2px;border-top-width:1px;border-right-width:1px;border-bottom-width:0; animation:uw-circle-outer  6s linear infinite}
+.circle-middle{width:320px;height:320px;top:80px;left:80px;  border-left-width:1px;border-top-width:2px;border-right-width:0;border-bottom-width:1px;animation:uw-circle-middle 8s linear infinite}
+.circle-inner {width:160px;height:160px;top:160px;left:160px;border-left-width:1px;border-top-width:0;border-right-width:0;border-bottom-width:2px; animation:uw-circle-inner   10s linear infinite}
 
 
 /* ══════════════════════════════════════════════════════
@@ -416,7 +389,7 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 @media(min-width:768px) {.subnav-list{padding:0 24px}}
 @media(min-width:1024px){.subnav-list{padding:0 40px}}
 .subnav-list li{display:flex}
-.subnav-tab{display:flex;align-items:center;height:100%;padding:0 20px;font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body);color:var(--uw-muted);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color 150ms ease,border-color 150ms ease}
+.subnav-tab{display:flex;align-items:center;height:100%;padding:0 20px;font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body);color:var(--uw-muted);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color var(--uw-transition-hover) ease,border-color var(--uw-transition-hover) ease}
 .subnav-tab:hover   {color:var(--uw-body-text)}
 .subnav-tab.is-active{color:var(--uw-black);border-bottom-color:var(--uw-amber-light)}
 #our-approach,#prevention,#recovery,#where-to-start,#client-stories{scroll-margin-top:116px}
@@ -523,8 +496,6 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .card-eyebrow {font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-eyebrow);letter-spacing:.10em;text-transform:uppercase;color:var(--uw-amber-dark);margin-bottom:8px}
 .card-heading {font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-h4-sm);letter-spacing:-.01em;color:var(--uw-white);margin-bottom:10px}
 .card-body    {font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body);line-height:1.65;color:var(--uw-text-on-dark-dim);margin-bottom:18px}
-.card-link    {font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body-sm);color:var(--uw-amber-dark);display:inline-flex;align-items:center;gap:5px;text-decoration:none;transition:opacity 150ms ease;}
-.card-link:hover{text-decoration:underline;text-underline-offset:3px;}
 
 
 /* ─── Placeholders ────────────────────────────────── */
@@ -613,8 +584,8 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .tile-prev { background:var(--uw-white); border:1px solid var(--border-light-subtle); }
 .tile-rec  { background:var(--surface-dark-subtle); border:1px solid var(--border-dark); }
 
-.tile-icon-w { width:48px; height:48px; border-radius:10px; border:1px solid var(--border-light-muted); background:var(--surface-light-subtle); display:flex; align-items:center; justify-content:center; margin-bottom:16px; flex-shrink:0; color:var(--uw-text-on-light-muted); cursor:default; transition:background-color 250ms ease,border-color 250ms ease,color 250ms ease; }
-.tile-icon-d { width:48px; height:48px; border-radius:10px; border:1px solid var(--border-chrome-pill-idle); background:var(--surface-dark-subtle); display:flex; align-items:center; justify-content:center; margin-bottom:16px; flex-shrink:0; color:var(--uw-text-on-dark-secondary); cursor:default; transition:background-color 250ms ease,border-color 250ms ease,color 250ms ease; }
+.tile-icon-w { width:48px; height:48px; border-radius:10px; border:1px solid var(--border-light-muted); background:var(--surface-light-subtle); display:flex; align-items:center; justify-content:center; margin-bottom:16px; flex-shrink:0; color:var(--uw-text-on-light-muted); cursor:default; transition:background-color var(--uw-transition-hover) ease,border-color var(--uw-transition-hover) ease,color var(--uw-transition-hover) ease; }
+.tile-icon-d { width:48px; height:48px; border-radius:10px; border:1px solid var(--border-chrome-pill-idle); background:var(--surface-dark-subtle); display:flex; align-items:center; justify-content:center; margin-bottom:16px; flex-shrink:0; color:var(--uw-text-on-dark-secondary); cursor:default; transition:background-color var(--uw-transition-hover) ease,border-color var(--uw-transition-hover) ease,color var(--uw-transition-hover) ease; }
 
 .tile-name-w { font-family:var(--font-display); font-weight:var(--font-weight-semibold); font-size:var(--text-h4-sm); line-height:1.30; letter-spacing:0; color:var(--uw-black); margin-bottom:10px; flex-shrink:0; }
 .tile-name-d { font-family:var(--font-display); font-weight:var(--font-weight-semibold); font-size:var(--text-h4-sm); line-height:1.30; letter-spacing:0; color:var(--uw-white);  margin-bottom:10px; flex-shrink:0; }
@@ -657,41 +628,11 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .ot-heading { font-family:var(--font-display); font-weight:var(--font-weight-semibold); font-size:var(--text-h4-sm); line-height:1.30; letter-spacing:0; color:var(--uw-black); margin-bottom:8px; }
 @media(min-width:1024px){ .ot-heading { font-size:var(--text-h4); } }
 .ot-body    { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-body-text); }
-/* ── Ghost / Link button type ──
-   No padding, no border, no fill at any state — text only,
-   optionally with the arrow SVG. Sizes by font-size only:
-   Small 14px, Medium 16px, Large 18px. */
-.ghost-link{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-body); font-weight:var(--font-weight-medium); text-decoration:none; transition:color 150ms ease; }
-.ghost-link-sm{ font-size:var(--text-body-sm); }
-.ghost-link-md{ font-size:var(--text-body); }
-.ghost-link-lg{ font-size:var(--text-body-lg-sm); }
-/* White surface */
-.ghost-link-w{ color:var(--uw-amber-light); }
-.ghost-link-w:hover{ text-decoration:underline; text-underline-offset:3px; }
-/* Dark surface */
-.ghost-link-d{ color:var(--uw-amber-dark); }
-.ghost-link-d:hover{ text-decoration:underline; text-underline-offset:3px; }
-/* Amber surface */
-.ghost-link-a{ color:var(--uw-black); }
-.ghost-link-a:hover{ text-decoration:underline; text-underline-offset:3px; }
-.ot-callout .ghost-link{ margin-top:16px; }
-/* External-style link: simple display swap (not an opacity crossfade)
-   between the default right-arrow and the Phosphor ArrowUpRight icon.
-   No absolute positioning, no overlap — one icon is hidden, the other
-   shown. More robust than a crossfade, which depends on both icons
-   sharing an identical stacking position. */
-.gl-arrow-wrap{ display:inline-flex; align-items:center; }
-.gl-arrow-hover{ display:none; }
-.ghost-link--external:hover .gl-arrow-default{ display:none; }
-.ghost-link--external:hover .gl-arrow-hover{ display:inline-block; }
+.ot-callout .link-text{ margin-top:16px; }
 
 /* ── Section CTAs ── */
 .sec-cta-question-l { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); color:var(--uw-muted); margin-bottom:12px; line-height:1.5; }
 .sec-cta-question-d { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); color:var(--uw-text-on-dark-dim); margin-bottom:14px; line-height:1.5; }
-.sec-cta-link-l { font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-body); color:var(--uw-black); border:1px solid var(--border-light-strong); border-radius:8px; padding:11px 22px; display:inline-flex; align-items:center; gap:8px; text-decoration:none; background:transparent; transition:background-color 150ms ease,color 150ms ease,border-color 150ms ease; }
-.sec-cta-link-l:hover { background:var(--uw-black); border-color:var(--uw-black); color:var(--uw-white); }
-.sec-cta-btn-d  { font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-body); color:var(--uw-white); border:1px solid var(--border-chrome-intense); border-radius:8px; padding:11px 22px; background:transparent; display:inline-flex; align-items:center; gap:8px; text-decoration:none; transition:background-color 150ms ease,color 150ms ease; }
-.sec-cta-btn-d:hover { background:var(--uw-white); color:var(--uw-black); }
 
 
 /* ── Pill hover: card-level trigger ── */

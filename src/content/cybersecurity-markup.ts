@@ -13,13 +13,15 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
       No prevention is guaranteed. When an attack gets through, recovery is what
       keeps the business running.
     </p>
-    <a href="/contact" class="btn-hero" data-reveal="240"
-       onclick="window.openBookingPanel(); return false;">
-      Book a Security Review
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+    <span data-reveal="240">
+      <a href="/contact" class="btn-size-lg btn-surface-dark"
+         onclick="window.openBookingPanel(); return false;">
+        Book a Security Review
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </span>
   </div>
   <div class="circle-group uw-circles-xl" aria-hidden="true">
     <div class="circle-enter" style="--enter-delay:0ms"><div class="circle-ring circle-outer"  data-circle="outer"></div></div>
@@ -167,13 +169,16 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
             Firewall, endpoint, email, zero-trust access, data, and cloud security.
             Assessed, deployed, and fully managed by Uniware for your environment.
           </p>
-          <a href="#prevention" class="card-link">
+          <a href="#prevention" class="link-text-dark-sm link-text--anchor">
             Our prevention services
-            <svg width="11" height="11" viewBox="0 0 14 14" fill="none"
-                 stroke="currentColor" stroke-width="1.5"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M7 2.5V11.5M11.5 7L7 11.5M2.5 7L7 11.5"/>
-            </svg>
+            <span class="link-text-arrow-wrap">
+              <svg class="link-text-arrow-default" width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2.5 7H11.5M11.5 7L7 3.5M11.5 7L7 10.5"/>
+              </svg>
+              <svg class="link-text-arrow-hover" width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 2.5V11.5M7 11.5L2.5 7M7 11.5L11.5 7"/>
+              </svg>
+            </span>
           </a>
         </div>
 
@@ -188,13 +193,16 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
             Immutable backup, disaster recovery planning, cyber recovery, and
             full infrastructure rebuild. Planned before any incident. Not under pressure.
           </p>
-          <a href="#recovery" class="card-link">
+          <a href="#recovery" class="link-text-dark-sm link-text--anchor">
             Our recovery services
-            <svg width="11" height="11" viewBox="0 0 14 14" fill="none"
-                 stroke="currentColor" stroke-width="1.5"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M7 2.5V11.5M11.5 7L7 11.5M2.5 7L7 11.5"/>
-            </svg>
+            <span class="link-text-arrow-wrap">
+              <svg class="link-text-arrow-default" width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2.5 7H11.5M11.5 7L7 3.5M11.5 7L7 10.5"/>
+              </svg>
+              <svg class="link-text-arrow-hover" width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 2.5V11.5M7 11.5L2.5 7M7 11.5L11.5 7"/>
+              </svg>
+            </span>
           </a>
         </div>
 
@@ -346,7 +354,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
       <p class="ot-body">
         Working in a factory or industrial environment? OT and IoT security requires a different approach. We have experience protecting operational technology and connected industrial systems alongside standard IT, using Armis and Versa.
       </p>
-      <a href="/contact" class="ghost-link ghost-link-w ghost-link-sm">
+      <a href="/contact" class="link-text link-text-light link-text-sm">
         Talk to us about your environment
         <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
       </a>
@@ -354,14 +362,63 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 
     <!-- Prevention CTA: question first, action second -->
     <p class="sec-cta-question-l" data-reveal="0">Not sure how your security measures up?</p>
-    <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="sec-cta-link-l" data-reveal="80">
-      Take the Cyber Readiness Assessment
-      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
-    </a>
+    <span data-reveal="80">
+      <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="btn-size-md btn-surface-light-ghost">
+        Take the Cyber Readiness Assessment
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
+      </a>
+    </span>
 
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     PRE-FOOTER — Technology ecosystem logo marquee.
+     Full-width. No left column, no label (Option 1 — logos speak for
+     themselves). Two rows with horizontal rail lines and vertical logo
+     separators. Real logos embedded as base64 SVG/PNG.
+     Partner accreditations (Dell/AWS/Commvault) move to the footer.
+═══════════════════════════════════════════════════════════════ -->
+<section class="pf" aria-label="Technology ecosystem partners">
+  <div class="pf-marquee-col">
+    <div class="pf-marquee-track">
+      <div class="pf-marquee-row pf-marquee-row--ltr">
+        <div class="pf-logo-item"><img src="/partners/logo-1.svg" alt="Fortinet" height="28"></div>
+        <div class="pf-logo-item"><img src="/partners/logo-2.svg" alt="CrowdStrike" height="28"></div>
+        <div class="pf-logo-item"><img src="/partners/logo-3.svg" alt="Sophos" height="28"></div>
+        <div class="pf-logo-item"><img src="/partners/logo-4.svg" alt="Netskope" height="28"></div>
+        <div class="pf-logo-item"><img src="/partners/logo-5.svg" alt="Tenable" height="28"></div>
+        <div class="pf-logo-item"><img src="/partners/logo-6.svg" alt="Versa" height="28"></div>
+        <div class="pf-logo-item"><img src="/partners/logo-7.svg" alt="Armis" height="44"></div>
+        <div class="pf-logo-item"><img src="/partners/logo-8.svg" alt="F5" height="28" style="width:28px"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
+        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════════════════════════════
      RECOVERY
@@ -438,11 +495,13 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 
     <!-- Recovery CTA: question first, action second -->
     <p class="sec-cta-question-d" data-reveal="0">Want to talk about your recovery position?</p>
-    <a href="/contact" class="sec-cta-btn-d" data-reveal="80"
-       onclick="window.openBookingPanel(); return false;">
-      Book a Security Review
-      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
-    </a>
+    <span data-reveal="80">
+      <a href="/contact" class="btn-size-md btn-surface-dark-ghost"
+         onclick="window.openBookingPanel(); return false;">
+        Book a Security Review
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
+      </a>
+    </span>
 
   </div>
 </section>
@@ -536,7 +595,9 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
     <div class="cs-grid">
 
       <!-- Card 1: Chemical manufacturing — LockBit -->
-      <div class="cs-card" data-reveal="0">
+      <div data-reveal="0">
+        <div class="cs-card">
+        <a href="/resources/case-studies/ransomware-recovery-chemical-manufacturing/" class="card-overlay-link" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"></a>
         <div class="cs-badge" aria-hidden="true">
           <svg class="cs-badge-stroke" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
           <svg class="cs-badge-fill" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
@@ -550,19 +611,22 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
           <span class="cs-pill">No ransom paid</span>
           <span class="cs-pill">Zero repeat incidents</span>
         </div>
-        <div class="cs-cta">
-          <a href="/resources/case-studies/ransomware-recovery-chemical-manufacturing/" class="ghost-link ghost-link-d ghost-link-sm ghost-link--external" target="_blank" rel="noopener">
+        <div class="cs-cta card-cta">
+          <a href="/resources/case-studies/ransomware-recovery-chemical-manufacturing/" class="link-text link-text-dark link-text-sm link-text--external" target="_blank" rel="noopener">
             Read the case study
-            <span class="gl-arrow-wrap">
-              <svg class="gl-arrow-default" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
-              <svg class="gl-arrow-hover" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+            <span class="link-text-arrow-wrap">
+              <svg class="link-text-arrow-default" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
+              <svg class="link-text-arrow-hover" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
             </span>
           </a>
+        </div>
         </div>
       </div>
 
       <!-- Card 2: IT services — VPN vulnerability -->
-      <div class="cs-card" data-reveal="80">
+      <div data-reveal="80">
+        <div class="cs-card">
+        <a href="/resources/case-studies/ransomware-recovery-vpn-vulnerability/" class="card-overlay-link" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"></a>
         <div class="cs-badge" aria-hidden="true">
           <svg class="cs-badge-stroke" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
           <svg class="cs-badge-fill" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="11" y="17" width="2" height="3"/><rect x="8" y="20" width="8" height="2" rx="1"/></svg>
@@ -576,65 +640,18 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
           <span class="cs-pill">No ransom paid</span>
           <span class="cs-pill">Now a managed client</span>
         </div>
-        <div class="cs-cta">
-          <a href="/resources/case-studies/ransomware-recovery-vpn-vulnerability/" class="ghost-link ghost-link-d ghost-link-sm ghost-link--external" target="_blank" rel="noopener">
+        <div class="cs-cta card-cta">
+          <a href="/resources/case-studies/ransomware-recovery-vpn-vulnerability/" class="link-text link-text-dark link-text-sm link-text--external" target="_blank" rel="noopener">
             Read the case study
-            <span class="gl-arrow-wrap">
-              <svg class="gl-arrow-default" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
-              <svg class="gl-arrow-hover" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+            <span class="link-text-arrow-wrap">
+              <svg class="link-text-arrow-default" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5"/></svg>
+              <svg class="link-text-arrow-hover" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
             </span>
           </a>
         </div>
+        </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     PRE-FOOTER — Technology ecosystem logo marquee.
-     Full-width. No left column, no label (Option 1 — logos speak for
-     themselves). Two rows with horizontal rail lines and vertical logo
-     separators. Real logos embedded as base64 SVG/PNG.
-     Partner accreditations (Dell/AWS/Commvault) move to the footer.
-═══════════════════════════════════════════════════════════════ -->
-<section class="pf" aria-label="Technology ecosystem partners">
-  <div class="pf-marquee-col">
-    <div class="pf-marquee-track">
-      <div class="pf-marquee-row pf-marquee-row--ltr">
-        <div class="pf-logo-item"><img src="/partners/logo-1.svg" alt="Fortinet" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-2.svg" alt="CrowdStrike" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-3.svg" alt="Sophos" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-4.svg" alt="Netskope" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-5.svg" alt="Tenable" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-6.svg" alt="Versa" height="28"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-7.svg" alt="Armis" height="44"></div>
-        <div class="pf-logo-item"><img src="/partners/logo-8.svg" alt="F5" height="28" style="width:28px"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-1.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-2.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-3.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-4.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-5.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-6.svg" alt="" height="28"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-7.svg" alt="" height="44"></div>
-        <div class="pf-logo-item" aria-hidden="true"><img src="/partners/logo-8.svg" alt="" height="28" style="width:28px"></div>
-      </div>
     </div>
   </div>
 </section>
@@ -657,19 +674,43 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 
     <div class="gs-grid">
 
-      <div class="gs-block" data-reveal="0">
+      <div data-reveal="0">
+        <div class="gs-block">
+        <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="card-overlay-link" aria-hidden="true" tabindex="-1"></a>
         <p class="gs-block-label">Not sure where you fit</p>
         <h3 class="gs-block-heading">Take the Cyber Readiness Assessment</h3>
         <p class="gs-block-body">Answer 15 questions about your current setup. Get a clear picture of where you stand and what to prioritise. Takes 3 to 5 minutes.</p>
-        <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="btn-primary-l">Take the assessment</a>
+        <div class="card-cta">
+          <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="btn-size-md btn-surface-light">Take the assessment</a>
+        </div>
+        <div class="gs-circle-group" aria-hidden="true">
+          <div style="opacity:0.6">
+            <div class="circle-ring gs-circle-outer"  data-circle="outer"></div>
+            <div class="circle-ring gs-circle-middle" data-circle="middle"></div>
+            <div class="circle-ring gs-circle-inner"  data-circle="inner"></div>
+          </div>
+        </div>
+        </div>
       </div>
 
-      <div class="gs-block" data-reveal="80">
+      <div data-reveal="80">
+        <div class="gs-block">
+        <a href="/contact" class="card-overlay-link" aria-hidden="true" tabindex="-1" onclick="window.openBookingPanel(); return false;"></a>
         <p class="gs-block-label">Ready to talk</p>
         <h3 class="gs-block-heading">Book a security review</h3>
         <p class="gs-block-body">A structured conversation with one of our engineers. We look at your environment, identify your biggest risks, and tell you what to fix first. No obligation.</p>
-        <a href="/contact" class="btn-primary-l"
-           onclick="window.openBookingPanel(); return false;">Book a review</a>
+        <div class="card-cta">
+          <a href="/contact" class="btn-size-md btn-surface-light"
+             onclick="window.openBookingPanel(); return false;">Book a review</a>
+        </div>
+        <div class="gs-circle-group" aria-hidden="true">
+          <div style="opacity:0.6">
+            <div class="circle-ring gs-circle-outer"  data-circle="outer"></div>
+            <div class="circle-ring gs-circle-middle" data-circle="middle"></div>
+            <div class="circle-ring gs-circle-inner"  data-circle="inner"></div>
+          </div>
+        </div>
+        </div>
       </div>
 
     </div>

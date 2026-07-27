@@ -170,6 +170,9 @@
   --status-developing-text: #a56208;
   --status-attention: #d63b3b;
   --status-attention-text: #a32525;
+
+  /* Motion */
+  --uw-transition-hover: 400ms;
 }
 
 @theme inline {
@@ -216,6 +219,7 @@
   --text-body-sm: 14px;
   --text-body-sm--line-height: 1.5;
   --max-width-content: 1200px;
+  --duration-hover: 400ms;
 }
 
 *,
@@ -271,7 +275,7 @@ html.is-ready [data-reveal].is-visible {
     transform: rotate(60deg);
   }
   to {
-    transform: rotate(-300deg);
+    transform: rotate(420deg);
   }
 }
 @keyframes uw-circle-inner {
@@ -418,41 +422,10 @@ html.is-ready [data-reveal].is-visible {
   text-decoration: none;
   padding: 0 12px;
   white-space: nowrap;
-  transition: color 150ms ease;
+  transition: color var(--uw-transition-hover) ease;
 }
 .site-nav-link:hover {
   color: var(--uw-white);
-}
-.site-nav-cta {
-  font-family: var(--font-body);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--text-body-sm);
-  line-height: 1;
-  padding: 9px 18px;
-  border-radius: 8px;
-  background: var(--uw-white);
-  color: var(--uw-black);
-  border: 1px solid var(--uw-white);
-  text-decoration: none;
-  white-space: nowrap;
-  transition:
-    background-color 150ms ease,
-    color 150ms ease;
-}
-.site-nav-cta:hover {
-  background: transparent;
-  color: var(--uw-white);
-}
-/* Secondary (active on /contact) — design system dark-surface secondary */
-.site-nav-cta--secondary {
-  background: transparent;
-  color: var(--uw-white);
-  border-color: var(--border-chrome-intense);
-}
-.site-nav-cta--secondary:hover {
-  background: var(--uw-white);
-  color: var(--uw-black);
-  border-color: var(--uw-white);
 }
 
 /* ── Shared footer (no data-reveal) — matches reference chrome ── */
@@ -497,7 +470,7 @@ html.is-ready [data-reveal].is-visible {
   color: var(--uw-text-on-dark);
   text-decoration: none;
   padding: 0 22px;
-  transition: color 150ms ease;
+  transition: color var(--uw-transition-hover) ease;
 }
 .footer-link:hover {
   color: var(--uw-text-on-dark-hover);
@@ -546,3 +519,179 @@ html.is-ready [data-reveal].is-visible {
 .logo-strip-track:hover {
   animation-play-state: paused;
 }
+
+/* ── Shared button system (Design System v1.3, Section 10 — Button System) ──
+   Size classes: dimensions and timing only, no color.
+   Surface classes: color only, no dimensions or timing.
+   Compose one of each, e.g. class="btn-size-md btn-surface-light".
+   Not yet referenced anywhere — existing button classes (.btn-hero,
+   .btn-panel-submit, .btn-primary, .btn-primary-amber, .btn-primary-l,
+   .btn-submit-l) are untouched. */
+.btn-size-lg {
+  padding: 14px 30px;
+  font-size: 16px;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition-property: background-color, border-color, color;
+  transition-duration: var(--uw-transition-hover);
+  transition-timing-function: ease;
+}
+.btn-size-lg:focus-visible {
+  outline: 2px solid var(--uw-white);
+  outline-offset: 2px;
+}
+
+.btn-size-md {
+  padding: 11px 22px;
+  font-size: 15px;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition-property: background-color, border-color, color;
+  transition-duration: var(--uw-transition-hover);
+  transition-timing-function: ease;
+}
+.btn-size-md:focus-visible {
+  outline: 2px solid var(--uw-white);
+  outline-offset: 2px;
+}
+
+.btn-size-sm {
+  padding: 7px 14px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition-property: background-color, border-color, color;
+  transition-duration: var(--uw-transition-hover);
+  transition-timing-function: ease;
+}
+.btn-size-sm:focus-visible {
+  outline: 2px solid var(--uw-white);
+  outline-offset: 2px;
+}
+
+.btn-surface-dark {
+  background: var(--uw-white);
+  color: var(--uw-black);
+  border: 1px solid var(--uw-white);
+}
+.btn-surface-dark:hover {
+  background: transparent;
+  color: var(--uw-white);
+}
+
+.btn-surface-light {
+  background: var(--uw-black);
+  color: var(--uw-white);
+  border: 1px solid var(--uw-black);
+}
+.btn-surface-light:hover {
+  background: var(--uw-amber-dark);
+  border-color: var(--uw-amber-dark);
+  color: var(--uw-black);
+}
+
+.btn-surface-amber {
+  background: var(--uw-black);
+  color: var(--uw-white);
+  border: 1px solid var(--uw-black);
+}
+.btn-surface-amber:hover {
+  background: var(--uw-white);
+  border-color: var(--uw-white);
+  color: var(--uw-black);
+}
+
+.btn-surface-amber-fill {
+  background: var(--uw-amber-dark);
+  color: var(--uw-black);
+  border: 1px solid var(--uw-amber-dark);
+}
+.btn-surface-amber-fill:hover {
+  background: transparent;
+  border-color: var(--uw-amber-dark);
+  color: var(--uw-amber-dark);
+}
+
+.btn-surface-light-ghost {
+  background: transparent;
+  color: var(--uw-black);
+  border: 1px solid var(--border-light-strong);
+}
+.btn-surface-light-ghost:hover {
+  background: var(--uw-black);
+  border-color: var(--uw-black);
+  color: var(--uw-white);
+}
+
+.btn-surface-dark-ghost {
+  background: transparent;
+  color: var(--uw-white);
+  border: 1px solid var(--border-chrome-intense);
+}
+.btn-surface-dark-ghost:hover {
+  background: var(--uw-white);
+  color: var(--uw-black);
+}
+
+/* ── Shared link-text family ──
+   No padding, no border, no fill at any state — text only,
+   optionally with the arrow SVG. Sizes by font-size only:
+   Small 14px, Medium 16px, Large 18px. */
+.link-text{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-body); font-weight:var(--font-weight-medium); text-decoration:none; transition:color var(--uw-transition-hover) ease; }
+.link-text-sm{ font-size:var(--text-body-sm); }
+.link-text-md{ font-size:var(--text-body); }
+.link-text-lg{ font-size:var(--text-body-lg-sm); }
+/* White surface */
+.link-text-light{ color:var(--uw-amber-light); }
+.link-text-light:hover{ text-decoration:underline; text-underline-offset:3px; }
+/* Dark surface */
+.link-text-dark{ color:var(--uw-amber-dark); }
+.link-text-dark:hover{ text-decoration:underline; text-underline-offset:3px; }
+/* Amber surface */
+.link-text-amber{ color:var(--uw-black); }
+.link-text-amber:hover{ text-decoration:underline; text-underline-offset:3px; }
+/* Arrow swap: simple display swap (not an opacity crossfade) between two
+   inline SVGs — one hidden, the other shown. More robust than a crossfade,
+   which depends on both icons sharing an identical stacking position.
+   .link-text--external: default right-arrow → external-link diagonal arrow.
+   .link-text--anchor:   default right-arrow → downward arrow (same-page scroll). */
+.link-text-arrow-wrap{ display:inline-flex; align-items:center; }
+.link-text-arrow-hover{ display:none; }
+.link-text--external:hover .link-text-arrow-default{ display:none; }
+.link-text--external:hover .link-text-arrow-hover{ display:inline-block; }
+.link-text--anchor:hover .link-text-arrow-default{ display:none; }
+.link-text--anchor:hover .link-text-arrow-hover{ display:inline-block; }
+
+/* Touch devices can't hover to discover the arrow swap — show the
+   swapped-state arrow permanently below desktop. Underline stays
+   hover-only, unaffected, exactly as everywhere else. */
+@media (max-width: 1023px) {
+  .link-text--external .link-text-arrow-default,
+  .link-text--anchor .link-text-arrow-default { display: none; }
+  .link-text--external .link-text-arrow-hover,
+  .link-text--anchor .link-text-arrow-hover { display: inline-block; }
+}
+
+.link-text-dark-sm    {font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body-sm);color:var(--uw-amber-dark);display:inline-flex;align-items:center;gap:5px;text-decoration:none;transition:opacity var(--uw-transition-hover) ease;}
+.link-text-dark-sm:hover{text-decoration:underline;text-underline-offset:3px;}

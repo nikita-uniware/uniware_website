@@ -34,7 +34,7 @@ export function SiteFooter() {
           </Link>
           <span className="footer-sep" aria-hidden="true" />
           <a
-            href="https://www.linkedin.com/company/uniware-systems/"
+            href="https://www.linkedin.com/company/uniware/posts"
             className="footer-link"
             target="_blank"
             rel="noopener noreferrer"

@@ -42,7 +42,9 @@ export function SiteNav() {
           <Link
             href="/contact"
             className={
-              onContact ? "site-nav-cta site-nav-cta--secondary" : "site-nav-cta"
+              onContact
+                ? "btn-size-sm btn-surface-dark-ghost"
+                : "btn-size-sm btn-surface-dark"
             }
             aria-current={onContact ? "page" : undefined}
           >

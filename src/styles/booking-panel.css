@@ -38,7 +38,7 @@
   color:var(--uw-text-on-dark-secondary);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;
-  transition:background-color 150ms ease,border-color 150ms ease,color 150ms ease;
+  transition:background-color var(--uw-transition-hover) ease,border-color var(--uw-transition-hover) ease,color var(--uw-transition-hover) ease;
 }
 .panel-close:hover{background:var(--surface-dark-light);border-color:var(--border-chrome-panel);color:var(--uw-white)}
 .panel-close:focus-visible{outline:2px solid var(--uw-amber-dark);outline-offset:2px}
@@ -127,7 +127,7 @@
   font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body-sm);
   color:var(--uw-text-on-dark-pill);
   cursor:pointer;user-select:none;
-  transition:border-color 150ms ease,background-color 150ms ease,color 150ms ease;
+  transition:border-color var(--uw-transition-hover) ease,background-color var(--uw-transition-hover) ease,color var(--uw-transition-hover) ease;
 }
 .pill-label:hover{border-color:var(--border-chrome-half);color:var(--uw-white)}
 /* CSS-only checked state — no JS */
@@ -138,17 +138,8 @@
 }
 .pill-input:focus-visible + .pill-label{outline:2px solid var(--uw-amber-border);outline-offset:2px}
 
-/* Panel submit button — amber fill on dark surface */
-.btn-panel-submit{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-button);line-height:1;
-  padding:14px 28px;border-radius:8px;
-  background:var(--uw-amber-dark);color:var(--uw-black);border:1px solid var(--uw-amber-dark);
-  cursor:pointer;width:100%;margin-top:8px;
-  transition:background-color 150ms ease,border-color 150ms ease,color 150ms ease;
-}
-.btn-panel-submit:hover{background:transparent;border-color:var(--uw-amber-dark);color:var(--uw-amber-dark)}
-.btn-panel-submit:focus-visible{outline:2px solid var(--uw-white);outline-offset:2px}
+/* Panel submit button — layout only; size/color come from .btn-size-lg .btn-surface-amber */
+.btn-panel-submit-layout { width: 100%; margin-top: 8px; }
 
 /* Panel success state */
 .panel-success{display:none;padding:24px 0}

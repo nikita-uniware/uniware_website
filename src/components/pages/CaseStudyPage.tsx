@@ -305,18 +305,20 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
             Talk to the Uniware team about ransomware recovery and prevention,
             before an attack forces the conversation.
           </p>
-          <Link href="/contact" className="btn-primary-amber" data-reveal="160">
-            Book a Security Review
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path
-                d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Link>
+          <span data-reveal="160">
+            <Link href="/contact" className="btn-size-lg btn-surface-amber">
+              Book a Security Review
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path
+                  d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </span>
         </div>
       </section>
     </div>

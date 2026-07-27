@@ -241,6 +241,39 @@ Cards not in a connected group use a direct border:
 
 ---
 
+## 03a — Clickable Card Pattern (Overlay Link)
+
+Use this pattern any time a card has exactly one CTA (a link or button) and the whole card should be clickable, while hover feedback (underline, arrow swap, button color change) stays scoped to only the CTA itself, not the whole card.
+
+**Why this is needed:** a single element cannot have two different hover boundaries. If the CTA's own clickable area is stretched to cover the whole card, its hover feedback fires from anywhere on the card too, since the browser can't distinguish "big for clicking" from "small for hovering" on one element. The fix is two separate elements: an invisible one sized to the whole card that only handles the click, and the real, visible CTA that only handles its own small hover area.
+
+**The pattern, three parts:**
+
+1. **An invisible overlay link**, added as the first child inside the card, sized to fill the card and pointing to the same destination as the visible CTA:
+
+```html
+<a href="[same destination as the CTA]" class="card-overlay-link" aria-hidden="true" tabindex="-1"></a>
+```
+
+`aria-hidden="true"` and `tabindex="-1"` keep this out of keyboard and screen-reader navigation. Only the real, visible CTA should ever be reachable that way.
+
+2. **The CTA wrapper sits above the overlay**, regardless of how many buttons or links are inside it:
+
+```css
+.card-overlay-link{ position:absolute; inset:0; z-index:1; border-radius:12px; }
+.card-cta{ position:relative; z-index:2; }
+```
+
+Any element or wrapper holding a card's CTA(s) gets the `card-cta` class. This is what lets the real button/link peek above the overlay in its own small area, so hovering or clicking it lands on the actual element, not the invisible one.
+
+3. **Never apply position/z-index directly to individual buttons or links.** Always apply card-cta to their wrapper instead, so the rule stays consistent and reusable regardless of what's inside.
+
+**Result:** hovering empty card space does nothing to the CTA's visual state. Hovering directly on the CTA triggers its own hover state normally. Clicking anywhere on the card, including empty space, navigates to the same destination as the CTA.
+
+**Reference implementation:** Client Stories cards and Get Started blocks, cybersecurity page.
+
+---
+
 ## 04 — Layout System
 
 ### Content max width
@@ -800,7 +833,9 @@ On any card hover — whether the card is clickable or not — the icon transiti
 
 ### Base properties
 
-Font: DM Sans 500. Radius: 8px (`rounded-lg`). Transition: `background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease`.
+Font: DM Sans 500. Radius: 8px (`rounded-lg`). Transition: `background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease`.
+
+`--uw-transition-hover` is defined in `globals.css` — reference it rather than hardcoding a duration, so all hover transitions stay in sync if the value ever changes.
 
 All buttons carry a `border: 1px solid` so switching between filled and ghost states never causes layout shift.
 
@@ -846,7 +881,7 @@ Large: hero CTAs and standalone CTA blocks. Medium: default for most sections. S
 <button className="bg-white text-[#010512] border border-white font-body font-medium
   text-[15px] px-[22px] py-[11px] rounded-lg
   hover:bg-transparent hover:text-white
-  transition-[background-color,border-color,color] duration-150 ease-in-out">
+  transition-[background-color,border-color,color] duration-hover ease-in-out">
   Get in touch
 </button>
 
@@ -854,7 +889,7 @@ Large: hero CTAs and standalone CTA blocks. Medium: default for most sections. S
 <button className="bg-transparent text-white border border-[rgba(255,255,255,0.35)] font-body font-medium
   text-[15px] px-[22px] py-[11px] rounded-lg
   hover:bg-white hover:text-[#010512] hover:border-white
-  transition-[background-color,border-color,color] duration-150 ease-in-out">
+  transition-[background-color,border-color,color] duration-hover ease-in-out">
   Learn more
 </button>
 ```
@@ -875,7 +910,7 @@ Large: hero CTAs and standalone CTA blocks. Medium: default for most sections. S
 <button className="bg-[#010512] text-white border border-[#010512] font-body font-medium
   text-[15px] px-[22px] py-[11px] rounded-lg
   hover:bg-[#E9A638] hover:border-[#E9A638] hover:text-[#010512]
-  transition-[background-color,border-color,color] duration-150 ease-in-out">
+  transition-[background-color,border-color,color] duration-hover ease-in-out">
   Get in touch
 </button>
 
@@ -883,7 +918,7 @@ Large: hero CTAs and standalone CTA blocks. Medium: default for most sections. S
 <button className="bg-transparent text-[#010512] border border-[rgba(1,5,18,0.28)] font-body font-medium
   text-[15px] px-[22px] py-[11px] rounded-lg
   hover:bg-[#010512] hover:border-[#010512] hover:text-white
-  transition-[background-color,border-color,color] duration-150 ease-in-out">
+  transition-[background-color,border-color,color] duration-hover ease-in-out">
   Learn more
 </button>
 ```
@@ -904,7 +939,7 @@ Primary only. No secondary buttons on amber sections.
 <button className="bg-[#010512] text-white border border-[#010512] font-body font-medium
   text-[15px] px-[22px] py-[11px] rounded-lg
   hover:bg-white hover:border-white hover:text-[#010512]
-  transition-[background-color,border-color,color] duration-150 ease-in-out">
+  transition-[background-color,border-color,color] duration-hover ease-in-out">
   Get in touch
 </button>
 ```

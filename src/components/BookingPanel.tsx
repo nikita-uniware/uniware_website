@@ -335,7 +335,7 @@ export function BookingPanel() {
                 <div>
                   <button
                     type="submit"
-                    className="btn-panel-submit"
+                    className="btn-size-lg btn-surface-amber-fill btn-panel-submit-layout"
                     disabled={submitting}
                   >
                     Book my call
