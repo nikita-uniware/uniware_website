@@ -71,10 +71,11 @@ export const allCaseStudiesQuery = `*[_type == "caseStudy" && defined(slug.curre
   "seoTitle": seoTitle
 }`;
 
-/** Published technologies with a logo — used by the cybersecurity partner strip. */
-export const technologiesQuery = `*[_type == "technology" && defined(name) && defined(logo.asset)] | order(name asc){
+/** Technologies with a logo for a given website page (e.g. cybersecurity partner strip). */
+export const technologiesByPageQuery = `*[_type == "technology" && defined(name) && defined(logo.asset) && $page in pages] | order(name asc){
   _id,
   name,
   "slug": slug.current,
-  "logoUrl": logo.asset->url
+  "logoUrl": logo.asset->url,
+  pages
 }`;

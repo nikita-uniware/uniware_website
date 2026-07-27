@@ -27,6 +27,10 @@ const CATEGORY_TAGS = [
   { title: "Infrastructure", value: "Infrastructure" },
 ];
 
+const TECHNOLOGY_PAGES = [
+  { title: "Cybersecurity", value: "cybersecurity" },
+];
+
 export const technology = {
   name: "technology",
   title: "Technology",
@@ -52,7 +56,36 @@ export const technology = {
       options: { source: "name" },
       validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
+    {
+      name: "pages",
+      title: "Show on pages",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        list: TECHNOLOGY_PAGES,
+        layout: "grid",
+      },
+      description:
+        "Choose which website pages this logo should appear on. Add more page options here as new partner strips ship.",
+      initialValue: ["cybersecurity"],
+    },
   ],
+  preview: {
+    select: { title: "name", subtitle: "pages" },
+    prepare: ({
+      title,
+      subtitle,
+    }: {
+      title?: string;
+      subtitle?: string[];
+    }) => ({
+      title: title || "Untitled technology",
+      subtitle:
+        Array.isArray(subtitle) && subtitle.length > 0
+          ? `Pages: ${subtitle.join(", ")}`
+          : "Pages: none selected",
+    }),
+  },
 };
 
 export const caseStudy = {

@@ -107,6 +107,7 @@ for (const file of files) {
       _type: "technology",
       name,
       slug: { _type: "slug", current: slug },
+      pages: ["cybersecurity"],
       logo: {
         _type: "image",
         asset: { _type: "reference", _ref: asset._id },

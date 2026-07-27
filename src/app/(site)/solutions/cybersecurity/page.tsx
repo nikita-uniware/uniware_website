@@ -12,6 +12,6 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function Page() {
-  const technologies = await fetchTechnologies();
+  const technologies = await fetchTechnologies("cybersecurity");
   return <CybersecurityPage technologies={technologies} />;
 }

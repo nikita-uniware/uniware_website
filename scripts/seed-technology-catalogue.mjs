@@ -60,12 +60,26 @@ for (const name of CATALOGUE) {
   try {
     const existing = await client.getDocument(id).catch(() => null);
     if (existing) {
-      results.push({
-        name,
-        slug,
-        status: "exists",
-        hasLogo: Boolean(existing.logo?.asset),
-      });
+      const pages = Array.isArray(existing.pages) ? existing.pages : [];
+      if (!pages.includes("cybersecurity")) {
+        await client
+          .patch(id)
+          .set({ pages: [...pages, "cybersecurity"] })
+          .commit();
+        results.push({
+          name,
+          slug,
+          status: "pages-updated",
+          hasLogo: Boolean(existing.logo?.asset),
+        });
+      } else {
+        results.push({
+          name,
+          slug,
+          status: "exists",
+          hasLogo: Boolean(existing.logo?.asset),
+        });
+      }
       continue;
     }
 
@@ -74,6 +88,7 @@ for (const name of CATALOGUE) {
       _type: "technology",
       name,
       slug: { _type: "slug", current: slug },
+      pages: ["cybersecurity"],
     });
     results.push({ name, slug, status: "created", hasLogo: false });
   } catch (error) {

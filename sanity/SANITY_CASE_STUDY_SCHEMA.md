@@ -108,8 +108,9 @@ If product later wants UniDocs-style block builders (images mid-story, drag-reor
 | name | string | yes | Display name (e.g. CrowdStrike) |
 | logo | image | recommended | Official vendor logo |
 | slug | slug | yes | Auto from name |
+| pages | array of string | no | Which site pages show this logo. For now: `cybersecurity`. Filtered by `fetchTechnologies(page)`. |
 
-Used by: case study overview/solution references, and cybersecurity partner logo strip (`fetchTechnologies`).
+Used by: case study overview/solution references, and cybersecurity partner logo strip (`fetchTechnologies("cybersecurity")`).
 
 ---
 

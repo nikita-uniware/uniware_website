@@ -3,7 +3,7 @@ import {
   allCaseStudiesQuery,
   caseStudyBySlugQuery,
   caseStudySlugsQuery,
-  technologiesQuery,
+  technologiesByPageQuery,
 } from "./queries";
 import { mapSanityCaseStudy, type SanityCaseStudyDoc } from "./mappers";
 import type { CaseStudy } from "@/content/case-studies/chemical-manufacturing";
@@ -82,17 +82,25 @@ type SanityTechnologyDoc = {
   name: string;
   slug: string | null;
   logoUrl: string | null;
+  pages?: string[] | null;
 };
 
-/** Published technologies for the cybersecurity partner logo strip. */
-export async function fetchTechnologies(): Promise<TechnologyLogo[]> {
+export type TechnologyPageId = "cybersecurity";
+
+/** Published technologies for a page partner strip (filtered by CMS `pages`). */
+export async function fetchTechnologies(
+  page: TechnologyPageId = "cybersecurity"
+): Promise<TechnologyLogo[]> {
   if (!isSanityConfigured()) return LOCAL_TECHNOLOGY_LOGOS;
 
   try {
     const client = getSanityClient();
     if (!client) return LOCAL_TECHNOLOGY_LOGOS;
 
-    const docs = await client.fetch<SanityTechnologyDoc[]>(technologiesQuery);
+    const docs = await client.fetch<SanityTechnologyDoc[]>(
+      technologiesByPageQuery,
+      { page }
+    );
     const mapped = (docs ?? [])
       .filter((doc) => Boolean(doc.logoUrl && doc.name))
       .map((doc) => ({
