@@ -59,7 +59,7 @@ export async function sendWebsiteNotification(opts: {
   const portRaw = process.env.SMTP_PORT?.trim();
   const user = process.env.SMTP_USER?.trim();
   const password = process.env.SMTP_PASSWORD?.replace(/^['"]|['"]$/g, "");
-  const from = process.env.SMTP_FROM?.trim();
+  const from = process.env.SMTP_FROM?.trim().replace(/^['"]|['"]$/g, "");
   const secureEnv = process.env.SMTP_SECURE?.trim().toLowerCase();
 
   if (!host || !portRaw || !user || !password || !from) {
@@ -76,7 +76,9 @@ export async function sendWebsiteNotification(opts: {
   const secure =
     secureEnv === "true" || secureEnv === "1" || (!secureEnv && port === 465);
 
-  const recipients = [WEBSITE_FORM_TO, ...WEBSITE_FORM_CC];
+  const to = WEBSITE_FORM_TO;
+  const cc = WEBSITE_FORM_CC;
+  const envelopeRecipients = [to, ...cc];
 
   const transporter = nodemailer.createTransport({
     host,
@@ -91,15 +93,15 @@ export async function sendWebsiteNotification(opts: {
 
   const info = await transporter.sendMail({
     from,
-    to: recipients,
-    cc: WEBSITE_FORM_CC,
+    to,
+    cc,
     replyTo: opts.replyTo,
     subject: opts.subject,
     text: opts.text,
     html: opts.html,
     envelope: {
       from: user,
-      to: recipients,
+      to: envelopeRecipients,
     },
   });
 
