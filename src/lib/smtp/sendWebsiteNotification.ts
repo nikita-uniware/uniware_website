@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 export const WEBSITE_FORM_TO = "sales@uniware.net";
-export const WEBSITE_FORM_CC = ["srimathi.s@uniware.net"];
+export const WEBSITE_FORM_CC = ["srimathi.s@uniware.net", "nikita@uniware.net"];
 
 export function escapeHtml(value: string) {
   return value
