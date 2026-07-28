@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { submitAssessment } from "@/app/solutions/cybersecurity/cyber-readiness-assessment/actions";
+import { submitAssessment } from "@/lib/cyber-readiness-assessment/actions";
 import { questions, type AnswerValue } from "@/content/cyber-readiness-assessment-data";
 import { getAllDomainScores, getOverallScore, getTier } from "@/lib/cyber-readiness-scoring";
 import { ContactFormScreen, type ContactDetails } from "./ContactFormScreen";

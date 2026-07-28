@@ -49,25 +49,5 @@ writeMarkupModule(
   "caseStudyMarkup"
 );
 
-fs.writeFileSync(
-  "src/styles/cybersecurity.page.css",
-  patchPageCss(fs.readFileSync("src/styles/cybersecurity.css", "utf8"))
-);
-fs.writeFileSync(
-  "src/styles/case-study.page.css",
-  patchPageCss(fs.readFileSync("src/styles/case-study.css", "utf8"))
-);
-console.log("Page CSS ready");
-
-/** Next.js layout already clears the fixed nav via body padding-top. */
-function patchPageCss(css) {
-  return css
-    .replace(
-      /\.hero\{\s*padding-top:64px;\s*\}\s*\/\*\s*compensate for fixed 64px nav\s*\*\//g,
-      "/* hero nav clearance: body padding-top in globals.css */"
-    )
-    .replace(
-      /\.site-footer\{[\s\S]*?\.footer-copy\{[^}]+\}\n?/g,
-      "/* Footer chrome lives in globals.css + SiteFooter (layout) — omit page duplicates */\n"
-    );
-}
+// Page CSS is maintained directly in *.page.css (legacy non-.page copies removed).
+console.log("Markup modules written. Page CSS is not regenerated from legacy CSS copies.");

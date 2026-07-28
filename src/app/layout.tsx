@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { spaceGrotesk, dmSans } from "./fonts";
-import { SiteNav } from "@/components/SiteNav";
-import { SiteFooter } from "@/components/SiteFooter";
-import { BookingPanel } from "@/components/BookingPanel";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,12 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${dmSans.variable}`}>
-      <body className="font-body antialiased">
-        <SiteNav />
-        <main>{children}</main>
-        <SiteFooter />
-        <BookingPanel />
-      </body>
+      <body className="font-body antialiased">{children}</body>
     </html>
   );
 }
