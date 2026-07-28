@@ -24,7 +24,7 @@ const chemicalManufacturingCaseStudy = {
   slug: "ransomware-recovery-chemical-manufacturing",
   categoryTags: ["Cybersecurity", "Data Protection", "Infrastructure"],
   headline:
-    "Test headline: Ransomware recovery for a five-division manufacturing business, in 72 hours.",
+    "Ransomware recovery for a five-division manufacturing business, in 72 hours.",
   subtext:
     "A 300-person chemical manufacturing business with five divisions across Tamil Nadu. No ransom paid. No repeat incidents since.",
   stats: [

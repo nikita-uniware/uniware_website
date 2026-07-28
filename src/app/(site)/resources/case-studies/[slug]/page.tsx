@@ -9,6 +9,9 @@ import {
 /** Refresh published Studio content without a full redeploy. */
 export const revalidate = 60;
 
+/** Allow CMS slugs that were not known at build time. */
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const slugs = await fetchCaseStudySlugs();
   return slugs.map((slug) => ({ slug }));

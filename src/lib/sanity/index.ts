@@ -30,22 +30,27 @@ export async function fetchCaseStudyBySlug(
           { slug }
         );
         const mapped = mapSanityCaseStudy(doc);
-        if (mapped) return mapped;
-
+        if (mapped) {
+          console.info(`[sanity] serving case study "${slug}" from CMS`);
+          return mapped;
+        }
         console.error(
-          `[sanity] case study "${slug}" fetched but failed mapping (check required CMS fields). Not using local fallback while Sanity is configured.`
+          `[sanity] case study "${slug}" fetched but failed mapping — using local fallback`
         );
-        return null;
       }
     } catch (err) {
-      console.error("[sanity] fetchCaseStudyBySlug failed:", err);
-      // Do not silently serve local hardcoded content when Sanity is configured —
-      // that hid CMS issues on production.
-      return null;
+      console.error(
+        `[sanity] fetchCaseStudyBySlug failed for "${slug}" — using local fallback:`,
+        err
+      );
     }
   }
 
-  return LOCAL_FALLBACKS[slug] ?? null;
+  const local = LOCAL_FALLBACKS[slug] ?? null;
+  if (local) {
+    console.warn(`[sanity] serving case study "${slug}" from local fallback`);
+  }
+  return local;
 }
 
 export async function fetchCaseStudySlugs(): Promise<string[]> {
