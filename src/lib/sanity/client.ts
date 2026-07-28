@@ -12,6 +12,12 @@ const token = process.env.SANITY_API_READ_TOKEN;
 export function getSanityClient(): SanityClient | null {
   if (!projectId) return null;
 
+  if (!token) {
+    console.warn(
+      "[sanity] SANITY_API_READ_TOKEN is not set. Private datasets will fail to load CMS content."
+    );
+  }
+
   return createClient({
     projectId,
     dataset,
@@ -22,6 +28,7 @@ export function getSanityClient(): SanityClient | null {
   });
 }
 
+/** True when project ID is present (token strongly recommended for production). */
 export function isSanityConfigured(): boolean {
   return Boolean(projectId);
 }

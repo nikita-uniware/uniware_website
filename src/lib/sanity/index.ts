@@ -31,9 +31,17 @@ export async function fetchCaseStudyBySlug(
         );
         const mapped = mapSanityCaseStudy(doc);
         if (mapped) return mapped;
+
+        console.error(
+          `[sanity] case study "${slug}" fetched but failed mapping (check required CMS fields). Not using local fallback while Sanity is configured.`
+        );
+        return null;
       }
     } catch (err) {
       console.error("[sanity] fetchCaseStudyBySlug failed:", err);
+      // Do not silently serve local hardcoded content when Sanity is configured —
+      // that hid CMS issues on production.
+      return null;
     }
   }
 
