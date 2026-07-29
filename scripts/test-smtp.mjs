@@ -6,15 +6,21 @@
  */
 import nodemailer from "nodemailer";
 
+const stripQuotes = (v) => v.replace(/^['"]|['"]$/g, "");
+
 const host = process.env.SMTP_HOST?.trim();
 const portRaw = process.env.SMTP_PORT?.trim();
 const user = process.env.SMTP_USER?.trim();
-const password = process.env.SMTP_PASSWORD;
-const from = process.env.SMTP_FROM?.trim();
+const password = process.env.SMTP_PASSWORD
+  ? stripQuotes(process.env.SMTP_PASSWORD)
+  : undefined;
+const from = process.env.SMTP_FROM
+  ? stripQuotes(process.env.SMTP_FROM.trim())
+  : undefined;
 const secureEnv = process.env.SMTP_SECURE?.trim().toLowerCase();
 
 const TO = "sales@uniware.net";
-const CC = ["srimathi.s@uniware.net"];
+const CC = ["srimathi.s@uniware.net", "nikita@uniware.net"];
 
 if (!host || !portRaw || !user || !password || !from) {
   console.error("Missing SMTP_* env vars. Add them to .env.local first.");

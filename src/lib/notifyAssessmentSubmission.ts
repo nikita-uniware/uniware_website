@@ -8,8 +8,12 @@ import {
 } from "@/content/cyber-readiness-assessment-data";
 import {
   escapeHtml,
+  leadHeading,
+  leadSubject,
   sendWebsiteNotification,
 } from "@/lib/smtp/sendWebsiteNotification";
+
+const FORM_NAME = "Cyber Readiness Assessment";
 
 export type AssessmentEmailPayload = {
   firstName: string;
@@ -56,7 +60,7 @@ function buildBodies(payload: AssessmentEmailPayload, ref: string) {
   });
 
   const text = [
-    "New Uniware website lead — Cyber Readiness Assessment",
+    leadHeading(FORM_NAME),
     "",
     ...summaryRows.map((row) => `${row.label}: ${row.value}`),
     "",
@@ -84,7 +88,7 @@ function buildBodies(payload: AssessmentEmailPayload, ref: string) {
 
   const html = `
     <div style="font-family:Arial,sans-serif;font-size:14px;color:#111;line-height:1.5;">
-      <p style="margin:0 0 16px;"><strong>New Uniware website lead — Cyber Readiness Assessment</strong></p>
+      <p style="margin:0 0 16px;"><strong>${escapeHtml(leadHeading(FORM_NAME))}</strong></p>
       <table style="border-collapse:collapse;width:100%;max-width:640px;margin-bottom:16px;">
         ${htmlSummary}
       </table>
@@ -101,7 +105,7 @@ function buildBodies(payload: AssessmentEmailPayload, ref: string) {
 export async function notifyAssessmentSubmission(payload: AssessmentEmailPayload) {
   const ref = `CRA-${Date.now().toString(36).toUpperCase()}`;
   const { text, html } = buildBodies(payload, ref);
-  const subject = `[Uniware] Cyber readiness assessment (${ref}) — ${payload.company}`;
+  const subject = leadSubject(FORM_NAME);
 
   await sendWebsiteNotification({
     logLabel: "notifyAssessmentSubmission",

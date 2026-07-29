@@ -3,6 +3,20 @@ import nodemailer from "nodemailer";
 export const WEBSITE_FORM_TO = "sales@uniware.net";
 export const WEBSITE_FORM_CC = ["srimathi.s@uniware.net", "nikita@uniware.net"];
 
+/** Public site host shown in lead subject lines. */
+export const WEBSITE_SOURCE_HOST =
+  process.env.WEBSITE_SOURCE_HOST?.trim() || "global.uniware.net";
+
+/** Shared body heading for lead notifications, e.g. "New lead — Contact form". */
+export function leadHeading(formName: string) {
+  return `New lead — ${formName}`;
+}
+
+/** Subject line: heading plus source host, e.g. "… | global.uniware.net". */
+export function leadSubject(formName: string) {
+  return `${leadHeading(formName)} | ${WEBSITE_SOURCE_HOST}`;
+}
+
 export function escapeHtml(value: string) {
   return value
     .replace(/&/g, "&amp;")

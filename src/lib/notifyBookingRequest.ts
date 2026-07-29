@@ -1,5 +1,7 @@
 import {
   buildKeyValueBodies,
+  leadHeading,
+  leadSubject,
   sendWebsiteNotification,
 } from "@/lib/smtp/sendWebsiteNotification";
 
@@ -13,6 +15,8 @@ export type BookingRequestEmailPayload = {
   notes: string;
   timestamp?: string;
 };
+
+const FORM_NAME = "Book a security review";
 
 const TOPIC_LABELS: Record<string, string> = {
   cybersecurity: "Cybersecurity",
@@ -59,10 +63,10 @@ export async function notifyBookingRequest(payload: BookingRequestEmailPayload) 
   const company = payload.company.trim() || "No company given";
   const topic = topicLabel(payload.topic);
   const timestamp = payload.timestamp ?? new Date().toISOString();
-  const subject = `[Uniware] Book a security review — ${topic} — ${company}`;
+  const subject = leadSubject(FORM_NAME);
 
   const { text, html } = buildKeyValueBodies({
-    title: "New Uniware website lead — Book a security review",
+    title: leadHeading(FORM_NAME),
     rows: [
       { label: "Form", value: "Booking panel — Book a security review / Book a call" },
       { label: "Name", value: payload.name },

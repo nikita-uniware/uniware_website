@@ -34,8 +34,9 @@ yarn-error.log*
 .env*
 !.env.example
 
-# Sanity Studio local runtime
+# Sanity Studio local runtime and deploy build output
 .sanity/
+/dist/
 
 # vercel
 .vercel

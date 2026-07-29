@@ -66,7 +66,7 @@ export const technology = {
         layout: "grid",
       },
       description:
-        "Choose which website pages this logo should appear on. Add more page options here as new partner strips ship.",
+        "Tick the pages where this logo should appear. Leave all unticked to hide it everywhere without deleting. Only these options are allowed — do not type custom names.",
       initialValue: ["cybersecurity"],
     },
   ],

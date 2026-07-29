@@ -1,5 +1,7 @@
 import {
   buildKeyValueBodies,
+  leadHeading,
+  leadSubject,
   sendWebsiteNotification,
 } from "@/lib/smtp/sendWebsiteNotification";
 
@@ -11,6 +13,8 @@ export type ContactSubmissionEmailPayload = {
   message: string;
   timestamp?: string;
 };
+
+const FORM_NAME = "Contact form";
 
 const ABOUT_LABELS: Record<string, string> = {
   cybersecurity: "Cybersecurity",
@@ -30,10 +34,10 @@ export async function notifyContactSubmission(
   const company = payload.company.trim() || "No company given";
   const about = aboutLabel(payload.about);
   const timestamp = payload.timestamp ?? new Date().toISOString();
-  const subject = `[Uniware] Contact form — ${about} — ${company}`;
+  const subject = leadSubject(FORM_NAME);
 
   const { text, html } = buildKeyValueBodies({
-    title: "New Uniware website lead — Contact form (Get in touch)",
+    title: leadHeading(FORM_NAME),
     rows: [
       { label: "Form", value: "Contact page — Send us a message" },
       { label: "Name", value: payload.name },
