@@ -44,22 +44,8 @@ body{font-family:var(--font-body);font-weight:var(--font-weight-light);backgroun
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
-/* ─── Scroll reveal — text elements ──────────────────────
-   Actual trigger: rootMargin 0px on all sides, threshold 0 —
-   fires as soon as any part of the element enters the
-   viewport (typically the bottom edge while scrolling up),
-   NOT at 50% viewport height. 600ms ease-out.
-   data-reveal = transition-delay in ms.
-   --lift = y-offset (14px, applied uniformly).
-────────────────────────────────────────────────────────── */
-html.is-ready [data-reveal]{
-  opacity:0;
-  transform:translateY(var(--lift,14px));
-  transition:
-    opacity   600ms ease-out var(--reveal-delay,0ms),
-    transform 600ms ease-out var(--reveal-delay,0ms);
-}
-html.is-ready [data-reveal].is-visible{opacity:1;transform:translateY(0)}
+/* Scroll reveal for [data-reveal] text elements is defined once,
+   globally, in globals.css — do not duplicate it here. */
 
 /* ─── Scroll reveal — spine lines ────────────────────────
    Triggers immediately when line enters viewport bottom.

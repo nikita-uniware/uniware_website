@@ -574,9 +574,9 @@ html.is-ready [data-reveal].is-visible {
    Size classes: dimensions and timing only, no color.
    Surface classes: color only, no dimensions or timing.
    Compose one of each, e.g. class="btn-size-md btn-surface-light".
-   Not yet referenced anywhere — existing button classes (.btn-hero,
-   .btn-panel-submit, .btn-primary, .btn-primary-amber, .btn-primary-l,
-   .btn-submit-l) are untouched. */
+   All prior button classes (.btn-hero, .btn-panel-submit, .btn-primary,
+   .btn-primary-amber, .btn-primary-l, .btn-submit-l) have been migrated
+   onto this system and no longer exist as separate definitions. */
 .btn-size-lg {
   padding: 14px 30px;
   font-size: 16px;

@@ -742,6 +742,14 @@ export function useReveal() {
 
 The `data-reveal` value on each element is its stagger delay in milliseconds (e.g. `data-reveal="80"`, `data-reveal="160"`).
 
+### data-reveal and hover transitions — never share an element
+
+**Rule:** never place `data-reveal` directly on an element that also has its own hover transition. Put `data-reveal` on a wrapper instead, and let the hover transition live on the inner element.
+
+**Why:** both the reveal system and a hover effect work by animating the CSS `transition` property. When two rules both set `transition` on the *same* element, CSS specificity/cascade rules mean the more specific (or later, or `!important`) rule wins **completely**, not partially — it silently discards the other rule's transition value entirely, rather than merging the two lists of animated properties. In practice this means either the reveal fade-up stops animating, or the hover effect stops animating (whichever rule loses), with no error or warning — it just silently snaps instead of transitioning.
+
+**How to apply:** wrap the element in a plain `<div data-reveal="...">` (or reuse an existing wrapper) and keep the hover-transitioned element — a button, a link-text CTA, a card — as a plain child with its own `transition` declaration, untouched by the reveal system.
+
 ### Framer Motion usage limits
 
 
@@ -833,32 +841,61 @@ On any card hover — whether the card is clickable or not — the icon transiti
 
 ## 10 — Button System
 
-### Base properties
+A real button is always a **size class + a surface class, composed together** — never used alone:
 
-Font: DM Sans 500. Radius: 8px (`rounded-lg`). Transition: `background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease`.
+```html
+<a href="/contact" class="btn-size-md btn-surface-dark">Get in touch</a>
+```
 
-`--uw-transition-hover` is defined in `globals.css` — reference it rather than hardcoding a duration, so all hover transitions stay in sync if the value ever changes.
+Size classes control dimensions and timing only, no color. Surface classes control color only, no dimensions or timing. This split means any size can pair with any surface without duplicating rules.
 
-All buttons carry a `border: 1px solid` so switching between filled and ghost states never causes layout shift.
+### Base properties (all size classes)
+
+Font: `var(--font-body)` / `var(--font-weight-medium)`. Radius: `8px`. Layout: `inline-flex`, centered, no text decoration.
+
+Transition (identical across all sizes and surfaces): `transition-property: background-color, border-color, color; transition-duration: var(--uw-transition-hover); transition-timing-function: ease;`
+
+`--uw-transition-hover` (`400ms`) is the standard transition value for this entire system — every hover-driven color change references this token rather than a hardcoded duration or an old `duration-150`/`0.15s` value, so all hover transitions stay in sync if it's ever tuned.
+
+Every size class also carries a `:focus-visible` outline (`2px solid var(--uw-white)`, `2px` offset) for keyboard navigation — this is not optional or surface-dependent, it's identical on every button regardless of surface.
+
+All buttons carry a `border: 1px solid` (color set by the surface class) so switching between filled and ghost states never causes layout shift.
+
+### Size classes
+
+Only padding, font size, and gap differ between sizes — everything else comes from the base properties above.
+
+| Class | Padding | Font size | Gap |
+|---|---|---|---|
+| `.btn-size-lg` | `14px 30px` | 16px | 10px |
+| `.btn-size-md` | `11px 22px` | 15px | 8px |
+| `.btn-size-sm` | `7px 14px` | 13px | 8px |
+
+Large: hero CTAs and standalone CTA blocks. Medium: default for most sections. Small: card CTAs and inline actions.
+
+### Surface classes
+
+Color only — background, text color, border color, and their hover states. Pick the surface class matching the background the button sits on.
+
+| Class | Surface it's for | Default | Hover |
+|---|---|---|---|
+| `.btn-surface-dark` | Dark sections (primary CTA) | White fill, black text, white border | Transparent, white text/border |
+| `.btn-surface-dark-ghost` | Dark sections (secondary CTA) | Transparent, white text, `--border-chrome-intense` border | White fill, black text |
+| `.btn-surface-light` | White sections (primary CTA) | Black fill, white text, black border | Amber (`--uw-amber-dark`) fill, black text/border |
+| `.btn-surface-light-ghost` | White sections (secondary CTA) | Transparent, black text, `--border-light-strong` border | Black fill, white text/border |
+| `.btn-surface-amber` | Amber sections (primary CTA; no secondary on amber) | Black fill, white text, black border | White fill, black text/border |
+| `.btn-surface-amber-fill` | Accent/filled-amber CTA, any surface | Amber (`--uw-amber-dark`) fill, black text/border | Transparent, amber text/border |
+
+**Note:** on dark surfaces, `.btn-surface-dark` and `.btn-surface-dark-ghost` converge to the same visual hover state (white fill, black text). This is intentional — in practice, buttons are positioned and sized with enough surrounding context that the hover parity does not create confusion.
 
 ### Types
 
-Three types across all surfaces:
+Three types, composable with any size/surface pair:
 - **Text only** — standard CTA
 - **Text + arrow** — navigational or directional CTA. Arrow is inline SVG with `stroke="currentColor"` so it always matches button text color, including on hover.
 - **Icon square** — compact, card-level or supplementary action
 
 Which type to use is a per-context decision, not a per-surface rule.
-
-### Sizes
-
-| Name | Font size | Padding | Icon square |
-|---|---|---|---|
-| Large | 16px | `py-[14px] px-[30px]` | 52 × 52px |
-| Medium (default) | 15px | `py-[11px] px-[22px]` | 44 × 44px |
-| Small | 13px | `py-[7px] px-[14px]` | 36 × 36px |
-
-Large: hero CTAs and standalone CTA blocks. Medium: default for most sections. Small: card CTAs and inline actions.
 
 ### Arrow SVG (inline, reuse across all button types)
 
@@ -871,80 +908,49 @@ Large: hero CTAs and standalone CTA blocks. Medium: default for most sections. S
 
 ---
 
-### Dark backgrounds
+## 10a — Link-Text System
 
-| State | Primary | Secondary |
-|---|---|---|
-| Default | White fill, dark text, white border | Transparent, white border (35% opacity), white text |
-| Hover | Transparent, white border, white text | White fill, dark text, white border |
+For links that are text-only — no padding, no border, no fill at any state — optionally with a trailing arrow SVG. This is a distinct system from the Button System above: buttons are filled/bordered controls, link-text is bare inline text, styled the same way regardless of size or surface beyond color and font-size.
 
-```jsx
-{/* Primary */}
-<button className="bg-white text-[#010512] border border-white font-body font-medium
-  text-[15px] px-[22px] py-[11px] rounded-lg
-  hover:bg-transparent hover:text-white
-  transition-[background-color,border-color,color] duration-hover ease-in-out">
-  Get in touch
-</button>
+### Base + size classes
 
-{/* Secondary */}
-<button className="bg-transparent text-white border border-[rgba(255,255,255,0.35)] font-body font-medium
-  text-[15px] px-[22px] py-[11px] rounded-lg
-  hover:bg-white hover:text-[#010512] hover:border-white
-  transition-[background-color,border-color,color] duration-hover ease-in-out">
-  Learn more
-</button>
-```
+`.link-text` is the base (display, gap, font-family/weight, color transition). Compose it with exactly one size class:
 
-**Note:** On hover, primary and secondary both render as ghost with white text. This is intentional. In practice, buttons are positioned and sized with enough surrounding context that the hover parity does not create confusion.
-
----
-
-### White backgrounds
-
-| State | Primary | Secondary |
-|---|---|---|
-| Default | Dark fill (#010512), white text | Transparent, dark border (28% opacity), dark text |
-| Hover | Amber fill (#E9A638), dark text, amber border | Dark fill (#010512), white text |
-
-```jsx
-{/* Primary */}
-<button className="bg-[#010512] text-white border border-[#010512] font-body font-medium
-  text-[15px] px-[22px] py-[11px] rounded-lg
-  hover:bg-[#E9A638] hover:border-[#E9A638] hover:text-[#010512]
-  transition-[background-color,border-color,color] duration-hover ease-in-out">
-  Get in touch
-</button>
-
-{/* Secondary */}
-<button className="bg-transparent text-[#010512] border border-[rgba(1,5,18,0.28)] font-body font-medium
-  text-[15px] px-[22px] py-[11px] rounded-lg
-  hover:bg-[#010512] hover:border-[#010512] hover:text-white
-  transition-[background-color,border-color,color] duration-hover ease-in-out">
-  Learn more
-</button>
-```
-
----
-
-### Amber backgrounds
-
-Primary only. No secondary buttons on amber sections.
-
-| State | Primary |
+| Class | Font size |
 |---|---|
-| Default | Dark fill (#010512), white text |
-| Hover | White fill, dark text, white border |
+| `.link-text-sm` | 14px |
+| `.link-text-md` | 16px |
+| `.link-text-lg` | 18px |
 
-```jsx
-{/* Primary */}
-<button className="bg-[#010512] text-white border border-[#010512] font-body font-medium
-  text-[15px] px-[22px] py-[11px] rounded-lg
-  hover:bg-white hover:border-white hover:text-[#010512]
-  transition-[background-color,border-color,color] duration-hover ease-in-out">
-  Get in touch
-</button>
+### Color variants (surface classes)
+
+Pick the variant matching the surface the link sits on. All three share the same hover behavior — underline, `3px` underline offset — only the base color differs:
+
+| Class | Surface | Color |
+|---|---|---|
+| `.link-text-light` | Dark/black surfaces | `var(--uw-amber-light)` |
+| `.link-text-dark` | White/light surfaces | `var(--uw-amber-dark)` |
+| `.link-text-amber` | Amber surfaces | `var(--uw-black)` |
+
+### Arrow swap behavior
+
+A link-text arrow is two stacked inline SVGs — `.link-text-arrow-default` (shown) and `.link-text-arrow-hover` (hidden) — swapped via plain `display` toggling, not an opacity crossfade, so the swap doesn't depend on both icons sharing an identical stacking position.
+
+Two swap variants, chosen by what the link does:
+- `.link-text--external` — default right-arrow → external-link diagonal arrow. For links that navigate to a different page/resource.
+- `.link-text--anchor` — default right-arrow → downward arrow. For same-page anchor/scroll links.
+
+```html
+<a class="link-text link-text-sm link-text-dark link-text--external" href="...">
+  Read the case study
+  <span class="link-text-arrow-wrap">
+    <svg class="link-text-arrow-default">...</svg>
+    <svg class="link-text-arrow-hover">...</svg>
+  </span>
+</a>
 ```
+
+**Below 1024px (touch devices):** the swapped-state arrow (the hover-only icon) shows permanently instead of the default arrow, since touch devices can't hover to discover the swap. The underline stays hover-only and is unaffected by this — only the arrow's resting state changes on touch.
 
 ---
 
@@ -990,6 +996,9 @@ Detailed per-component specs are produced in individual build sessions. This is 
 - Drop shadows anywhere. Borders only.
 - Card-level borders in connected groups — use the parent-gap technique.
 - Stacked or doubled borders — they compound in opacity and create inconsistent joins.
+
+### Animation
+- `data-reveal` on the same element as a hover transition — see [data-reveal and hover transitions](#data-reveal-and-hover-transitions--never-share-an-element) under §08.
 
 ---
 
