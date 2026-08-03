@@ -227,16 +227,13 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .gs-block-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-body-text); margin-bottom:var(--space-7); flex:1; }
 .gs-block .btn-size-lg,.gs-block .btn-size-md{ align-self:flex-start; }
 
-/* gs-block circle decoration — sm tier (240/160/80, bleed 60px), amber surface.
-   Negative z-index puts it behind gs-block's in-flow content (label, heading,
-   body, card-cta), which paint ahead of any z-index:0+ positioned sibling
-   regardless of DOM order — z-index:0 alone would render on top of them. */
-.gs-circle-group{ position:absolute; bottom:-104px; right:-104px; width:240px; height:240px; pointer-events:none; z-index:-1; opacity:0; transition:opacity 300ms ease; }
-.gs-block:hover .gs-circle-group{ opacity:1; }
-.gs-circle-group .circle-ring{ border-color:var(--circle-light); }
-.gs-circle-outer { width:240px; height:240px; top:0;   left:0;   border-left-width:2px; border-top-width:1px; border-right-width:1px; border-bottom-width:0; animation:uw-circle-outer  3s linear infinite; }
-.gs-circle-middle{ width:160px; height:160px; top:40px; left:40px; border-left-width:1px; border-top-width:2px; border-right-width:0; border-bottom-width:1px; animation:uw-circle-middle 4s linear infinite; }
-.gs-circle-inner { width:80px;  height:80px;  top:80px; left:80px; border-left-width:1px; border-top-width:0; border-right-width:0; border-bottom-width:2px; animation:uw-circle-inner   5s linear infinite; }
+/* gs-block circle decoration — negative z-index puts it behind gs-block's
+   in-flow content (label, heading, body, card-cta), which paint ahead of
+   any z-index:0+ positioned sibling regardless of DOM order — z-index:0
+   alone would render on top of them. Shape/wrapper/hover-reveal classes
+   (.circle-group, .circle-group--sm, .circle-group--light,
+   .circle-group-reveal, .circle-hover-parent, .circle-sm-*) live in
+   globals.css — reusable across pages, not gs-specific. */
 
 /* ══════════════════════════════════════════════════════
    PRE-FOOTER — Technology ecosystem logo marquee.
@@ -348,12 +345,11 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .hero-subtext{font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-lg-sm);line-height:1.65;color:var(--uw-text-on-dark);margin-bottom:var(--space-9);max-width:640px}
 @media(min-width:1024px){.hero-subtext{font-size:var(--text-body-lg)}}
 
-.circle-group{position:absolute;bottom:-120px;right:-120px;width:480px;height:480px;pointer-events:none;z-index:0}
+/* .circle-group and its size tiers (.circle-xl-*) live in globals.css —
+   reusable across pages. .circle-ring and .circle-enter (border-radius,
+   entrance animation) stay page-local here. */
 .circle-enter{position:absolute;inset:0;opacity:0;transform:scale(.4);transform-origin:center center;animation:circle-scale-in 900ms cubic-bezier(.34,1.56,.64,1) var(--enter-delay,0ms) both;}
 .circle-ring{position:absolute;border-radius:1000px;border-style:solid;border-color:var(--circle-dark)}
-.circle-outer {width:480px;height:480px;top:0;left:0;      border-left-width:2px;border-top-width:1px;border-right-width:1px;border-bottom-width:0; animation:uw-circle-outer  6s linear infinite}
-.circle-middle{width:320px;height:320px;top:80px;left:80px;  border-left-width:1px;border-top-width:2px;border-right-width:0;border-bottom-width:1px;animation:uw-circle-middle 8s linear infinite}
-.circle-inner {width:160px;height:160px;top:160px;left:160px;border-left-width:1px;border-top-width:0;border-right-width:0;border-bottom-width:2px; animation:uw-circle-inner   10s linear infinite}
 
 
 /* ══════════════════════════════════════════════════════

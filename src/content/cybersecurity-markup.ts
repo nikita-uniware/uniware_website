@@ -23,10 +23,10 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
       </a>
     </span>
   </div>
-  <div class="circle-group uw-circles-xl" aria-hidden="true">
-    <div class="circle-enter" style="--enter-delay:0ms"><div class="circle-ring circle-outer"  data-circle="outer"></div></div>
-    <div class="circle-enter" style="--enter-delay:150ms"><div class="circle-ring circle-middle" data-circle="middle"></div></div>
-    <div class="circle-enter" style="--enter-delay:300ms"><div class="circle-ring circle-inner"  data-circle="inner"></div></div>
+  <div class="circle-group circle-group--xl uw-circles-xl" aria-hidden="true">
+    <div class="circle-enter" style="--enter-delay:0ms"><div class="circle-ring circle-xl-outer"  data-circle="outer"></div></div>
+    <div class="circle-enter" style="--enter-delay:150ms"><div class="circle-ring circle-xl-middle" data-circle="middle"></div></div>
+    <div class="circle-enter" style="--enter-delay:300ms"><div class="circle-ring circle-xl-inner"  data-circle="inner"></div></div>
   </div>
 </section>
 
@@ -644,13 +644,6 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <div class="card-cta">
           <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="btn-size-md btn-surface-light">Take the assessment</a>
         </div>
-        <div class="gs-circle-group" aria-hidden="true">
-          <div style="opacity:0.6">
-            <div class="circle-ring gs-circle-outer"  data-circle="outer"></div>
-            <div class="circle-ring gs-circle-middle" data-circle="middle"></div>
-            <div class="circle-ring gs-circle-inner"  data-circle="inner"></div>
-          </div>
-        </div>
         </div>
       </div>
 
@@ -663,13 +656,6 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <div class="card-cta">
           <a href="/contact" class="btn-size-md btn-surface-light"
              onclick="window.openBookingPanel(); return false;">Book a review</a>
-        </div>
-        <div class="gs-circle-group" aria-hidden="true">
-          <div style="opacity:0.6">
-            <div class="circle-ring gs-circle-outer"  data-circle="outer"></div>
-            <div class="circle-ring gs-circle-middle" data-circle="middle"></div>
-            <div class="circle-ring gs-circle-inner"  data-circle="inner"></div>
-          </div>
         </div>
         </div>
       </div>

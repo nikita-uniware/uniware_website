@@ -379,6 +379,142 @@ html.is-ready [data-reveal].is-visible {
   }
 }
 
+/* ── Circle decoration system — reusable across pages ──
+   Generic wrapper + hover-reveal + three size tiers of ring shapes.
+   .circle-ring / .circle-enter (border-radius, entrance animation)
+   stay page-local where already defined — only the wrapper and the
+   ring tiers are shared here. */
+.circle-group {
+  position: absolute;
+  pointer-events: none;
+}
+.circle-group--xl {
+  width: 480px;
+  height: 480px;
+  bottom: -120px;
+  right: -120px;
+  z-index: 0;
+}
+.circle-group--sm {
+  width: 240px;
+  height: 240px;
+  bottom: -104px;
+  right: -104px;
+  z-index: -1;
+}
+.circle-group--light .circle-ring {
+  border-color: var(--circle-light);
+}
+.circle-group-reveal {
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.circle-hover-parent:hover .circle-group-reveal {
+  opacity: 1;
+}
+
+.circle-xl-outer {
+  width: 480px;
+  height: 480px;
+  top: 0;
+  left: 0;
+  border-left-width: 2px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 0;
+  animation: uw-circle-outer 6s linear infinite;
+}
+.circle-xl-middle {
+  width: 320px;
+  height: 320px;
+  top: 80px;
+  left: 80px;
+  border-left-width: 1px;
+  border-top-width: 2px;
+  border-right-width: 0;
+  border-bottom-width: 1px;
+  animation: uw-circle-middle 8s linear infinite;
+}
+.circle-xl-inner {
+  width: 160px;
+  height: 160px;
+  top: 160px;
+  left: 160px;
+  border-left-width: 1px;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 2px;
+  animation: uw-circle-inner 10s linear infinite;
+}
+
+.circle-lg-outer {
+  width: 360px;
+  height: 360px;
+  top: 0;
+  left: 0;
+  border-left-width: 2px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 0;
+  animation: uw-circle-outer 4.5s linear infinite;
+}
+.circle-lg-middle {
+  width: 240px;
+  height: 240px;
+  top: 60px;
+  left: 60px;
+  border-left-width: 1px;
+  border-top-width: 2px;
+  border-right-width: 0;
+  border-bottom-width: 1px;
+  animation: uw-circle-middle 6s linear infinite;
+}
+.circle-lg-inner {
+  width: 120px;
+  height: 120px;
+  top: 120px;
+  left: 120px;
+  border-left-width: 1px;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 2px;
+  animation: uw-circle-inner 7.5s linear infinite;
+}
+
+.circle-sm-outer {
+  width: 240px;
+  height: 240px;
+  top: 0;
+  left: 0;
+  border-left-width: 2px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 0;
+  animation: uw-circle-outer 3s linear infinite;
+}
+.circle-sm-middle {
+  width: 160px;
+  height: 160px;
+  top: 40px;
+  left: 40px;
+  border-left-width: 1px;
+  border-top-width: 2px;
+  border-right-width: 0;
+  border-bottom-width: 1px;
+  animation: uw-circle-middle 4s linear infinite;
+}
+.circle-sm-inner {
+  width: 80px;
+  height: 80px;
+  top: 80px;
+  left: 80px;
+  border-left-width: 1px;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 2px;
+  animation: uw-circle-inner 5s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
