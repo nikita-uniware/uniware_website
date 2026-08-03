@@ -696,7 +696,7 @@ html.is-ready [data-reveal].is-visible{ opacity:1; transform:translateY(0); }
 // hooks/useReveal.ts
 import { useEffect } from 'react';
 
-const TRIGGER_LINE = 0.65; // 65% down the viewport — elements finish
+const TRIGGER_LINE = 0.85; // 85% down the viewport — elements finish
                             // animating before reaching the reader's
                             // actual eye line (~50%). Tune this one
                             // number to shift the trigger point.
@@ -759,7 +759,9 @@ If Framer Motion is used, verify that the Next.js server render produces visible
 
 ### Fade-in exception — Hero and Footer
 
-The standard scroll-reveal system (rAF-based position check against a fixed `TRIGGER_LINE` — see live implementation for current constant, currently `0.65` — 600ms ease-out, 14px lift, staggered via a `data-reveal` delay attribute) applies to all sections **between** the hero and the footer.
+The standard scroll-reveal system (rAF-based position check against a fixed `TRIGGER_LINE` — see live implementation for current constant, currently `0.85` — 600ms ease-out, 14px lift, staggered via a `data-reveal` delay attribute) applies to all sections **between** the hero and the footer.
+
+On initial page load, hero and above-the-fold elements reveal using a double-requestAnimationFrame pattern before adding is-visible, guaranteeing the browser paints the hidden state first. Without this, the fade-up transition risks silently not animating at all, snapping straight to visible, since the browser has no guarantee of painting an intermediate frame between two class changes made in the same script execution. This applies to useReveal.ts, shared by the Cybersecurity, Case Study, and Contact pages.
 
 **Hero.** Never gated by scroll position or the `TRIGGER_LINE` threshold. Its `[data-reveal]` elements fade in automatically the instant the page renders, in their staggered order, using the same 600ms/14px timing as the rest of the system — just triggered on load instead of on scroll. A visitor hasn't scrolled yet and shouldn't have to in order to see the CTA or anything else in the hero.
 

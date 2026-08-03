@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-const TRIGGER_LINE = 0.65;
+const TRIGGER_LINE = 0.85;
 
 type UseRevealOptions = {
   /** CSS selector for the hero container. Hero [data-reveal] fade in on load. */
@@ -16,7 +16,7 @@ type UseRevealOptions = {
  *
  * On first paint, anything already in the viewport (trigger = 1.0) reveals
  * immediately so short heroes don't leave a blank band below. Scroll/resize
- * checks keep TRIGGER_LINE = 0.65.
+ * checks keep TRIGGER_LINE = 0.85.
  */
 export function useReveal({ heroSelector = ".hero" }: UseRevealOptions = {}) {
   useEffect(() => {
@@ -25,11 +25,6 @@ export function useReveal({ heroSelector = ".hero" }: UseRevealOptions = {}) {
     const heroEls = Array.from(
       document.querySelectorAll(`${heroSelector} [data-reveal]`)
     );
-    heroEls.forEach((el) => {
-      const delay = parseInt(el.getAttribute("data-reveal") || "0", 10) || 0;
-      (el as HTMLElement).style.setProperty("--reveal-delay", `${delay}ms`);
-      el.classList.add("is-visible");
-    });
 
     let revealEls = Array.from(document.querySelectorAll("[data-reveal]")).filter(
       (el) => !el.closest(heroSelector)
@@ -55,8 +50,22 @@ export function useReveal({ heroSelector = ".hero" }: UseRevealOptions = {}) {
       requestAnimationFrame(() => check());
     }
 
-    // On load: reveal everything currently in the viewport
-    check(1);
+    // Double rAF guarantees the browser paints the hidden (is-ready, no
+    // is-visible) state at least once before we flip to visible, so the
+    // fade-up transition always plays instead of possibly being coalesced
+    // into a single style recalculation and snapping straight to visible.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        heroEls.forEach((el) => {
+          const delay = parseInt(el.getAttribute("data-reveal") || "0", 10) || 0;
+          (el as HTMLElement).style.setProperty("--reveal-delay", `${delay}ms`);
+          el.classList.add("is-visible");
+        });
+
+        // On load: reveal everything currently in the viewport
+        check(1);
+      });
+    });
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
