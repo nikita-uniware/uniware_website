@@ -74,10 +74,8 @@ html.is-ready .crossbar-dr{
 html.is-ready .crossbar-dl.line-visible,
 html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 
-/* ─── Circle layout (keyframes live in globals.css) ──── */
-.uw-circles-xl{transform-origin:bottom right;transform:scale(.6)}
-@media(min-width:768px) {.uw-circles-xl{transform:scale(.65)}}
-@media(min-width:1024px){.uw-circles-xl{transform:scale(1)}}
+/* .uw-circles-xl (and its -lg/-sm siblings) now live in globals.css —
+   this page-local copy was a duplicate of the same rule. */
 
 /* ─── Container ───────────────────────────────────────── */
 .container{max-width:1200px;margin:0 auto;padding:0 var(--space-4)}
@@ -331,25 +329,15 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 /* ══════════════════════════════════════════════════════
    HERO
 ══════════════════════════════════════════════════════ */
-.hero{background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));position:relative;overflow:hidden}
-.hero .container{position:relative;z-index:2;padding-top:var(--section-pad-sm);padding-bottom:var(--section-pad-sm)}
-@media(min-width:768px){.hero .container{padding-top:var(--section-pad-md);padding-bottom:var(--section-pad-md)}}
-/* Nav clearance is body padding-top:var(--uw-nav-height) in globals.css — do not add another here */
-@media(min-width:1024px){.hero .container{padding-top:var(--section-pad-lg);padding-bottom:var(--section-pad-lg)}}
-
-.hero-eyebrow{font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-eyebrow);letter-spacing:.12em;text-transform:uppercase;color:var(--uw-amber-dark);margin-bottom:var(--space-5)}
-.hero-headline{font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-display-sm);line-height:1.10;letter-spacing:-.02em;color:var(--uw-white);margin-bottom:var(--space-6);max-width:880px}
-@media(min-width:768px) {.hero-headline{font-size:var(--text-display-md)}}
-@media(min-width:1024px){.hero-headline{font-size:var(--text-display)}}
+/* .hero, .hero-eyebrow, .hero-headline, .hero-subtext now live in
+   globals.css, reusable across pages (moved out for the case-studies
+   index build). .hero-headline .amber stays page-local — no other
+   page's hero currently uses the inline amber-span treatment. */
 .hero-headline .amber{color:var(--uw-amber-dark)}
-.hero-subtext{font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-lg-sm);line-height:1.65;color:var(--uw-text-on-dark);margin-bottom:var(--space-9);max-width:640px}
-@media(min-width:1024px){.hero-subtext{font-size:var(--text-body-lg)}}
 
-/* .circle-group and its size tiers (.circle-xl-*) live in globals.css —
-   reusable across pages. .circle-ring and .circle-enter (border-radius,
-   entrance animation) stay page-local here. */
-.circle-enter{position:absolute;inset:0;opacity:0;transform:scale(.4);transform-origin:center center;animation:circle-scale-in 900ms cubic-bezier(.34,1.56,.64,1) var(--enter-delay,0ms) both;}
-.circle-ring{position:absolute;border-radius:1000px;border-style:solid;border-color:var(--circle-dark)}
+/* .circle-group, its size tiers (.circle-xl-*/-lg-*/-sm-*), and
+   .circle-ring/.circle-enter now all live in globals.css, reusable
+   across pages (moved out for the case-studies index hero). */
 
 
 /* ══════════════════════════════════════════════════════
@@ -529,20 +517,9 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
   .recovery .container { padding-top:var(--section-pad-lg); padding-bottom:var(--section-pad-lg); }
 }
 
-/* ── Section header ── */
-.sec-eyebrow-l { font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-light); margin-bottom:var(--space-3); }
-.sec-eyebrow-d { font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-dark); margin-bottom:var(--space-3); }
-.sec-heading-l { font-family:var(--font-display); font-weight:var(--font-weight-bold); font-size:var(--text-h2-sm); line-height:1.15; letter-spacing:-.015em; color:var(--uw-black); margin-bottom:var(--space-2_5); }
-.sec-heading-d { font-family:var(--font-display); font-weight:var(--font-weight-bold); font-size:var(--text-h2-sm); line-height:1.15; letter-spacing:-.015em; color:var(--uw-white);  margin-bottom:var(--space-2_5); }
-@media(min-width:1024px){
-  .sec-heading-l,.sec-heading-d { font-size:var(--text-h2); }
-}
-.sec-sub-l { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body-lg-sm); line-height:1.65; color:var(--uw-muted); margin-bottom:var(--space-7); max-width:640px; }
-.sec-sub-d { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body-lg-sm); line-height:1.65; color:var(--uw-text-on-dark-muted); margin-bottom:var(--space-7); max-width:640px; }
-@media(min-width:1024px){
-  .sec-sub-l,.sec-sub-d { font-size:var(--text-h4-sm); }
-}
-.section-header-block { margin-bottom: 28px; }
+/* ── Section header — .section-header-block, .sec-eyebrow-l/-d,
+   .sec-heading-l/-d, .sec-sub-l/-d now live in globals.css, reusable
+   across pages (moved out for the case-studies index build). ── */
 
 /* ── Carousel wrapper ── */
 .carousel-wrap { position:relative; overflow:hidden; margin-bottom:var(--space-6); }

@@ -1,0 +1,35 @@
+/* ══════════════════════════════════════════════════════
+   CASE STUDIES INDEX — /resources/case-studies
+   Section 1 (header) reuses .hero/.hero-headline/.hero-subtext from
+   globals.css. Section 2 (category filter) below is page-specific —
+   no other page has a URL-driven single-select filter yet.
+   Grid/cards/thumbnail land in later sections of this build.
+══════════════════════════════════════════════════════ */
+
+.csi-filter { background: var(--uw-white); border-bottom: 1px solid var(--section-divider); }
+.csi-filter .container {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+}
+.csi-filter-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  list-style: none;
+}
+.csi-filter-tab {
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-body);
+  color: var(--uw-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease;
+}
+.csi-filter-tab:hover { color: var(--uw-body-text); }
+.csi-filter-tab.is-active { color: var(--uw-black); border-bottom-color: var(--uw-amber-light); }

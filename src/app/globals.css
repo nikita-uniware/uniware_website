@@ -361,38 +361,70 @@ html.is-ready [data-reveal].is-visible {
   }
 }
 
-.uw-circles-xl {
+/* Responsive shrink for every circle-group tier — same technique, same
+   multipliers (0.6 -> 0.65 -> 1.0 at 0/768/1024px) applied per tier.
+   Each multiplier scales that tier's own base size, so --lg/--sm shrink
+   proportionally smaller than --xl without needing different factors. */
+.uw-circles-xl,
+.uw-circles-lg,
+.uw-circles-sm {
   transform-origin: bottom right;
   transform: scale(0.6);
 }
-.uw-circles-xl.pos-top-right {
+.uw-circles-xl.pos-top-right,
+.uw-circles-lg.pos-top-right,
+.uw-circles-sm.pos-top-right {
   transform-origin: top right;
 }
 @media (min-width: 768px) {
-  .uw-circles-xl {
+  .uw-circles-xl,
+  .uw-circles-lg,
+  .uw-circles-sm {
     transform: scale(0.65);
   }
 }
 @media (min-width: 1024px) {
-  .uw-circles-xl {
+  .uw-circles-xl,
+  .uw-circles-lg,
+  .uw-circles-sm {
     transform: scale(1);
   }
 }
 
 /* ── Circle decoration system — reusable across pages ──
-   Generic wrapper + hover-reveal + three size tiers of ring shapes.
-   .circle-ring / .circle-enter (border-radius, entrance animation)
-   stay page-local where already defined — only the wrapper and the
-   ring tiers are shared here. */
+   Generic wrapper + hover-reveal + three size tiers of ring shapes,
+   plus the ring/entrance-animation primitives. */
 .circle-group {
   position: absolute;
   pointer-events: none;
+}
+.circle-enter {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(0.4);
+  transform-origin: center center;
+  animation: circle-scale-in 900ms cubic-bezier(0.34, 1.56, 0.64, 1)
+    var(--enter-delay, 0ms) both;
+}
+.circle-ring {
+  position: absolute;
+  border-radius: 1000px;
+  border-style: solid;
+  border-color: var(--circle-dark);
 }
 .circle-group--xl {
   width: 480px;
   height: 480px;
   bottom: -120px;
   right: -120px;
+  z-index: 0;
+}
+.circle-group--lg {
+  width: 360px;
+  height: 360px;
+  bottom: -112px;
+  right: -112px;
   z-index: 0;
 }
 .circle-group--sm {
@@ -514,6 +546,40 @@ html.is-ready [data-reveal].is-visible {
   border-bottom-width: 2px;
   animation: uw-circle-inner 5s linear infinite;
 }
+
+/* ── Hero — reusable across pages ──
+   Dark gradient hero background + eyebrow/headline/subtext text styles.
+   .hero-headline .amber (inline accent-span color) stays page-local
+   where a hero actually uses it. */
+.hero{background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));position:relative;overflow:hidden}
+.hero .container{position:relative;z-index:2;padding-top:var(--section-pad-sm);padding-bottom:var(--section-pad-sm)}
+@media(min-width:768px){.hero .container{padding-top:var(--section-pad-md);padding-bottom:var(--section-pad-md)}}
+/* Nav clearance is body padding-top:var(--uw-nav-height) in globals.css — do not add another here */
+@media(min-width:1024px){.hero .container{padding-top:var(--section-pad-lg);padding-bottom:var(--section-pad-lg)}}
+
+.hero-eyebrow{font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-eyebrow);letter-spacing:.12em;text-transform:uppercase;color:var(--uw-amber-dark);margin-bottom:var(--space-5)}
+.hero-headline{font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-display-sm);line-height:1.10;letter-spacing:-.02em;color:var(--uw-white);margin-bottom:var(--space-6);max-width:880px}
+@media(min-width:768px) {.hero-headline{font-size:var(--text-display-md)}}
+@media(min-width:1024px){.hero-headline{font-size:var(--text-display)}}
+.hero-subtext{font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-lg-sm);line-height:1.65;color:var(--uw-text-on-dark);margin-bottom:var(--space-9);max-width:640px}
+@media(min-width:1024px){.hero-subtext{font-size:var(--text-body-lg)}}
+
+/* ── Section header — reusable across pages ──
+   .section-header-block wraps eyebrow + heading + subtext; -l suffix
+   for white/light sections, -d suffix for dark sections. */
+.sec-eyebrow-l { font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-light); margin-bottom:var(--space-3); }
+.sec-eyebrow-d { font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-dark); margin-bottom:var(--space-3); }
+.sec-heading-l { font-family:var(--font-display); font-weight:var(--font-weight-bold); font-size:var(--text-h2-sm); line-height:1.15; letter-spacing:-.015em; color:var(--uw-black); margin-bottom:var(--space-2_5); }
+.sec-heading-d { font-family:var(--font-display); font-weight:var(--font-weight-bold); font-size:var(--text-h2-sm); line-height:1.15; letter-spacing:-.015em; color:var(--uw-white);  margin-bottom:var(--space-2_5); }
+@media(min-width:1024px){
+  .sec-heading-l,.sec-heading-d { font-size:var(--text-h2); }
+}
+.sec-sub-l { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body-lg-sm); line-height:1.65; color:var(--uw-muted); margin-bottom:var(--space-7); max-width:640px; }
+.sec-sub-d { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body-lg-sm); line-height:1.65; color:var(--uw-text-on-dark-muted); margin-bottom:var(--space-7); max-width:640px; }
+@media(min-width:1024px){
+  .sec-sub-l,.sec-sub-d { font-size:var(--text-h4-sm); }
+}
+.section-header-block { margin-bottom: 28px; }
 
 @media (prefers-reduced-motion: reduce) {
   *,
