@@ -263,8 +263,8 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 /* The marquee column is now the whole section width */
 .pf-marquee-col{ display:block; padding:0; }
 .pf-marquee-fill{ display:flex; flex-direction:column; }
-.pf-marquee-col .pf-marquee-track:first-child { padding-bottom: var(--space-2); border-bottom:1px solid var(--section-divider); }
-.pf-marquee-col .pf-marquee-track + .pf-marquee-track{ margin-top:var(--space-2); }
+.pf-marquee-col .pf-marquee-track:first-child { border-bottom:1px solid var(--section-divider); }
+.pf-marquee-col .pf-marquee-track + .pf-marquee-track{ margin-top:0; }
 .pf-marquee-track{ position:relative; overflow:hidden;
   -webkit-mask-image:linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
   mask-image:linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); }
