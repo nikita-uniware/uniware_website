@@ -83,17 +83,8 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 @media(min-width:1024px){.container{padding:0 var(--space-10)}}
 .scrollbar-none::-webkit-scrollbar{display:none}
 
-/* ─── Card overlay link ──────────────────────────────────
-   Reusable pattern: for cards with exactly one CTA where the
-   whole card should be clickable, but hover feedback stays
-   scoped to the CTA. Add an empty <a class="card-overlay-link">
-   as the card's first child — it stretches to fill the card
-   (its nearest position:relative ancestor) and sits above
-   everything (z-index:1), while the visible CTA keeps its own
-   :hover styling since it isn't covered by anything higher.
-────────────────────────────────────────────────────────── */
-.card-overlay-link{ position:absolute; inset:0; z-index:1; border-radius:12px; }
-.card-cta{ position:relative; z-index:2; }
+/* .card-overlay-link / .card-cta now live in globals.css, reusable
+   across pages (moved out for the case-studies index grid). */
 
 
 /* ══════════════════════════════════════════════════════
@@ -360,9 +351,8 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 @media(min-width:768px) {.stats-right{padding-left:var(--space-10)}}
 @media(min-width:1024px){.stats-right{padding-left:var(--space-16)}}
 .stat-card  {background:var(--surface-light-subtle);border-radius:12px;padding:var(--space-5) var(--space-6);flex:1}
-.stat-number{font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-h2);line-height:1;letter-spacing:-.02em;color:var(--uw-black);margin-bottom:var(--space-1_5)}
-@media(min-width:1024px){.stat-number{font-size:var(--text-stat-lg)}}
-.stat-label {font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-sm);line-height:1.50;color:var(--uw-body-text)}
+/* .stat-number / .stat-label now live in globals.css, reusable across
+   pages (moved out for the case-studies index cards). */
 
 
 /* ══════════════════════════════════════════════════════

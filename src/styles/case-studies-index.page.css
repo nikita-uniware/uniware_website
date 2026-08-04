@@ -33,3 +33,108 @@
 }
 .csi-filter-tab:hover { color: var(--uw-body-text); }
 .csi-filter-tab.is-active { color: var(--uw-black); border-bottom-color: var(--uw-amber-light); }
+
+/* ── Grid section ──
+   2 columns desktop (1024px+) only — 1 column tablet and mobile, per
+   spec. Deliberately not the .cs-grid breakpoint (768px) used on the
+   cybersecurity page's client-story grid, which is a different layout. */
+.csi-grid-section { background: var(--uw-white); }
+.csi-grid-section .container {
+  padding-top: var(--section-pad-sm);
+  padding-bottom: var(--section-pad-sm);
+}
+@media (min-width: 768px) {
+  .csi-grid-section .container { padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); }
+}
+@media (min-width: 1024px) {
+  .csi-grid-section .container { padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); }
+}
+.csi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+@media (min-width: 1024px) {
+  .csi-grid { grid-template-columns: 1fr 1fr; gap: var(--space-7); }
+}
+.csi-empty {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
+  font-size: var(--text-body);
+  color: var(--uw-muted);
+}
+
+/* ── Card — White Card Accent Pattern (3+ card grid), design doc
+   Appendix "White Card Accent Pattern" / "White card hover rules". ── */
+.csi-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--uw-white);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease;
+}
+.csi-card:hover {
+  background: var(--uw-yellow-card-hover);
+  border-color: var(--uw-amber-border);
+}
+.csi-card:hover .link-text-light { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Thumbnail placeholder — Section 6 (generated hash/tone/icon/rings
+   thumbnail) lands separately; this is a neutral placeholder only,
+   deliberately not using the amber tones pending sign-off. */
+.csi-thumbnail-placeholder {
+  height: 170px;
+  background: var(--surface-light-subtle);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.csi-card-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.csi-tag-pill {
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-caption);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--uw-wts-ring-current);
+  background: var(--amber-tint-bg-strong);
+  border: 1px solid var(--amber-tint-border);
+  border-radius: 4px;
+  padding: 5px 12px;
+  margin-bottom: var(--space-4);
+}
+.csi-card-headline {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-h4-sm);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--uw-black);
+  margin-bottom: var(--space-3);
+}
+@media (min-width: 1024px) {
+  .csi-card-headline { font-size: var(--text-h4); }
+}
+.csi-card-subtext {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
+  font-size: var(--text-body-sm);
+  line-height: 1.6;
+  color: var(--uw-body-text);
+  margin-bottom: var(--space-5);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.csi-card-stat { margin-bottom: var(--space-6); }
+.csi-card-cta { margin-top: auto; }

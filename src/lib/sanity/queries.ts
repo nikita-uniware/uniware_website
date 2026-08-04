@@ -64,11 +64,17 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
   "ogImageUrl": ogImage.asset->url
 }`;
 
-export const allCaseStudiesQuery = `*[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc){
+/**
+ * Card list for /resources/case-studies (index grid + category filter).
+ * Only stats[0] is fetched — whichever stat the editor lists first in
+ * Studio is the one shown on the card, per the content model.
+ */
+export const caseStudyCardsQuery = `*[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc){
   "slug": slug.current,
   headline,
+  subtext[]${portableBlockProjection},
   categoryTags,
-  "seoTitle": seoTitle
+  "stat": stats[0]
 }`;
 
 /** Technologies with a logo for a given website page (e.g. cybersecurity partner strip). */

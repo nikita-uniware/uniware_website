@@ -1,11 +1,12 @@
 import { getSanityClient, isSanityConfigured } from "./client";
 import {
-  allCaseStudiesQuery,
   caseStudyBySlugQuery,
+  caseStudyCardsQuery,
   caseStudySlugsQuery,
   technologiesByPageQuery,
 } from "./queries";
 import { mapSanityCaseStudy, type SanityCaseStudyDoc } from "./mappers";
+import { portableTextToBoldMarkdown } from "./portableText";
 import type { CaseStudy } from "@/content/case-studies/chemical-manufacturing";
 import { chemicalManufacturingCaseStudy } from "@/content/case-studies/chemical-manufacturing";
 import {
@@ -70,22 +71,54 @@ export async function fetchCaseStudySlugs(): Promise<string[]> {
   }
 }
 
-export async function fetchAllCaseStudySummaries() {
+export type CaseStudyCardSummary = {
+  slug: string;
+  headline: string;
+  /** Bold-markdown text (renderBoldOnly-compatible), 1-2 sentence teaser. */
+  subtext: string;
+  categoryTags: string[];
+  stat: { number: string; label: string } | null;
+};
+
+type SanityCaseStudyCardDoc = {
+  slug: string;
+  headline?: string | null;
+  subtext?: unknown;
+  categoryTags?: string[] | null;
+  stat?: { number: string; label: string } | null;
+};
+
+/** Card list for /resources/case-studies (grid + category filter). */
+export async function fetchCaseStudyCards(): Promise<CaseStudyCardSummary[]> {
   if (!isSanityConfigured()) {
     return Object.values(LOCAL_FALLBACKS).map((s) => ({
       slug: s.slug,
       headline: s.headline,
+      subtext: s.subtext,
       categoryTags: s.categoryTags,
-      seoTitle: s.seo.title,
+      stat: s.stats[0] ?? null,
     }));
   }
 
   try {
     const client = getSanityClient();
     if (!client) return [];
-    return await client.fetch(allCaseStudiesQuery);
+    const docs = await client.fetch<SanityCaseStudyCardDoc[]>(
+      caseStudyCardsQuery
+    );
+    return (docs ?? [])
+      .filter((doc) => Boolean(doc.slug))
+      .map((doc) => ({
+        slug: doc.slug,
+        headline: doc.headline ?? "",
+        subtext: portableTextToBoldMarkdown(
+          doc.subtext as Parameters<typeof portableTextToBoldMarkdown>[0]
+        ),
+        categoryTags: (doc.categoryTags ?? []).filter(Boolean),
+        stat: doc.stat ?? null,
+      }));
   } catch (err) {
-    console.error("[sanity] fetchAllCaseStudySummaries failed:", err);
+    console.error("[sanity] fetchCaseStudyCards failed:", err);
     return [];
   }
 }

@@ -581,6 +581,21 @@ html.is-ready [data-reveal].is-visible {
 }
 .section-header-block { margin-bottom: 28px; }
 
+/* ── Card overlay link — reusable across pages ──
+   For cards with exactly one CTA where the whole card should be
+   clickable, but hover feedback stays scoped to the CTA. Add an empty
+   <a class="card-overlay-link"> as the card's first child — it
+   stretches to fill the card (its nearest position:relative ancestor)
+   and sits above everything (z-index:1), while the visible CTA keeps
+   its own :hover styling since it isn't covered by anything higher. */
+.card-overlay-link{ position:absolute; inset:0; z-index:1; border-radius:12px; }
+.card-cta{ position:relative; z-index:2; }
+
+/* ── Stat number/label — reusable across pages ── */
+.stat-number{font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-h2);line-height:1;letter-spacing:-.02em;color:var(--uw-black);margin-bottom:var(--space-1_5)}
+@media(min-width:1024px){.stat-number{font-size:var(--text-stat-lg)}}
+.stat-label {font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-sm);line-height:1.50;color:var(--uw-body-text)}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

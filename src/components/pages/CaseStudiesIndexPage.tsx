@@ -4,23 +4,39 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { useReveal } from "@/hooks/useReveal";
 import { categoryTagToSlug } from "@/lib/sanity/categorySlug";
+import {
+  renderBoldOnly,
+  type CaseStudyStat,
+} from "@/content/case-studies/chemical-manufacturing";
 import "@/styles/case-studies-index.page.css";
+
+type CaseStudyCard = {
+  slug: string;
+  headline: string;
+  subtext: string;
+  categoryTags: string[];
+  stat: CaseStudyStat | null;
+};
 
 type CaseStudiesIndexPageProps = {
   /** Category tags with at least one published case study, canonical order. */
   categories: string[];
   /** "all" or a category URL slug — whichever tab is currently active. */
   activeCategorySlug: string;
+  /** Already filtered to the active category server-side. */
+  cards: CaseStudyCard[];
 };
 
 /**
  * Case studies index — /resources/case-studies
- * Sections 1 (hero) + 2 (category filter) so far. Grid/cards/thumbnail
- * land later.
+ * Sections 1 (hero), 2 (category filter) and 3 (grid/cards) so far.
+ * Generated thumbnail (spec Section 6) lands as its own step — cards
+ * use a neutral placeholder in that slot for now.
  */
 export function CaseStudiesIndexPage({
   categories,
   activeCategorySlug,
+  cards,
 }: CaseStudiesIndexPageProps) {
   useReveal();
 
@@ -98,6 +114,74 @@ export function CaseStudiesIndexPage({
           </ul>
         </div>
       </nav>
+
+      <section className="csi-grid-section">
+        <div className="container">
+          {cards.length === 0 ? (
+            <p className="csi-empty">No case studies in this category yet.</p>
+          ) : (
+            <div className="csi-grid">
+              {cards.map((study) => {
+                const href = `/resources/case-studies/${study.slug}`;
+                return (
+                  <article className="csi-card" key={study.slug}>
+                    <Link
+                      href={href}
+                      className="card-overlay-link"
+                      aria-hidden="true"
+                      tabIndex={-1}
+                    />
+                    <div
+                      className="csi-thumbnail-placeholder"
+                      aria-hidden="true"
+                    />
+                    <div className="csi-card-body">
+                      {study.categoryTags[0] ? (
+                        <span className="csi-tag-pill">
+                          {study.categoryTags[0]}
+                        </span>
+                      ) : null}
+                      <h3 className="csi-card-headline">{study.headline}</h3>
+                      <p className="csi-card-subtext">
+                        {renderBoldOnly(study.subtext)}
+                      </p>
+                      {study.stat ? (
+                        <div className="csi-card-stat">
+                          <div className="stat-number">
+                            {study.stat.number}
+                          </div>
+                          <div className="stat-label">{study.stat.label}</div>
+                        </div>
+                      ) : null}
+                      <div className="csi-card-cta card-cta">
+                        <Link
+                          href={href}
+                          className="link-text link-text-light link-text-sm"
+                        >
+                          Read the case study
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M7 2.5L11.5 7M11.5 7L7 11.5M11.5 7H2.5" />
+                          </svg>
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }
