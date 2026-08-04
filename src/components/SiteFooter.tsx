@@ -25,6 +25,13 @@ export function SiteFooter() {
             Cybersecurity
           </Link>
           <span className="footer-sep" aria-hidden="true" />
+          <Link
+            href="/solutions/data-centre-infrastructure"
+            className="footer-link"
+          >
+            Data Centre Infrastructure
+          </Link>
+          <span className="footer-sep" aria-hidden="true" />
           <Link href="/resources/case-studies" className="footer-link">
             Case studies
           </Link>
