@@ -6,6 +6,8 @@ export type CaseStudyStat = {
 export type CaseStudyTechnology = {
   name: string;
   type?: string;
+  /** Catalogue logo CDN URL when available from Sanity. */
+  logoUrl?: string;
 };
 
 export type CaseStudyStep = {
@@ -39,7 +41,6 @@ export type CaseStudy = {
     location: string;
     timeline?: string;
     deliveredBy: string;
-    technologies: CaseStudyTechnology[];
   };
   problem: {
     heading: string;
@@ -51,6 +52,7 @@ export type CaseStudy = {
     showSteps: boolean;
     steps: CaseStudyStep[];
     showTechnologies: boolean;
+    /** Single source — also powers the sidebar "Technologies used" list. */
     technologies: CaseStudyTechnology[];
   };
   beforeAfter: {
@@ -92,11 +94,6 @@ export const chemicalManufacturingCaseStudy: CaseStudy = {
     location: "Chennai, India",
     timeline: "72 hours, emergency response",
     deliveredBy: "Uniware Systems",
-    technologies: [
-      { name: "CrowdStrike", type: "Falcon EDR" },
-      { name: "Fortinet", type: "Firewall" },
-      { name: "Veeam", type: "Backup" },
-    ],
   },
   problem: {
     heading: "A single server failure turned out to be the entire business.",

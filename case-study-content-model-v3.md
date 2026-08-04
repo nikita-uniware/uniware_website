@@ -64,7 +64,8 @@ One heading and one description, not two separate fields.
 | Location | Short text | Country required, city optional | — | "Country is required. Add a city if you have one: 'Chennai, India.' Just the country is fine if a city isn't relevant to the story." |
 | Timeline | Short text | Optional | — | "How long this took, if that's a meaningful number for this project. Examples: '72 hours, emergency response' / '3 days, full deployment' / '6 months, phased rollout.' Leave blank if there isn't a clean timeframe, for example an ongoing retainer with no single delivery moment." |
 | Delivered by | Short text | Yes | — | Pre-filled default: **"Uniware Systems."** Only change this for a genuinely co-delivered project. |
-| Technologies used | See section 5 | Yes, min 1 | — | Same list and same setup as the Solution section below, just shown as a shorter bulleted list here instead of the fuller version. |
+
+**Technologies used (sidebar):** not a separate Client overview field. Entered once under Solution → Technologies used; the sidebar reuses that same list (bullet / dash style).
 
 **On Location — country required, city optional**: this is deliberately asymmetric. Country always matters (it tells a reader where in the world this happened), a specific city sometimes doesn't add anything the story needs. Making city optional avoids forcing someone to guess or invent a location detail just to fill a required field.
 
@@ -99,7 +100,7 @@ Two simple steps for whoever is filling this in:
 1. **Select the Technology** from the list (a dropdown of every product Uniware works with, see the full list below).
 2. **Add the Type**, only if it's needed. This is a short text field. If the logo alone already says enough, leave it blank. If it needs a word to clarify which product or use, add it, "Falcon EDR" for CrowdStrike, "Firewall" for Fortinet, "Backup" for Veeam.
 
-That's the whole thing, one dropdown and one optional text field per technology added. This is stored once as a reference list so the same product always shows the same logo everywhere it's used, rather than every case study author choosing or uploading their own icon.
+That's the whole thing, one dropdown and one optional text field per technology added. This is stored once under Solution (not under Client overview) so the same product always shows the same logo everywhere it's used — Solution chips with the catalogue logo, sidebar as bold name + dash + type — rather than every case study author choosing or uploading their own icon or filling the list twice.
 
 **The reference list to set up in Sanity now** (name + logo, one entry each):
 
