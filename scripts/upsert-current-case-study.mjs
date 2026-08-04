@@ -252,10 +252,6 @@ async function run() {
   const source = chemicalManufacturingCaseStudy;
   const slug = source.slug;
 
-  const overviewTech = await mapTechnologyArray(
-    source.overview.technologies,
-    "overview-tech"
-  );
   const solutionTech = await mapTechnologyArray(
     source.solution.technologies,
     "solution-tech"
@@ -279,7 +275,6 @@ async function run() {
       location: source.overview.location,
       timeline: source.overview.timeline || "",
       deliveredBy: source.overview.deliveredBy,
-      technologies: overviewTech,
     },
     problem: {
       heading: source.problem.heading,

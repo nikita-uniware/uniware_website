@@ -21,11 +21,7 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
     description[]${portableBlockProjection},
     location,
     timeline,
-    deliveredBy,
-    technologies[]{
-      "name": technology->name,
-      type
-    }
+    deliveredBy
   },
   problem{
     heading,
@@ -39,7 +35,8 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
     showTechnologies,
     technologies[]{
       "name": technology->name,
-      type
+      type,
+      "logoUrl": technology->logo.asset->url
     }
   },
   beforeAfter{

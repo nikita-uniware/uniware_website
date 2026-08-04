@@ -10,6 +10,12 @@ type PortableBlock = {
   markDefs?: { _key?: string; _type?: string }[];
 };
 
+type SanityTech = {
+  name?: string | null;
+  type?: string | null;
+  logoUrl?: string | null;
+};
+
 /** Raw shape returned by caseStudyBySlugQuery */
 export type SanityCaseStudyDoc = {
   slug: string | null;
@@ -23,7 +29,6 @@ export type SanityCaseStudyDoc = {
     location?: string | null;
     timeline?: string | null;
     deliveredBy?: string | null;
-    technologies?: { name?: string | null; type?: string | null }[] | null;
   } | null;
   problem?: {
     heading?: string | null;
@@ -35,7 +40,7 @@ export type SanityCaseStudyDoc = {
     showSteps?: boolean | null;
     steps?: { title?: string | null; body?: string | null }[] | null;
     showTechnologies?: boolean | null;
-    technologies?: { name?: string | null; type?: string | null }[] | null;
+    technologies?: SanityTech[] | null;
   } | null;
   beforeAfter?: {
     heading?: string | null;
@@ -63,14 +68,13 @@ export type SanityCaseStudyDoc = {
   ogImageUrl?: string | null;
 };
 
-function mapTechs(
-  list: { name?: string | null; type?: string | null }[] | null | undefined
-) {
+function mapTechs(list: SanityTech[] | null | undefined) {
   return (list ?? [])
     .filter((t) => t?.name)
     .map((t) => ({
       name: String(t.name),
       ...(t.type ? { type: String(t.type) } : {}),
+      ...(t.logoUrl ? { logoUrl: String(t.logoUrl) } : {}),
     }));
 }
 
@@ -116,6 +120,8 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
 
   if (problemBody.length === 0) return null;
 
+  const technologies = mapTechs(solution.technologies);
+
   const study: CaseStudy = {
     slug: doc.slug,
     categoryTags: (doc.categoryTags ?? []).filter(Boolean).map(String),
@@ -130,7 +136,6 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
       location: overview.location,
       ...(overview.timeline ? { timeline: overview.timeline } : {}),
       deliveredBy: overview.deliveredBy,
-      technologies: mapTechs(overview.technologies),
     },
     problem: {
       heading: problem.heading,
@@ -144,7 +149,7 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
         .filter((s) => s?.title && s?.body)
         .map((s) => ({ title: String(s!.title), body: String(s!.body) })),
       showTechnologies: Boolean(solution.showTechnologies),
-      technologies: mapTechs(solution.technologies),
+      technologies,
     },
     beforeAfter: {
       heading: beforeAfter.heading,
