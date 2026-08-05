@@ -500,7 +500,7 @@ html.is-ready [data-reveal].is-visible {
 }
 .site-nav-dropdown-menu {
   position: absolute;
-  top: calc(100% + 10px);
+  top: 24px;
   left: 0;
   min-width: 240px;
   padding: 8px 0;
@@ -509,6 +509,15 @@ html.is-ready [data-reveal].is-visible {
   border-radius: 8px;
   box-shadow: 0 12px 32px rgba(1, 5, 18, 0.35);
   z-index: 70;
+}
+/* Bridge the gap so hover is not lost between the trigger and the menu. */
+.site-nav-dropdown-menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 24px;
 }
 .site-nav-dropdown-item {
   display: block;
