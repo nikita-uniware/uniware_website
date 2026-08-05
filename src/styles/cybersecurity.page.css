@@ -336,7 +336,7 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .cs-outcome{ font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-body); line-height:1.65; color:var(--uw-white); margin-bottom:var(--space-5); }
 .cs-pills{ display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-6); }
 .cs-pill{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-caption); color:var(--uw-amber-border); background:var(--amber-border-highlight); border:1px solid var(--amber-border-highlight-strong); border-radius:14px; padding:var(--space-px-5) var(--space-3); }
-.cs-cta{ margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-chrome-light); }
+.cs-card .cs-cta{ margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-chrome-light); background:transparent; }
 
 /* ══════════════════════════════════════════════════════
    FOOTER
