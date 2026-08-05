@@ -464,7 +464,21 @@ export const caseStudy = {
                 },
               ],
               preview: {
-                select: { title: "technology.name", subtitle: "type" },
+                select: {
+                  name: "technology.name",
+                  techType: "type",
+                },
+                prepare: ({
+                  name,
+                  techType,
+                }: {
+                  name?: string;
+                  techType?: string;
+                }) => ({
+                  // Match Client Overview list style: name as title, type as subtitle
+                  title: name || "Select a technology",
+                  subtitle: techType || undefined,
+                }),
               },
             },
           ],
