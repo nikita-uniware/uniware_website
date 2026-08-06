@@ -259,37 +259,6 @@ export const caseStudy = {
           initialValue: "Uniware Systems",
           validation: (Rule: { required: () => unknown }) => Rule.required(),
         },
-        {
-          name: "technologies",
-          title: "Technologies used",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                {
-                  name: "technology",
-                  title: "Technology",
-                  type: "reference",
-                  to: [{ type: "technology" }],
-                },
-                {
-                  name: "type",
-                  title: "Type",
-                  type: "string",
-                  description:
-                    'Optional qualifier, e.g. "Falcon EDR", "Firewall".',
-                },
-              ],
-              preview: {
-                select: { title: "technology.name", subtitle: "type" },
-              },
-            },
-          ],
-          validation: (Rule: {
-            required: () => { min: (n: number) => unknown };
-          }) => Rule.required().min(1),
-        },
       ],
     },
     {
@@ -453,7 +422,7 @@ export const caseStudy = {
           hidden: ({ parent }: { parent?: { showTechnologies?: boolean } }) =>
             !parent?.showTechnologies,
           description:
-            "Pick from the Technology list. Drag to reorder. Required when Show technologies is on.",
+            "Single source for both the Solution chips and the sidebar list. Pick from the Technology catalogue. Drag to reorder. Required when Show technologies is on.",
           validation: (Rule: {
             custom: (
               fn: (
@@ -490,8 +459,27 @@ export const caseStudy = {
                   name: "type",
                   title: "Type",
                   type: "string",
+                  description:
+                    'Optional qualifier, e.g. "Falcon EDR", "Firewall".',
                 },
               ],
+              preview: {
+                select: {
+                  name: "technology.name",
+                  techType: "type",
+                },
+                prepare: ({
+                  name,
+                  techType,
+                }: {
+                  name?: string;
+                  techType?: string;
+                }) => ({
+                  // Match Client Overview list style: name as title, type as subtitle
+                  title: name || "Select a technology",
+                  subtitle: techType || undefined,
+                }),
+              },
             },
           ],
         },

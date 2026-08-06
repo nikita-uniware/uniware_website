@@ -11,7 +11,8 @@ import { CircleGroup } from "@/components/CircleGroup";
 import "@/styles/case-study.page.css";
 
 function OverviewCard({ study }: { study: CaseStudy }) {
-  const { overview } = study;
+  const { overview, solution } = study;
+  const technologies = solution.technologies;
   return (
     <div className="cs-overview-card" data-reveal="0">
       <div className="cs-overview-head">
@@ -33,15 +34,17 @@ function OverviewCard({ study }: { study: CaseStudy }) {
         <span className="cs-overview-label">Delivered by</span>
         <span className="cs-overview-value">{overview.deliveredBy}</span>
       </div>
-      <div className="cs-stack-mini">
-        <p className="cs-stack-mini-label">Technologies used</p>
-        {overview.technologies.map((t) => (
-          <p className="cs-stack-mini-item" key={t.name}>
-            <strong>{t.name}</strong>
-            {t.type ? ` - ${t.type}` : ""}
-          </p>
-        ))}
-      </div>
+      {technologies.length > 0 ? (
+        <div className="cs-stack-mini">
+          <p className="cs-stack-mini-label">Technologies used</p>
+          {technologies.map((t) => (
+            <p className="cs-stack-mini-item" key={t.name}>
+              <strong>{t.name}</strong>
+              {t.type ? ` - ${t.type}` : ""}
+            </p>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -199,7 +202,13 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                     <div className="cs-stack" data-reveal="280">
                       {study.solution.technologies.map((t) => (
                         <span className="cs-stack-chip" key={t.name}>
-                          <span className="cs-stack-chip-logo">{t.name}</span>
+                          <span className="cs-stack-chip-logo">
+                            {t.logoUrl ? (
+                              <img src={t.logoUrl} alt={t.name} />
+                            ) : (
+                              t.name
+                            )}
+                          </span>
                           {t.type ? (
                             <span className="cs-stack-chip-qualifier">
                               {t.type}
