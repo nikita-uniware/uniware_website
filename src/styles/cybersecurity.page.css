@@ -81,7 +81,7 @@ html.is-ready .crossbar-dr.line-visible{transform:scaleY(1)}
 .container{max-width:1200px;margin:0 auto;padding:0 var(--space-4)}
 @media(min-width:768px) {.container{padding:0 var(--space-6)}}
 @media(min-width:1024px){.container{padding:0 var(--space-10)}}
-.scrollbar-none::-webkit-scrollbar{display:none}
+/* .scrollbar-none now lives in globals.css, reusable across pages. */
 
 /* .card-overlay-link / .card-cta now live in globals.css, reusable
    across pages (moved out for the case-studies index grid). */
@@ -356,18 +356,11 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 
 
 /* ══════════════════════════════════════════════════════
-   SUBNAV
+   SUBNAV — .subnav/.subnav-scroll/.subnav-list/.subnav-tab now live
+   in globals.css, reusable across pages (moved out for the case-
+   studies index filter). Only this page's specific anchor-ID scroll
+   offsets stay page-local below.
 ══════════════════════════════════════════════════════ */
-.subnav{position:sticky;top:var(--uw-nav-height);z-index:50;background:var(--uw-white);border-bottom:1px solid var(--section-divider)}
-.subnav-scroll{max-width:1200px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
-.subnav-scroll::-webkit-scrollbar{display:none}
-.subnav-list{display:flex;align-items:stretch;height:var(--uw-subnav-height);padding:0 var(--space-4);width:max-content;min-width:100%;list-style:none}
-@media(min-width:768px) {.subnav-list{padding:0 var(--space-6)}}
-@media(min-width:1024px){.subnav-list{padding:0 var(--space-10)}}
-.subnav-list li{display:flex}
-.subnav-tab{display:flex;align-items:center;height:100%;padding:0 var(--space-5);font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body);color:var(--uw-muted);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color var(--uw-transition-hover) ease,border-color var(--uw-transition-hover) ease}
-.subnav-tab:hover   {color:var(--uw-body-text)}
-.subnav-tab.is-active{color:var(--uw-black);border-bottom-color:var(--uw-amber-light)}
 #our-approach,#prevention,#recovery,#where-to-start,#client-stories{scroll-margin-top:var(--uw-scroll-offset)}
 
 

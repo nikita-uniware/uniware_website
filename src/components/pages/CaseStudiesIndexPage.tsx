@@ -81,13 +81,13 @@ export function CaseStudiesIndexPage({
         </div>
       </section>
 
-      <nav className="csi-filter" aria-label="Filter case studies by category">
-        <div className="container">
-          <ul className="csi-filter-list">
+      <nav className="subnav" aria-label="Filter case studies by category">
+        <div className="subnav-scroll scrollbar-none">
+          <ul className="subnav-list">
             <li>
               <Link
                 href="/resources/case-studies"
-                className={`csi-filter-tab${
+                className={`subnav-tab${
                   activeCategorySlug === "all" ? " is-active" : ""
                 }`}
                 aria-current={activeCategorySlug === "all" ? "true" : undefined}
@@ -103,7 +103,7 @@ export function CaseStudiesIndexPage({
                 <li key={slug}>
                   <Link
                     href={`/resources/case-studies?category=${slug}`}
-                    className={`csi-filter-tab${isActive ? " is-active" : ""}`}
+                    className={`subnav-tab${isActive ? " is-active" : ""}`}
                     aria-current={isActive ? "true" : undefined}
                   >
                     {tag}
@@ -131,25 +131,21 @@ export function CaseStudiesIndexPage({
                       aria-hidden="true"
                       tabIndex={-1}
                     />
-                    <CaseStudyThumbnail slug={study.slug} />
+                    <CaseStudyThumbnail slug={study.slug} stat={study.stat} />
                     <div className="csi-card-body">
-                      {study.categoryTags[0] ? (
-                        <span className="csi-tag-pill">
-                          {study.categoryTags[0]}
-                        </span>
+                      {study.categoryTags.length > 0 ? (
+                        <div className="csi-tag-pill-row">
+                          {study.categoryTags.slice(0, 3).map((tag) => (
+                            <span className="csi-tag-pill" key={tag}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       ) : null}
                       <h3 className="csi-card-headline">{study.headline}</h3>
                       <p className="csi-card-subtext">
                         {renderBoldOnly(study.subtext)}
                       </p>
-                      {study.stat ? (
-                        <div className="csi-card-stat">
-                          <div className="stat-number">
-                            {study.stat.number}
-                          </div>
-                          <div className="stat-label">{study.stat.label}</div>
-                        </div>
-                      ) : null}
                       <div className="csi-card-cta card-cta">
                         <Link
                           href={href}

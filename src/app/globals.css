@@ -69,6 +69,10 @@
   --thumbnail-tone-4: #efd5a6;
   --thumbnail-tone-5: #e7c384;
   --thumbnail-tone-6: #dcad5c;
+  /* Thumbnail visual-band ink — stronger steps of the same accent-brown
+     family as --amber-icon-tint, for contrast against --thumbnail-tone-3. */
+  --thumbnail-icon-tint: rgba(92, 74, 18, 0.65);
+  --thumbnail-stat-tint: rgba(92, 74, 18, 0.8);
   --amber-border-highlight: rgba(240, 189, 82, 0.1);
   --amber-border-highlight-strong: rgba(240, 189, 82, 0.25);
   --amber-border-highlight-focus: rgba(240, 189, 82, 0.3);
@@ -654,6 +658,27 @@ html.is-ready [data-reveal].is-visible {
 .stat-number{font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-h2);line-height:1;letter-spacing:-.02em;color:var(--uw-black);margin-bottom:var(--space-1_5)}
 @media(min-width:1024px){.stat-number{font-size:var(--text-stat-lg)}}
 .stat-label {font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-sm);line-height:1.50;color:var(--uw-body-text)}
+
+/* ── Sticky subnav / tab bar — reusable across pages ──
+   Sticks below the fixed site nav. Horizontal-scroll row on narrow
+   viewports, no visible scrollbar. .is-active is styling only —
+   *how* it gets applied (scroll-spy, URL state, click handler) is
+   left to the consumer; the cybersecurity page uses an
+   IntersectionObserver scroll-spy (useCyberPageBehaviors), the case
+   studies index sets it directly from server-rendered URL state. */
+.subnav{position:sticky;top:var(--uw-nav-height);z-index:50;background:var(--uw-white);border-bottom:1px solid var(--section-divider)}
+.subnav-scroll{max-width:var(--max-width-content);margin:0 auto;overflow-x:auto;scrollbar-width:none}
+.subnav-scroll::-webkit-scrollbar{display:none}
+.subnav-list{display:flex;align-items:stretch;height:var(--uw-subnav-height);padding:0 var(--space-4);width:max-content;min-width:100%;list-style:none}
+@media(min-width:768px) {.subnav-list{padding:0 var(--space-6)}}
+@media(min-width:1024px){.subnav-list{padding:0 var(--space-10)}}
+.subnav-list li{display:flex}
+.subnav-tab{display:flex;align-items:center;height:100%;padding:0 var(--space-5);font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body);color:var(--uw-muted);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color var(--uw-transition-hover) ease,border-color var(--uw-transition-hover) ease}
+.subnav-tab:hover   {color:var(--uw-body-text)}
+.subnav-tab.is-active{color:var(--uw-black);border-bottom-color:var(--uw-amber-light)}
+
+/* ── Hide native scrollbar on horizontal-scroll rows — reusable ── */
+.scrollbar-none::-webkit-scrollbar{display:none}
 
 @media (prefers-reduced-motion: reduce) {
   *,

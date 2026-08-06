@@ -1,41 +1,14 @@
 /* ══════════════════════════════════════════════════════
    CASE STUDIES INDEX — /resources/case-studies
    Section 1 (header) reuses .hero/.hero-headline/.hero-subtext from
-   globals.css. Section 2 (category filter) is page-specific — no
-   other page has a URL-driven single-select filter yet. Section 3
-   (grid/cards) reuses card-overlay-link + the White Card Accent
-   Pattern. Section 6 (generated thumbnail) reuses the circle-group
-   system's new --xs tier + --center/--fill modifiers, all in
-   globals.css.
+   globals.css. Section 2 (category filter) reuses .subnav/.subnav-
+   scroll/.subnav-list/.subnav-tab (sticky, horizontal-scroll row —
+   same pattern as the cybersecurity page's in-page nav), also in
+   globals.css. Section 3 (grid/cards) reuses card-overlay-link + the
+   White Card Accent Pattern. Section 6 (generated thumbnail) reuses
+   the circle-group system's new --xs tier + --center/--fill
+   modifiers, all in globals.css.
 ══════════════════════════════════════════════════════ */
-
-.csi-filter { background: var(--uw-white); border-bottom: 1px solid var(--section-divider); }
-.csi-filter .container {
-  padding-top: var(--space-6);
-  padding-bottom: var(--space-6);
-}
-.csi-filter-list {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-6);
-  list-style: none;
-}
-.csi-filter-tab {
-  display: inline-flex;
-  align-items: center;
-  padding-bottom: var(--space-2);
-  font-family: var(--font-body);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--text-body);
-  color: var(--uw-muted);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap;
-  transition: color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease;
-}
-.csi-filter-tab:hover { color: var(--uw-body-text); }
-.csi-filter-tab.is-active { color: var(--uw-black); border-bottom-color: var(--uw-amber-light); }
 
 /* ── Grid section ──
    2 columns desktop (1024px+) only — 1 column tablet and mobile, per
@@ -86,21 +59,68 @@
 }
 .csi-card:hover .link-text-light { text-decoration: underline; text-underline-offset: 3px; }
 
-/* Generated thumbnail (Section 6) — hash(slug) picks a tone + icon,
-   the circle-group --xs/--center rings sit behind the icon. Rings are
-   allowed to bleed past this 170px box; the card's own overflow:hidden
-   clips them, per spec. */
+/* Generated thumbnail (Section 6) — hash(slug) picks a tone + icon
+   for the left visual zone; the single stat sits in the right zone,
+   same tone background, divided by a thin vertical rule. Rings are
+   contained within the visual zone's own overflow:hidden so they
+   don't bleed into the stat text. */
 .csi-thumbnail {
   position: relative;
+  /* 170px is load-bearing, not arbitrary — the --xs circle-group
+     tier's 190/128/64 ring sizing and centering math (globals.css)
+     was built against this exact height. Don't round it to a nearby
+     --space-* token without re-checking the ring math too. */
   height: 170px;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border-light);
+}
+.csi-thumbnail-visual {
+  position: relative;
+  flex: 1.2;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--border-light);
+  overflow: hidden;
 }
 .csi-thumbnail-icon {
   position: relative;
   z-index: 1;
+}
+.csi-thumbnail-divider {
+  width: 1px;
+  flex-shrink: 0;
+  margin: var(--space-6) 0;
+  background: var(--border-light-muted);
+}
+.csi-thumbnail-stat {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 var(--space-5);
+}
+.csi-thumbnail-stat-number {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-h4-sm);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--thumbnail-stat-tint);
+  margin-bottom: var(--space-1);
+}
+@media (min-width: 1024px) {
+  .csi-thumbnail-stat-number { font-size: var(--text-h4); }
+}
+.csi-thumbnail-stat-label {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-caption);
+  line-height: 1.35;
+  color: var(--amber-icon-tint);
 }
 
 .csi-card-body {
@@ -109,8 +129,13 @@
   flex-direction: column;
   flex: 1;
 }
+.csi-tag-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1_5);
+  margin-bottom: var(--space-3);
+}
 .csi-tag-pill {
-  align-self: flex-start;
   font-family: var(--font-body);
   font-weight: var(--font-weight-medium);
   font-size: var(--text-caption);
@@ -120,20 +145,19 @@
   background: var(--amber-tint-bg-strong);
   border: 1px solid var(--amber-tint-border);
   border-radius: 4px;
-  padding: 5px 12px;
-  margin-bottom: var(--space-4);
+  padding: var(--space-1) var(--space-2_5);
 }
 .csi-card-headline {
   font-family: var(--font-display);
   font-weight: var(--font-weight-bold);
-  font-size: var(--text-h4-sm);
-  line-height: 1.25;
+  font-size: var(--text-h3-sm);
+  line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--uw-black);
   margin-bottom: var(--space-3);
 }
 @media (min-width: 1024px) {
-  .csi-card-headline { font-size: var(--text-h4); }
+  .csi-card-headline { font-size: var(--text-h3); }
 }
 .csi-card-subtext {
   font-family: var(--font-body);
@@ -147,5 +171,4 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
-.csi-card-stat { margin-bottom: var(--space-6); }
 .csi-card-cta { margin-top: auto; }
