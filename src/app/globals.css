@@ -62,6 +62,13 @@
   --amber-fill-selected: rgba(240, 189, 82, 0.15);
   --amber-fill-success: rgba(240, 189, 82, 0.22);
   --amber-fill-success-icon: rgba(240, 189, 82, 0.12);
+  /* Case study thumbnail tones (generated hash -> tone recipe, Section 6). */
+  --thumbnail-tone-1: #fdf8f0;
+  --thumbnail-tone-2: var(--uw-yellow-card);
+  --thumbnail-tone-3: #f5e4c3;
+  --thumbnail-tone-4: #efd5a6;
+  --thumbnail-tone-5: #e7c384;
+  --thumbnail-tone-6: #dcad5c;
   --amber-border-highlight: rgba(240, 189, 82, 0.1);
   --amber-border-highlight-strong: rgba(240, 189, 82, 0.25);
   --amber-border-highlight-focus: rgba(240, 189, 82, 0.3);
@@ -546,6 +553,58 @@ html.is-ready [data-reveal].is-visible {
   border-bottom-width: 2px;
   animation: uw-circle-inner 5s linear infinite;
 }
+
+/* --xs tier — small enough to sit behind an icon (e.g. the case study
+   thumbnail, Section 6) rather than bleed off a section corner like
+   --xl/--lg/--sm. Only size/position is tier-specific here; render
+   style (stroked vs filled) is a separate composable concern below. */
+.circle-group--xs {
+  width: 190px;
+  height: 190px;
+}
+.circle-xs-outer {
+  width: 190px;
+  height: 190px;
+  top: 0;
+  left: 0;
+}
+.circle-xs-middle {
+  width: 128px;
+  height: 128px;
+  top: 31px;
+  left: 31px;
+}
+.circle-xs-inner {
+  width: 64px;
+  height: 64px;
+  top: 63px;
+  left: 63px;
+}
+
+/* .circle-group--center — composable position modifier, usable with
+   any tier: centers the group instead of the default corner-bleed
+   (bottom/right offsets baked into --xl/--lg/--sm). Available for any
+   future centered usage, not just the --xs thumbnail case. */
+.circle-group--center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* .circle-ring--fill — composable render-style modifier: solid filled
+   circles instead of .circle-ring's stroked border look, for contexts
+   (like the thumbnail) that want flat concentric fills, not rotating
+   rings. Opacity graduates outer (lightest) -> inner (darkest), per
+   spec: 2% / 3% / 4%. */
+.circle-ring--fill {
+  border: none;
+  background-color: var(--uw-wts-ring-current);
+}
+.circle-fill-outer { opacity: 0.02; }
+.circle-fill-middle { opacity: 0.03; }
+.circle-fill-inner { opacity: 0.04; }
 
 /* ── Hero — reusable across pages ──
    Dark gradient hero background + eyebrow/headline/subtext text styles.

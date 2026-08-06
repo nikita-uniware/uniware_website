@@ -1,9 +1,12 @@
 /* ══════════════════════════════════════════════════════
    CASE STUDIES INDEX — /resources/case-studies
    Section 1 (header) reuses .hero/.hero-headline/.hero-subtext from
-   globals.css. Section 2 (category filter) below is page-specific —
-   no other page has a URL-driven single-select filter yet.
-   Grid/cards/thumbnail land in later sections of this build.
+   globals.css. Section 2 (category filter) is page-specific — no
+   other page has a URL-driven single-select filter yet. Section 3
+   (grid/cards) reuses card-overlay-link + the White Card Accent
+   Pattern. Section 6 (generated thumbnail) reuses the circle-group
+   system's new --xs tier + --center/--fill modifiers, all in
+   globals.css.
 ══════════════════════════════════════════════════════ */
 
 .csi-filter { background: var(--uw-white); border-bottom: 1px solid var(--section-divider); }
@@ -83,13 +86,21 @@
 }
 .csi-card:hover .link-text-light { text-decoration: underline; text-underline-offset: 3px; }
 
-/* Thumbnail placeholder — Section 6 (generated hash/tone/icon/rings
-   thumbnail) lands separately; this is a neutral placeholder only,
-   deliberately not using the amber tones pending sign-off. */
-.csi-thumbnail-placeholder {
+/* Generated thumbnail (Section 6) — hash(slug) picks a tone + icon,
+   the circle-group --xs/--center rings sit behind the icon. Rings are
+   allowed to bleed past this 170px box; the card's own overflow:hidden
+   clips them, per spec. */
+.csi-thumbnail {
+  position: relative;
   height: 170px;
-  background: var(--surface-light-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-bottom: 1px solid var(--border-light);
+}
+.csi-thumbnail-icon {
+  position: relative;
+  z-index: 1;
 }
 
 .csi-card-body {

@@ -8,6 +8,7 @@ import {
   renderBoldOnly,
   type CaseStudyStat,
 } from "@/content/case-studies/chemical-manufacturing";
+import { CaseStudyThumbnail } from "@/components/CaseStudyThumbnail";
 import "@/styles/case-studies-index.page.css";
 
 type CaseStudyCard = {
@@ -29,9 +30,8 @@ type CaseStudiesIndexPageProps = {
 
 /**
  * Case studies index — /resources/case-studies
- * Sections 1 (hero), 2 (category filter) and 3 (grid/cards) so far.
- * Generated thumbnail (spec Section 6) lands as its own step — cards
- * use a neutral placeholder in that slot for now.
+ * Sections 1 (hero), 2 (category filter), 3 (grid/cards) and 6
+ * (generated thumbnail) are in place.
  */
 export function CaseStudiesIndexPage({
   categories,
@@ -131,10 +131,7 @@ export function CaseStudiesIndexPage({
                       aria-hidden="true"
                       tabIndex={-1}
                     />
-                    <div
-                      className="csi-thumbnail-placeholder"
-                      aria-hidden="true"
-                    />
+                    <CaseStudyThumbnail slug={study.slug} />
                     <div className="csi-card-body">
                       {study.categoryTags[0] ? (
                         <span className="csi-tag-pill">
