@@ -9,6 +9,7 @@ import { mapSanityCaseStudy, type SanityCaseStudyDoc } from "./mappers";
 import { portableTextToBoldMarkdown } from "./portableText";
 import type { CaseStudy } from "@/content/case-studies/chemical-manufacturing";
 import { chemicalManufacturingCaseStudy } from "@/content/case-studies/chemical-manufacturing";
+import { vpnVulnerabilityCaseStudy } from "@/content/case-studies/vpn-vulnerability";
 import {
   LOCAL_TECHNOLOGY_LOGOS,
   type TechnologyLogo,
@@ -17,6 +18,7 @@ import {
 /** Local fallback while Studio content is empty / unpublished. */
 const LOCAL_FALLBACKS: Record<string, CaseStudy> = {
   [chemicalManufacturingCaseStudy.slug]: chemicalManufacturingCaseStudy,
+  [vpnVulnerabilityCaseStudy.slug]: vpnVulnerabilityCaseStudy,
 };
 
 export async function fetchCaseStudyBySlug(
@@ -78,6 +80,7 @@ export type CaseStudyCardSummary = {
   subtext: string;
   categoryTags: string[];
   stat: { number: string; label: string } | null;
+  thumbnailIconOverride?: string | null;
 };
 
 type SanityCaseStudyCardDoc = {
@@ -86,6 +89,7 @@ type SanityCaseStudyCardDoc = {
   subtext?: unknown;
   categoryTags?: string[] | null;
   stat?: { number: string; label: string } | null;
+  thumbnailIconOverride?: string | null;
 };
 
 /** Card list for /resources/case-studies (grid + category filter). */
@@ -97,6 +101,7 @@ export async function fetchCaseStudyCards(): Promise<CaseStudyCardSummary[]> {
       subtext: s.subtext,
       categoryTags: s.categoryTags,
       stat: s.stats[0] ?? null,
+      thumbnailIconOverride: s.thumbnailIconOverride ?? null,
     }));
   }
 
@@ -116,6 +121,7 @@ export async function fetchCaseStudyCards(): Promise<CaseStudyCardSummary[]> {
         ),
         categoryTags: (doc.categoryTags ?? []).filter(Boolean),
         stat: doc.stat ?? null,
+        thumbnailIconOverride: doc.thumbnailIconOverride?.trim() || null,
       }));
   } catch (err) {
     console.error("[sanity] fetchCaseStudyCards failed:", err);

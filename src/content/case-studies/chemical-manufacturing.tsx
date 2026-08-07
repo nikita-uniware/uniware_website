@@ -35,6 +35,8 @@ export type CaseStudy = {
   headline: string;
   subtext: string;
   stats: CaseStudyStat[];
+  /** When set, card + OG image use this Phosphor icon instead of hash auto-pick. */
+  thumbnailIconOverride?: string;
   overview: {
     heading: string;
     description: string;

@@ -17,6 +17,7 @@ type CaseStudyCard = {
   subtext: string;
   categoryTags: string[];
   stat: CaseStudyStat | null;
+  thumbnailIconOverride?: string | null;
 };
 
 type CaseStudiesIndexPageProps = {
@@ -131,7 +132,11 @@ export function CaseStudiesIndexPage({
                       aria-hidden="true"
                       tabIndex={-1}
                     />
-                    <CaseStudyThumbnail slug={study.slug} stat={study.stat} />
+                    <CaseStudyThumbnail
+                      slug={study.slug}
+                      stat={study.stat}
+                      thumbnailIconOverride={study.thumbnailIconOverride}
+                    />
                     <div className="csi-card-body">
                       {study.categoryTags.length > 0 ? (
                         <div className="csi-tag-pill-row">

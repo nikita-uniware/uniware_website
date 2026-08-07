@@ -16,6 +16,7 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
   headline,
   subtext[]${portableBlockProjection},
   stats[]{ number, label },
+  thumbnailIconOverride,
   overview{
     heading,
     description[]${portableBlockProjection},
@@ -71,7 +72,8 @@ export const caseStudyCardsQuery = `*[_type == "caseStudy" && defined(slug.curre
   headline,
   subtext[]${portableBlockProjection},
   categoryTags,
-  "stat": stats[0]
+  "stat": stats[0],
+  thumbnailIconOverride
 }`;
 
 /** Technologies with a logo for a given website page (e.g. cybersecurity partner strip). */

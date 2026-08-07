@@ -66,6 +66,7 @@ export type SanityCaseStudyDoc = {
   seoTitle?: string | null;
   metaDescription?: string | null;
   ogImageUrl?: string | null;
+  thumbnailIconOverride?: string | null;
 };
 
 function mapTechs(list: SanityTech[] | null | undefined) {
@@ -130,6 +131,9 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
       doc.subtext as PortableBlock[] | string | null | undefined
     ),
     stats,
+    ...(doc.thumbnailIconOverride?.trim()
+      ? { thumbnailIconOverride: doc.thumbnailIconOverride.trim() }
+      : {}),
     overview: {
       heading: overview.heading,
       description: overviewDescription,

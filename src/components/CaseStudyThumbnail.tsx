@@ -1,36 +1,23 @@
 import {
-  ArrowClockwise,
-  Cloud,
-  Database,
-  HardDrives,
-  LockKey,
-  Shield,
-} from "@phosphor-icons/react/dist/ssr";
-
-const ICONS = [Shield, Cloud, Database, LockKey, HardDrives, ArrowClockwise] as const;
-
-/**
- * Simple stable string hash, salted so the same slug can be hashed
- * multiple times with different (still deterministic) results if more
- * hashed properties are ever needed again — icon selection uses it as-is.
- */
-function hashSlug(slug: string, salt: string): number {
-  let hash = 0;
-  const input = `${salt}::${slug}`;
-  for (let i = 0; i < input.length; i++) {
-    hash = hash * 31 + input.charCodeAt(i);
-  }
-  return Math.abs(hash);
-}
+  resolveThumbnailIconName,
+} from "@/lib/caseStudyThumbnail";
+import { THUMBNAIL_ICON_COMPONENTS } from "@/lib/caseStudyThumbnailIcons";
+import { Shield } from "@phosphor-icons/react/dist/ssr";
 
 type CaseStudyThumbnailProps = {
   slug: string;
   stat: { number: string; label: string } | null;
+  /** When set, used instead of hash-based auto-pick. */
+  thumbnailIconOverride?: string | null;
 };
 
-export function CaseStudyThumbnail({ slug, stat }: CaseStudyThumbnailProps) {
-  const iconIndex = hashSlug(slug, "icon") % ICONS.length;
-  const Icon = ICONS[iconIndex];
+export function CaseStudyThumbnail({
+  slug,
+  stat,
+  thumbnailIconOverride,
+}: CaseStudyThumbnailProps) {
+  const iconName = resolveThumbnailIconName(slug, thumbnailIconOverride);
+  const Icon = THUMBNAIL_ICON_COMPONENTS[iconName] ?? Shield;
 
   return (
     <div
