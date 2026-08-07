@@ -27,6 +27,18 @@ const CATEGORY_TAGS = [
   { title: "Infrastructure", value: "Infrastructure" },
 ];
 
+/** Internal taxonomy for filtering/reporting — not rendered on the site yet. */
+const INDUSTRIES = [
+  { title: "Manufacturing", value: "Manufacturing" },
+  { title: "BFSI", value: "BFSI" },
+  { title: "Healthcare", value: "Healthcare" },
+  { title: "Education", value: "Education" },
+  { title: "Real Estate", value: "Real Estate" },
+  { title: "Media & Entertainment", value: "Media & Entertainment" },
+  { title: "Public Sector", value: "Public Sector" },
+  { title: "IT & Technology Services", value: "IT & Technology Services" },
+];
+
 const TECHNOLOGY_PAGES = [
   { title: "Cybersecurity", value: "cybersecurity" },
 ];
@@ -109,6 +121,19 @@ export const caseStudy = {
       validation: (Rule: {
         required: () => { min: (n: number) => { max: (n: number) => unknown } };
       }) => Rule.required().min(1).max(3),
+    },
+    {
+      name: "industry",
+      title: "Industry",
+      type: "string",
+      group: "content",
+      options: {
+        list: INDUSTRIES,
+        layout: "dropdown",
+      },
+      description:
+        "Required. Internal only for now — used for filtering and reporting later. Not shown on the live page yet.",
+      validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
     {
       name: "headline",
@@ -812,7 +837,23 @@ export const caseStudy = {
     },
   ],
   preview: {
-    select: { title: "headline", subtitle: "overview.heading" },
+    select: {
+      title: "headline",
+      client: "overview.heading",
+      industry: "industry",
+    },
+    prepare: ({
+      title,
+      client,
+      industry,
+    }: {
+      title?: string;
+      client?: string;
+      industry?: string;
+    }) => ({
+      title: title || "Untitled case study",
+      subtitle: [client, industry].filter(Boolean).join(" · ") || undefined,
+    }),
   },
 };
 
