@@ -326,9 +326,9 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
    page's hero currently uses the inline amber-span treatment. */
 .hero-headline .amber{color:var(--uw-amber-dark)}
 
-/* .circle-group, its size tiers (.circle-xl-*/-lg-*/-sm-*), and
-   .circle-ring/.circle-enter now all live in globals.css, reusable
-   across pages (moved out for the case-studies index hero). */
+/* .circle-group, its size tiers (.circle-xl, .circle-lg, .circle-sm),
+   and .circle-ring / .circle-enter now all live in globals.css,
+   reusable across pages (moved out for the case-studies index hero). */
 
 
 /* ══════════════════════════════════════════════════════
