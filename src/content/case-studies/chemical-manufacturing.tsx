@@ -29,6 +29,11 @@ export type CaseStudyNote = {
   company: string;
 };
 
+export type SolutionContentBlock =
+  | { type: "text"; body: string }
+  | { type: "image"; src: string; alt: string; caption?: string }
+  | { type: "video"; src: string; poster?: string; caption?: string };
+
 export type CaseStudy = {
   slug: string;
   categoryTags: string[];
@@ -51,6 +56,7 @@ export type CaseStudy = {
   solution: {
     heading: string;
     body: string;
+    contentBlocks: SolutionContentBlock[];
     showSteps: boolean;
     steps: CaseStudyStep[];
     showTechnologies: boolean;
@@ -65,7 +71,9 @@ export type CaseStudy = {
     heading: string;
     outcomes: string[];
   };
-  note?: CaseStudyNote;
+  notesAfterProblem: CaseStudyNote[];
+  notesAfterSolution: CaseStudyNote[];
+  notesAfterResults: CaseStudyNote[];
   whatsNext?: string;
   seo: {
     title: string;
@@ -137,6 +145,7 @@ export const chemicalManufacturingCaseStudy: CaseStudy = {
       { name: "Fortinet", type: "Firewall" },
       { name: "Veeam", type: "Backup" },
     ],
+    contentBlocks: [],
   },
   beforeAfter: {
     heading: "Read row by row, what actually changed.",
@@ -183,14 +192,18 @@ export const chemicalManufacturingCaseStudy: CaseStudy = {
       "Layered backup strategy protects against future attacks",
     ],
   },
-  note: {
-    source: "team",
-    quote:
-      "If a client calls over the weekend, it is almost always ransomware. We went immediately, and the whole team rallied, including all 300 staff who helped re-enter two days of missing data by hand.",
-    name: "Dhanasekar",
-    designation: "Chief Technology Officer",
-    company: "Uniware Systems",
-  },
+  notesAfterProblem: [],
+  notesAfterSolution: [],
+  notesAfterResults: [
+    {
+      source: "team",
+      quote:
+        "If a client calls over the weekend, it is almost always ransomware. We went immediately, and the whole team rallied, including all 300 staff who helped re-enter two days of missing data by hand.",
+      name: "Dhanasekar",
+      designation: "Chief Technology Officer",
+      company: "Uniware Systems",
+    },
+  ],
   whatsNext:
     "Phase 2 is underway: long-term backup retention is moving to the cloud, layered on top of the fast local recovery already in place.",
   seo: {

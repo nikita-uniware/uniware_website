@@ -18,6 +18,135 @@ function portableTextLength(blocks: PortableBlock[] | undefined) {
     .trim().length;
 }
 
+const boldOnlyBlock = {
+  type: "block",
+  styles: [],
+  lists: [],
+  marks: {
+    decorators: [{ title: "Bold", value: "strong" }],
+    annotations: [],
+  },
+};
+
+const noteQuoteFields = [
+  {
+    name: "source",
+    title: "Source",
+    type: "string",
+    options: {
+      list: [
+        { title: "A note from our client", value: "client" },
+        { title: "A note from our team", value: "team" },
+      ],
+    },
+    validation: (Rule: { required: () => unknown }) => Rule.required(),
+  },
+  {
+    name: "quote",
+    title: "Quote text",
+    type: "array",
+    of: [boldOnlyBlock],
+    description: "Keep to 2–3 sentences. Max ~300 characters.",
+    validation: (Rule: {
+      required: () => {
+        custom: (
+          fn: (value: PortableBlock[] | undefined) => true | string
+        ) => unknown;
+      };
+    }) =>
+      Rule.required().custom((value: PortableBlock[] | undefined) => {
+        const len = portableTextLength(value);
+        if (len === 0) return "Quote is required";
+        if (len > 300) return `Keep under 300 characters (currently ${len})`;
+        return true;
+      }),
+  },
+  {
+    name: "name",
+    title: "Name",
+    type: "string",
+    validation: (Rule: { required: () => unknown }) => Rule.required(),
+  },
+  {
+    name: "designation",
+    title: "Designation",
+    type: "string",
+    validation: (Rule: { required: () => unknown }) => Rule.required(),
+  },
+  {
+    name: "company",
+    title: "Company",
+    type: "string",
+    validation: (Rule: { required: () => unknown }) => Rule.required(),
+  },
+];
+
+function noteSlotField(name: string, title: string, description: string) {
+  return {
+    name,
+    title,
+    type: "object",
+    group: "content",
+    fields: [
+      {
+        name: "show",
+        title: "Show this note",
+        type: "boolean",
+        initialValue: false,
+        description:
+          "Off by default. Switch on only if you have a quote or comment for this position.",
+      },
+      {
+        name: "quotes",
+        title: "Quotes",
+        type: "array",
+        hidden: ({ parent }: { parent?: { show?: boolean } }) => !parent?.show,
+        description: "Add one or more quotes. Drag to reorder.",
+        validation: (Rule: {
+          custom: (
+            fn: (
+              value: unknown,
+              context: { parent?: { show?: boolean } }
+            ) => true | string
+          ) => unknown;
+        }) =>
+          Rule.custom(
+            (quotes: unknown, context: { parent?: { show?: boolean } }) => {
+              if (!context.parent?.show) return true;
+              if (!Array.isArray(quotes) || quotes.length < 1) {
+                return "Add at least one quote when this note is shown";
+              }
+              return true;
+            }
+          ),
+        of: [
+          {
+            type: "object",
+            fields: noteQuoteFields,
+            preview: {
+              select: { title: "name", subtitle: "source" },
+              prepare: ({
+                title,
+                subtitle,
+              }: {
+                title?: string;
+                subtitle?: string;
+              }) => ({
+                title: title || "Untitled quote",
+                subtitle:
+                  subtitle === "client"
+                    ? "A note from our client"
+                    : "A note from our team",
+              }),
+            },
+          },
+        ],
+      },
+    ],
+    description,
+  };
+}
+
 const CATEGORY_TAGS = [
   { title: "Cloud", value: "Cloud" },
   { title: "Cybersecurity", value: "Cybersecurity" },
@@ -426,6 +555,111 @@ export const caseStudy = {
           validation: (Rule: { required: () => unknown }) => Rule.required(),
         },
         {
+          name: "contentBlocks",
+          title: "Content blocks",
+          type: "array",
+          description:
+            "Optional. Add text, image, or video in any order. Drag to reorder. Hosting for video can be upgraded later — upload an MP4 for now.",
+          of: [
+            {
+              type: "object",
+              name: "solutionText",
+              title: "Text",
+              fields: [
+                {
+                  name: "body",
+                  title: "Body",
+                  type: "array",
+                  of: [boldOnlyBlock],
+                  validation: (Rule: { required: () => unknown }) =>
+                    Rule.required(),
+                },
+              ],
+              preview: {
+                select: { body: "body" },
+                prepare: ({ body }: { body?: PortableBlock[] }) => ({
+                  title: "Text",
+                  subtitle:
+                    (body ?? [])
+                      .map((b) =>
+                        (b.children ?? []).map((c) => c.text ?? "").join("")
+                      )
+                      .join(" ")
+                      .slice(0, 80) || "Empty",
+                }),
+              },
+            },
+            {
+              type: "object",
+              name: "solutionImage",
+              title: "Image",
+              fields: [
+                {
+                  name: "image",
+                  title: "Image",
+                  type: "image",
+                  options: { hotspot: true },
+                  validation: (Rule: { required: () => unknown }) =>
+                    Rule.required(),
+                },
+                {
+                  name: "alt",
+                  title: "Alt text",
+                  type: "string",
+                  description: "Describe the image for accessibility.",
+                  validation: (Rule: { required: () => unknown }) =>
+                    Rule.required(),
+                },
+                {
+                  name: "caption",
+                  title: "Caption",
+                  type: "string",
+                  description: "Optional. Shown under the image.",
+                },
+              ],
+              preview: {
+                select: { title: "alt", media: "image" },
+              },
+            },
+            {
+              type: "object",
+              name: "solutionVideo",
+              title: "Video",
+              fields: [
+                {
+                  name: "file",
+                  title: "Video file",
+                  type: "file",
+                  options: { accept: "video/*" },
+                  description:
+                    "Upload MP4 (H.264) for now. Hosting approach (Mux vs embed) still to be confirmed.",
+                  validation: (Rule: { required: () => unknown }) =>
+                    Rule.required(),
+                },
+                {
+                  name: "poster",
+                  title: "Poster image",
+                  type: "image",
+                  description: "Optional still shown before play.",
+                },
+                {
+                  name: "caption",
+                  title: "Caption",
+                  type: "string",
+                  description: "Optional. Shown under the video.",
+                },
+              ],
+              preview: {
+                select: { title: "caption" },
+                prepare: ({ title }: { title?: string }) => ({
+                  title: "Video",
+                  subtitle: title || "Uploaded file",
+                }),
+              },
+            },
+          ],
+        },
+        {
           name: "showSteps",
           title: "Show steps",
           type: "boolean",
@@ -631,160 +865,21 @@ export const caseStudy = {
         },
       ],
     },
-    {
-      name: "showNote",
-      title: "Show note section",
-      type: "boolean",
-      group: "content",
-      initialValue: false,
-      description:
-        "Only switch on if you actually have a quote or comment.",
-    },
-    {
-      name: "note",
-      title: "Note",
-      type: "object",
-      group: "content",
-      hidden: ({ parent }: { parent?: { showNote?: boolean } }) =>
-        !parent?.showNote,
-      fields: [
-        {
-          name: "source",
-          title: "Source",
-          type: "string",
-          options: {
-            list: [
-              { title: "A note from our client", value: "client" },
-              { title: "A note from our team", value: "team" },
-            ],
-          },
-          validation: (Rule: {
-            custom: (
-              fn: (
-                value: unknown,
-                context: { document?: { showNote?: boolean } }
-              ) => true | string
-            ) => unknown;
-          }) =>
-            Rule.custom(
-              (
-                value: unknown,
-                context: { document?: { showNote?: boolean } }
-              ) => {
-                if (!context.document?.showNote) return true;
-                if (!value) return "Choose client or team when note is shown";
-                return true;
-              }
-            ),
-        },
-        {
-          name: "quote",
-          title: "Quote text",
-          type: "array",
-          of: [
-            {
-              type: "block",
-              styles: [],
-              lists: [],
-              marks: {
-                decorators: [{ title: "Bold", value: "strong" }],
-                annotations: [],
-              },
-            },
-          ],
-          description: "Keep to 2–3 sentences. Max ~300 characters.",
-          validation: (Rule: {
-            custom: (
-              fn: (
-                value: PortableBlock[] | undefined,
-                context: { document?: { showNote?: boolean } }
-              ) => true | string
-            ) => unknown;
-          }) =>
-            Rule.custom(
-              (
-                value: PortableBlock[] | undefined,
-                context: { document?: { showNote?: boolean } }
-              ) => {
-                if (!context.document?.showNote) return true;
-                const len = portableTextLength(value);
-                if (len === 0) return "Quote is required when note is shown";
-                if (len > 300) return `Keep under 300 characters (currently ${len})`;
-                return true;
-              }
-            ),
-        },
-        {
-          name: "name",
-          title: "Name",
-          type: "string",
-          validation: (Rule: {
-            custom: (
-              fn: (
-                value: unknown,
-                context: { document?: { showNote?: boolean } }
-              ) => true | string
-            ) => unknown;
-          }) =>
-            Rule.custom(
-              (
-                value: unknown,
-                context: { document?: { showNote?: boolean } }
-              ) => {
-                if (!context.document?.showNote) return true;
-                if (!value) return "Name is required when note is shown";
-                return true;
-              }
-            ),
-        },
-        {
-          name: "designation",
-          title: "Designation",
-          type: "string",
-          validation: (Rule: {
-            custom: (
-              fn: (
-                value: unknown,
-                context: { document?: { showNote?: boolean } }
-              ) => true | string
-            ) => unknown;
-          }) =>
-            Rule.custom(
-              (
-                value: unknown,
-                context: { document?: { showNote?: boolean } }
-              ) => {
-                if (!context.document?.showNote) return true;
-                if (!value) return "Designation is required when note is shown";
-                return true;
-              }
-            ),
-        },
-        {
-          name: "company",
-          title: "Company",
-          type: "string",
-          validation: (Rule: {
-            custom: (
-              fn: (
-                value: unknown,
-                context: { document?: { showNote?: boolean } }
-              ) => true | string
-            ) => unknown;
-          }) =>
-            Rule.custom(
-              (
-                value: unknown,
-                context: { document?: { showNote?: boolean } }
-              ) => {
-                if (!context.document?.showNote) return true;
-                if (!value) return "Company is required when note is shown";
-                return true;
-              }
-            ),
-        },
-      ],
-    },
+    noteSlotField(
+      "noteAfterProblem",
+      "Note after Problem",
+      "Off by default. Renders between Problem and Solution when switched on."
+    ),
+    noteSlotField(
+      "noteAfterSolution",
+      "Note after Solution",
+      "Off by default. Renders between Solution and Before & After when switched on."
+    ),
+    noteSlotField(
+      "noteAfterResults",
+      "Note after Results",
+      "Off by default. Renders after Results (same position as the previous single Note). Existing quotes were migrated here."
+    ),
     {
       name: "whatsNext",
       title: "What's Next",

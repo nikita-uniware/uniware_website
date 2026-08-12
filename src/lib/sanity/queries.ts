@@ -10,6 +10,17 @@ const portableBlockProjection = `{
 
 export const caseStudySlugsQuery = `*[_type == "caseStudy" && defined(slug.current)][].slug.current`;
 
+const noteSlotProjection = `{
+  show,
+  quotes[]{
+    source,
+    quote[]${portableBlockProjection},
+    name,
+    designation,
+    company
+  }
+}`;
+
 export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $slug][0]{
   "slug": slug.current,
   categoryTags,
@@ -31,6 +42,16 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
   solution{
     heading,
     body[]${portableBlockProjection},
+    contentBlocks[]{
+      _type,
+      _key,
+      body[]${portableBlockProjection},
+      alt,
+      caption,
+      "imageUrl": image.asset->url,
+      "fileUrl": file.asset->url,
+      "posterUrl": poster.asset->url
+    },
     showSteps,
     steps[]{ title, body },
     showTechnologies,
@@ -48,6 +69,9 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
     heading,
     outcomes
   },
+  noteAfterProblem${noteSlotProjection},
+  noteAfterSolution${noteSlotProjection},
+  noteAfterResults${noteSlotProjection},
   showNote,
   note{
     source,

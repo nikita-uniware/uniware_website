@@ -63,14 +63,79 @@ const CheckIcon = () => (
   </svg>
 );
 
+function NoteSection({
+  notes,
+  revealBase = 0,
+}: {
+  notes: CaseStudy["notesAfterResults"];
+  revealBase?: number;
+}) {
+  if (notes.length === 0) return null;
+  return (
+    <div className="cs-block">
+      {notes.map((note, i) => {
+        const heading =
+          note.source === "client" ? "A note from our client" : "A note from our team";
+        return (
+          <div className="cs-quote-stack-item" key={`${note.name}-${i}`}>
+            <p className="cs-eyebrow" data-reveal={String(revealBase + i * 80)}>
+              {heading}
+            </p>
+            <div className="cs-quote-block" data-reveal={String(revealBase + 80 + i * 80)}>
+              <p className="cs-quote-block-text">{note.quote}</p>
+              <p className="cs-quote-block-name">{note.name}</p>
+              <p className="cs-quote-block-title">
+                {note.designation}, {note.company}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function SolutionContentBlocks({ study }: { study: CaseStudy }) {
+  if (study.solution.contentBlocks.length === 0) return null;
+  return (
+    <div className="cs-solution-blocks">
+      {study.solution.contentBlocks.map((block, i) => {
+        if (block.type === "text") {
+          return (
+            <p className="cs-block-body" data-reveal={String(200 + i * 60)} key={`text-${i}`}>
+              {renderBoldOnly(block.body)}
+            </p>
+          );
+        }
+        if (block.type === "image") {
+          return (
+            <figure className="cs-media-block" data-reveal={String(200 + i * 60)} key={`image-${i}`}>
+              <img className="cs-media-image" src={block.src} alt={block.alt} loading="lazy" />
+              {block.caption ? <figcaption className="cs-media-caption">{block.caption}</figcaption> : null}
+            </figure>
+          );
+        }
+        return (
+          <figure className="cs-media-block" data-reveal={String(200 + i * 60)} key={`video-${i}`}>
+            <video
+              className="cs-media-video"
+              controls
+              preload="metadata"
+              src={block.src}
+              poster={block.poster}
+            />
+            {block.caption ? <figcaption className="cs-media-caption">{block.caption}</figcaption> : null}
+          </figure>
+        );
+      })}
+    </div>
+  );
+}
+
 export function CaseStudyPage({ study }: { study: CaseStudy }) {
   useReveal({ heroSelector: ".cs-hero" });
 
   const statCols = study.stats.length;
-  const noteHeading =
-    study.note?.source === "client"
-      ? "A note from our client"
-      : "A note from our team";
 
   return (
     <div className="case-study-page">
@@ -168,6 +233,8 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                 ))}
               </div>
 
+              <NoteSection notes={study.notesAfterProblem} revealBase={200} />
+
               <div className="cs-block">
                 <p className="cs-eyebrow" data-reveal="0">
                   The solution
@@ -178,6 +245,8 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                 <p className="cs-block-body" data-reveal="160">
                   {renderBoldOnly(study.solution.body)}
                 </p>
+
+                <SolutionContentBlocks study={study} />
 
                 {study.solution.showSteps && study.solution.steps.length > 0 ? (
                   <ol className="cs-timeline" data-reveal="220">
@@ -220,6 +289,8 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                   </>
                 ) : null}
               </div>
+
+              <NoteSection notes={study.notesAfterSolution} revealBase={220} />
 
               <div className="cs-block">
                 <p className="cs-eyebrow" data-reveal="0">
@@ -265,20 +336,7 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                 </ul>
               </div>
 
-              {study.note ? (
-                <div className="cs-block">
-                  <p className="cs-eyebrow" data-reveal="0">
-                    {noteHeading}
-                  </p>
-                  <div className="cs-quote-block" data-reveal="80">
-                    <p className="cs-quote-block-text">{study.note.quote}</p>
-                    <p className="cs-quote-block-name">{study.note.name}</p>
-                    <p className="cs-quote-block-title">
-                      {study.note.designation}, {study.note.company}
-                    </p>
-                  </div>
-                </div>
-              ) : null}
+              <NoteSection notes={study.notesAfterResults} revealBase={180} />
 
               {study.whatsNext ? (
                 <div className="cs-block">

@@ -1,4 +1,8 @@
-import type { CaseStudy } from "@/content/case-studies/chemical-manufacturing";
+import type {
+  CaseStudy,
+  CaseStudyNote,
+  SolutionContentBlock,
+} from "@/content/case-studies/chemical-manufacturing";
 import {
   portableTextBlocksToParagraphs,
   portableTextToBoldMarkdown,
@@ -14,6 +18,30 @@ type SanityTech = {
   name?: string | null;
   type?: string | null;
   logoUrl?: string | null;
+};
+
+type SanityNoteQuote = {
+  source?: "client" | "team" | string | null;
+  quote?: PortableBlock[] | string | null;
+  name?: string | null;
+  designation?: string | null;
+  company?: string | null;
+};
+
+type SanityNoteSlot = {
+  show?: boolean | null;
+  quotes?: SanityNoteQuote[] | null;
+};
+
+type SanityContentBlock = {
+  _type?: string | null;
+  _key?: string | null;
+  body?: PortableBlock[] | string | null;
+  alt?: string | null;
+  caption?: string | null;
+  imageUrl?: string | null;
+  fileUrl?: string | null;
+  posterUrl?: string | null;
 };
 
 /** Raw shape returned by caseStudyBySlugQuery */
@@ -37,6 +65,7 @@ export type SanityCaseStudyDoc = {
   solution?: {
     heading?: string | null;
     body?: PortableBlock[] | string | null;
+    contentBlocks?: SanityContentBlock[] | null;
     showSteps?: boolean | null;
     steps?: { title?: string | null; body?: string | null }[] | null;
     showTechnologies?: boolean | null;
@@ -54,14 +83,11 @@ export type SanityCaseStudyDoc = {
     heading?: string | null;
     outcomes?: (string | null)[] | null;
   } | null;
+  noteAfterProblem?: SanityNoteSlot | null;
+  noteAfterSolution?: SanityNoteSlot | null;
+  noteAfterResults?: SanityNoteSlot | null;
   showNote?: boolean | null;
-  note?: {
-    source?: "client" | "team" | string | null;
-    quote?: PortableBlock[] | string | null;
-    name?: string | null;
-    designation?: string | null;
-    company?: string | null;
-  } | null;
+  note?: SanityNoteQuote | null;
   whatsNext?: string | null;
   seoTitle?: string | null;
   metaDescription?: string | null;
@@ -77,6 +103,72 @@ function mapTechs(list: SanityTech[] | null | undefined) {
       ...(t.type ? { type: String(t.type) } : {}),
       ...(t.logoUrl ? { logoUrl: String(t.logoUrl) } : {}),
     }));
+}
+
+function mapNoteQuote(raw: SanityNoteQuote | null | undefined): CaseStudyNote | null {
+  if (!raw?.name) return null;
+  const quote = portableTextToBoldMarkdown(
+    raw.quote as PortableBlock[] | string | null | undefined
+  );
+  if (!quote) return null;
+  const source =
+    raw.source === "client" || raw.source === "team" ? raw.source : "team";
+  return {
+    source,
+    quote,
+    name: raw.name,
+    designation: raw.designation ?? "",
+    company: raw.company ?? "",
+  };
+}
+
+function mapNoteSlot(
+  slot: SanityNoteSlot | null | undefined,
+  legacy?: { show?: boolean | null; note?: SanityNoteQuote | null }
+): CaseStudyNote[] {
+  if (slot?.show) {
+    return (slot.quotes ?? [])
+      .map((q) => mapNoteQuote(q))
+      .filter((q): q is CaseStudyNote => Boolean(q));
+  }
+  if (legacy?.show && legacy.note) {
+    const mapped = mapNoteQuote(legacy.note);
+    return mapped ? [mapped] : [];
+  }
+  return [];
+}
+
+function mapContentBlocks(
+  blocks: SanityContentBlock[] | null | undefined
+): SolutionContentBlock[] {
+  const out: SolutionContentBlock[] = [];
+  for (const block of blocks ?? []) {
+    if (block._type === "solutionText") {
+      const body = portableTextToBoldMarkdown(
+        block.body as PortableBlock[] | string | null | undefined
+      );
+      if (body) out.push({ type: "text", body });
+      continue;
+    }
+    if (block._type === "solutionImage" && block.imageUrl) {
+      out.push({
+        type: "image",
+        src: block.imageUrl,
+        alt: block.alt?.trim() || "Case study image",
+        ...(block.caption?.trim() ? { caption: block.caption.trim() } : {}),
+      });
+      continue;
+    }
+    if (block._type === "solutionVideo" && block.fileUrl) {
+      out.push({
+        type: "video",
+        src: block.fileUrl,
+        ...(block.posterUrl ? { poster: block.posterUrl } : {}),
+        ...(block.caption?.trim() ? { caption: block.caption.trim() } : {}),
+      });
+    }
+  }
+  return out;
 }
 
 /**
@@ -148,6 +240,7 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
     solution: {
       heading: solution.heading,
       body: solutionBody,
+      contentBlocks: mapContentBlocks(solution.contentBlocks),
       showSteps: Boolean(solution.showSteps),
       steps: (solution.steps ?? [])
         .filter((s) => s?.title && s?.body)
@@ -169,31 +262,18 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
       heading: results.heading,
       outcomes: (results.outcomes ?? []).filter(Boolean).map(String),
     },
+    notesAfterProblem: mapNoteSlot(doc.noteAfterProblem),
+    notesAfterSolution: mapNoteSlot(doc.noteAfterSolution),
+    notesAfterResults: mapNoteSlot(doc.noteAfterResults, {
+      show: doc.showNote,
+      note: doc.note,
+    }),
     seo: {
       title: doc.seoTitle ?? doc.headline,
       description: doc.metaDescription ?? "",
       ...(doc.ogImageUrl ? { ogImageUrl: doc.ogImageUrl } : {}),
     },
   };
-
-  if (doc.showNote && doc.note?.name) {
-    const quote = portableTextToBoldMarkdown(
-      doc.note.quote as PortableBlock[] | string | null | undefined
-    );
-    if (quote) {
-      const source =
-        doc.note.source === "client" || doc.note.source === "team"
-          ? doc.note.source
-          : "team";
-      study.note = {
-        source,
-        quote,
-        name: doc.note.name,
-        designation: doc.note.designation ?? "",
-        company: doc.note.company ?? "",
-      };
-    }
-  }
 
   if (doc.whatsNext) {
     study.whatsNext = doc.whatsNext;
