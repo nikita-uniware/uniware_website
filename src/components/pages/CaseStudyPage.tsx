@@ -63,7 +63,7 @@ const CheckIcon = () => (
   </svg>
 );
 
-function NoteSection({
+function QuoteSection({
   notes,
   revealBase = 0,
 }: {
@@ -75,7 +75,9 @@ function NoteSection({
     <div className="cs-block">
       {notes.map((note, i) => {
         const heading =
-          note.source === "client" ? "A note from our client" : "A note from our team";
+          note.source === "client"
+            ? "A quote from our client"
+            : "A quote from our team";
         return (
           <div className="cs-quote-stack-item" key={`${note.name}-${i}`}>
             <p className="cs-eyebrow" data-reveal={String(revealBase + i * 80)}>
@@ -233,7 +235,7 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                 ))}
               </div>
 
-              <NoteSection notes={study.notesAfterProblem} revealBase={200} />
+              <QuoteSection notes={study.notesAfterProblem} revealBase={200} />
 
               <div className="cs-block">
                 <p className="cs-eyebrow" data-reveal="0">
@@ -290,7 +292,7 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                 ) : null}
               </div>
 
-              <NoteSection notes={study.notesAfterSolution} revealBase={220} />
+              <QuoteSection notes={study.notesAfterSolution} revealBase={220} />
 
               <div className="cs-block">
                 <p className="cs-eyebrow" data-reveal="0">
@@ -336,7 +338,7 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                 </ul>
               </div>
 
-              <NoteSection notes={study.notesAfterResults} revealBase={180} />
+              <QuoteSection notes={study.notesAfterResults} revealBase={180} />
 
               {study.whatsNext ? (
                 <div className="cs-block">

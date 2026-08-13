@@ -35,8 +35,8 @@ const noteQuoteFields = [
     type: "string",
     options: {
       list: [
-        { title: "A note from our client", value: "client" },
-        { title: "A note from our team", value: "team" },
+        { title: "A quote from our client", value: "client" },
+        { title: "A quote from our team", value: "team" },
       ],
     },
     validation: (Rule: { required: () => unknown }) => Rule.required(),
@@ -81,7 +81,7 @@ const noteQuoteFields = [
   },
 ];
 
-function noteSlotField(name: string, title: string, description: string) {
+function quoteSlotField(name: string, title: string, description: string) {
   return {
     name,
     title,
@@ -90,11 +90,11 @@ function noteSlotField(name: string, title: string, description: string) {
     fields: [
       {
         name: "show",
-        title: "Show this note",
+        title: "Show this quote",
         type: "boolean",
         initialValue: false,
         description:
-          "Off by default. Switch on only if you have a quote or comment for this position.",
+          "Off by default. Switch on only if you have a quote for this position.",
       },
       {
         name: "quotes",
@@ -114,7 +114,7 @@ function noteSlotField(name: string, title: string, description: string) {
             (quotes: unknown, context: { parent?: { show?: boolean } }) => {
               if (!context.parent?.show) return true;
               if (!Array.isArray(quotes) || quotes.length < 1) {
-                return "Add at least one quote when this note is shown";
+                return "Add at least one quote when this is shown";
               }
               return true;
             }
@@ -135,8 +135,8 @@ function noteSlotField(name: string, title: string, description: string) {
                 title: title || "Untitled quote",
                 subtitle:
                   subtitle === "client"
-                    ? "A note from our client"
-                    : "A note from our team",
+                    ? "A quote from our client"
+                    : "A quote from our team",
               }),
             },
           },
@@ -523,6 +523,11 @@ export const caseStudy = {
         },
       ],
     },
+    quoteSlotField(
+      "noteAfterProblem",
+      "Quote after Problem",
+      "Off by default. Sits directly after Problem on the page."
+    ),
     {
       name: "solution",
       title: "Solution",
@@ -795,6 +800,11 @@ export const caseStudy = {
         },
       ],
     },
+    quoteSlotField(
+      "noteAfterSolution",
+      "Quote after Solution",
+      "Off by default. Sits directly after Solution on the page."
+    ),
     {
       name: "beforeAfter",
       title: "Before & After",
@@ -865,20 +875,10 @@ export const caseStudy = {
         },
       ],
     },
-    noteSlotField(
-      "noteAfterProblem",
-      "Note after Problem",
-      "Off by default. Renders between Problem and Solution when switched on."
-    ),
-    noteSlotField(
-      "noteAfterSolution",
-      "Note after Solution",
-      "Off by default. Renders between Solution and Before & After when switched on."
-    ),
-    noteSlotField(
+    quoteSlotField(
       "noteAfterResults",
-      "Note after Results",
-      "Off by default. Renders after Results (same position as the previous single Note). Existing quotes were migrated here."
+      "Quote after Results",
+      "Off by default. Sits directly after Results on the page. Existing quotes were migrated here."
     ),
     {
       name: "whatsNext",

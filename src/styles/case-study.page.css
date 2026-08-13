@@ -161,8 +161,7 @@ html.is-ready [data-reveal].is-visible{opacity:1;transform:translateY(0)}
 .cs-results li:first-child{border-top:none}
 .cs-results li svg{flex-shrink:0;margin-top:3px;color:var(--uw-amber-light)}
 
-/* Note from the team — toggle component. Renders only when a quote or team
-   comment exists in the content model; the block below is shown ON. */
+/* Quote block — renders only when a quote exists in the content model. */
 .cs-quote-block{border-left:3px solid var(--uw-amber-dark);background:var(--uw-wts-ring-2);border-radius:0 12px 12px 0;padding:24px 28px}
 .cs-quote-block-text{font-family:var(--font-display);font-weight:var(--font-weight-semibold);font-size:var(--text-body-lg-sm);line-height:1.5;color:var(--uw-black);margin-bottom:12px}
 .cs-quote-block-name{font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body-sm);line-height:1.5;color:var(--uw-black)}
