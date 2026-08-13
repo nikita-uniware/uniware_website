@@ -118,16 +118,22 @@ function SolutionContentBlocks({ study }: { study: CaseStudy }) {
           );
         }
         return (
-          <figure className="cs-media-block" data-reveal={String(200 + i * 60)} key={`video-${i}`}>
-            <video
-              className="cs-media-video"
-              controls
-              preload="metadata"
-              src={block.src}
-              poster={block.poster}
-            />
-            {block.caption ? <figcaption className="cs-media-caption">{block.caption}</figcaption> : null}
-          </figure>
+          <div className="cs-solution-media" key={`video-${i}`}>
+            {block.poster ? (
+              <figure className="cs-media-block" data-reveal={String(200 + i * 60)}>
+                <img
+                  className="cs-media-image"
+                  src={block.poster}
+                  alt={block.caption || "Case study image"}
+                  loading="lazy"
+                />
+              </figure>
+            ) : null}
+            <figure className="cs-media-block" data-reveal={String(200 + i * 60)}>
+              <video className="cs-media-video" controls preload="metadata" src={block.src} />
+              {block.caption ? <figcaption className="cs-media-caption">{block.caption}</figcaption> : null}
+            </figure>
+          </div>
         );
       })}
     </div>

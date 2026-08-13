@@ -643,9 +643,10 @@ export const caseStudy = {
                 },
                 {
                   name: "poster",
-                  title: "Poster image",
+                  title: "Still image",
                   type: "image",
-                  description: "Optional still shown before play.",
+                  description:
+                    "Optional. Shown above the video and stays visible when the video plays. To add only a photo (no video), use an Image block instead.",
                 },
                 {
                   name: "caption",

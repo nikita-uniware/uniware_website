@@ -160,10 +160,18 @@ function mapContentBlocks(
       continue;
     }
     if (block._type === "solutionVideo" && block.fileUrl) {
+      // Poster is a still that must stay on the page — not the HTML video
+      // poster, which the browser replaces as soon as playback starts.
+      if (block.posterUrl) {
+        out.push({
+          type: "image",
+          src: block.posterUrl,
+          alt: block.alt?.trim() || block.caption?.trim() || "Case study image",
+        });
+      }
       out.push({
         type: "video",
         src: block.fileUrl,
-        ...(block.posterUrl ? { poster: block.posterUrl } : {}),
         ...(block.caption?.trim() ? { caption: block.caption.trim() } : {}),
       });
     }
