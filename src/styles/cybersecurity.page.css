@@ -1,41 +1,5 @@
 
 
-/* ══════════════════════════════════════════════════════
-   SITE NAV — Fixed top bar. Dark gradient. Logo left,
-   links right. No data-reveal. No JS for functionality.
-   Height: 64px. Subnav sticks at top:64px (below this).
-══════════════════════════════════════════════════════ */
-.site-nav{
-  position:fixed; top:0; left:0; right:0; z-index:60;
-  /* background: Tailwind bg-linear-90 from-uw-dark-blue to-uw-black on SiteNav */
-  border-bottom:1px solid var(--border-chrome);
-  height:var(--uw-nav-height); display:flex; align-items:center;
-}
-.site-nav-inner{
-  width:100%; max-width:1200px; margin:0 auto;
-  padding:0 var(--space-4);
-  display:flex; align-items:center; justify-content:space-between;
-  gap:var(--space-6);
-}
-@media(min-width:768px){ .site-nav-inner{ padding:0 var(--space-6); } }
-@media(min-width:1024px){ .site-nav-inner{ padding:0 var(--space-10); } }
-.site-nav-logo{ display:flex; align-items:center; text-decoration:none; flex-shrink:0; }
-.site-nav-logo img{ width:auto; }
-.site-nav-logo-mark{ display:block; height:32px; width:32px; }
-.site-nav-logo-word{ display:none; height:28px; }
-@media(min-width:768px){
-  .site-nav-logo-mark{ display:none; }
-  .site-nav-logo-word{ display:block; }
-}
-.site-nav-links{ display:flex; align-items:center; gap:var(--space-2); }
-/* Ghost link in nav — white on dark */
-.site-nav-link{
-  font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-button);
-  color:var(--uw-text-on-dark-secondary); text-decoration:none; padding:0 12px; white-space:nowrap;
-  transition:color var(--uw-transition-hover) ease;
-}
-.site-nav-link:hover{ color:var(--uw-white); }
-
 /* ─── Reset ──────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
