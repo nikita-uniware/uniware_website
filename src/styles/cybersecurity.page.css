@@ -195,8 +195,15 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 
 
 /* ══════════════════════════════════════════════════════
-   GET STARTED — Final CTA. White. Two side-by-side blocks.
-   Assessment route (self-serve) + Book a review (direct).
+   GET STARTED — Final CTA. White section. Two blocks, 2:1 width:
+   amber-filled "Book a review" (subtle hover: outline + slightly
+   lighter amber) + white "Take the assessment" (hover reuses the same
+   border/background escalation DCI's .dci-stack-block already uses
+   on a white card: border→amber-border, background→yellow-card-hover).
+   Grid stretches both wrapper divs to equal row height by default;
+   .gs-block fills that height and is itself a flex column, so the
+   button (and phone line, on the amber card) can be pushed to the
+   bottom via margin-top:auto regardless of which card's copy is longer.
 ══════════════════════════════════════════════════════ */
 .gs { background:var(--uw-white); border-top:1px solid var(--section-divider); }
 .gs .container { padding-top:var(--section-pad-sm); padding-bottom:var(--section-pad-sm); }
@@ -204,17 +211,40 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 @media(min-width:1024px){ .gs .container{ padding-top:var(--section-pad-lg); padding-bottom:var(--section-pad-lg); } }
 .gs-head { margin-bottom:var(--section-head-gap); }
 .gs-grid { display:grid; grid-template-columns:1fr; gap:var(--space-5); }
-@media(min-width:768px){ .gs-grid{ grid-template-columns:1fr 1fr; gap:var(--space-6); } }
+@media(min-width:768px){ .gs-grid{ grid-template-columns:2fr 1fr; gap:var(--space-6); } }
+.gs-grid > div{ display:flex; }
 
-.gs-block{ background:var(--uw-yellow-card); border:1px solid var(--section-divider); border-radius:12px; padding:var(--space-9); display:flex; flex-direction:column; position:relative; overflow:hidden; cursor:pointer; transition:border-color var(--uw-transition-hover) ease, background-color var(--uw-transition-hover) ease; }
-.gs-block:hover{ border-color:var(--uw-amber-border); background:var(--uw-yellow-card-hover); }
+.gs-block{ flex:1; border:1px solid var(--section-divider); border-radius:12px; padding:var(--space-9); display:flex; flex-direction:column; position:relative; overflow:hidden; cursor:pointer; transition:border-color var(--uw-transition-hover) ease, background-color var(--uw-transition-hover) ease; }
+
+.gs-block--white{ background:var(--uw-white); }
+.gs-block--white:hover{ border-color:var(--uw-amber-border); background:var(--uw-yellow-card-hover); }
+
+/* Amber block: full fill, same token as DCI's .dci-cta. Hover is
+   deliberately subtle — border-light-strong is the same "black outline"
+   token .btn-surface-light-ghost already uses, and amber-border is the
+   lighter amber shade already used as a hover accent elsewhere (DCI
+   stack block, white card above), reused here as a slight background
+   lightening instead of inventing a new shade. Same transition as the
+   white card — both inherit it from the shared .gs-block rule above. */
+.gs-block--amber{ background:var(--uw-amber-dark); border-color:var(--uw-amber-dark); }
+.gs-block--amber:hover{ border-color:var(--border-light-strong); background:var(--uw-amber-border); }
+
 .gs-block-label{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-light); margin-bottom:var(--space-3); }
+.gs-block--amber .gs-block-label{ color:var(--uw-text-on-light-strong); }
 /* H4 spec: 24px desktop / 20px mobile, Space Grotesk 600, line-height 1.30 */
 .gs-block-heading{ font-family:var(--font-display); font-weight:var(--font-weight-semibold); font-size:var(--text-h4-sm); line-height:1.30; letter-spacing:0; color:var(--uw-black); margin-bottom:var(--space-3_5); }
 @media(min-width:1024px){ .gs-block-heading{ font-size:var(--text-h4); } }
 /* text-body-lg: 16px DM Sans 300, line-height 1.65 */
-.gs-block-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-body-text); margin-bottom:var(--space-7); flex:1; }
+.gs-block-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-body-text); margin-bottom:var(--space-7); }
+.gs-block--amber .gs-block-body{ color:var(--uw-text-on-light-strong); }
 .gs-block .btn-size-lg,.gs-block .btn-size-md{ align-self:flex-start; }
+.gs-block .card-cta{ margin-top:auto; }
+
+/* Sized/colored off .wts-card-audience (text-body-sm, regular, 1.50) —
+   the closest existing secondary-text pattern; color swapped to the
+   same on-light token already used for .gs-block--amber's own label/body. */
+.gs-block-phone{ position:relative; z-index:2; margin-top:var(--space-3); font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-body-sm); line-height:1.50; color:var(--uw-text-on-light-strong); }
+.gs-block-phone a{ color:inherit; text-decoration:underline; text-underline-offset:3px; }
 
 /* gs-block circle decoration — negative z-index puts it behind gs-block's
    in-flow content (label, heading, body, card-cta), which paint ahead of
@@ -276,39 +306,10 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
    stat is always RECOVERY speed (never attack speed) to
    avoid the two numbers being read as the same category.
 ══════════════════════════════════════════════════════ */
-.cs { background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black)); }
-.cs .container { padding-top:var(--section-pad-sm); padding-bottom:var(--section-pad-sm); }
-@media(min-width:768px){ .cs .container{ padding-top:var(--section-pad-md); padding-bottom:var(--section-pad-md); } }
-@media(min-width:1024px){ .cs .container{ padding-top:var(--section-pad-lg); padding-bottom:var(--section-pad-lg); } }
-.cs-grid { display:grid; grid-template-columns:1fr; gap:var(--space-6); margin-top:var(--section-head-gap); }
-@media(min-width:768px){ .cs-grid{ grid-template-columns:1fr 1fr; gap:var(--space-7); } }
-
-.cs-card{
-  background:var(--surface-dark-card); border:1px solid var(--border-chrome-light); border-radius:12px;
-  padding:var(--space-7) var(--space-7) var(--space-6); display:flex; flex-direction:column; position:relative; cursor:pointer;
-  transition:background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease;
-}
-.cs-card:hover{
-  background:var(--surface-dark-card-hover); border-color:var(--border-chrome-heavy);
-}
-/* On card hover, fire the link-text arrow-swap and underline */
-.cs-card:hover .link-text-dark{ text-decoration:underline; text-underline-offset:3px; }
-.cs-card:hover .link-text-dark .link-text-arrow-default{ display:none; }
-.cs-card:hover .link-text-dark .link-text-arrow-hover{ display:inline-block; }
-.cs-badge{ width:44px; height:44px; border-radius:10px; background:var(--surface-dark-muted); border:1px solid var(--border-chrome-pill); display:flex; align-items:center; justify-content:center; margin-bottom:var(--space-4); color:var(--uw-white); transition:background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease; }
-.cs-card:hover .cs-badge{ background:var(--surface-dark-light); border-color:var(--border-chrome-max); }
-.cs-badge-fill{ display:none; }
-.cs-card:hover .cs-badge-stroke{ display:none; }
-.cs-card:hover .cs-badge-fill{ display:block; }
-.cs-eyebrow{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-dark); margin-bottom:var(--space-3); }
-.cs-stat{ font-family:var(--font-display); font-weight:var(--font-weight-bold); font-size:var(--text-display-sm); line-height:1.05; color:var(--uw-white); margin-bottom:var(--space-1); }
-@media(max-width:767px){ .cs-stat{ font-size:var(--text-h3); } }
-.cs-stat-caption{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-body-sm); color:var(--uw-text-on-dark-caption); margin-bottom:var(--space-5); }
-.cs-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-text-on-dark); margin-bottom:var(--space-2_5); }
-.cs-outcome{ font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-body); line-height:1.65; color:var(--uw-white); margin-bottom:var(--space-5); }
-.cs-pills{ display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-6); }
-.cs-pill{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-caption); color:var(--uw-amber-border); background:var(--amber-border-highlight); border:1px solid var(--amber-border-highlight-strong); border-radius:14px; padding:var(--space-px-5) var(--space-3); }
-.cs-card .cs-cta{ margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-chrome-light); background:transparent; }
+/* .cs / .cs-grid / .cs-card and friends (client-stories dark section +
+   card system) now live in globals.css, reusable across pages — promoted
+   when the Infrastructure page's case studies section adopted the same
+   treatment, exactly as specified ("no token swap needed"). */
 
 /* ══════════════════════════════════════════════════════
    FOOTER
@@ -320,11 +321,10 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 /* ══════════════════════════════════════════════════════
    HERO
 ══════════════════════════════════════════════════════ */
-/* .hero, .hero-eyebrow, .hero-headline, .hero-subtext now live in
-   globals.css, reusable across pages (moved out for the case-studies
-   index build). .hero-headline .amber stays page-local — no other
-   page's hero currently uses the inline amber-span treatment. */
-.hero-headline .amber{color:var(--uw-amber-dark)}
+/* .hero, .hero-eyebrow, .hero-headline, .hero-subtext, and
+   .hero-headline .amber all live in globals.css, reusable across pages
+   (moved out for the case-studies index build; .amber promoted when the
+   Infrastructure page hero adopted the same inline accent-span treatment). */
 
 /* .circle-group, its size tiers (.circle-xl, .circle-lg, .circle-sm),
    and .circle-ring / .circle-enter now all live in globals.css,

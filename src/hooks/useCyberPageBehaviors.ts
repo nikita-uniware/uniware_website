@@ -2,12 +2,21 @@
 
 import { useEffect } from "react";
 import { useReveal } from "@/hooks/useReveal";
+import { useScrollSyncHighlight } from "@/hooks/useScrollSyncHighlight";
 
 /**
  * Cybersecurity page interactions from the reference HTML script.
  */
 export function useCyberPageBehaviors() {
   useReveal({ heroSelector: ".hero" });
+  useScrollSyncHighlight({
+    triggerSelector: "[data-ring-trigger]",
+    triggerAttr: "ring-trigger",
+    companionSelector: "#wts-rings .wts-ring",
+    companionAttr: "ring",
+    lineRatio: 0.45,
+    activeClass: "is-current",
+  });
 
   useEffect(() => {
     const tabs = document.querySelectorAll(".subnav-tab");
@@ -97,58 +106,6 @@ export function useCyberPageBehaviors() {
       crossObs.observe(el);
     });
 
-    const wtsRingsEl = document.getElementById("wts-rings");
-    let wtsOnScroll: (() => void) | null = null;
-    if (wtsRingsEl) {
-      const wtsCards = Array.from(
-        document.querySelectorAll("[data-ring-trigger]")
-      );
-      let wtsTicking = false;
-      let wtsCurrentLevel: string | null = null;
-
-      function wtsUpdate() {
-        wtsTicking = false;
-        const refLine = window.innerHeight * 0.45;
-        let closest: Element | null = null;
-        let closestDist = Infinity;
-        wtsCards.forEach((card) => {
-          const rect = card.getBoundingClientRect();
-          const center = rect.top + rect.height / 2;
-          const dist = Math.abs(center - refLine);
-          if (dist < closestDist) {
-            closestDist = dist;
-            closest = card;
-          }
-        });
-        if (!closest) return;
-        const level = (closest as Element).getAttribute("data-ring-trigger");
-        if (level === wtsCurrentLevel) return;
-        wtsCurrentLevel = level;
-        wtsRingsEl!.querySelectorAll(".wts-ring").forEach((r) => {
-          r.classList.toggle(
-            "is-current",
-            r.getAttribute("data-ring") === level
-          );
-        });
-        wtsCards.forEach((c) => {
-          c.classList.toggle(
-            "is-current",
-            c.getAttribute("data-ring-trigger") === level
-          );
-        });
-      }
-
-      wtsOnScroll = () => {
-        if (wtsTicking) return;
-        wtsTicking = true;
-        requestAnimationFrame(wtsUpdate);
-      };
-
-      window.addEventListener("scroll", wtsOnScroll, { passive: true });
-      window.addEventListener("resize", wtsOnScroll);
-      wtsUpdate();
-    }
-
     const arrowHandlers: Array<{
       btn: Element;
       handler: EventListener;
@@ -193,10 +150,6 @@ export function useCyberPageBehaviors() {
       crossObs.disconnect();
       window.removeEventListener("scroll", lineOnScroll);
       window.removeEventListener("resize", lineOnScroll);
-      if (wtsOnScroll) {
-        window.removeEventListener("scroll", wtsOnScroll);
-        window.removeEventListener("resize", wtsOnScroll);
-      }
       arrowHandlers.forEach(({ btn, handler }) =>
         btn.removeEventListener("click", handler)
       );

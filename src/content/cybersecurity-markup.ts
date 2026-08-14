@@ -618,10 +618,10 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     GET STARTED — Final CTA section. White. Two side-by-side blocks.
-     Assessment route (self-serve, 3-5 min) + Book a review (direct
-     conversation with the team). No data-reveal on CTAs themselves —
-     the reveal is on the block containers only.
+     GET STARTED — Final CTA section. White. Two blocks, 2:1 width.
+     Book a review (amber fill, direct conversation with the team) +
+     Take the assessment (white, self-serve, 3-5 min). No data-reveal
+     on CTAs themselves — the reveal is on the block containers only.
 ═══════════════════════════════════════════════════════════════ -->
 <section id="get-started" class="gs" aria-labelledby="gs-heading">
   <div class="container">
@@ -636,26 +636,27 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
     <div class="gs-grid">
 
       <div data-reveal="0">
-        <div class="gs-block">
+        <div class="gs-block gs-block--amber">
+        <a href="/contact" class="card-overlay-link" aria-hidden="true" tabindex="-1" onclick="window.openBookingPanel(); return false;"></a>
+        <p class="gs-block-label">Ready to talk</p>
+        <h3 class="gs-block-heading">Book a security review</h3>
+        <p class="gs-block-body">A structured conversation with one of our engineers. We look at your environment, identify your biggest risks, and tell you what to fix first. No obligation.</p>
+        <div class="card-cta">
+          <a href="/contact" class="btn-size-md btn-surface-amber"
+             onclick="window.openBookingPanel(); return false;">Book a review</a>
+        </div>
+        <p class="gs-block-phone">Prefer to call? Nirmal | <a href="tel:+919840861475">+91 98408 61475</a></p>
+        </div>
+      </div>
+
+      <div data-reveal="80">
+        <div class="gs-block gs-block--white">
         <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="card-overlay-link" aria-hidden="true" tabindex="-1"></a>
         <p class="gs-block-label">Not sure where you fit</p>
         <h3 class="gs-block-heading">Take the Cyber Readiness Assessment</h3>
         <p class="gs-block-body">Answer 15 questions about your current setup. Get a clear picture of where you stand and what to prioritise. Takes 3 to 5 minutes.</p>
         <div class="card-cta">
           <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="btn-size-md btn-surface-light">Take the assessment</a>
-        </div>
-        </div>
-      </div>
-
-      <div data-reveal="80">
-        <div class="gs-block">
-        <a href="/contact" class="card-overlay-link" aria-hidden="true" tabindex="-1" onclick="window.openBookingPanel(); return false;"></a>
-        <p class="gs-block-label">Ready to talk</p>
-        <h3 class="gs-block-heading">Book a security review</h3>
-        <p class="gs-block-body">A structured conversation with one of our engineers. We look at your environment, identify your biggest risks, and tell you what to fix first. No obligation.</p>
-        <div class="card-cta">
-          <a href="/contact" class="btn-size-md btn-surface-light"
-             onclick="window.openBookingPanel(); return false;">Book a review</a>
         </div>
         </div>
       </div>

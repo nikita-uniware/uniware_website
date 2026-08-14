@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { InfrastructurePage } from "@/components/pages/InfrastructurePage";
 
 export const metadata: Metadata = {
   title: "Data Centre Infrastructure",
@@ -7,9 +8,9 @@ export const metadata: Metadata = {
 };
 
 /**
- * Data Centre Infrastructure page shell — layout/content to be designed.
+ * Data Centre Infrastructure page.
  * Route: /solutions/data-centre-infrastructure
  */
 export default function Page() {
-  return null;
+  return <InfrastructurePage />;
 }

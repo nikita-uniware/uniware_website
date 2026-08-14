@@ -387,6 +387,11 @@ html.is-ready [data-reveal].is-visible {
 .uw-circles-sm.pos-top-right {
   transform-origin: top right;
 }
+.uw-circles-xl.pos-middle-left,
+.uw-circles-lg.pos-middle-left,
+.uw-circles-sm.pos-middle-left {
+  transform-origin: center left;
+}
 @media (min-width: 768px) {
   .uw-circles-xl,
   .uw-circles-lg,
@@ -611,9 +616,9 @@ html.is-ready [data-reveal].is-visible {
 .circle-fill-inner { opacity: 0.04; }
 
 /* ── Hero — reusable across pages ──
-   Dark gradient hero background + eyebrow/headline/subtext text styles.
-   .hero-headline .amber (inline accent-span color) stays page-local
-   where a hero actually uses it. */
+   Dark gradient hero background + eyebrow/headline/subtext text styles,
+   plus .hero-headline .amber for the inline accent-span highlight
+   (shared across every page's hero, not page-local). */
 .hero{background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));position:relative;overflow:hidden}
 .hero .container{position:relative;z-index:2;padding-top:var(--section-pad-sm);padding-bottom:var(--section-pad-sm)}
 @media(min-width:768px){.hero .container{padding-top:var(--section-pad-md);padding-bottom:var(--section-pad-md)}}
@@ -626,6 +631,7 @@ html.is-ready [data-reveal].is-visible {
 @media(min-width:1024px){.hero-headline{font-size:var(--text-display)}}
 .hero-subtext{font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body-lg-sm);line-height:1.65;color:var(--uw-text-on-dark);margin-bottom:var(--space-9);max-width:640px}
 @media(min-width:1024px){.hero-subtext{font-size:var(--text-body-lg)}}
+.hero-headline .amber{color:var(--uw-amber-dark)}
 
 /* ── Section header — reusable across pages ──
    .section-header-block wraps eyebrow + heading + subtext; -l suffix
@@ -637,6 +643,7 @@ html.is-ready [data-reveal].is-visible {
 @media(min-width:1024px){
   .sec-heading-l,.sec-heading-d { font-size:var(--text-h2); }
 }
+.sec-heading-d .amber{color:var(--uw-amber-dark)}
 .sec-sub-l { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body-lg-sm); line-height:1.65; color:var(--uw-muted); margin-bottom:var(--space-7); max-width:640px; }
 .sec-sub-d { font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body-lg-sm); line-height:1.65; color:var(--uw-text-on-dark-muted); margin-bottom:var(--space-7); max-width:640px; }
 @media(min-width:1024px){
@@ -1105,3 +1112,58 @@ html.is-ready [data-reveal].is-visible {
 
 .link-text-dark-sm    {font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-body-sm);color:var(--uw-amber-dark);display:inline-flex;align-items:center;gap:5px;text-decoration:none;transition:opacity var(--uw-transition-hover) ease;}
 .link-text-dark-sm:hover{text-decoration:underline;text-underline-offset:3px;}
+
+/* ── Boxed logo chip — reusable across pages ──
+   Not a pill: a real partner logo (or a placeholder wordmark) gets room to
+   sit cleanly next to an optional qualifier word. Promoted from the case
+   study page when the Infrastructure page pillar blocks adopted the same
+   chip treatment for vendor logos. */
+.cs-stack-chip{display:flex;align-items:center;gap:10px;border:1px solid var(--border-light-subtle);border-radius:10px;padding:10px 16px;background:var(--uw-white)}
+.cs-stack-chip-logo{font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-body-sm);letter-spacing:-.01em;color:var(--uw-black);display:inline-flex;align-items:center;min-height:24px}
+.cs-stack-chip-logo img{display:block;height:24px;width:auto;max-width:120px;object-fit:contain}
+.cs-stack-chip-qualifier{font-family:var(--font-body);font-weight:var(--font-weight-regular);font-size:var(--text-body-sm);color:var(--uw-muted);padding-left:10px;border-left:1px solid var(--border-light-muted)}
+
+/* ── Checkmark bullet list — reusable across pages ──
+   Promoted from the case study page when the Infrastructure page pillar
+   blocks adopted the same "what's included" bullet treatment. */
+.cs-results{list-style:none;margin-top:8px}
+.cs-results li{display:flex;gap:12px;font-family:var(--font-body);font-weight:var(--font-weight-light);font-size:var(--text-body);line-height:1.6;color:var(--uw-body-text);padding:14px 0;border-top:1px solid var(--section-divider)}
+.cs-results li:first-child{border-top:none}
+.cs-results li svg{flex-shrink:0;margin-top:3px;color:var(--uw-amber-light)}
+
+/* ── Client-stories dark section + card system — reusable across pages ──
+   Promoted from the cybersecurity page when the Infrastructure page case
+   studies section adopted the same treatment, exactly as specified. */
+.cs { background:linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black)); }
+.cs .container { padding-top:var(--section-pad-sm); padding-bottom:var(--section-pad-sm); }
+@media(min-width:768px){ .cs .container{ padding-top:var(--section-pad-md); padding-bottom:var(--section-pad-md); } }
+@media(min-width:1024px){ .cs .container{ padding-top:var(--section-pad-lg); padding-bottom:var(--section-pad-lg); } }
+.cs-grid { display:grid; grid-template-columns:1fr; gap:var(--space-6); margin-top:var(--section-head-gap); }
+@media(min-width:768px){ .cs-grid{ grid-template-columns:1fr 1fr; gap:var(--space-7); } }
+
+.cs-card{
+  background:var(--surface-dark-card); border:1px solid var(--border-chrome-light); border-radius:12px;
+  padding:var(--space-7) var(--space-7) var(--space-6); display:flex; flex-direction:column; position:relative; cursor:pointer;
+  transition:background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease;
+}
+.cs-card:hover{
+  background:var(--surface-dark-card-hover); border-color:var(--border-chrome-heavy);
+}
+/* On card hover, fire the link-text arrow-swap and underline */
+.cs-card:hover .link-text-dark{ text-decoration:underline; text-underline-offset:3px; }
+.cs-card:hover .link-text-dark .link-text-arrow-default{ display:none; }
+.cs-card:hover .link-text-dark .link-text-arrow-hover{ display:inline-block; }
+.cs-badge{ width:44px; height:44px; border-radius:10px; background:var(--surface-dark-muted); border:1px solid var(--border-chrome-pill); display:flex; align-items:center; justify-content:center; margin-bottom:var(--space-4); color:var(--uw-white); transition:background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease; }
+.cs-card:hover .cs-badge{ background:var(--surface-dark-light); border-color:var(--border-chrome-max); }
+.cs-badge-fill{ display:none; }
+.cs-card:hover .cs-badge-stroke{ display:none; }
+.cs-card:hover .cs-badge-fill{ display:block; }
+.cs-eyebrow{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-dark); margin-bottom:var(--space-3); }
+.cs-stat{ font-family:var(--font-display); font-weight:var(--font-weight-bold); font-size:var(--text-display-sm); line-height:1.05; color:var(--uw-white); margin-bottom:var(--space-1); }
+@media(max-width:767px){ .cs-stat{ font-size:var(--text-h3); } }
+.cs-stat-caption{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-body-sm); color:var(--uw-text-on-dark-caption); margin-bottom:var(--space-5); }
+.cs-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-text-on-dark); margin-bottom:var(--space-2_5); }
+.cs-outcome{ font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-body); line-height:1.65; color:var(--uw-white); margin-bottom:var(--space-5); }
+.cs-pills{ display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-6); }
+.cs-pill{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-caption); color:var(--uw-amber-border); background:var(--amber-border-highlight); border:1px solid var(--amber-border-highlight-strong); border-radius:14px; padding:var(--space-px-5) var(--space-3); }
+.cs-card .cs-cta{ margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-chrome-light); background:transparent; }

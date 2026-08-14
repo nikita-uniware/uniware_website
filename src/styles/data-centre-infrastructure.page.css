@@ -1,0 +1,161 @@
+/* ══════════════════════════════════════════════════════
+   PARTNER ACCREDITATION BADGES
+   White, static. Directly under hero. Mobile: stacked
+   fully vertical. Tablet: Dell full-width row 1, AWS +
+   Commvault split row 2 with a divider between them only.
+   Desktop: all three in one row, dividers between each.
+══════════════════════════════════════════════════════ */
+.dci-badges { background: var(--uw-white); border-top: 1px solid var(--section-divider); border-bottom: 1px solid var(--section-divider); }
+.dci-badges .container { padding-top: var(--space-5); padding-bottom: var(--space-5); }
+
+.dci-badges-row { display: flex; flex-direction: column; gap: var(--space-8); }
+
+.dci-badge { display: flex; align-items: center; gap: var(--space-5); }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dci-badges-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8) var(--space-10); }
+  .dci-badge:nth-child(1) { grid-column: 1 / -1; }
+  .dci-badge:nth-child(2) { border-right: 1px solid var(--section-divider); padding-right: var(--space-10); }
+}
+
+@media (min-width: 1024px) {
+  .dci-badges-row { flex-direction: row; align-items: center; justify-content: center; gap: var(--space-10); }
+  .dci-badge { border-right: 1px solid var(--section-divider); padding-right: var(--space-10); }
+  .dci-badge:last-child { border-right: none; padding-right: 0; }
+}
+
+.dci-badge-text { display: flex; flex-direction: column; gap: var(--space-1); }
+.dci-badge-label { font-family: var(--font-body); font-weight: var(--font-weight-medium); font-size: var(--text-caption); letter-spacing: .12em; text-transform: uppercase; color: var(--uw-muted); }
+.dci-badge-tier { font-family: var(--font-body); font-weight: var(--font-weight-medium); font-size: var(--text-body-sm); line-height: 1.3; }
+
+/* ══════════════════════════════════════════════════════
+   THE STACK + FIVE PILLAR BLOCKS
+   Two-column header: copy left, diagram right (matches the
+   reading direction used by the hero and pillar blocks).
+   The diagram is a plain bordered box, not connected to the
+   pillar group below it — a short vertical connector, routed
+   to the shared right edge, links the two. Corner radius is
+   squared off at exactly that junction (diagram's bottom-right,
+   Server's top-right) so the connector reads as a continuation
+   of one shared edge. Decorative circles are section-level
+   siblings so neither box's own overflow:hidden clips them.
+══════════════════════════════════════════════════════ */
+.dci-stack-pillars { background: var(--uw-white); position: relative; overflow: hidden; }
+.dci-stack-pillars .container { position: relative; z-index: 1; padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+@media (min-width: 768px) { .dci-stack-pillars .container { padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); } }
+@media (min-width: 1024px) { .dci-stack-pillars .container { padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); } }
+
+/* .dci-group no longer clips via overflow:hidden — that would also clip
+   the bottom-right/middle-left CircleGroups anchored to .dci-group-wrap
+   (both are siblings of .dci-group, not nested inside any specific cell,
+   so a single position+z-index on .dci-group itself is enough to keep
+   every card above both circles). Corner rounding moves to the first/
+   last cell directly instead (each cell already paints its own solid
+   background, so this looks identical). */
+.dci-group-wrap { position: relative; }
+.dci-group { border-left: 1px solid var(--section-divider); border-right: 1px solid var(--section-divider); border-top-left-radius: 16px; border-top-right-radius: 0; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; position: relative; z-index: 1; }
+.dci-cell { background: var(--uw-white); border-bottom: 1px solid var(--section-divider); }
+.dci-cell:first-child { border-top: 1px solid var(--section-divider); border-top-left-radius: 16px; border-top-right-radius: 0; }
+.dci-cell:last-child { border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; }
+
+/* ── Header: copy + diagram side by side ── */
+.dci-stack-header { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
+@media (min-width: 1024px) { .dci-stack-header { grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: start; } }
+
+.dci-stack-diagram-col { display: flex; flex-direction: column; min-width: 0; position: relative; }
+
+/* ── Stack visual — plain bordered box, square only at the
+   bottom-right corner where the connector meets it. min-width:0
+   overrides the flex/grid default of min-width:auto, which otherwise
+   lets this box's content (the base row below) refuse to shrink below
+   its natural width and push the whole page wider than the viewport. ── */
+.dci-stack-wrap { display: flex; flex-direction: column; gap: var(--space-4); background: var(--uw-wts-ring-2); border: 1px solid var(--section-divider); border-top-left-radius: 16px; border-top-right-radius: 16px; border-bottom-left-radius: 16px; border-bottom-right-radius: 0; overflow: hidden; padding: var(--space-6); min-width: 0; max-width: 100%; box-sizing: border-box; position: relative; z-index: 1; }
+@media (min-width: 768px) { .dci-stack-wrap { padding: var(--space-8); } }
+
+.dci-tier-base { --dci-tier-fill: var(--uw-wts-ring-2); }
+.dci-tier-mid  { --dci-tier-fill: var(--uw-wts-ring-3); }
+.dci-tier-deep { --dci-tier-fill: var(--uw-wts-ring-4); }
+
+.dci-stack-security,
+.dci-stack-block { border-radius: 8px; padding: var(--space-4) var(--space-5); background: var(--uw-white); border: 1.5px solid transparent; cursor: pointer; transition: background-color 300ms ease, border-color 300ms ease; }
+.dci-stack-security:hover, .dci-stack-security.is-current,
+.dci-stack-block:hover, .dci-stack-block.is-current { background: var(--uw-yellow-card); border-color: var(--uw-amber-border); }
+
+.dci-stack-security-sub { font-family: var(--font-body); font-weight: var(--font-weight-regular); font-size: var(--text-caption); line-height: 1.4; color: var(--uw-muted); margin-top: var(--space-1); text-align: center; }
+
+.dci-stack-block { display: flex; align-items: center; justify-content: center; text-align: center; flex: 1; min-width: 0; }
+.dci-stack-base-row { display: flex; gap: var(--space-3); min-width: 0; }
+
+/* All five labels share the same size/weight — none reads as more
+   important than another; only the sub-line under Data Security is
+   smaller and secondary. The arrow reserves zero space by default
+   (width:0, no gap) so the label is genuinely centered before hover —
+   it only grows into view, shifting the label slightly, on hover/active. */
+.dci-stack-label { font-family: var(--font-body); font-weight: var(--font-weight-medium); font-size: var(--text-body-sm); color: var(--uw-black); display: flex; align-items: center; justify-content: center; min-width: 0; }
+.dci-stack-arrow { display: inline-flex; align-items: center; width: 0; margin-left: 0; opacity: 0; overflow: hidden; transition: width 200ms ease, margin-left 200ms ease, opacity 200ms ease; }
+.dci-stack-security:hover .dci-stack-arrow, .dci-stack-security.is-current .dci-stack-arrow,
+.dci-stack-block:hover .dci-stack-arrow, .dci-stack-block.is-current .dci-stack-arrow { width: 11px; margin-left: var(--space-1); opacity: 1; }
+
+/* ── Connector — doubled height, routed to the right edge (not centered)
+   so it reads as a continuation of the diagram's/Server's shared edge. ── */
+.dci-connector { width: 1px; height: var(--space-16); background: var(--section-divider); margin-left: auto; }
+
+/* ── Pillar cells ── */
+.dci-pillar { padding: var(--space-8) var(--space-6); transition: background-color 400ms ease, border-color 400ms ease; scroll-margin-top: var(--uw-nav-height); }
+@media (min-width: 768px) { .dci-pillar { padding: var(--space-9) var(--space-8); } }
+.dci-pillar.is-current { background: var(--uw-yellow-card); }
+
+/* position+z-index here too: Network's cell is deliberately z-index:auto
+   (see above), so its own grid content needs to compete directly in
+   .dci-group's shared stacking context to beat the nested circle. */
+.dci-pillar-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-7); }
+@media (min-width: 768px) { .dci-pillar-grid { grid-template-columns: 1.3fr 1fr; gap: var(--space-9); } }
+
+.dci-pillar-heading { font-family: var(--font-display); font-weight: var(--font-weight-semibold); font-size: var(--text-h4-sm); line-height: 1.25; color: var(--uw-black); margin-bottom: var(--space-2_5); }
+@media (min-width: 1024px) { .dci-pillar-heading { font-size: var(--text-h4); } }
+.dci-pillar-desc { font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body); line-height: 1.65; color: var(--uw-body-text); margin-bottom: var(--space-4); }
+.dci-pillar-crosslink { font-family: var(--font-body); font-weight: var(--font-weight-regular); font-size: var(--text-body-sm); line-height: 1.5; color: var(--uw-muted); margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--section-divider); }
+
+/* Right-aligned once the two columns sit side by side (matches the
+   .dci-pillar-grid breakpoint). Below that, the media column stacks
+   full-width beneath the copy, so it left-aligns instead — right-aligning
+   a full-width stacked block reads oddly on mobile. */
+.dci-pillar-media { display: flex; flex-direction: column; align-items: flex-start; }
+.dci-pillar-vendors { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: var(--space-2_5); margin-bottom: var(--space-6); }
+.dci-pillar-cta { margin-top: auto; }
+@media (min-width: 768px) {
+  .dci-pillar-media { align-items: flex-end; }
+  .dci-pillar-vendors { justify-content: flex-end; }
+}
+
+/* ── Case studies: one featured card, two supporting cards in a row below.
+   .cs-card itself is the promoted cybersecurity client-stories card,
+   reused exactly as-is; only the surrounding grid is page-specific. ── */
+.dci-cs-grid { display: flex; flex-direction: column; gap: var(--space-6); margin-top: var(--section-head-gap); }
+.dci-cs-support-row { display: grid; grid-template-columns: 1fr; gap: var(--space-6); }
+@media (min-width: 768px) { .dci-cs-support-row { grid-template-columns: 1fr 1fr; } }
+
+/* ── CTA — Pattern 1 (left-aligned content, no existing precedent to
+   reuse for this layout — the only other amber CTA on the site,
+   case-study.page.css's .cs-cta, is Pattern 2/centered). Token choices
+   below reuse that section's own color decisions (--uw-black heading,
+   --uw-text-on-light-strong body, .btn-surface-amber button) rather than
+   inventing new ones.
+   Single flex row: heading+subtext are grouped in .dci-cta-text on the
+   left, the button sits on the right, align-items:flex-end on the row
+   bottom-aligns the button with the bottom of the subtext instead of
+   floating at a mismatched height. .container stays a flex column with
+   justify-content:center so the row centers within the min-height,
+   which keeps the section feeling like a proper close to the page
+   rather than a thin strip. ── */
+.dci-cta { background: var(--uw-amber-dark); position: relative; overflow: hidden; }
+.dci-cta .container { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; min-height: 320px; padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+@media (min-width: 768px) { .dci-cta .container { padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); min-height: 350px; } }
+@media (min-width: 1024px) { .dci-cta .container { padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); min-height: 380px; } }
+
+.dci-cta-row { display: flex; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap; }
+
+.dci-cta-heading { font-family: var(--font-display); font-weight: var(--font-weight-bold); font-size: var(--text-h2-sm); line-height: 1.15; letter-spacing: -.015em; color: var(--uw-black); max-width: 560px; margin-bottom: var(--space-4); }
+@media (min-width: 1024px) { .dci-cta-heading { font-size: var(--text-h2); } }
+
+.dci-cta-sub { font-family: var(--font-body); font-weight: var(--font-weight-regular); font-size: var(--text-body); line-height: 1.65; color: var(--uw-text-on-light-strong); max-width: 480px; }

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 /**
  * Footer never uses data-reveal — always fully visible.
- * Final concept from Niki still pending; spacing matches the cyber HTML footer.
+ * Spacing matches the cyber HTML footer.
  */
 export function SiteFooter() {
   return (
