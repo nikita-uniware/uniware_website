@@ -17,6 +17,9 @@ const eslintConfig = [
       ".next/**",
       "out/**",
       "build/**",
+      // Sanity Studio deploy bundle and local scratch extracts are generated output.
+      "dist/**",
+      "_extract/**",
       "next-env.d.ts",
     ],
   },

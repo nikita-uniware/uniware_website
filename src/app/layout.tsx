@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   },
   description:
     "Adaptive Technology Integrators. Cloud, cybersecurity, modern workplace, and infrastructure.",
+  manifest: "/site.webmanifest",
+  // favicon.ico is picked up from the app directory file convention.
+  icons: {
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
