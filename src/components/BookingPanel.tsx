@@ -3,20 +3,46 @@
 import { useEffect, useRef, useState } from "react";
 import "@/styles/booking-panel.css";
 
+const INFRASTRUCTURE_TOPICS: {
+  value: InfrastructureBookingTopic;
+  label: string;
+}[] = [
+  { value: "server", label: "Server" },
+  { value: "storage", label: "Storage" },
+  { value: "network", label: "Networking" },
+  { value: "virtualization", label: "Virtualization / HCI" },
+  { value: "data-security", label: "Data Security" },
+  { value: "enquiry", label: "General enquiry" },
+];
+
 /**
  * Global booking slide-in panel. Mounted once in root layout.
- * Open/close via window.openBookingPanel() / window.closeBookingPanel().
+ * Open/close via window.openBookingPanel(config, preselectedTopic) /
+ * window.closeBookingPanel().
  */
 export function BookingPanel() {
   const [open, setOpen] = useState(false);
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [config, setConfig] =
+    useState<BookingPanelConfig>("cybersecurity");
+  const [infrastructureTopics, setInfrastructureTopics] = useState<
+    InfrastructureBookingTopic[]
+  >([]);
+  const [topicError, setTopicError] = useState("");
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const successHeadingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    window.openBookingPanel = () => {
+    window.openBookingPanel = (nextConfig, preselectedTopic) => {
+      setConfig(nextConfig);
+      setInfrastructureTopics(
+        nextConfig === "infrastructure" && preselectedTopic
+          ? [preselectedTopic]
+          : []
+      );
+      setTopicError("");
       setSent(false);
       setOpen(true);
     };
@@ -58,6 +84,11 @@ export function BookingPanel() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (config === "infrastructure" && infrastructureTopics.length === 0) {
+      setTopicError("Select at least one topic.");
+      return;
+    }
+
     const form = e.currentTarget;
     setSubmitting(true);
     try {
@@ -173,6 +204,7 @@ export function BookingPanel() {
               method="POST"
               onSubmit={onSubmit}
             >
+              <input type="hidden" name="booking_context" value={config} />
               <div className="panel-field-group">
                 <div className="panel-field-item">
                   <label className="panel-field-label" htmlFor="pf-name">
@@ -249,27 +281,78 @@ export function BookingPanel() {
                   </div>
                 </div>
 
-                <div className="panel-field-item">
-                  <label className="panel-field-label" htmlFor="pf-topic">
-                    What would you like to discuss
-                  </label>
-                  <div className="panel-select-wrap">
-                    <select
-                      className="panel-select"
-                      id="pf-topic"
-                      name="topic"
-                      required
-                      defaultValue=""
-                    >
-                      <option value="" disabled>
-                        Select a topic
-                      </option>
-                      <option value="cybersecurity">Cybersecurity</option>
-                      <option value="backup">Backup and Recovery</option>
-                      <option value="enquiry">General enquiry</option>
-                    </select>
+                {config === "cybersecurity" ? (
+                  <div className="panel-field-item">
+                    <label className="panel-field-label" htmlFor="pf-topic">
+                      What would you like to discuss
+                    </label>
+                    <div className="panel-select-wrap">
+                      <select
+                        className="panel-select"
+                        id="pf-topic"
+                        name="topic"
+                        required
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Select a topic
+                        </option>
+                        <option value="cybersecurity">Cybersecurity</option>
+                        <option value="backup">Backup and Recovery</option>
+                        <option value="enquiry">General enquiry</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div
+                    className="panel-field-item"
+                    role="group"
+                    aria-labelledby="pf-topic-legend"
+                    aria-describedby={topicError ? "pf-topic-error" : undefined}
+                  >
+                    <p id="pf-topic-legend" className="panel-field-label">
+                      What would you like to discuss{" "}
+                      <span className="panel-field-optional">
+                        (select all that apply)
+                      </span>
+                    </p>
+                    <div className="pills-track">
+                      {INFRASTRUCTURE_TOPICS.map((topic) => {
+                        const id = `pf-topic-${topic.value}`;
+                        return (
+                          <span key={topic.value}>
+                            <input
+                              type="checkbox"
+                              id={id}
+                              name="topic[]"
+                              value={topic.value}
+                              className="pill-input"
+                              checked={infrastructureTopics.includes(topic.value)}
+                              onChange={(event) => {
+                                setInfrastructureTopics((current) =>
+                                  event.target.checked
+                                    ? [...current, topic.value]
+                                    : current.filter(
+                                        (value) => value !== topic.value
+                                      )
+                                );
+                                setTopicError("");
+                              }}
+                            />
+                            <label htmlFor={id} className="pill-label">
+                              {topic.label}
+                            </label>
+                          </span>
+                        );
+                      })}
+                    </div>
+                    {topicError && (
+                      <p id="pf-topic-error" className="panel-field-error" role="alert">
+                        {topicError}
+                      </p>
+                    )}
+                  </div>
+                )}
 
                 <div
                   className="panel-field-item"

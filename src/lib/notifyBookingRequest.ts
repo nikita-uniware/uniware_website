@@ -10,17 +10,26 @@ export type BookingRequestEmailPayload = {
   email: string;
   company: string;
   country: string;
-  topic: string;
+  booking_context: "cybersecurity" | "infrastructure";
+  topics: string[];
   preferred_time: string[];
   notes: string;
   timestamp?: string;
 };
 
-const FORM_NAME = "Book a security review";
+const FORM_NAMES = {
+  cybersecurity: "Book a security review",
+  infrastructure: "Talk to an infrastructure expert",
+} as const;
 
 const TOPIC_LABELS: Record<string, string> = {
   cybersecurity: "Cybersecurity",
   backup: "Backup and Recovery",
+  server: "Server",
+  storage: "Storage",
+  network: "Networking",
+  virtualization: "Virtualization / HCI",
+  "data-security": "Data Security",
   enquiry: "General enquiry",
 };
 
@@ -45,8 +54,8 @@ const TIME_LABELS: Record<string, string> = {
   evening: "Evening",
 };
 
-function topicLabel(value: string) {
-  return TOPIC_LABELS[value] ?? value;
+function topicsLabel(values: string[]) {
+  return values.map((value) => TOPIC_LABELS[value] ?? value).join(", ");
 }
 
 function countryLabel(value: string) {
@@ -61,19 +70,29 @@ function preferredTimesLabel(values: string[]) {
 /** Best-effort email for booking panel / “Book a security review”. */
 export async function notifyBookingRequest(payload: BookingRequestEmailPayload) {
   const company = payload.company.trim() || "No company given";
-  const topic = topicLabel(payload.topic);
+  const formName = FORM_NAMES[payload.booking_context];
+  const topics = topicsLabel(payload.topics);
   const timestamp = payload.timestamp ?? new Date().toISOString();
-  const subject = leadSubject(FORM_NAME);
+  const subject = leadSubject(formName);
 
   const { text, html } = buildKeyValueBodies({
-    title: leadHeading(FORM_NAME),
+    title: leadHeading(formName),
     rows: [
-      { label: "Form", value: "Booking panel — Book a security review / Book a call" },
+      {
+        label: "Form",
+        value:
+          payload.booking_context === "infrastructure"
+            ? "Booking panel: Data Centre Infrastructure"
+            : "Booking panel: Book a security review / Book a call",
+      },
       { label: "Name", value: payload.name },
       { label: "Email", value: payload.email },
       { label: "Company", value: company },
       { label: "Country", value: countryLabel(payload.country) },
-      { label: "Topic", value: topic },
+      {
+        label: payload.topics.length > 1 ? "Topics" : "Topic",
+        value: topics,
+      },
       { label: "Preferred time", value: preferredTimesLabel(payload.preferred_time) },
       { label: "Notes", value: payload.notes.trim() || "—" },
       { label: "Submitted at", value: timestamp },

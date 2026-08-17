@@ -108,3 +108,18 @@ export const technologiesByPageQuery = `*[_type == "technology" && defined(name)
   "logoUrl": logo.asset->url,
   pages
 }`;
+
+/** Official vendor logos assigned to one or more Data Centre Infrastructure pillars. */
+export const infrastructureTechnologiesQuery = `*[
+  _type == "technology" &&
+  defined(name) &&
+  defined(logo.asset) &&
+  "data-centre-infrastructure" in pages &&
+  count(infrastructurePillars) > 0
+] | order(name asc){
+  _id,
+  name,
+  "slug": slug.current,
+  "logoUrl": logo.asset->url,
+  infrastructurePillars
+}`;
