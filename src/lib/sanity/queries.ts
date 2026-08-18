@@ -49,6 +49,7 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
       alt,
       caption,
       "imageUrl": image.asset->url,
+      "muxPlaybackId": video.asset->playbackId,
       "fileUrl": file.asset->url,
       "posterUrl": poster.asset->url
     },

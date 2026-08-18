@@ -661,14 +661,11 @@ export const caseStudy = {
               title: "Video",
               fields: [
                 {
-                  name: "file",
-                  title: "Video file",
-                  type: "file",
-                  options: { accept: "video/*" },
+                  name: "video",
+                  title: "Video",
+                  type: "mux.video",
                   description:
-                    "Upload MP4 (H.264) for now. Hosting approach (Mux vs embed) still to be confirmed.",
-                  validation: (Rule: { required: () => unknown }) =>
-                    Rule.required(),
+                    "Upload a video — it streams via Mux with adaptive quality.",
                 },
                 {
                   name: "poster",
@@ -683,12 +680,19 @@ export const caseStudy = {
                   type: "string",
                   description: "Optional. Shown under the video.",
                 },
+                // Legacy — hidden, keeps old MP4 data readable until migrated.
+                {
+                  name: "file",
+                  title: "Legacy file",
+                  type: "file",
+                  hidden: true,
+                },
               ],
               preview: {
                 select: { title: "caption" },
                 prepare: ({ title }: { title?: string }) => ({
                   title: "Video",
-                  subtitle: title || "Uploaded file",
+                  subtitle: title || "Uploaded video",
                 }),
               },
             },

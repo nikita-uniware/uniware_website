@@ -8,6 +8,7 @@ import {
   renderBoldOnly,
 } from "@/content/case-studies/chemical-manufacturing";
 import { CircleGroup } from "@/components/CircleGroup";
+import MuxPlayer from "@mux/mux-player-react";
 import "@/styles/case-study.page.css";
 
 function OverviewCard({ study }: { study: CaseStudy }) {
@@ -117,6 +118,32 @@ function SolutionContentBlocks({ study }: { study: CaseStudy }) {
             </figure>
           );
         }
+        if (block.type === "muxVideo") {
+          return (
+            <div className="cs-solution-media" key={`mux-${i}`}>
+              {block.poster ? (
+                <figure className="cs-media-block" data-reveal={String(200 + i * 60)}>
+                  <img
+                    className="cs-media-image"
+                    src={block.poster}
+                    alt={block.caption || "Case study image"}
+                    loading="lazy"
+                  />
+                </figure>
+              ) : null}
+              <figure className="cs-media-block" data-reveal={String(200 + i * 60)}>
+                <MuxPlayer
+                  className="cs-media-video"
+                  playbackId={block.playbackId}
+                  streamType="on-demand"
+                  accentColor="#D4832F"
+                />
+                {block.caption ? <figcaption className="cs-media-caption">{block.caption}</figcaption> : null}
+              </figure>
+            </div>
+          );
+        }
+        // Legacy MP4 fallback
         return (
           <div className="cs-solution-media" key={`video-${i}`}>
             {block.poster ? (

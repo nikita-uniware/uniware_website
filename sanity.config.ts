@@ -1,6 +1,7 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { muxInput } from "sanity-plugin-mux-input";
 import { schemaTypes } from "./sanity/schemas";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "ubaw4uif";
@@ -12,7 +13,7 @@ export default defineConfig({
   projectId,
   dataset,
   basePath: process.env.SANITY_STUDIO_BASE_PATH || "/studio",
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool(), visionTool(), muxInput()],
   schema: {
     types: schemaTypes,
   },

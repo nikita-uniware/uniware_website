@@ -40,6 +40,7 @@ type SanityContentBlock = {
   alt?: string | null;
   caption?: string | null;
   imageUrl?: string | null;
+  muxPlaybackId?: string | null;
   fileUrl?: string | null;
   posterUrl?: string | null;
 };
@@ -159,9 +160,8 @@ function mapContentBlocks(
       });
       continue;
     }
-    if (block._type === "solutionVideo" && block.fileUrl) {
-      // Poster is a still that must stay on the page — not the HTML video
-      // poster, which the browser replaces as soon as playback starts.
+    if (block._type === "solutionVideo") {
+      // Still image stays above the player as a separate figure.
       if (block.posterUrl) {
         out.push({
           type: "image",
@@ -169,11 +169,20 @@ function mapContentBlocks(
           alt: block.alt?.trim() || block.caption?.trim() || "Case study image",
         });
       }
-      out.push({
-        type: "video",
-        src: block.fileUrl,
-        ...(block.caption?.trim() ? { caption: block.caption.trim() } : {}),
-      });
+      // Prefer Mux adaptive stream; fall back to legacy Sanity CDN MP4.
+      if (block.muxPlaybackId) {
+        out.push({
+          type: "muxVideo",
+          playbackId: block.muxPlaybackId,
+          ...(block.caption?.trim() ? { caption: block.caption.trim() } : {}),
+        });
+      } else if (block.fileUrl) {
+        out.push({
+          type: "video",
+          src: block.fileUrl,
+          ...(block.caption?.trim() ? { caption: block.caption.trim() } : {}),
+        });
+      }
     }
   }
   return out;
