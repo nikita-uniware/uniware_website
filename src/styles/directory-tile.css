@@ -1,0 +1,104 @@
+/* ══════════════════════════════════════════════════════
+   DIRECTORY TILE — self-contained styles for the shared
+   DirectoryTile component (src/components/DirectoryTile.tsx).
+   Imported directly by the component, not by any page — no
+   page-scoped CSS file is a dependency of this component.
+
+   Visually modeled on the site's .tile-prev/.tile-rec card
+   (icon slot, heading, description), but this variant is
+   purpose-built for clickable directory grids: the whole card
+   is the link, the footer stays a "go to page" link, and there
+   is no fixed carousel width — it just fills its grid column.
+
+   All values are tokens already defined in globals.css. No
+   hardcoded colors, spacing, or type sizes.
+══════════════════════════════════════════════════════ */
+
+.directory-tile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 12px;
+  padding: var(--space-5);
+  text-decoration: none;
+  transition: border-color var(--uw-transition-hover) ease, background-color var(--uw-transition-hover) ease;
+}
+
+.directory-tile--light { background: var(--uw-white); border: 1px solid var(--border-light-subtle); }
+.directory-tile--dark  { background: var(--surface-dark-subtle); border: 1px solid var(--border-dark); }
+
+/* ── Icon / logo-placeholder slot ── */
+.directory-tile-icon {
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+  flex-shrink: 0;
+  transition: background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease;
+}
+.directory-tile-icon--light { border: 1px solid var(--border-light-muted); background: var(--surface-light-subtle); color: var(--uw-text-on-light-muted); }
+.directory-tile-icon--dark  { border: 1px solid var(--border-chrome-pill-idle); background: var(--surface-dark-subtle); color: var(--uw-text-on-dark-secondary); }
+
+.directory-tile--light:hover .directory-tile-icon--light { color: var(--uw-wts-ring-current); }
+.directory-tile--dark:hover  .directory-tile-icon--dark  { color: var(--uw-text-on-dark-bright); }
+
+/* Two-SVG swap: stroke shown by default, fill shown on hover. Applies
+   to the Phosphor icon slot only (Services cards) — the AWS-logo
+   placeholder slot (Workloads cards) has no regular/fill swap. */
+.directory-tile-icon-fill { display: none; }
+.directory-tile:hover .directory-tile-icon-stroke { display: none; }
+.directory-tile:hover .directory-tile-icon-fill { display: block; }
+
+/* Logo placeholder — Workloads directory only. AWS product logos are
+   not supplied yet; this is a deliberate "logo coming soon" glyph in
+   the same icon-slot box, not meant to read as the product's real
+   icon. Swap for the official AWS Architecture Icon per product once
+   Niki provides them. */
+.directory-tile-logo-placeholder { opacity: 0.7; }
+
+/* ── Heading / body ── */
+.directory-tile-heading {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-h4-sm);
+  line-height: 1.30;
+  margin-bottom: var(--space-2_5);
+  flex-shrink: 0;
+}
+.directory-tile-heading--light { color: var(--uw-black); }
+.directory-tile-heading--dark  { color: var(--uw-white); }
+@media(min-width:768px){ .directory-tile-heading { font-size: var(--text-h4); } }
+
+.directory-tile-body {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: var(--space-6);
+}
+.directory-tile-body--light { color: var(--uw-muted); }
+.directory-tile-body--dark  { color: var(--uw-text-on-dark-muted); }
+
+/* ── Footer link — "go to page", whole card is the click target ── */
+.directory-tile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-body);
+  transition: color var(--uw-transition-hover) ease;
+}
+.directory-tile-link--light { color: var(--uw-amber-dark); }
+.directory-tile-link--dark  { color: var(--uw-amber-light); }
+
+.directory-tile:hover .directory-tile-link { text-decoration: underline; text-underline-offset: 3px; }
+
+.directory-tile-link-arrow-wrap { display: inline-flex; align-items: center; }
+.directory-tile-link-arrow-hover { display: none; }
+.directory-tile:hover .directory-tile-link-arrow-default { display: none; }
+.directory-tile:hover .directory-tile-link-arrow-hover { display: inline-block; }
