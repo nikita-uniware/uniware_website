@@ -197,7 +197,7 @@ export function CloudInfrastructurePage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel();
+                window.openBookingPanel("cloud");
               }}
             >
               Talk to an expert
@@ -354,7 +354,7 @@ export function CloudInfrastructurePage() {
                         href="/contact"
                         onClick={(e) => {
                           e.preventDefault();
-                          window.openBookingPanel();
+                          window.openBookingPanel("cloud");
                         }}
                       >
                         Talk to an expert
@@ -485,6 +485,7 @@ export function CloudInfrastructurePage() {
         body="Tell us what you're running, or what you're trying to move. We'll bring in the right person."
         buttonText="Talk to an expert"
         buttonLink="/contact"
+        category="cloud"
       />
     </div>
   );

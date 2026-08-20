@@ -30,6 +30,7 @@ export function CybersecurityPage({ technologies }: CybersecurityPageProps) {
       <div dangerouslySetInnerHTML={{ __html: html }} />
       <SplitCTA
         id="get-started"
+        category="cybersecurity"
         primary={{
           eyebrow: "Ready to Talk",
           heading: "Book a security review",

@@ -127,7 +127,7 @@ export function AwsHubPage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel();
+                window.openBookingPanel("cloud");
               }}
             >
               Talk to an expert
@@ -307,6 +307,7 @@ export function AwsHubPage() {
         body="Tell us what you're running on AWS. We'll point you to the right service."
         buttonText="Talk to an expert"
         buttonLink="/contact"
+        category="cloud"
         contactLine={{
           name: "Yogeshwaran",
           phone: "+91 73587 83739",

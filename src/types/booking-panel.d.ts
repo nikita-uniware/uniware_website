@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-  type BookingPanelConfig = "cybersecurity" | "infrastructure";
+  type BookingPanelConfig = "cybersecurity" | "infrastructure" | "cloud";
   type InfrastructureBookingTopic =
     | "server"
     | "storage"

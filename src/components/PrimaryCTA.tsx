@@ -22,6 +22,10 @@ type PrimaryCTAProps = {
   body: string;
   buttonText: string;
   buttonLink: string;
+  /** Which booking-panel category this page's CTA falls under —
+   * PrimaryCTA is reused across page types, so the category can't be
+   * hardcoded here. Only relevant when buttonLink is "/contact". */
+  category: BookingPanelConfig;
   /** Optional "prefer to call" line, rendered between the body copy
    * and the button. Per-page decision, not a default — omit entirely
    * for a PrimaryCTA with no phone contact. Same pattern as SplitCTA's
@@ -34,10 +38,12 @@ function PrimaryCTAButton({
   href,
   className,
   children,
+  category,
 }: {
   href: string;
   className: string;
   children: string;
+  category: BookingPanelConfig;
 }) {
   if (href === "/contact") {
     return (
@@ -46,7 +52,7 @@ function PrimaryCTAButton({
         className={className}
         onClick={(e) => {
           e.preventDefault();
-          window.openBookingPanel();
+          window.openBookingPanel(category);
         }}
       >
         {children}
@@ -84,6 +90,7 @@ export function PrimaryCTA({
   body,
   buttonText,
   buttonLink,
+  category,
   contactLine,
 }: PrimaryCTAProps) {
   return (
@@ -117,7 +124,7 @@ export function PrimaryCTA({
             )}
           </div>
           <span className="dci-cta-button-wrap" data-reveal="160">
-            <PrimaryCTAButton href={buttonLink} className="btn-size-lg btn-surface-amber">
+            <PrimaryCTAButton href={buttonLink} className="btn-size-lg btn-surface-amber" category={category}>
               {buttonText}
             </PrimaryCTAButton>
           </span>

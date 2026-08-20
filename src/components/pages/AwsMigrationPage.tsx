@@ -137,7 +137,7 @@ export function AwsMigrationPage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel();
+                window.openBookingPanel("cloud");
               }}
             >
               Talk to an expert
@@ -446,6 +446,7 @@ export function AwsMigrationPage() {
 
       <SplitCTA
         id="get-started"
+        category="cloud"
         primary={{
           eyebrow: "Get Started",
           heading: "Ready to plan your migration?",

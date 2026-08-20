@@ -27,6 +27,11 @@ type SplitCTAProps = {
   id?: string;
   primary: SplitCTAZone;
   secondary: SplitCTAZone;
+  /** Which booking-panel category this page's CTA falls under —
+   * SplitCTA is reused across page types, so the category can't be
+   * hardcoded here. Only relevant for a zone whose buttonLink is
+   * "/contact". */
+  category: BookingPanelConfig;
   /** Optional "prefer to call" line under the primary zone's button.
    * Per-page decision, not a default — omit entirely for a SplitCTA
    * with no phone contact. */
@@ -37,10 +42,12 @@ function SplitCTAButton({
   href,
   className,
   children,
+  category,
 }: {
   href: string;
   className: string;
   children: string;
+  category: BookingPanelConfig;
 }) {
   if (href === "/contact") {
     return (
@@ -49,7 +56,7 @@ function SplitCTAButton({
         className={className}
         onClick={(e) => {
           e.preventDefault();
-          window.openBookingPanel();
+          window.openBookingPanel(category);
         }}
       >
         {children}
@@ -63,7 +70,7 @@ function SplitCTAButton({
   );
 }
 
-export function SplitCTA({ id, primary, secondary, primaryContact }: SplitCTAProps) {
+export function SplitCTA({ id, primary, secondary, category, primaryContact }: SplitCTAProps) {
   return (
     <section id={id} className="cta-split" aria-label="Get started">
       <div className="cta-split-amber" data-reveal="0">
@@ -75,6 +82,7 @@ export function SplitCTA({ id, primary, secondary, primaryContact }: SplitCTAPro
             <SplitCTAButton
               href={primary.buttonLink}
               className="btn-size-md btn-surface-amber"
+              category={category}
             >
               {primary.buttonText}
             </SplitCTAButton>
@@ -102,6 +110,7 @@ export function SplitCTA({ id, primary, secondary, primaryContact }: SplitCTAPro
           <SplitCTAButton
             href={secondary.buttonLink}
             className="btn-size-md btn-surface-light"
+            category={category}
           >
             {secondary.buttonText}
           </SplitCTAButton>

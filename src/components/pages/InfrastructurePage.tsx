@@ -691,6 +691,7 @@ export function InfrastructurePage({ technologies }: InfrastructurePageProps) {
         body="Tell us what you're working on, server, storage, network, virtualization, or backup, and we'll bring in the right person."
         buttonText="Talk to an expert"
         buttonLink="/contact"
+        category="infrastructure"
       />
     </div>
   );

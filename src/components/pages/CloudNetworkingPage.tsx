@@ -140,7 +140,7 @@ export function CloudNetworkingPage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel();
+                window.openBookingPanel("cloud");
               }}
             >
               Talk to an expert
@@ -350,6 +350,7 @@ export function CloudNetworkingPage() {
         body="Tell us how your business connects today. We'll design the right mix of VPN, Direct Connect, and SD-WAN for you."
         buttonText="Talk to an expert"
         buttonLink="/contact"
+        category="cloud"
       />
     </div>
   );
