@@ -137,6 +137,13 @@
   color:var(--uw-white);
 }
 .pill-input:focus-visible + .pill-label{outline:2px solid var(--uw-amber-border);outline-offset:2px}
+.panel-field-error{
+  margin-top:2px;
+  font-family:var(--font-body);
+  font-weight:var(--font-weight-regular);
+  font-size:var(--text-body-sm);
+  color:var(--uw-amber-dark);
+}
 
 /* Panel submit button — layout only; size/color come from .btn-size-lg .btn-surface-amber */
 .btn-panel-submit-layout { width: 100%; margin-top: 8px; }

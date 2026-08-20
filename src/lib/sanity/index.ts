@@ -3,6 +3,7 @@ import {
   caseStudyBySlugQuery,
   caseStudyCardsQuery,
   caseStudySlugsQuery,
+  infrastructureTechnologiesQuery,
   technologiesByPageQuery,
 } from "./queries";
 import { mapSanityCaseStudy, type SanityCaseStudyDoc } from "./mappers";
@@ -135,9 +136,20 @@ type SanityTechnologyDoc = {
   slug: string | null;
   logoUrl: string | null;
   pages?: string[] | null;
+  infrastructurePillars?: string[] | null;
 };
 
 export type TechnologyPageId = "cybersecurity";
+export type InfrastructurePillarId =
+  | "server"
+  | "storage"
+  | "network"
+  | "virtualization"
+  | "data-security";
+
+export type InfrastructureTechnologyLogo = TechnologyLogo & {
+  infrastructurePillars: InfrastructurePillarId[];
+};
 
 /** Published technologies for a page partner strip (filtered by CMS `pages`). */
 export async function fetchTechnologies(
@@ -170,6 +182,45 @@ export async function fetchTechnologies(
   } catch (err) {
     console.error("[sanity] fetchTechnologies failed:", err);
     return LOCAL_TECHNOLOGY_LOGOS;
+  }
+}
+
+/** Official CMS logos grouped by their Data Centre Infrastructure pillar tags. */
+export async function fetchInfrastructureTechnologies(): Promise<
+  InfrastructureTechnologyLogo[]
+> {
+  if (!isSanityConfigured()) return [];
+
+  try {
+    const client = getSanityClient();
+    if (!client) return [];
+
+    const docs = await client.fetch<SanityTechnologyDoc[]>(
+      infrastructureTechnologiesQuery
+    );
+
+    return (docs ?? [])
+      .filter(
+        (doc) =>
+          Boolean(doc.logoUrl && doc.name) &&
+          Array.isArray(doc.infrastructurePillars) &&
+          doc.infrastructurePillars.length > 0
+      )
+      .map((doc) => ({
+        name: doc.name,
+        slug:
+          doc.slug ||
+          doc.name
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, ""),
+        logoUrl: doc.logoUrl as string,
+        infrastructurePillars:
+          doc.infrastructurePillars as InfrastructurePillarId[],
+      }));
+  } catch (err) {
+    console.error("[sanity] fetchInfrastructureTechnologies failed:", err);
+    return [];
   }
 }
 

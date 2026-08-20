@@ -170,6 +170,18 @@ const INDUSTRIES = [
 
 const TECHNOLOGY_PAGES = [
   { title: "Cybersecurity", value: "cybersecurity" },
+  {
+    title: "Data Centre Infrastructure",
+    value: "data-centre-infrastructure",
+  },
+];
+
+const INFRASTRUCTURE_PILLARS = [
+  { title: "Server", value: "server" },
+  { title: "Storage", value: "storage" },
+  { title: "Networking", value: "network" },
+  { title: "Virtualization / HCI", value: "virtualization" },
+  { title: "Data Security", value: "data-security" },
 ];
 
 export const technology = {
@@ -209,6 +221,23 @@ export const technology = {
       description:
         "Tick the pages where this logo should appear. Leave all unticked to hide it everywhere without deleting. Only these options are allowed — do not type custom names.",
       initialValue: ["cybersecurity"],
+    },
+    {
+      name: "infrastructurePillars",
+      title: "Infrastructure pillars",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        list: INFRASTRUCTURE_PILLARS,
+        layout: "grid",
+      },
+      hidden: ({
+        parent,
+      }: {
+        parent?: { pages?: string[] };
+      }) => !parent?.pages?.includes("data-centre-infrastructure"),
+      description:
+        "Choose every infrastructure pillar where this official logo should appear. A vendor can be used in more than one pillar.",
     },
   ],
   preview: {
@@ -632,14 +661,11 @@ export const caseStudy = {
               title: "Video",
               fields: [
                 {
-                  name: "file",
-                  title: "Video file",
-                  type: "file",
-                  options: { accept: "video/*" },
+                  name: "video",
+                  title: "Video",
+                  type: "mux.video",
                   description:
-                    "Upload MP4 (H.264) for now. Hosting approach (Mux vs embed) still to be confirmed.",
-                  validation: (Rule: { required: () => unknown }) =>
-                    Rule.required(),
+                    "Upload a video — it streams via Mux with adaptive quality.",
                 },
                 {
                   name: "poster",
@@ -654,12 +680,19 @@ export const caseStudy = {
                   type: "string",
                   description: "Optional. Shown under the video.",
                 },
+                // Legacy — hidden, keeps old MP4 data readable until migrated.
+                {
+                  name: "file",
+                  title: "Legacy file",
+                  type: "file",
+                  hidden: true,
+                },
               ],
               preview: {
                 select: { title: "caption" },
                 prepare: ({ title }: { title?: string }) => ({
                   title: "Video",
-                  subtitle: title || "Uploaded file",
+                  subtitle: title || "Uploaded video",
                 }),
               },
             },

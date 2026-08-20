@@ -233,6 +233,9 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
                               Select a topic
                             </option>
                             <option value="cybersecurity">Cybersecurity</option>
+                            <option value="data-centre-infrastructure">
+                              Data Centre Infrastructure
+                            </option>
                             <option value="backup">Backup and Recovery</option>
                             <option value="enquiry">General enquiry</option>
                             <option value="partnership">Partnership</option>

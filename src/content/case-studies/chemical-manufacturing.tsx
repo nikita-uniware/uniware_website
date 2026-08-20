@@ -32,7 +32,8 @@ export type CaseStudyNote = {
 export type SolutionContentBlock =
   | { type: "text"; body: string }
   | { type: "image"; src: string; alt: string; caption?: string }
-  | { type: "video"; src: string; poster?: string; caption?: string };
+  | { type: "video"; src: string; poster?: string; caption?: string }
+  | { type: "muxVideo"; playbackId: string; poster?: string; caption?: string };
 
 export type CaseStudy = {
   slug: string;

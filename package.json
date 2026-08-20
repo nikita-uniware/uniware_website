@@ -13,6 +13,7 @@
     "sanity:deploy:hosted": "node --env-file=.env.local scripts/deploy-studio.mjs"
   },
   "dependencies": {
+    "@mux/mux-player-react": "^3.13.2",
     "@phosphor-icons/react": "^2.1.10",
     "@sanity/client": "^7.23.2",
     "@sanity/image-url": "^2.1.1",
@@ -24,6 +25,7 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "sanity": "^6.5.0",
+    "sanity-plugin-mux-input": "^4.1.9",
     "styled-components": "^6.4.4",
     "use-effect-event": "^2.0.3"
   },

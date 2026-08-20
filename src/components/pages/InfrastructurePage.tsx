@@ -1,10 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useReveal } from "@/hooks/useReveal";
 import { useScrollSyncHighlight } from "@/hooks/useScrollSyncHighlight";
 import { CircleGroup } from "@/components/CircleGroup";
 import { PrimaryCTA } from "@/components/PrimaryCTA";
+import type {
+  InfrastructurePillarId,
+  InfrastructureTechnologyLogo,
+} from "@/lib/sanity";
 import "@/styles/data-centre-infrastructure.page.css";
 
 const CheckIcon = () => (
@@ -50,14 +55,13 @@ const DownArrow = () => (
 );
 
 type Pillar = {
-  key: string;
+  key: InfrastructurePillarId;
   tier: "base" | "mid" | "deep";
   stackLabel: string;
   eyebrow: string;
   heading: string;
   description: string;
   bullets: string[];
-  vendors: { name: string; placeholderSrc: string }[];
   crossLink?: string;
 };
 
@@ -76,10 +80,6 @@ const PILLARS: Pillar[] = [
       "Enterprise rack and data center setup",
       "Lifecycle planning for hardware refreshes",
     ],
-    vendors: [
-      { name: "Dell", placeholderSrc: "/partners/dell.svg" },
-      { name: "HPE", placeholderSrc: "/partners/hpe.svg" },
-    ],
   },
   {
     key: "storage",
@@ -95,13 +95,6 @@ const PILLARS: Pillar[] = [
       "Storage built to plug straight into backup and disaster recovery",
       "Capacity planning as data grows",
     ],
-    vendors: [
-      { name: "Dell", placeholderSrc: "/partners/dell.svg" },
-      { name: "NetApp", placeholderSrc: "/partners/netapp.svg" },
-      { name: "Hitachi", placeholderSrc: "/partners/hitachi.svg" },
-      { name: "Qnap", placeholderSrc: "/partners/qnap.svg" },
-      { name: "Synology", placeholderSrc: "/partners/synology.svg" },
-    ],
   },
   {
     key: "network",
@@ -116,11 +109,6 @@ const PILLARS: Pillar[] = [
       "InfiniBand switch design",
       "Branch connectivity and SD-WAN, software-defined networking, for multi-site businesses",
       "PoE switches for connected devices like Wi-Fi access points, security cameras, and access control systems",
-    ],
-    vendors: [
-      { name: "Dell", placeholderSrc: "/partners/dell.svg" },
-      { name: "HPE Aruba", placeholderSrc: "/partners/hpe-aruba.svg" },
-      { name: "Arista", placeholderSrc: "/partners/arista.svg" },
     ],
   },
   {
@@ -138,12 +126,6 @@ const PILLARS: Pillar[] = [
       "Spin up compute elastically in AWS when a workload needs extra capacity, then scale back down",
       "Container orchestration with Kubernetes",
     ],
-    vendors: [
-      { name: "Nutanix", placeholderSrc: "/partners/nutanix.svg" },
-      { name: "VMware", placeholderSrc: "/partners/vmware.svg" },
-      { name: "Microsoft Hyper-V", placeholderSrc: "/partners/hyper-v.svg" },
-      { name: "Proxmox", placeholderSrc: "/partners/proxmox.svg" },
-    ],
   },
   {
     key: "data-security",
@@ -159,11 +141,6 @@ const PILLARS: Pillar[] = [
       "Disaster recovery site setup and replication",
       "Deduplication for longer backup retention at a lower cost",
       "Faster backups after the first, source-based deduplication only sends what's changed",
-    ],
-    vendors: [
-      { name: "Dell", placeholderSrc: "/partners/dell.svg" },
-      { name: "Commvault", placeholderSrc: "/partners/commvault.svg" },
-      { name: "Veeam", placeholderSrc: "/partners/veeam.svg" },
     ],
     crossLink:
       "For the deeper story on ransomware recovery and cyber resiliency, see Cybersecurity.",
@@ -209,7 +186,11 @@ const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
-export function InfrastructurePage() {
+type InfrastructurePageProps = {
+  technologies: InfrastructureTechnologyLogo[];
+};
+
+export function InfrastructurePage({ technologies }: InfrastructurePageProps) {
   useReveal();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -291,11 +272,7 @@ export function InfrastructurePage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                // TODO(Srimathi): once BookingPanel takes a contextual
-                // config param (see General Site Notes — architecture note),
-                // call window.openBookingPanel("infrastructure") here so this
-                // pre-fills the multi-select topic instead of the generic form.
-                window.openBookingPanel();
+                window.openBookingPanel("infrastructure");
               }}
             >
               Talk to an expert
@@ -474,24 +451,36 @@ export function InfrastructurePage() {
                     </div>
 
                     <div className="dci-pillar-media">
-                      <div className="dci-pillar-vendors">
-                        {p.vendors.map((v) => (
-                          <div className="cs-stack-chip" key={v.name}>
-                            {/* TODO: replace with real vendor logo file at v.placeholderSrc */}
-                            <span className="cs-stack-chip-logo">{v.name}</span>
-                          </div>
-                        ))}
-                      </div>
+                      {technologies.some((technology) =>
+                        technology.infrastructurePillars.includes(p.key)
+                      ) && (
+                        <div
+                          className="dci-pillar-vendors"
+                          aria-label={`${p.stackLabel} technology partners`}
+                        >
+                          {technologies
+                            .filter((technology) =>
+                              technology.infrastructurePillars.includes(p.key)
+                            )
+                            .map((technology) => (
+                              <div className="cs-stack-chip" key={technology.slug}>
+                                <span className="cs-stack-chip-logo">
+                                  <img
+                                    src={technology.logoUrl}
+                                    alt={technology.name}
+                                    loading="lazy"
+                                  />
+                                </span>
+                              </div>
+                            ))}
+                        </div>
+                      )}
                       <a
                         className="link-text link-text-light link-text-md dci-pillar-cta"
                         href="/contact"
                         onClick={(e) => {
                           e.preventDefault();
-                          // TODO(Srimathi): once BookingPanel takes a contextual
-                          // config param, call
-                          // window.openBookingPanel("infrastructure", p.key)
-                          // here so this pre-selects this pillar in the panel.
-                          window.openBookingPanel();
+                          window.openBookingPanel("infrastructure", p.key);
                         }}
                       >
                         Talk to an expert
@@ -543,7 +532,7 @@ export function InfrastructurePage() {
           </div>
 
           <div className="dci-cs-grid">
-            <a
+            <Link
               href="/resources/case-studies/schwing-stetter-dell-data-protection-backup"
               className="cs-card"
               data-reveal="0"
@@ -592,11 +581,11 @@ export function InfrastructurePage() {
                   </span>
                 </span>
               </div>
-            </a>
+            </Link>
 
             <div className="dci-cs-support-row">
               {CASE_STUDY_SUPPORTING.map((c) => (
-                <a href={c.url} className="cs-card" data-reveal="0" key={c.pillar}>
+                <Link href={c.url} className="cs-card" data-reveal="0" key={c.pillar}>
                   <p className="cs-eyebrow">{c.pillar}</p>
                   <p className="cs-stat">{c.statHeadline}</p>
                   <p className="cs-stat-caption">{c.statCaption}</p>
@@ -638,7 +627,7 @@ export function InfrastructurePage() {
                       </span>
                     </span>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>

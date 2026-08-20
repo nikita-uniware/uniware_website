@@ -18,6 +18,7 @@ const FORM_NAME = "Contact form";
 
 const ABOUT_LABELS: Record<string, string> = {
   cybersecurity: "Cybersecurity",
+  "data-centre-infrastructure": "Data Centre Infrastructure",
   backup: "Backup and Recovery",
   enquiry: "General enquiry",
   partnership: "Partnership",
