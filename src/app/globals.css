@@ -378,23 +378,33 @@ html.is-ready [data-reveal].is-visible {
    proportionally smaller than --xl without needing different factors. */
 .uw-circles-xl,
 .uw-circles-lg,
+.uw-circles-md,
 .uw-circles-sm {
   transform-origin: bottom right;
   transform: scale(0.6);
 }
 .uw-circles-xl.pos-top-right,
 .uw-circles-lg.pos-top-right,
+.uw-circles-md.pos-top-right,
 .uw-circles-sm.pos-top-right {
   transform-origin: top right;
 }
 .uw-circles-xl.pos-middle-left,
 .uw-circles-lg.pos-middle-left,
+.uw-circles-md.pos-middle-left,
 .uw-circles-sm.pos-middle-left {
   transform-origin: center left;
+}
+.uw-circles-xl.pos-bottom-left,
+.uw-circles-lg.pos-bottom-left,
+.uw-circles-md.pos-bottom-left,
+.uw-circles-sm.pos-bottom-left {
+  transform-origin: bottom left;
 }
 @media (min-width: 768px) {
   .uw-circles-xl,
   .uw-circles-lg,
+  .uw-circles-md,
   .uw-circles-sm {
     transform: scale(0.65);
   }
@@ -402,6 +412,7 @@ html.is-ready [data-reveal].is-visible {
 @media (min-width: 1024px) {
   .uw-circles-xl,
   .uw-circles-lg,
+  .uw-circles-md,
   .uw-circles-sm {
     transform: scale(1);
   }
@@ -1319,6 +1330,7 @@ html.is-ready [data-reveal].is-visible {
 .cs-card{
   background:var(--surface-dark-card); border:1px solid var(--border-chrome-light); border-radius:12px;
   padding:var(--space-7) var(--space-7) var(--space-6); display:flex; flex-direction:column; position:relative; cursor:pointer;
+  height:100%;
   transition:background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease;
 }
 .cs-card:hover{
@@ -1342,3 +1354,121 @@ html.is-ready [data-reveal].is-visible {
 .cs-pills{ display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-6); }
 .cs-pill{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-caption); color:var(--uw-amber-border); background:var(--amber-border-highlight); border:1px solid var(--amber-border-highlight-strong); border-radius:14px; padding:var(--space-px-5) var(--space-3); }
 .cs-card .cs-cta{ margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-chrome-light); background:transparent; }
+
+/* ── Split CTA — reusable across pages ──
+   Single continuous section split by background colour at the 2/3
+   mark, not two bordered cards: full-bleed edge to edge (same
+   technique every section background already uses — .hero/.cs/.gs
+   all paint the full section width, .container only insets text).
+   Hard seam: no gap, no radius, no shadow. Both zones top-aligned.
+   min-height and the amber heading size are pulled directly from
+   .dci-cta / .dci-cta-heading, so this carries the same weight.
+   No hover on the panels themselves — only the buttons (their own
+   .btn-surface-* rules) get a hover state.
+   Promoted from the AWS Migration page when the Cybersecurity page's
+   "Get Started" CTA adopted the same treatment, exactly as specified.
+
+   Outer-edge padding: since these panels are full-bleed (no
+   .container wrapper — that's what makes the colour fill reach the
+   true edge), a flat responsive padding value isn't enough to line
+   the text up with the rest of the page once the viewport exceeds
+   .container's own 1200px max-width — .container's content stays
+   inset by (viewport-1200)/2 plus its padding at that point, not
+   just the padding. The calc() below reproduces that exact formula.
+   The seam-adjacent edge stays a fixed var(--space-9) instead — the
+   same value .gs-block used for its own padding — so text never
+   touches the seam.
+
+   2:1 split — seam tracks the CONTENT AREA's internal two-thirds
+   mark, not the raw viewport's. The background fill is still full-
+   bleed (each zone paints edge to edge), but where amber ends and
+   white begins is computed from the same 1200px max-width, centered
+   content box every .container on the site uses for text alignment.
+   Below 1200px the content area equals the viewport, so this looks
+   identical to a flat 2/3 viewport split; above 1200px the content
+   area is centered with margins on both sides, and the seam holds at
+   that box's own 2/3 point while white absorbs the extra margin —
+   NOT a flat 2fr/1fr of the viewport, which was the actual bug (it
+   tracked the viewport instead of the content area, only matching
+   it below 1200px by coincidence). Expressed as an explicit width on
+   the amber column (content-area-left + content-area-width * 2/3);
+   white is `1fr` and simply fills whatever's left, so it always
+   reaches the true right edge. */
+.cta-split{ display: flex; flex-direction: column; min-height: 320px; }
+@media(min-width:768px){ .cta-split{ min-height: 350px; } }
+@media(min-width:1024px){
+  .cta-split{
+    display: grid;
+    grid-template-columns: calc(max((100vw - 1200px) / 2, 0px) + min(100vw, 1200px) * 2 / 3) 1fr;
+    align-items: stretch; min-height: 380px;
+  }
+}
+
+.cta-split-amber,
+.cta-split-white{ display: flex; flex-direction: column; justify-content: flex-start; width: 100%; min-width: 0; }
+
+.cta-split-amber{ background: var(--uw-amber-dark); position: relative; overflow: hidden; }
+.cta-split-white{ background: var(--uw-yellow-card); }
+
+/* Content wrapper needed only on the amber side, to lift the text
+   above a CircleGroup decoration (position:absolute, zIndex:0) in
+   the stacking order — same technique .hero .container uses against
+   the hero's own CircleGroup. */
+.cta-split-content{ position: relative; z-index: 1; }
+
+.cta-split-amber .gs-block-label,
+.cta-split-amber .gs-block-body{ color: var(--uw-text-on-light-strong); }
+
+/* Heading size pulled directly from .dci-cta-heading. While the two
+   zones are stacked (below the 1024px side-by-side breakpoint), the
+   white zone's heading matches the amber zone's size — hierarchy
+   between them only reads as a signal when they sit side by side;
+   stacked, a size mismatch just looks arbitrary. At 1024px+ (side by
+   side) white reverts to its own smaller .gs-block-heading size. */
+.cta-split-amber .gs-block-heading,
+.cta-split-white .gs-block-heading{ font-size: var(--text-h2-sm); }
+@media(min-width:1024px){
+  .cta-split-amber .gs-block-heading{ font-size: var(--text-h2); }
+  .cta-split-white .gs-block-heading{ font-size: var(--text-h4); }
+}
+
+/* Stacked (below 1024px, mobile AND tablet now — the seam is
+   horizontal): left/right both use the outer-edge calc, top/bottom
+   are asymmetric, with the shared edge (amber's bottom, white's top)
+   getting the fixed seam inset. Side by side (1024px+, the seam is
+   vertical): top/bottom both use the uniform section padding, left/
+   right are asymmetric, with the shared edge getting the seam inset. */
+.cta-split-amber{
+  padding-top: var(--section-pad-sm); padding-bottom: var(--space-9);
+  padding-left: calc(max((100vw - 1200px) / 2, 0px) + var(--space-4));
+  padding-right: calc(max((100vw - 1200px) / 2, 0px) + var(--space-4));
+}
+.cta-split-white{
+  padding-top: var(--space-9); padding-bottom: var(--section-pad-sm);
+  padding-left: calc(max((100vw - 1200px) / 2, 0px) + var(--space-4));
+  padding-right: calc(max((100vw - 1200px) / 2, 0px) + var(--space-4));
+}
+@media(min-width:768px){
+  .cta-split-amber{
+    padding-top: var(--section-pad-md); padding-bottom: var(--space-9);
+    padding-left: calc(max((100vw - 1200px) / 2, 0px) + var(--space-6));
+    padding-right: calc(max((100vw - 1200px) / 2, 0px) + var(--space-6));
+  }
+  .cta-split-white{
+    padding-top: var(--space-9); padding-bottom: var(--section-pad-md);
+    padding-left: calc(max((100vw - 1200px) / 2, 0px) + var(--space-6));
+    padding-right: calc(max((100vw - 1200px) / 2, 0px) + var(--space-6));
+  }
+}
+@media(min-width:1024px){
+  .cta-split-amber{
+    padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg);
+    padding-left: calc(max((100vw - 1200px) / 2, 0px) + var(--space-10));
+    padding-right: var(--space-9);
+  }
+  .cta-split-white{
+    padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg);
+    padding-left: var(--space-9);
+    padding-right: calc(max((100vw - 1200px) / 2, 0px) + var(--space-10));
+  }
+}

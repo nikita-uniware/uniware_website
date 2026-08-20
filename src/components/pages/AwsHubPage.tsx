@@ -39,12 +39,14 @@ const SERVICE_CARDS = [
     heading: "Migration",
     body: "Minimal-downtime migration to AWS, planned and executed by certified engineers.",
     href: "/solutions/cloud/aws/services/migration/",
+    linkText: "Explore Migration",
   },
   {
     icon: Pulse,
     heading: "Managed Services",
     body: "24/7 monitoring, security, cost control, and support for AWS environments already in production.",
     href: "/solutions/cloud/aws/services/managed-services/",
+    linkText: "Explore Managed Services",
   },
   {
     // DRAFT — needs review once Consulting page content is finalized
@@ -53,6 +55,7 @@ const SERVICE_CARDS = [
     heading: "Consulting",
     body: "AWS architecture and strategy guidance from certified consultants.",
     href: "/solutions/cloud/aws/services/consulting/",
+    linkText: "Explore Consulting",
   },
 ];
 
@@ -61,6 +64,7 @@ const WORKLOAD_CARDS = [
     heading: "Amazon RDS",
     body: "Amazon RDS database setup, tuning, and ongoing management, so your data layer stays fast and reliable.",
     href: "/solutions/cloud/aws/workloads/rds/",
+    linkText: "Explore RDS",
   },
   {
     // DRAFT — needs review, pending scope decision on relationship to the
@@ -68,35 +72,7 @@ const WORKLOAD_CARDS = [
     heading: "Generative AI (Amazon Bedrock)",
     body: "Custom AI and document automation built on Amazon Bedrock, tailored to your business.",
     href: "/solutions/cloud/aws/workloads/genai/",
-  },
-  {
-    // NEEDS CONFIRMATION — still active? See Dhana question (per
-    // AWS_Hub_Page_Build.md, open item 2).
-    heading: "HPC",
-    body: "High-performance computing clusters for research, simulation, and compute-intensive workloads on AWS.",
-    href: "/solutions/cloud/aws/workloads/hpc/",
-  },
-];
-
-// DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet. Replace
-// with real Sanity content once available, same pattern as the other
-// AWS/cloud pages' own case-study placeholders.
-type CaseStudyPlaceholder = {
-  eyebrow: string;
-  stat: string;
-  body: string;
-};
-
-const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
-  {
-    eyebrow: "AWS",
-    stat: "Placeholder",
-    body: "Draft: AWS engagement for a mid-market client, timeline and outcome to confirm.",
-  },
-  {
-    eyebrow: "AWS",
-    stat: "Placeholder",
-    body: "Draft: AWS engagement for an established client, timeline and outcome to confirm.",
+    linkText: "Explore Amazon Bedrock",
   },
 ];
 
@@ -204,30 +180,27 @@ export function AwsHubPage() {
         </div>
       </section>
 
-      {/* Track Record — heading number, body year, and both stat values are
-          NEEDS CONFIRMATION per AWS_Hub_Page_Build.md (open item 1): years
-          as an AWS partner and total AWS engagements delivered, pending
-          Dhana/Yogi. Shown as "—" rather than an invented figure. */}
       <section className="stats stats--dark" aria-label="Track record">
         <div className="container">
           <div className="stats-grid">
             <div className="stats-left" data-reveal="0">
               <p className="stats-eyebrow">Track Record</p>
-              <h2 className="stats-heading">— years of AWS partnership.</h2>
+              <h2 className="stats-heading">11+ years of AWS partnership.</h2>
               <p className="stats-body">
-                We&apos;ve been an AWS partner since —, delivering migration,
-                managed services, and workload-specific expertise to
-                businesses across India and the US.
+                We&apos;ve been an AWS partner since 2015, holding Advanced
+                Tier status since 2016, delivering cloud deployments,
+                migrations, and managed services to businesses across India
+                and the US.
               </p>
             </div>
             <div className="stats-right">
               <div className="stat-card" data-reveal="0">
-                <div className="stat-number">—</div>
-                <div className="stat-label">Years as an AWS Partner</div>
+                <div className="stat-number">11+</div>
+                <div className="stat-label">Years as an AWS Advanced Tier Partner</div>
               </div>
               <div className="stat-card" data-reveal="80">
-                <div className="stat-number">—</div>
-                <div className="stat-label">AWS engagements delivered</div>
+                <div className="stat-number">250+</div>
+                <div className="stat-label">Cloud deployments delivered</div>
               </div>
             </div>
           </div>
@@ -266,78 +239,10 @@ export function AwsHubPage() {
             </p>
           </div>
 
-          <div className="svc-grid" data-reveal="0">
+          <div className="svc-grid svc-grid--2col" data-reveal="0">
             {WORKLOAD_CARDS.map((card) => (
               <DirectoryTile key={card.heading} variant="dark" {...card} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet.
-          Swap CASE_STUDY_PLACEHOLDERS above for real Sanity content once
-          it's live, same as the other cloud pages' own placeholder case
-          studies. */}
-      <section id="case-studies" className="cs" aria-labelledby="aws-hub-cs-heading">
-        <div className="container">
-          <div data-reveal="0">
-            <div className="section-header-block">
-              <p className="sec-eyebrow-d">Case Studies</p>
-              <h2 className="sec-heading-d" id="aws-hub-cs-heading">
-                Placeholder — replace once cloud case studies are live
-              </h2>
-            </div>
-          </div>
-
-          <div className="dci-cs-grid">
-            <div className="dci-cs-support-row">
-              {CASE_STUDY_PLACEHOLDERS.map((c, i) => (
-                <a
-                  href="#"
-                  className="cs-card"
-                  data-reveal="0"
-                  key={`${c.eyebrow}-${i}`}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <p className="cs-eyebrow">{c.eyebrow}</p>
-                  <p className="cs-stat">{c.stat}</p>
-                  <p className="cs-outcome">{c.body}</p>
-                  <div className="cs-cta">
-                    <span className="link-text link-text-dark link-text-md link-text--external">
-                      Read a case study
-                      <span className="link-text-arrow-wrap">
-                        <svg
-                          className="link-text-arrow-default"
-                          width="12"
-                          height="12"
-                          viewBox="0 0 14 14"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" />
-                        </svg>
-                        <svg
-                          className="link-text-arrow-hover"
-                          width="12"
-                          height="12"
-                          viewBox="0 0 14 14"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M3 11L11 3M11 3H5M11 3V9" />
-                        </svg>
-                      </span>
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -399,10 +304,10 @@ export function AwsHubPage() {
           here as a placeholder until confirmed right for a hub-level page. */}
       <PrimaryCTA
         heading="Not sure where to start?"
-        body="Tell us what you're running, or what you're trying to run, on AWS. We'll point you to the right service."
+        body="Tell us what you're running on AWS. We'll point you to the right service."
         buttonText="Talk to an expert"
         buttonLink="/contact"
-        contact={{
+        contactLine={{
           name: "Yogeshwaran",
           phone: "+91 73587 83739",
         }}

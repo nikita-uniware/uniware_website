@@ -44,6 +44,18 @@ const OFFICES = [
     phoneHref: "tel:+917358035443",
   },
   {
+    city: "Bangalore, India",
+    hq: false,
+    addressLines: [
+      "RBI Gautham Housing Society, 2, Kothnur Dinne Main Rd,",
+      "Nrupathunga Nagar, JP Nagar 7th Phase,",
+      "Bengaluru, Karnataka 560078, India",
+    ],
+    contactName: "Ilakkiya",
+    phoneDisplay: "+91 73388 49085",
+    phoneHref: "tel:+917338849085",
+  },
+  {
     city: "Delaware, USA",
     hq: false,
     addressLines: ["8 The Green, Suite A", "Dover, DE 19901-3618"],

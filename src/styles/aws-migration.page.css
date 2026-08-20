@@ -1,0 +1,100 @@
+/* ══════════════════════════════════════════════════════
+   PARTNER ACCREDITATION BADGES — page-scoped override
+   Reuses DCI's .dci-badges pattern exactly (structure,
+   layout, justify-content: center). Tier text bumped to
+   the next documented tier up, same as Cloud Infrastructure's
+   own badge strip, scoped so DCI's own badge row is untouched.
+══════════════════════════════════════════════════════ */
+.aws-migration-page .dci-badge-tier { font-size: var(--text-body); }
+
+/* ══════════════════════════════════════════════════════
+   WHO THIS IS FOR — dark variant of the .stats shell.
+   .stats is only ever styled white elsewhere (cybersecurity
+   page); this page needs it dark, so this modifier overrides
+   background/borders/text colors with the same dark-surface
+   tokens already used on every other dark section (.hero,
+   .our-approach, .cs), scoped under .stats--dark so the
+   white .stats used elsewhere is untouched.
+══════════════════════════════════════════════════════ */
+.aws-migration-page .stats--dark {
+  background: linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));
+  border-top: 1px solid var(--border-chrome-muted);
+  border-bottom: 1px solid var(--border-chrome-muted);
+}
+.aws-migration-page .stats--dark .stats-left { border-right-color: var(--border-chrome-muted); }
+.aws-migration-page .stats--dark .stats-eyebrow { color: var(--uw-amber-dark); }
+.aws-migration-page .stats--dark .stats-heading { color: var(--uw-white); }
+.aws-migration-page .stats--dark .stats-body { color: var(--uw-text-on-dark-dim); }
+.aws-migration-page .stats--dark .stat-card { background: var(--surface-dark-subtle); }
+.aws-migration-page .stats--dark .stat-number { color: var(--uw-white); }
+.aws-migration-page .stats--dark .stat-label { color: var(--uw-text-on-dark-secondary); }
+
+/* ══════════════════════════════════════════════════════
+   MIGRATION PROCESS — reuses .wts/.wts-layout/.wts-card
+   exactly (cybersecurity's "Where to Start", Step instead
+   of Level). This page has no diagram image, so the left
+   column that .wts-rings normally fills (sticky, desktop
+   only) holds heading copy instead — same slot, same sticky
+   behaviour, reusing the token .wts-rings already sticks to.
+══════════════════════════════════════════════════════ */
+@media(min-width:1024px){
+  .aws-migration-page .mig-process-sticky{ position: sticky; top: var(--uw-sticky-rings-top); }
+}
+
+/* ══════════════════════════════════════════════════════
+   FAQ — new component, the one genuinely new pattern on
+   this page. Typography/colour tokens all reused from
+   existing shared classes (.sec-eyebrow-l/.sec-heading-l
+   for the head, wts-card-heading/body sizing for question/
+   answer, var(--section-divider) for every rule — the same
+   token DCI's badge and pillar dividers already use).
+   Left column (1/3): eyebrow + heading, not sticky, scrolls
+   normally. Right column (2/3): accordion list.
+══════════════════════════════════════════════════════ */
+.aws-migration-page .faq { background: var(--uw-white); border-top: 1px solid var(--section-divider); border-bottom: 1px solid var(--section-divider); }
+.aws-migration-page .faq .container { padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+@media(min-width:768px){ .aws-migration-page .faq .container{ padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); } }
+@media(min-width:1024px){ .aws-migration-page .faq .container{ padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); } }
+
+.aws-migration-page .faq-layout { display: block; }
+@media(min-width:1024px){
+  .aws-migration-page .faq-layout{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: start; }
+}
+
+.aws-migration-page .faq-list{ display: flex; flex-direction: column; }
+
+/* Divider rule: every item has a border-bottom; every item after the
+   first also gets a border-top via the adjacent-sibling selector, so
+   the rule reads as one continuous line down the full list. */
+.aws-migration-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
+.aws-migration-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
+
+.aws-migration-page .faq-question-wrap{ margin: 0; }
+.aws-migration-page .faq-question{
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+  padding: var(--space-6) 0; background: none; border: none; text-align: left; cursor: pointer;
+  font-family: var(--font-display); font-weight: var(--font-weight-semibold); font-size: var(--text-h4-sm);
+  line-height: 1.30; color: var(--uw-black);
+}
+@media(min-width:1024px){ .aws-migration-page .faq-question{ font-size: var(--text-h4); } }
+
+.aws-migration-page .faq-icon{
+  flex-shrink: 0; width: var(--space-9); height: var(--space-9); border-radius: 50%;
+  border: 1px solid var(--border-light-medium); color: var(--uw-text-on-light-ghost);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease;
+}
+.aws-migration-page .faq-icon.is-open{ transform: rotate(45deg); border-color: var(--uw-amber-border); color: var(--uw-wts-ring-current); }
+
+.aws-migration-page .faq-answer{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--uw-transition-hover) ease; }
+.aws-migration-page .faq-answer.is-open{ grid-template-rows: 1fr; }
+.aws-migration-page .faq-answer-inner{ overflow: hidden; }
+.aws-migration-page .faq-answer-inner p{
+  font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body);
+  line-height: 1.65; color: var(--uw-body-text); max-width: 640px; padding-bottom: var(--space-6);
+}
+
+/* GET STARTED — .cta-split / .cta-split-amber / .cta-split-white /
+   .cta-split-content now live in globals.css, reusable across pages —
+   promoted when the Cybersecurity page's "Get Started" CTA adopted
+   the same split-panel treatment, exactly as specified. */

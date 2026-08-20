@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { useScrollSyncHighlight } from "@/hooks/useScrollSyncHighlight";
 import { CircleGroup } from "@/components/CircleGroup";
+import { PrimaryCTA } from "@/components/PrimaryCTA";
 import "@/styles/data-centre-infrastructure.page.css";
 
 const CheckIcon = () => (
@@ -17,6 +18,17 @@ const CheckIcon = () => (
     aria-hidden="true"
   >
     <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const PlusIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path
+      d="M8 2.5V13.5M2.5 8H13.5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
@@ -187,8 +199,19 @@ const CASE_STUDY_SUPPORTING: CaseStudySupporting[] = [
   },
 ];
 
+type FaqItem = { question: string; answer: string };
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "Where do you operate?",
+    answer:
+      "We're headquartered in Chennai, India, with offices in Kerala, Hyderabad, and Bangalore. We have a presence in Delaware, US. Our London office opens in September 2026. We work with clients across India and the US, and remotely with businesses wherever they're based.",
+  },
+];
+
 export function InfrastructurePage() {
   useReveal();
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   // The middle-left circle behind the Network card sits as a sibling of
   // .dci-group (same level as the bottom-right circle, whose stacking
@@ -622,44 +645,64 @@ export function InfrastructurePage() {
         </div>
       </section>
 
-      <section className="dci-cta">
-        <CircleGroup size="lg" surface="light" position="top-right" />
+      <section id="faq" className="faq" aria-labelledby="faq-heading">
         <div className="container">
-          <div className="dci-cta-row">
-            <div className="dci-cta-text">
-              <h2 className="dci-cta-heading" data-reveal="0">
-                Ready to talk about your data center?
-              </h2>
-              <p className="dci-cta-sub" data-reveal="80">
-                Tell us what you&apos;re working on, server, storage, network,
-                virtualization, or backup, and we&apos;ll bring in the right
-                person.
+          <div className="faq-layout">
+            <div className="section-header-block">
+              <p className="sec-eyebrow-l" data-reveal="0">
+                FAQ
               </p>
+              <h2 className="sec-heading-l" id="faq-heading" data-reveal="0">
+                Questions people ask
+              </h2>
             </div>
-            <span className="dci-cta-button-wrap" data-reveal="160">
-              <a
-                href="/contact"
-                className="btn-size-lg btn-surface-amber"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.openBookingPanel();
-                }}
-              >
-                Talk to an expert
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path
-                    d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
-            </span>
+
+            <div className="faq-list" data-reveal="0">
+              {FAQ_ITEMS.map((item, i) => {
+                const isOpen = openFaq === i;
+                const panelId = `faq-panel-${i}`;
+                const buttonId = `faq-button-${i}`;
+                return (
+                  <div className="faq-item" key={item.question}>
+                    <h3 className="faq-question-wrap">
+                      <button
+                        type="button"
+                        id={buttonId}
+                        className="faq-question"
+                        aria-expanded={isOpen}
+                        aria-controls={panelId}
+                        onClick={() => setOpenFaq(isOpen ? null : i)}
+                      >
+                        <span>{item.question}</span>
+                        <span className={`faq-icon${isOpen ? " is-open" : ""}`}>
+                          <PlusIcon />
+                        </span>
+                      </button>
+                    </h3>
+                    <div
+                      className={`faq-answer${isOpen ? " is-open" : ""}`}
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                    >
+                      <div className="faq-answer-inner">
+                        <p>{item.answer}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
+
+      <PrimaryCTA
+        heading="Ready to talk about your data center?"
+        body="Tell us what you're working on, server, storage, network, virtualization, or backup, and we'll bring in the right person."
+        buttonText="Talk to an expert"
+        buttonLink="/contact"
+      />
     </div>
   );
 }

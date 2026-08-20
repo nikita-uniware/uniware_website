@@ -4,16 +4,24 @@
    Imported directly by the component, not by any page — no
    page-scoped CSS file is a dependency of this component.
 
-   Visually modeled on the site's .tile-prev/.tile-rec card
-   (icon slot, heading, description), but this variant is
-   purpose-built for clickable directory grids: the whole card
-   is the link, the footer stays a "go to page" link, and there
-   is no fixed carousel width — it just fills its grid column.
+   Visually reuses the site's .tile-prev/.tile-icon-w (light
+   variant) and .tile-rec/.tile-icon-d (dark variant) treatment
+   from cybersecurity.page.css, and the .cs-card:hover /
+   .link-text-dark / .link-text-light hover pattern from
+   globals.css — but this variant is purpose-built for clickable
+   directory grids: the whole card is the link, the footer stays
+   a "go to page" link, and there is no fixed carousel width, it
+   just fills its grid column.
 
-   All values are tokens already defined in globals.css. No
-   hardcoded colors, spacing, or type sizes.
+   Every value below is a token already defined in globals.css
+   (the two literal pixel radii — 12px card, 10px icon box — are
+   not tokenized anywhere in the codebase, but are the same
+   literal values .tile-prev/.tile-rec/.tile-icon-w/.tile-icon-d/
+   .cs-card/.wts-card/.stat-card already all use identically,
+   copied here rather than invented). No new tokens.
 ══════════════════════════════════════════════════════ */
 
+/* ── Card — reuses .tile-prev (light) / .tile-rec (dark) ── */
 .directory-tile {
   display: flex;
   flex-direction: column;
@@ -21,13 +29,22 @@
   border-radius: 12px;
   padding: var(--space-5);
   text-decoration: none;
-  transition: border-color var(--uw-transition-hover) ease, background-color var(--uw-transition-hover) ease;
+  transition: background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease;
 }
 
 .directory-tile--light { background: var(--uw-white); border: 1px solid var(--border-light-subtle); }
 .directory-tile--dark  { background: var(--surface-dark-subtle); border: 1px solid var(--border-dark); }
 
-/* ── Icon / logo-placeholder slot ── */
+/* Hover — light: same tokens as .gs-block:hover's escalation
+   (--uw-yellow-card-hover / --uw-amber-border). Dark: same tokens
+   as .cs-card:hover's dark-card escalation (--surface-dark-card-hover
+   / --border-chrome-heavy). */
+.directory-tile--light:hover { background: var(--uw-yellow-card-hover); border-color: var(--uw-amber-border); }
+.directory-tile--dark:hover  { background: var(--surface-dark-card-hover); border-color: var(--border-chrome-heavy); }
+
+/* ── Icon / logo-placeholder slot — reuses .tile-icon-w (light,
+   including the amber-tinted .tile-prev .tile-icon-w override) /
+   .tile-icon-d (dark) ── */
 .directory-tile-icon {
   width: var(--space-12);
   height: var(--space-12);
@@ -39,27 +56,27 @@
   flex-shrink: 0;
   transition: background-color var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease;
 }
-.directory-tile-icon--light { border: 1px solid var(--border-light-muted); background: var(--surface-light-subtle); color: var(--uw-text-on-light-muted); }
+.directory-tile-icon--light { border: 1px solid var(--amber-tint-border-strong); background: var(--amber-tint-bg); color: var(--amber-icon-tint); }
 .directory-tile-icon--dark  { border: 1px solid var(--border-chrome-pill-idle); background: var(--surface-dark-subtle); color: var(--uw-text-on-dark-secondary); }
 
 .directory-tile--light:hover .directory-tile-icon--light { color: var(--uw-wts-ring-current); }
 .directory-tile--dark:hover  .directory-tile-icon--dark  { color: var(--uw-text-on-dark-bright); }
 
-/* Two-SVG swap: stroke shown by default, fill shown on hover. Applies
-   to the Phosphor icon slot only (Services cards) — the AWS-logo
-   placeholder slot (Workloads cards) has no regular/fill swap. */
+/* Two-SVG swap: stroke shown by default, fill shown on hover — same
+   .ti-stroke/.ti-fill technique as .tile-prev:hover/.tile-rec:hover.
+   Phosphor icon cards only; the logo-placeholder slot has no swap. */
 .directory-tile-icon-fill { display: none; }
 .directory-tile:hover .directory-tile-icon-stroke { display: none; }
 .directory-tile:hover .directory-tile-icon-fill { display: block; }
 
-/* Logo placeholder — Workloads directory only. AWS product logos are
-   not supplied yet; this is a deliberate "logo coming soon" glyph in
-   the same icon-slot box, not meant to read as the product's real
-   icon. Swap for the official AWS Architecture Icon per product once
-   Niki provides them. */
+/* Logo placeholder — Workloads directory only. AWS logo to be
+   swapped in — source: AWS Architecture Icons. Sized identically to
+   the icon slot (same .directory-tile-icon box); the reduced opacity
+   marks it as an intentional "logo coming soon" placeholder, not
+   meant to read as the product's real icon. */
 .directory-tile-logo-placeholder { opacity: 0.7; }
 
-/* ── Heading / body ── */
+/* ── Heading — reuses .tile-name-w / .tile-name-d ── */
 .directory-tile-heading {
   font-family: var(--font-display);
   font-weight: var(--font-weight-semibold);
@@ -72,6 +89,10 @@
 .directory-tile-heading--dark  { color: var(--uw-white); }
 @media(min-width:768px){ .directory-tile-heading { font-size: var(--text-h4); } }
 
+/* ── Body — reuses .tile-prev .tile-desc-w (light) / .tile-desc-d
+   (dark). flex:1 fills remaining card height so the footer link
+   naturally sits at the bottom, same effect .tile-connector gives
+   the carousel version. ── */
 .directory-tile-body {
   font-family: var(--font-body);
   font-weight: var(--font-weight-light);
@@ -80,25 +101,21 @@
   flex: 1;
   margin-bottom: var(--space-6);
 }
-.directory-tile-body--light { color: var(--uw-muted); }
+.directory-tile-body--light { color: var(--uw-body-text); }
 .directory-tile-body--dark  { color: var(--uw-text-on-dark-muted); }
 
-/* ── Footer link — "go to page", whole card is the click target ── */
-.directory-tile-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-body);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--text-body);
-  transition: color var(--uw-transition-hover) ease;
-}
-.directory-tile-link--light { color: var(--uw-amber-dark); }
-.directory-tile-link--dark  { color: var(--uw-amber-light); }
+/* ── Footer link hover, driven by hovering anywhere on the card —
+   exactly the .cs-card:hover .link-text-dark pattern from
+   globals.css, applied to this card and to both .link-text-light
+   (light variant, var(--uw-amber-light) — correct for a light
+   surface) / .link-text-dark (dark variant, var(--uw-amber-dark) —
+   correct for a dark surface). The link itself uses the real
+   .link-text/.link-text-light/.link-text-dark/.link-text-arrow-*
+   classes from globals.css — nothing reimplemented here. ── */
+.directory-tile--light:hover .link-text-light { text-decoration: underline; text-underline-offset: 3px; }
+.directory-tile--light:hover .link-text-light .link-text-arrow-default { display: none; }
+.directory-tile--light:hover .link-text-light .link-text-arrow-hover { display: inline-block; }
 
-.directory-tile:hover .directory-tile-link { text-decoration: underline; text-underline-offset: 3px; }
-
-.directory-tile-link-arrow-wrap { display: inline-flex; align-items: center; }
-.directory-tile-link-arrow-hover { display: none; }
-.directory-tile:hover .directory-tile-link-arrow-default { display: none; }
-.directory-tile:hover .directory-tile-link-arrow-hover { display: inline-block; }
+.directory-tile--dark:hover .link-text-dark { text-decoration: underline; text-underline-offset: 3px; }
+.directory-tile--dark:hover .link-text-dark .link-text-arrow-default { display: none; }
+.directory-tile--dark:hover .link-text-dark .link-text-arrow-hover { display: inline-block; }

@@ -29,12 +29,12 @@ const PATH_CARDS: PathCard[] = [
   {
     icon: ArrowsLeftRight,
     heading: "Hybrid Connectivity",
-    body: "Connect your office or data center to AWS through a VPN tunnel or a dedicated Direct Connect line, whichever fits how you work.",
+    body: "Connect your office or data center to AWS through a VPN tunnel or a dedicated Direct Connect line, whichever fits your traffic volume and budget. AWS-only at this time.",
   },
   {
     icon: ShareNetwork,
     heading: "SD-WAN & Multi-Site Networking",
-    body: "Running more than one location? SD-WAN gives you one smart layer that routes traffic across offices, warehouses, and the cloud.",
+    body: "Running more than one location? We deploy and manage SD-WAN using Fortinet and Versa Networks, routing traffic intelligently across offices, warehouses, and your AWS connection.",
   },
 ];
 
@@ -74,12 +74,12 @@ const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   {
     eyebrow: "Hybrid Connectivity",
     stat: "Placeholder",
-    body: "Draft: VPN or Direct Connect setup for a mid-market client, timeline and outcome to confirm.",
+    body: "Draft: cloud network setup replicating an on-premise network structure with multiple VLANs and network segmentation for a mid-market client. Timeline and outcome to confirm.",
   },
   {
     eyebrow: "SD-WAN",
     stat: "Placeholder",
-    body: "Draft: multi-site SD-WAN deployment for an established client, timeline and outcome to confirm.",
+    body: "Draft: multi-site SD-WAN deployment using Fortinet for an established client with multiple office locations. Timeline and outcome to confirm.",
   },
 ];
 
@@ -91,18 +91,17 @@ const FAQ_ITEMS: FaqItem[] = [
     answer:
       "A VPN is an encrypted tunnel that runs over the public internet. Direct Connect is a dedicated physical line straight to AWS, bypassing the internet entirely. VPN is faster to set up and lower cost. Direct Connect is more reliable and predictable for high-volume or latency-sensitive traffic.",
   },
-  // TODO [NEEDS CONFIRMATION — see Cloud_Networking_Page_Build.md, FAQ Q2]:
-  // "Do you support SD-WAN across multiple offices?" — answer depends on
-  // the Direct Connect setup timeline (Q4 below). Add back once confirmed.
+  {
+    question: "Do you support SD-WAN across multiple offices?",
+    answer:
+      "Yes. We deploy and manage SD-WAN using Fortinet and Versa Networks, routing traffic intelligently across your office locations, warehouses, and cloud connections.",
+  },
   {
     question:
       "Can you connect our AWS environment directly to our office network?",
     answer:
       "Yes. We design and set up both VPN and Direct Connect depending on your traffic volume, budget, and latency needs.",
   },
-  // TODO [NEEDS CONFIRMATION — see Cloud_Networking_Page_Build.md, FAQ Q4]:
-  // "How long does Direct Connect take to set up?" — needs a realistic
-  // setup timeline from the team before this can be published.
   {
     question: "Where do you operate?",
     answer:
@@ -132,7 +131,8 @@ export function CloudNetworkingPage() {
           </h1>
           <p className="hero-subtext" data-reveal="160">
             VPN, Direct Connect, and SD-WAN, planned and managed so your
-            connection to AWS stays fast, secure, and reliable.
+            connection to AWS stays fast, secure, and reliable. 80+
+            connections set up since 2015, across India and the US.
           </p>
           <span data-reveal="240">
             <a

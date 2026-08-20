@@ -148,6 +148,54 @@
    justify-content:center so the row centers within the min-height,
    which keeps the section feeling like a proper close to the page
    rather than a thin strip. ── */
+/* ══════════════════════════════════════════════════════
+   FAQ — same pattern as the Migration/Managed Services FAQ
+   (.faq/.faq-layout/.faq-list/.faq-item/.faq-question/.faq-icon),
+   re-scoped under .dci-page. Minimal, single-question version:
+   same 1/2:1/2 layout, left column not sticky. border-bottom
+   separates the white FAQ section from the amber .dci-cta
+   section directly below it.
+══════════════════════════════════════════════════════ */
+.dci-page .faq { background: var(--uw-white); border-bottom: 1px solid var(--section-divider); }
+.dci-page .faq .container { padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+@media(min-width:768px){ .dci-page .faq .container{ padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); } }
+@media(min-width:1024px){ .dci-page .faq .container{ padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); } }
+
+.dci-page .faq-layout { display: block; }
+@media(min-width:1024px){
+  .dci-page .faq-layout{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: start; }
+}
+
+.dci-page .faq-list{ display: flex; flex-direction: column; }
+
+.dci-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
+.dci-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
+
+.dci-page .faq-question-wrap{ margin: 0; }
+.dci-page .faq-question{
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+  padding: var(--space-6) 0; background: none; border: none; text-align: left; cursor: pointer;
+  font-family: var(--font-display); font-weight: var(--font-weight-semibold); font-size: var(--text-h4-sm);
+  line-height: 1.30; color: var(--uw-black);
+}
+@media(min-width:1024px){ .dci-page .faq-question{ font-size: var(--text-h4); } }
+
+.dci-page .faq-icon{
+  flex-shrink: 0; width: var(--space-9); height: var(--space-9); border-radius: 50%;
+  border: 1px solid var(--border-light-medium); color: var(--uw-text-on-light-ghost);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease;
+}
+.dci-page .faq-icon.is-open{ transform: rotate(45deg); border-color: var(--uw-amber-border); color: var(--uw-wts-ring-current); }
+
+.dci-page .faq-answer{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--uw-transition-hover) ease; }
+.dci-page .faq-answer.is-open{ grid-template-rows: 1fr; }
+.dci-page .faq-answer-inner{ overflow: hidden; }
+.dci-page .faq-answer-inner p{
+  font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body);
+  line-height: 1.65; color: var(--uw-body-text); max-width: 640px; padding-bottom: var(--space-6);
+}
+
 .dci-cta { background: var(--uw-amber-dark); position: relative; overflow: hidden; }
 .dci-cta .container { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; min-height: 320px; padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
 @media (min-width: 768px) { .dci-cta .container { padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); min-height: 350px; } }

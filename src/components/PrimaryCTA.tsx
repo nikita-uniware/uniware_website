@@ -22,10 +22,12 @@ type PrimaryCTAProps = {
   body: string;
   buttonText: string;
   buttonLink: string;
-  /** Optional "prefer to call" line under the button. Per-page
-   * decision, not a default — omit entirely for a PrimaryCTA with
-   * no phone contact. Same pattern as SplitCTA's primaryContact. */
-  contact?: PrimaryCTAContact;
+  /** Optional "prefer to call" line, rendered between the body copy
+   * and the button. Per-page decision, not a default — omit entirely
+   * for a PrimaryCTA with no phone contact. Same pattern as SplitCTA's
+   * primaryContact; this prop is optional so existing PrimaryCTA call
+   * sites without it are unaffected. */
+  contactLine?: PrimaryCTAContact;
 };
 
 function PrimaryCTAButton({
@@ -82,7 +84,7 @@ export function PrimaryCTA({
   body,
   buttonText,
   buttonLink,
-  contact,
+  contactLine,
 }: PrimaryCTAProps) {
   return (
     <section className="dci-cta">
@@ -101,23 +103,23 @@ export function PrimaryCTA({
             <p className="dci-cta-sub" data-reveal="80">
               {body}
             </p>
-          </div>
-          <span className="dci-cta-button-wrap" data-reveal="160">
-            <PrimaryCTAButton href={buttonLink} className="btn-size-lg btn-surface-amber">
-              {buttonText}
-            </PrimaryCTAButton>
-            {contact && (
+            {contactLine && (
               <p className="gs-block-phone">
                 <span className="gs-block-phone-label">Prefer to call?</span>
                 <span className="gs-block-phone-line">
-                  Get in touch with {contact.name} at{" "}
-                  <a href={`tel:${contact.phone.replace(/\s+/g, "")}`}>
-                    {contact.phone}
+                  Get in touch with {contactLine.name} at{" "}
+                  <a href={`tel:${contactLine.phone.replace(/\s+/g, "")}`}>
+                    {contactLine.phone}
                   </a>
                   .
                 </span>
               </p>
             )}
+          </div>
+          <span className="dci-cta-button-wrap" data-reveal="160">
+            <PrimaryCTAButton href={buttonLink} className="btn-size-lg btn-surface-amber">
+              {buttonText}
+            </PrimaryCTAButton>
           </span>
         </div>
       </div>

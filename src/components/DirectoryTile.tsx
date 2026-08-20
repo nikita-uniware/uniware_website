@@ -4,9 +4,9 @@ import "@/styles/directory-tile.css";
 /**
  * Shared, self-contained directory-card component: whole card is a
  * single link, footer keeps a "go to page" link, for hub-style pages
- * that link out to other pages. Fully independent of any page-scoped
- * CSS — styles live in directory-tile.css, built from globals.css
- * tokens only.
+ * that link out to other pages. Styles live in directory-tile.css,
+ * built from globals.css/cybersecurity.page.css tokens only — this
+ * component is fully independent of any page-scoped CSS.
  *
  * Icon slot is one flexible prop: pass `icon` for a normal Phosphor
  * icon (Regular, Fill on hover). Omit it for the AWS-logo placeholder
@@ -64,6 +64,12 @@ export function DirectoryTile({
   href,
   linkText = "Go to page",
 }: DirectoryTileProps) {
+  // .link-text-light = var(--uw-amber-light) (#BB6D08, darker amber
+  // brown) — correct for links on light/white surfaces. .link-text-dark
+  // = var(--uw-amber-dark) (#E9A638, lighter amber yellow) — correct for
+  // links on dark surfaces.
+  const linkColorClass = variant === "light" ? "link-text-light" : "link-text-dark";
+
   return (
     <a href={href} className={`directory-tile directory-tile--${variant}`}>
       <div className={`directory-tile-icon directory-tile-icon--${variant}`} aria-hidden="true">
@@ -77,20 +83,20 @@ export function DirectoryTile({
             </span>
           </>
         ) : (
-          // DEV PLACEHOLDER — real AWS product logo not supplied yet.
-          // Swap for the official AWS Architecture Icon once Niki provides
-          // it. ImageSquare here is a deliberate "logo coming soon" glyph,
-          // not meant to read as this product's real icon.
+          // DEV PLACEHOLDER — AWS logo to be swapped in — source: AWS
+          // Architecture Icons. ImageSquare here is a deliberate "logo
+          // coming soon" glyph, not meant to read as this product's
+          // real icon.
           <ImageSquare size={16} weight="regular" className="directory-tile-logo-placeholder" />
         )}
       </div>
       <p className={`directory-tile-heading directory-tile-heading--${variant}`}>{heading}</p>
       <p className={`directory-tile-body directory-tile-body--${variant}`}>{body}</p>
-      <span className={`directory-tile-link directory-tile-link--${variant}`}>
+      <span className={`link-text ${linkColorClass} link-text-md link-text--external`}>
         {linkText}
-        <span className="directory-tile-link-arrow-wrap">
-          <ArrowRight className="directory-tile-link-arrow-default" />
-          <ArrowDiagonal className="directory-tile-link-arrow-hover" />
+        <span className="link-text-arrow-wrap">
+          <ArrowRight className="link-text-arrow-default" />
+          <ArrowDiagonal className="link-text-arrow-hover" />
         </span>
       </span>
     </a>

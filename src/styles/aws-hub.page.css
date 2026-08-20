@@ -39,6 +39,14 @@
 @media(max-width:1023px){ .aws-hub-page .svc-grid { grid-template-columns: repeat(2, 1fr); } }
 @media(max-width:639px){ .aws-hub-page .svc-grid { grid-template-columns: 1fr; } }
 
+/* Workloads directory has 2 cards, not 3 — at the desktop tier only
+   (tablet/mobile already collapse to 2/1 columns above, which already
+   fits 2 cards cleanly). Same gap token, same breakpoints, just fewer
+   columns so there's no empty third slot. */
+@media(min-width:1024px){
+  .aws-hub-page .svc-grid--2col { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ══════════════════════════════════════════════════════
    FAQ — copied from the Migration/Managed Services/Cloud
    Networking pages' identical override. Same 1/2:1/2 split,

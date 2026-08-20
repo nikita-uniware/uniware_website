@@ -159,64 +159,49 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 
 
 /* ══════════════════════════════════════════════════════
-   GET STARTED — Final CTA. White section. Two blocks, 2:1 width:
-   amber-filled "Book a review" (subtle hover: outline + slightly
-   lighter amber) + white "Take the assessment" (hover reuses the same
-   border/background escalation DCI's .dci-stack-block already uses
-   on a white card: border→amber-border, background→yellow-card-hover).
-   Grid stretches both wrapper divs to equal row height by default;
-   .gs-block fills that height and is itself a flex column, so the
-   button (and phone line, on the amber card) can be pushed to the
-   bottom via margin-top:auto regardless of which card's copy is longer.
+   GET STARTED — Final CTA. .cta-split / .cta-split-amber /
+   .cta-split-white / .cta-split-content now live in globals.css,
+   reusable across pages (promoted from the AWS Migration page's
+   settled split-panel CTA). Only the typography classes below stay
+   page-local — they originated here and the split CTA reuses them
+   as-is for label/heading/body/phone text.
 ══════════════════════════════════════════════════════ */
-.gs { background:var(--uw-white); border-top:1px solid var(--section-divider); }
-.gs .container { padding-top:var(--section-pad-sm); padding-bottom:var(--section-pad-sm); }
-@media(min-width:768px){ .gs .container{ padding-top:var(--section-pad-md); padding-bottom:var(--section-pad-md); } }
-@media(min-width:1024px){ .gs .container{ padding-top:var(--section-pad-lg); padding-bottom:var(--section-pad-lg); } }
-.gs-head { margin-bottom:var(--section-head-gap); }
-.gs-grid { display:grid; grid-template-columns:1fr; gap:var(--space-5); }
-@media(min-width:768px){ .gs-grid{ grid-template-columns:2fr 1fr; gap:var(--space-6); } }
-.gs-grid > div{ display:flex; }
-
-.gs-block{ flex:1; border:1px solid var(--section-divider); border-radius:12px; padding:var(--space-9); display:flex; flex-direction:column; position:relative; overflow:hidden; cursor:pointer; transition:border-color var(--uw-transition-hover) ease, background-color var(--uw-transition-hover) ease; }
-
-.gs-block--white{ background:var(--uw-white); }
-.gs-block--white:hover{ border-color:var(--uw-amber-border); background:var(--uw-yellow-card-hover); }
-
-/* Amber block: full fill, same token as DCI's .dci-cta. Hover is
-   deliberately subtle — border-light-strong is the same "black outline"
-   token .btn-surface-light-ghost already uses, and amber-border is the
-   lighter amber shade already used as a hover accent elsewhere (DCI
-   stack block, white card above), reused here as a slight background
-   lightening instead of inventing a new shade. Same transition as the
-   white card — both inherit it from the shared .gs-block rule above. */
-.gs-block--amber{ background:var(--uw-amber-dark); border-color:var(--uw-amber-dark); }
-.gs-block--amber:hover{ border-color:var(--border-light-strong); background:var(--uw-amber-border); }
-
 .gs-block-label{ font-family:var(--font-body); font-weight:var(--font-weight-medium); font-size:var(--text-eyebrow); letter-spacing:.12em; text-transform:uppercase; color:var(--uw-amber-light); margin-bottom:var(--space-3); }
-.gs-block--amber .gs-block-label{ color:var(--uw-text-on-light-strong); }
 /* H4 spec: 24px desktop / 20px mobile, Space Grotesk 600, line-height 1.30 */
 .gs-block-heading{ font-family:var(--font-display); font-weight:var(--font-weight-semibold); font-size:var(--text-h4-sm); line-height:1.30; letter-spacing:0; color:var(--uw-black); margin-bottom:var(--space-3_5); }
 @media(min-width:1024px){ .gs-block-heading{ font-size:var(--text-h4); } }
 /* text-body-lg: 16px DM Sans 300, line-height 1.65 */
-.gs-block-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-body-text); margin-bottom:var(--space-7); }
-.gs-block--amber .gs-block-body{ color:var(--uw-text-on-light-strong); }
-.gs-block .btn-size-lg,.gs-block .btn-size-md{ align-self:flex-start; }
-.gs-block .card-cta{ margin-top:auto; }
+.gs-block-body{ font-family:var(--font-body); font-weight:var(--font-weight-light); font-size:var(--text-body); line-height:1.65; color:var(--uw-body-text); margin-bottom:var(--space-7); max-width:560px; }
 
 /* Sized/colored off .wts-card-audience (text-body-sm, regular, 1.50) —
-   the closest existing secondary-text pattern; color swapped to the
-   same on-light token already used for .gs-block--amber's own label/body. */
-.gs-block-phone{ position:relative; z-index:2; margin-top:var(--space-3); font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-body-sm); line-height:1.50; color:var(--uw-text-on-light-strong); }
-.gs-block-phone a{ color:inherit; text-decoration:underline; text-underline-offset:3px; }
+   the closest existing secondary-text pattern; color is the muted
+   tier of the same on-light family .cta-split-amber's label/body use
+   (--uw-text-on-light-strong) — this line is secondary to that copy,
+   not equal to it, so it takes the real muted token instead of an
+   opacity hack. The lead-in ("Prefer to call?") uses the same medium
+   weight already established for short caption-style lead-ins
+   (.wts-card-footer-label). The phone number keeps a subtly thinner
+   underline than the browser default, still only on the number, not
+   the full sentence. */
+.gs-block-phone{ position:relative; z-index:2; margin-top:var(--space-3); font-family:var(--font-body); font-weight:var(--font-weight-regular); font-size:var(--text-body-sm); line-height:1.50; color:var(--uw-text-on-light-muted); }
+.gs-block-phone-label{ display:block; font-weight:var(--font-weight-medium); }
+.gs-block-phone-line{ display:block; }
+.gs-block-phone a{ color:inherit; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; transition:color var(--uw-transition-hover) ease; }
+.gs-block-phone a:hover{ color:var(--uw-black); }
 
-/* gs-block circle decoration — negative z-index puts it behind gs-block's
-   in-flow content (label, heading, body, card-cta), which paint ahead of
-   any z-index:0+ positioned sibling regardless of DOM order — z-index:0
-   alone would render on top of them. Shape/wrapper/hover-reveal classes
-   (.circle-group, .circle-group--sm, .circle-group--light,
-   .circle-group-reveal, .circle-hover-parent, .circle-sm-*) live in
-   globals.css — reusable across pages, not gs-specific. */
+/* GET STARTED circle decoration — small scale, subtle opacity, anchored
+   to the amber zone's bottom-left corner, same design decision as the
+   AWS Migration page's equivalent CTA. This page's circles use the
+   legacy raw-markup system (not the React CircleGroup component, since
+   this whole page is one HTML string) — sm tier's own dimensions/bleed,
+   but this page's own hero speed (6s/8s/10s, not sm's own slower
+   3s/4s/5s), decoupled the same way CircleGroup's `speed` prop
+   decouples rotation speed from size on the React pages. */
+.gs-cta-circle{ position:absolute; width:240px; height:240px; bottom:-104px; left:-104px; z-index:0; opacity:.4; pointer-events:none; }
+.gs-cta-circle .circle-ring{ border-color:var(--circle-light); }
+.gs-cta-circle .gs-cta-circle-outer{ width:240px; height:240px; top:0; left:0; border-left-width:2px; border-top-width:1px; border-right-width:1px; border-bottom-width:0; animation:uw-circle-outer 6s linear infinite; }
+.gs-cta-circle .gs-cta-circle-middle{ width:160px; height:160px; top:40px; left:40px; border-left-width:1px; border-top-width:2px; border-right-width:0; border-bottom-width:1px; animation:uw-circle-middle 8s linear infinite; }
+.gs-cta-circle .gs-cta-circle-inner{ width:80px; height:80px; top:80px; left:80px; border-left-width:1px; border-top-width:0; border-right-width:0; border-bottom-width:2px; animation:uw-circle-inner 10s linear infinite; }
 
 /* ══════════════════════════════════════════════════════
    PRE-FOOTER — Technology ecosystem logo marquee.
@@ -669,4 +654,52 @@ html.is-ready .sec-arrows {
 .tile-prev:hover .tile-icon-w   { color: var(--uw-wts-ring-current); }
 .tile-rec:hover  .tile-icon-d   { color: var(--uw-text-on-dark-bright); }
 .pillar-card:hover .card-icon   { color: var(--uw-text-on-dark-bright); }
+
+/* ══════════════════════════════════════════════════════
+   FAQ — same pattern as the Migration/Managed Services FAQ
+   (.faq/.faq-layout/.faq-list/.faq-item/.faq-question/.faq-icon),
+   re-scoped under .cyber-page since this page doesn't import
+   aws-migration.page.css. Markup here uses native <details>/
+   <summary> instead of a React-driven button, since this page
+   renders raw HTML — open state is read off the [open]
+   attribute instead of an .is-open class.
+   Left column (1/2): eyebrow + heading, not sticky. Right
+   column (1/2): accordion list.
+══════════════════════════════════════════════════════ */
+.cyber-page .faq { background: var(--uw-white); border-bottom: 1px solid var(--section-divider); }
+.cyber-page .faq .container { padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+@media(min-width:768px){ .cyber-page .faq .container{ padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); } }
+@media(min-width:1024px){ .cyber-page .faq .container{ padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); } }
+
+.cyber-page .faq-layout { display: block; }
+@media(min-width:1024px){
+  .cyber-page .faq-layout{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: start; }
+}
+
+.cyber-page .faq-list{ display: flex; flex-direction: column; }
+
+.cyber-page .faq-item{ border-bottom: 1px solid var(--section-divider); margin: 0; }
+.cyber-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
+
+.cyber-page .faq-question{
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+  padding: var(--space-6) 0; cursor: pointer; list-style: none;
+  font-family: var(--font-display); font-weight: var(--font-weight-semibold); font-size: var(--text-h4-sm);
+  line-height: 1.30; color: var(--uw-black);
+}
+.cyber-page .faq-question::-webkit-details-marker{ display: none; }
+@media(min-width:1024px){ .cyber-page .faq-question{ font-size: var(--text-h4); } }
+
+.cyber-page .faq-icon{
+  flex-shrink: 0; width: var(--space-9); height: var(--space-9); border-radius: 50%;
+  border: 1px solid var(--border-light-medium); color: var(--uw-text-on-light-ghost);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease;
+}
+.cyber-page details[open] .faq-icon{ transform: rotate(45deg); border-color: var(--uw-amber-border); color: var(--uw-wts-ring-current); }
+
+.cyber-page .faq-answer-inner p{
+  font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body);
+  line-height: 1.65; color: var(--uw-body-text); max-width: 640px; padding-bottom: var(--space-6);
+}
 

@@ -1,0 +1,90 @@
+/* ══════════════════════════════════════════════════════
+   PARTNER ACCREDITATION BADGES — page-scoped override
+   Copied from the Migration page's identical override.
+══════════════════════════════════════════════════════ */
+.aws-managed-services-page .dci-badge-tier { font-size: var(--text-body); }
+
+/* ══════════════════════════════════════════════════════
+   WHO THIS IS FOR — dark variant of the .stats shell.
+   Copied from the Migration page's identical override.
+══════════════════════════════════════════════════════ */
+.aws-managed-services-page .stats--dark {
+  background: linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));
+  border-top: 1px solid var(--border-chrome-muted);
+  border-bottom: 1px solid var(--border-chrome-muted);
+}
+.aws-managed-services-page .stats--dark .stats-left { border-right-color: var(--border-chrome-muted); }
+.aws-managed-services-page .stats--dark .stats-eyebrow { color: var(--uw-amber-dark); }
+.aws-managed-services-page .stats--dark .stats-heading { color: var(--uw-white); }
+.aws-managed-services-page .stats--dark .stats-body { color: var(--uw-text-on-dark-dim); }
+.aws-managed-services-page .stats--dark .stat-card { background: var(--surface-dark-subtle); }
+.aws-managed-services-page .stats--dark .stat-number { color: var(--uw-white); }
+.aws-managed-services-page .stats--dark .stat-label { color: var(--uw-text-on-dark-secondary); }
+
+/* ══════════════════════════════════════════════════════
+   FAQ — copied from the Migration page's identical override.
+══════════════════════════════════════════════════════ */
+.aws-managed-services-page .faq { background: var(--uw-white); border-top: 1px solid var(--section-divider); border-bottom: 1px solid var(--section-divider); }
+.aws-managed-services-page .faq .container { padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+@media(min-width:768px){ .aws-managed-services-page .faq .container{ padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); } }
+@media(min-width:1024px){ .aws-managed-services-page .faq .container{ padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); } }
+
+.aws-managed-services-page .faq-layout { display: block; }
+@media(min-width:1024px){
+  .aws-managed-services-page .faq-layout{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: start; }
+}
+
+.aws-managed-services-page .faq-list{ display: flex; flex-direction: column; }
+
+.aws-managed-services-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
+.aws-managed-services-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
+
+.aws-managed-services-page .faq-question-wrap{ margin: 0; }
+.aws-managed-services-page .faq-question{
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+  padding: var(--space-6) 0; background: none; border: none; text-align: left; cursor: pointer;
+  font-family: var(--font-display); font-weight: var(--font-weight-semibold); font-size: var(--text-h4-sm);
+  line-height: 1.30; color: var(--uw-black);
+}
+@media(min-width:1024px){ .aws-managed-services-page .faq-question{ font-size: var(--text-h4); } }
+
+.aws-managed-services-page .faq-icon{
+  flex-shrink: 0; width: var(--space-9); height: var(--space-9); border-radius: 50%;
+  border: 1px solid var(--border-light-medium); color: var(--uw-text-on-light-ghost);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease;
+}
+.aws-managed-services-page .faq-icon.is-open{ transform: rotate(45deg); border-color: var(--uw-amber-border); color: var(--uw-wts-ring-current); }
+
+.aws-managed-services-page .faq-answer{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--uw-transition-hover) ease; }
+.aws-managed-services-page .faq-answer.is-open{ grid-template-rows: 1fr; }
+.aws-managed-services-page .faq-answer-inner{ overflow: hidden; }
+.aws-managed-services-page .faq-answer-inner p{
+  font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body);
+  line-height: 1.65; color: var(--uw-body-text); max-width: 640px; padding-bottom: var(--space-6);
+}
+
+/* ══════════════════════════════════════════════════════
+   WHAT'S INCLUDED — fixed grid, not a carousel. Reuses the
+   .prevention section shell and the .tile-prev card unit
+   (icon/heading/description) as-is; only the layout wrapper
+   is new, since no fixed-grid version of this card exists
+   anywhere else in the codebase. Footer connector and
+   partner pills are simply omitted from the markup, not
+   hidden via CSS.
+══════════════════════════════════════════════════════ */
+.aws-managed-services-page .svc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+@media(max-width:1023px){ .aws-managed-services-page .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:639px){ .aws-managed-services-page .svc-grid { grid-template-columns: 1fr; } }
+
+/* .tile-prev is carousel-sized (fixed width, flex-shrink:0) by default;
+   inside the grid it needs to fill its column instead. */
+.aws-managed-services-page .svc-grid .tile-prev.svc-tile {
+  width: auto;
+  max-width: none;
+  flex-shrink: 1;
+}

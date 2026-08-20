@@ -6,6 +6,7 @@ import {
   injectPartnerStrip,
   type TechnologyLogo,
 } from "@/lib/sanity/partnerStrip";
+import { SplitCTA } from "@/components/SplitCTA";
 import "@/styles/cybersecurity.page.css";
 
 type CybersecurityPageProps = {
@@ -25,9 +26,29 @@ export function CybersecurityPage({ technologies }: CybersecurityPageProps) {
   const html = injectPartnerStrip(cybersecurityMarkup, technologies);
 
   return (
-    <div
-      className="cyber-page"
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    <div className="cyber-page">
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <SplitCTA
+        id="get-started"
+        primary={{
+          eyebrow: "Ready to Talk",
+          heading: "Book a security review",
+          body: "A structured conversation with one of our engineers. We look at your environment, identify your biggest risks, and tell you what to fix first. No obligation.",
+          buttonText: "Book a review",
+          buttonLink: "/contact",
+        }}
+        secondary={{
+          eyebrow: "Not Sure Where You Fit",
+          heading: "Take the Cyber Readiness Assessment",
+          body: "Answer 15 questions about your current setup. Get a clear picture of where you stand and what to prioritise. Takes 3 to 5 minutes.",
+          buttonText: "Take the assessment",
+          buttonLink: "/solutions/cybersecurity/cyber-readiness-assessment",
+        }}
+        primaryContact={{
+          name: "Nirmal",
+          phone: "+91 98408 61475",
+        }}
+      />
+    </div>
   );
 }

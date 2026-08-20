@@ -1,0 +1,9 @@
+/* ══════════════════════════════════════════════════════
+   PARTNER ACCREDITATION BADGES — page-scoped override
+   Reuses DCI's .dci-badges pattern exactly (structure,
+   layout, justify-content: center). Only the tier text
+   size is bumped for this page, to the next documented
+   text tier up (var(--text-body)), scoped so DCI's own
+   badge row is untouched.
+══════════════════════════════════════════════════════ */
+.cloud-infra-page .dci-badge-tier { font-size: var(--text-body); }

@@ -618,52 +618,74 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     GET STARTED — Final CTA section. White. Two blocks, 2:1 width.
-     Book a review (amber fill, direct conversation with the team) +
-     Take the assessment (white, self-serve, 3-5 min). No data-reveal
-     on CTAs themselves — the reveal is on the block containers only.
+     FAQ — native <details>/<summary> accordion (this page renders
+     raw HTML, no React state). Styled identically to the Migration/
+     Managed Services FAQ via the same .faq classes, re-scoped under
+     .cyber-page in cybersecurity.page.css.
 ═══════════════════════════════════════════════════════════════ -->
-<section id="get-started" class="gs" aria-labelledby="gs-heading">
+<section id="faq" class="faq" aria-labelledby="faq-heading">
   <div class="container">
-
-    <div class="gs-head" data-reveal="0">
+    <div class="faq-layout">
       <div class="section-header-block">
-        <p class="sec-eyebrow-l">Get started</p>
-        <h2 class="sec-heading-l" id="gs-heading">Two ways in.</h2>
-      </div>
-    </div>
-
-    <div class="gs-grid">
-
-      <div data-reveal="0">
-        <div class="gs-block gs-block--amber">
-        <a href="/contact" class="card-overlay-link" aria-hidden="true" tabindex="-1" onclick="window.openBookingPanel(); return false;"></a>
-        <p class="gs-block-label">Ready to talk</p>
-        <h3 class="gs-block-heading">Book a security review</h3>
-        <p class="gs-block-body">A structured conversation with one of our engineers. We look at your environment, identify your biggest risks, and tell you what to fix first. No obligation.</p>
-        <div class="card-cta">
-          <a href="/contact" class="btn-size-md btn-surface-amber"
-             onclick="window.openBookingPanel(); return false;">Book a review</a>
-        </div>
-        <p class="gs-block-phone">Prefer to call? Nirmal | <a href="tel:+919840861475">+91 98408 61475</a></p>
-        </div>
+        <p class="sec-eyebrow-l" data-reveal="0">FAQ</p>
+        <h2 class="sec-heading-l" id="faq-heading" data-reveal="0">Questions people ask about security</h2>
       </div>
 
-      <div data-reveal="80">
-        <div class="gs-block gs-block--white">
-        <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="card-overlay-link" aria-hidden="true" tabindex="-1"></a>
-        <p class="gs-block-label">Not sure where you fit</p>
-        <h3 class="gs-block-heading">Take the Cyber Readiness Assessment</h3>
-        <p class="gs-block-body">Answer 15 questions about your current setup. Get a clear picture of where you stand and what to prioritise. Takes 3 to 5 minutes.</p>
-        <div class="card-cta">
-          <a href="/solutions/cybersecurity/cyber-readiness-assessment" class="btn-size-md btn-surface-light">Take the assessment</a>
-        </div>
-        </div>
-      </div>
+      <div class="faq-list" data-reveal="0">
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>What types of businesses do you work with?</span>
+            <span class="faq-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5V13.5M2.5 8H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer-inner">
+            <p>We work with mid-market and enterprise businesses across manufacturing, engineering, logistics, and IT services, primarily in India and the United States. Many of our clients run hybrid environments or have moved to cloud, and need security covering both their on-premise infrastructure and their cloud footprint.</p>
+          </div>
+        </details>
 
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>What's the difference between prevention and recovery? Do I need both?</span>
+            <span class="faq-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5V13.5M2.5 8H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer-inner">
+            <p>Prevention stops most attacks. Network security, email filtering, endpoint protection, and access controls keep the majority of threats out. Recovery is what protects you from the incidents that still get through, and something always gets through eventually. One in three organisations that suffer a breach never fully recover, which is why we treat both as essential rather than optional. Most clients start with prevention and add recovery once they understand their actual exposure.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>What if we already have an internal IT team?</span>
+            <span class="faq-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5V13.5M2.5 8H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer-inner">
+            <p>We work alongside internal teams all the time. Our role is specialist coverage in areas where generalist IT staff don't typically have deep security expertise: threat detection, incident response, and compliance management. We're not here to replace your team. We handle what they can't cover alone.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Where do you operate?</span>
+            <span class="faq-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5V13.5M2.5 8H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer-inner">
+            <p>We're headquartered in Chennai, India, with offices in Kerala, Hyderabad, and Bangalore. We have a presence in Delaware, US. Our London office opens in September 2026. We work with clients across India and the US, and remotely with businesses wherever they're based.</p>
+          </div>
+        </details>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- GET STARTED — moved out of raw markup, now rendered as the real
+     SplitCTA component in CybersecurityPage.tsx. See that file. -->
 
 <!-- ═══════════════════════════════════════════════════════════════
      FOOTER — Option A: Full wordmark, centered, no fade-in.
