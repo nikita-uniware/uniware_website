@@ -1,19 +1,28 @@
 export {};
 
 declare global {
-  type BookingPanelConfig = "cybersecurity" | "infrastructure" | "cloud";
-  type InfrastructureBookingTopic =
+  type BookingPanelConfig = "cybersecurity" | "datacenter" | "cloud";
+  type DatacenterBookingTopic =
     | "server"
     | "storage"
     | "network"
     | "virtualization"
     | "data-security"
     | "enquiry";
+  type CloudBookingTopic =
+    | "cloud-infrastructure"
+    | "cloud-networking"
+    | "cloud-operations"
+    | "cloud-security"
+    | "aws-migration"
+    | "aws-consulting"
+    | "aws-managed-services"
+    | "enquiry";
 
   interface Window {
     openBookingPanel: (
       config: BookingPanelConfig,
-      preselectedTopic?: InfrastructureBookingTopic
+      preselectedTopic?: DatacenterBookingTopic
     ) => void;
     closeBookingPanel: () => void;
   }

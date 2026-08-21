@@ -11,7 +11,7 @@ function wantsJson(req: NextRequest) {
 
 const TOPICS_BY_CONTEXT = {
   cybersecurity: new Set(["cybersecurity", "backup", "enquiry"]),
-  infrastructure: new Set([
+  datacenter: new Set([
     "server",
     "storage",
     "network",
@@ -19,7 +19,25 @@ const TOPICS_BY_CONTEXT = {
     "data-security",
     "enquiry",
   ]),
+  cloud: new Set([
+    "cloud-infrastructure",
+    "cloud-networking",
+    "cloud-operations",
+    "cloud-security",
+    "aws-migration",
+    "aws-consulting",
+    "aws-managed-services",
+    "enquiry",
+  ]),
 } as const;
+
+function resolveBookingContext(
+  raw: string
+): BookingRequestEmailPayload["booking_context"] {
+  if (raw === "datacenter" || raw === "infrastructure") return "datacenter";
+  if (raw === "cloud") return "cloud";
+  return "cybersecurity";
+}
 
 /**
  * Booking panel form handler.
@@ -29,15 +47,11 @@ const TOPICS_BY_CONTEXT = {
 export async function POST(req: NextRequest) {
   const form = await req.formData();
   const preferred = form.getAll("preferred_time[]").map(String);
-  const requestedContext = String(
-    form.get("booking_context") ?? "cybersecurity"
+  const bookingContext = resolveBookingContext(
+    String(form.get("booking_context") ?? "cybersecurity")
   );
-  const bookingContext =
-    requestedContext === "infrastructure"
-      ? "infrastructure"
-      : "cybersecurity";
   const submittedTopics =
-    bookingContext === "infrastructure"
+    bookingContext === "datacenter"
       ? form.getAll("topic[]").map(String)
       : [String(form.get("topic") ?? "")];
   const topics = Array.from(

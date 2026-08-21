@@ -10,7 +10,7 @@ export type BookingRequestEmailPayload = {
   email: string;
   company: string;
   country: string;
-  booking_context: "cybersecurity" | "infrastructure";
+  booking_context: "cybersecurity" | "datacenter" | "cloud";
   topics: string[];
   preferred_time: string[];
   notes: string;
@@ -19,7 +19,14 @@ export type BookingRequestEmailPayload = {
 
 const FORM_NAMES = {
   cybersecurity: "Book a security review",
-  infrastructure: "Talk to an infrastructure expert",
+  datacenter: "Talk to an infrastructure expert",
+  cloud: "Talk about your cloud environment",
+} as const;
+
+const FORM_LABELS = {
+  cybersecurity: "Booking panel: Book a security review / Book a call",
+  datacenter: "Booking panel: Data Centre Infrastructure",
+  cloud: "Booking panel: Cloud",
 } as const;
 
 const TOPIC_LABELS: Record<string, string> = {
@@ -30,6 +37,13 @@ const TOPIC_LABELS: Record<string, string> = {
   network: "Networking",
   virtualization: "Virtualization / HCI",
   "data-security": "Data Security",
+  "cloud-infrastructure": "Cloud Infrastructure",
+  "cloud-networking": "Cloud Networking",
+  "cloud-operations": "Cloud Operations",
+  "cloud-security": "Cloud Security",
+  "aws-migration": "AWS Migration",
+  "aws-consulting": "AWS Consulting",
+  "aws-managed-services": "AWS Managed Services",
   enquiry: "General enquiry",
 };
 
@@ -67,7 +81,7 @@ function preferredTimesLabel(values: string[]) {
   return values.map((v) => TIME_LABELS[v] ?? v).join(", ");
 }
 
-/** Best-effort email for booking panel / “Book a security review”. */
+/** Best-effort email for booking panel. */
 export async function notifyBookingRequest(payload: BookingRequestEmailPayload) {
   const company = payload.company.trim() || "No company given";
   const formName = FORM_NAMES[payload.booking_context];
@@ -80,10 +94,7 @@ export async function notifyBookingRequest(payload: BookingRequestEmailPayload) 
     rows: [
       {
         label: "Form",
-        value:
-          payload.booking_context === "infrastructure"
-            ? "Booking panel: Data Centre Infrastructure"
-            : "Booking panel: Book a security review / Book a call",
+        value: FORM_LABELS[payload.booking_context],
       },
       { label: "Name", value: payload.name },
       { label: "Email", value: payload.email },

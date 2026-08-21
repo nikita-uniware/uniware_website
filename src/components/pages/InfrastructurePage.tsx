@@ -272,7 +272,7 @@ export function InfrastructurePage({ technologies }: InfrastructurePageProps) {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel("infrastructure");
+                window.openBookingPanel("datacenter");
               }}
             >
               Talk to an expert
@@ -480,7 +480,7 @@ export function InfrastructurePage({ technologies }: InfrastructurePageProps) {
                         href="/contact"
                         onClick={(e) => {
                           e.preventDefault();
-                          window.openBookingPanel("infrastructure", p.key);
+                          window.openBookingPanel("datacenter", p.key);
                         }}
                       >
                         Talk to an expert
@@ -691,7 +691,7 @@ export function InfrastructurePage({ technologies }: InfrastructurePageProps) {
         body="Tell us what you're working on, server, storage, network, virtualization, or backup, and we'll bring in the right person."
         buttonText="Talk to an expert"
         buttonLink="/contact"
-        category="infrastructure"
+        category="datacenter"
       />
     </div>
   );

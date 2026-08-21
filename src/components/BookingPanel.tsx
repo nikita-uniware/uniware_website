@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import "@/styles/booking-panel.css";
 
-const INFRASTRUCTURE_TOPICS: {
-  value: InfrastructureBookingTopic;
+const DATACENTER_TOPICS: {
+  value: DatacenterBookingTopic;
   label: string;
 }[] = [
   { value: "server", label: "Server" },
@@ -12,6 +12,17 @@ const INFRASTRUCTURE_TOPICS: {
   { value: "network", label: "Networking" },
   { value: "virtualization", label: "Virtualization / HCI" },
   { value: "data-security", label: "Data Security" },
+  { value: "enquiry", label: "General enquiry" },
+];
+
+const CLOUD_TOPICS: { value: CloudBookingTopic; label: string }[] = [
+  { value: "cloud-infrastructure", label: "Cloud Infrastructure" },
+  { value: "cloud-networking", label: "Cloud Networking" },
+  { value: "cloud-operations", label: "Cloud Operations" },
+  { value: "cloud-security", label: "Cloud Security" },
+  { value: "aws-migration", label: "AWS Migration" },
+  { value: "aws-consulting", label: "AWS Consulting" },
+  { value: "aws-managed-services", label: "AWS Managed Services" },
   { value: "enquiry", label: "General enquiry" },
 ];
 
@@ -26,8 +37,8 @@ export function BookingPanel() {
   const [submitting, setSubmitting] = useState(false);
   const [config, setConfig] =
     useState<BookingPanelConfig>("cybersecurity");
-  const [infrastructureTopics, setInfrastructureTopics] = useState<
-    InfrastructureBookingTopic[]
+  const [datacenterTopics, setDatacenterTopics] = useState<
+    DatacenterBookingTopic[]
   >([]);
   const [topicError, setTopicError] = useState("");
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -37,8 +48,8 @@ export function BookingPanel() {
   useEffect(() => {
     window.openBookingPanel = (nextConfig, preselectedTopic) => {
       setConfig(nextConfig);
-      setInfrastructureTopics(
-        nextConfig === "infrastructure" && preselectedTopic
+      setDatacenterTopics(
+        nextConfig === "datacenter" && preselectedTopic
           ? [preselectedTopic]
           : []
       );
@@ -84,7 +95,7 @@ export function BookingPanel() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (config === "infrastructure" && infrastructureTopics.length === 0) {
+    if (config === "datacenter" && datacenterTopics.length === 0) {
       setTopicError("Select at least one topic.");
       return;
     }
@@ -303,6 +314,31 @@ export function BookingPanel() {
                       </select>
                     </div>
                   </div>
+                ) : config === "cloud" ? (
+                  <div className="panel-field-item">
+                    <label className="panel-field-label" htmlFor="pf-topic">
+                      What would you like to discuss about your cloud
+                      environment?
+                    </label>
+                    <div className="panel-select-wrap">
+                      <select
+                        className="panel-select"
+                        id="pf-topic"
+                        name="topic"
+                        required
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Select a topic
+                        </option>
+                        {CLOUD_TOPICS.map((topic) => (
+                          <option key={topic.value} value={topic.value}>
+                            {topic.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 ) : (
                   <div
                     className="panel-field-item"
@@ -317,7 +353,7 @@ export function BookingPanel() {
                       </span>
                     </p>
                     <div className="pills-track">
-                      {INFRASTRUCTURE_TOPICS.map((topic) => {
+                      {DATACENTER_TOPICS.map((topic) => {
                         const id = `pf-topic-${topic.value}`;
                         return (
                           <span key={topic.value}>
@@ -327,9 +363,9 @@ export function BookingPanel() {
                               name="topic[]"
                               value={topic.value}
                               className="pill-input"
-                              checked={infrastructureTopics.includes(topic.value)}
+                              checked={datacenterTopics.includes(topic.value)}
                               onChange={(event) => {
-                                setInfrastructureTopics((current) =>
+                                setDatacenterTopics((current) =>
                                   event.target.checked
                                     ? [...current, topic.value]
                                     : current.filter(

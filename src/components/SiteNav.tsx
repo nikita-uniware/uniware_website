@@ -9,6 +9,7 @@ const CLOUD_SOLUTIONS = [
   { href: "/solutions/cloud/infrastructure", label: "Infrastructure" },
   { href: "/solutions/cloud/networking", label: "Networking" },
   { href: "/solutions/cloud/operations", label: "Operations" },
+  { href: "/solutions/cloud/security", label: "Security" },
   { href: "/solutions/cloud/aws", label: "AWS" },
 ] as const;
 
