@@ -124,3 +124,22 @@ export const infrastructureTechnologiesQuery = `*[
   "logoUrl": logo.asset->url,
   infrastructurePillars
 }`;
+
+/** Official vendor logos for Cloud Infrastructure model blocks. */
+export const cloudInfrastructureTechnologiesQuery = `*[
+  _type == "technology" &&
+  defined(name) &&
+  defined(logo.asset) &&
+  (
+    "cloud-infrastructure" in pages ||
+    lower(name) in ["aws", "azure", "dell", "vmware"] ||
+    name match "Dell*" ||
+    name match "VMware*"
+  )
+] | order(name asc){
+  _id,
+  name,
+  "slug": slug.current,
+  "logoUrl": logo.asset->url,
+  cloudModels
+}`;

@@ -1306,7 +1306,7 @@ html.is-ready [data-reveal].is-visible {
    chip treatment for vendor logos. */
 .cs-stack-chip{display:flex;align-items:center;gap:10px;border:1px solid var(--border-light-subtle);border-radius:10px;padding:10px 16px;background:var(--uw-white)}
 .cs-stack-chip-logo{font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-body-sm);letter-spacing:-.01em;color:var(--uw-black);display:inline-flex;align-items:center;min-height:24px}
-.cs-stack-chip-logo img{display:block;height:24px;width:auto;max-width:120px;object-fit:contain}
+.cs-stack-chip-logo img{display:block;height:24px;width:auto;min-width:48px;max-width:120px;object-fit:contain}
 .cs-stack-chip-qualifier{font-family:var(--font-body);font-weight:var(--font-weight-regular);font-size:var(--text-body-sm);color:var(--uw-muted);padding-left:10px;border-left:1px solid var(--border-light-muted)}
 
 /* ── Checkmark bullet list — reusable across pages ──

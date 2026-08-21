@@ -4,6 +4,10 @@ import { useReveal } from "@/hooks/useReveal";
 import { useScrollSyncHighlight } from "@/hooks/useScrollSyncHighlight";
 import { CircleGroup } from "@/components/CircleGroup";
 import { PrimaryCTA } from "@/components/PrimaryCTA";
+import type {
+  CloudInfrastructureTechnologyLogo,
+  CloudModelId,
+} from "@/lib/sanity";
 import "@/styles/data-centre-infrastructure.page.css";
 import "@/styles/cloud-infrastructure.page.css";
 
@@ -37,15 +41,21 @@ const DownArrow = () => (
   </svg>
 );
 
+type CloudModelVendor = {
+  name: string;
+  logoUrl?: string;
+};
+
 type CloudModel = {
-  key: string;
+  key: CloudModelId;
   tier: "base" | "mid";
   stackLabel: string;
   eyebrow: string;
   heading: string;
   description: string;
   bullets: string[];
-  vendors: string[];
+  /** Fallback names when Sanity has no cloudModels tags yet. */
+  vendorNames: string[];
   crossLink?: string;
 };
 
@@ -64,7 +74,7 @@ const CLOUD_MODELS: CloudModel[] = [
       "Best fit for regulated industries",
       "Higher upfront investment, in-house expertise required",
     ],
-    vendors: ["Dell", "VMware"],
+    vendorNames: ["Dell", "VMware"],
   },
   {
     key: "public",
@@ -80,7 +90,7 @@ const CLOUD_MODELS: CloudModel[] = [
       "No capital expense on hardware",
       "VPC gives you private-cloud-level control inside a public environment",
     ],
-    vendors: ["AWS", "Azure"],
+    vendorNames: ["AWS", "Azure"],
   },
   {
     key: "hybrid",
@@ -96,7 +106,7 @@ const CLOUD_MODELS: CloudModel[] = [
       "Cloud bursting for demand spikes",
       "One coherent architecture, not two disconnected environments",
     ],
-    vendors: ["AWS", "Azure", "VMware"],
+    vendorNames: ["AWS", "Azure", "VMware"],
     crossLink: "For connectivity between environments, see Cloud Networking.",
   },
   {
@@ -113,13 +123,45 @@ const CLOUD_MODELS: CloudModel[] = [
       "Unified management across providers",
       "Consistent security policy across environments",
     ],
-    vendors: ["AWS", "Azure"],
+    vendorNames: ["AWS", "Azure"],
   },
 ];
 
+function matchTechnologyByName(
+  name: string,
+  technologies: CloudInfrastructureTechnologyLogo[]
+) {
+  const needle = name.toLowerCase();
+  return technologies.find((technology) => {
+    const hay = technology.name.toLowerCase();
+    return hay === needle || hay.startsWith(`${needle} `) || hay.startsWith(needle);
+  });
+}
+
+function resolveModelVendors(
+  model: CloudModel,
+  technologies: CloudInfrastructureTechnologyLogo[]
+): CloudModelVendor[] {
+  const tagged = technologies.filter((technology) =>
+    technology.cloudModels.includes(model.key)
+  );
+  if (tagged.length > 0) {
+    return tagged.map((technology) => ({
+      name: technology.name,
+      logoUrl: technology.logoUrl,
+    }));
+  }
+
+  return model.vendorNames.map((name) => {
+    const match = matchTechnologyByName(name, technologies);
+    return match
+      ? { name: match.name, logoUrl: match.logoUrl }
+      : { name };
+  });
+}
+
 // DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet. Replace
-// with real Sanity content once available (same pattern as the vendor
-// logo placeholders below: TODO markers, easy to find, easy to delete).
+// with real Sanity content once available.
 type CaseStudyPlaceholder = {
   eyebrow: string;
   stat: string;
@@ -145,7 +187,13 @@ const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   },
 ];
 
-export function CloudInfrastructurePage() {
+type CloudInfrastructurePageProps = {
+  technologies: CloudInfrastructureTechnologyLogo[];
+};
+
+export function CloudInfrastructurePage({
+  technologies,
+}: CloudInfrastructurePageProps) {
   useReveal();
 
   const scrollSync = useScrollSyncHighlight({
@@ -316,7 +364,9 @@ export function CloudInfrastructurePage() {
 
           <div className="dci-group-wrap">
             <div className="dci-group">
-              {CLOUD_MODELS.map((m) => (
+              {CLOUD_MODELS.map((m) => {
+                const vendors = resolveModelVendors(m, technologies);
+                return (
                 <div
                   key={m.key}
                   id={`pillar-${m.key}`}
@@ -342,13 +392,28 @@ export function CloudInfrastructurePage() {
                     </div>
 
                     <div className="dci-pillar-media">
-                      <div className="dci-pillar-vendors">
-                        {m.vendors.map((v) => (
-                          <div className="cs-stack-chip" key={v}>
-                            <span className="cs-stack-chip-logo">{v}</span>
-                          </div>
-                        ))}
-                      </div>
+                      {vendors.length > 0 && (
+                        <div
+                          className="dci-pillar-vendors"
+                          aria-label={`${m.stackLabel} technology partners`}
+                        >
+                          {vendors.map((v) => (
+                            <div className="cs-stack-chip" key={v.name}>
+                              <span className="cs-stack-chip-logo">
+                                {v.logoUrl ? (
+                                  <img
+                                    src={v.logoUrl}
+                                    alt={v.name}
+                                    loading="lazy"
+                                  />
+                                ) : (
+                                  v.name
+                                )}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                       <a
                         className="link-text link-text-light link-text-md dci-pillar-cta"
                         href="/contact"
@@ -371,7 +436,8 @@ export function CloudInfrastructurePage() {
                     </div>
                   </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
             <CircleGroup size="lg" surface="light" position="bottom-right" bleedMultiplier={0.45} />
           </div>

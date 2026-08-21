@@ -3,6 +3,7 @@ import {
   caseStudyBySlugQuery,
   caseStudyCardsQuery,
   caseStudySlugsQuery,
+  cloudInfrastructureTechnologiesQuery,
   infrastructureTechnologiesQuery,
   technologiesByPageQuery,
 } from "./queries";
@@ -137,6 +138,7 @@ type SanityTechnologyDoc = {
   logoUrl: string | null;
   pages?: string[] | null;
   infrastructurePillars?: string[] | null;
+  cloudModels?: string[] | null;
 };
 
 export type TechnologyPageId = "cybersecurity";
@@ -146,9 +148,14 @@ export type InfrastructurePillarId =
   | "network"
   | "virtualization"
   | "data-security";
+export type CloudModelId = "private" | "public" | "hybrid" | "multi-cloud";
 
 export type InfrastructureTechnologyLogo = TechnologyLogo & {
   infrastructurePillars: InfrastructurePillarId[];
+};
+
+export type CloudInfrastructureTechnologyLogo = TechnologyLogo & {
+  cloudModels: CloudModelId[];
 };
 
 /** Published technologies for a page partner strip (filtered by CMS `pages`). */
@@ -220,6 +227,56 @@ export async function fetchInfrastructureTechnologies(): Promise<
       }));
   } catch (err) {
     console.error("[sanity] fetchInfrastructureTechnologies failed:", err);
+    return [];
+  }
+}
+
+const CLOUD_MODEL_IDS: CloudModelId[] = [
+  "private",
+  "public",
+  "hybrid",
+  "multi-cloud",
+];
+
+function normalizeTechSlug(name: string, slug: string | null) {
+  return (
+    slug ||
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
+  );
+}
+
+/** Official CMS logos for Cloud Infrastructure model blocks. */
+export async function fetchCloudInfrastructureTechnologies(): Promise<
+  CloudInfrastructureTechnologyLogo[]
+> {
+  if (!isSanityConfigured()) return [];
+
+  try {
+    const client = getSanityClient();
+    if (!client) return [];
+
+    const docs = await client.fetch<SanityTechnologyDoc[]>(
+      cloudInfrastructureTechnologiesQuery
+    );
+
+    return (docs ?? [])
+      .filter((doc) => Boolean(doc.logoUrl && doc.name))
+      .map((doc) => ({
+        name: doc.name,
+        slug: normalizeTechSlug(doc.name, doc.slug),
+        logoUrl: doc.logoUrl as string,
+        cloudModels: (doc.cloudModels ?? []).filter((model): model is CloudModelId =>
+          CLOUD_MODEL_IDS.includes(model as CloudModelId)
+        ),
+      }));
+  } catch (err) {
+    console.error(
+      "[sanity] fetchCloudInfrastructureTechnologies failed:",
+      err
+    );
     return [];
   }
 }

@@ -174,6 +174,10 @@ const TECHNOLOGY_PAGES = [
     title: "Data Centre Infrastructure",
     value: "data-centre-infrastructure",
   },
+  {
+    title: "Cloud Infrastructure",
+    value: "cloud-infrastructure",
+  },
 ];
 
 const INFRASTRUCTURE_PILLARS = [
@@ -182,6 +186,13 @@ const INFRASTRUCTURE_PILLARS = [
   { title: "Networking", value: "network" },
   { title: "Virtualization / HCI", value: "virtualization" },
   { title: "Data Security", value: "data-security" },
+];
+
+const CLOUD_MODELS = [
+  { title: "Private", value: "private" },
+  { title: "Public", value: "public" },
+  { title: "Hybrid", value: "hybrid" },
+  { title: "Multi-Cloud", value: "multi-cloud" },
 ];
 
 export const technology = {
@@ -238,6 +249,23 @@ export const technology = {
       }) => !parent?.pages?.includes("data-centre-infrastructure"),
       description:
         "Choose every infrastructure pillar where this official logo should appear. A vendor can be used in more than one pillar.",
+    },
+    {
+      name: "cloudModels",
+      title: "Cloud models",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        list: CLOUD_MODELS,
+        layout: "grid",
+      },
+      hidden: ({
+        parent,
+      }: {
+        parent?: { pages?: string[] };
+      }) => !parent?.pages?.includes("cloud-infrastructure"),
+      description:
+        "Choose every Cloud Infrastructure model block where this official logo should appear. A vendor can be used in more than one model.",
     },
   ],
   preview: {
