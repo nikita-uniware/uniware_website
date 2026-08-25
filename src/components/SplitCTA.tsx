@@ -36,6 +36,12 @@ type SplitCTAProps = {
    * Per-page decision, not a default — omit entirely for a SplitCTA
    * with no phone contact. */
   primaryContact?: SplitCTAContact;
+  /** Optional topic to preselect in the booking panel's topic dropdown
+   * when the primary zone's button opens it — same preselectedTopic
+   * mechanism window.openBookingPanel already supports for datacenter
+   * pillar pages. Only applies to the primary zone; omit for a SplitCTA
+   * with no specific topic to preselect. */
+  primaryPreselectedTopic?: DatacenterBookingTopic | CloudBookingTopic;
 };
 
 function SplitCTAButton({
@@ -43,11 +49,13 @@ function SplitCTAButton({
   className,
   children,
   category,
+  preselectedTopic,
 }: {
   href: string;
   className: string;
   children: string;
   category: BookingPanelConfig;
+  preselectedTopic?: DatacenterBookingTopic | CloudBookingTopic;
 }) {
   if (href === "/contact") {
     return (
@@ -56,7 +64,7 @@ function SplitCTAButton({
         className={className}
         onClick={(e) => {
           e.preventDefault();
-          window.openBookingPanel(category);
+          window.openBookingPanel(category, preselectedTopic);
         }}
       >
         {children}
@@ -70,7 +78,14 @@ function SplitCTAButton({
   );
 }
 
-export function SplitCTA({ id, primary, secondary, category, primaryContact }: SplitCTAProps) {
+export function SplitCTA({
+  id,
+  primary,
+  secondary,
+  category,
+  primaryContact,
+  primaryPreselectedTopic,
+}: SplitCTAProps) {
   return (
     <section id={id} className="cta-split" aria-label="Get started">
       <div className="cta-split-amber" data-reveal="0">
@@ -83,6 +98,7 @@ export function SplitCTA({ id, primary, secondary, category, primaryContact }: S
               href={primary.buttonLink}
               className="btn-size-md btn-surface-amber"
               category={category}
+              preselectedTopic={primaryPreselectedTopic}
             >
               {primary.buttonText}
             </SplitCTAButton>

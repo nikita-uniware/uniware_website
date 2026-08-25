@@ -5,6 +5,7 @@ import { Sparkle, FileText, Plugs, type Icon } from "@phosphor-icons/react";
 import { useReveal } from "@/hooks/useReveal";
 import { CircleGroup } from "@/components/CircleGroup";
 import { PrimaryCTA } from "@/components/PrimaryCTA";
+import { IconTile } from "@/components/IconTile";
 import "@/styles/data-centre-infrastructure.page.css";
 import "@/styles/cybersecurity.page.css";
 import "@/styles/aws-genai.page.css";
@@ -77,7 +78,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Where do you operate?",
     answer:
-      "We're headquartered in Chennai, India, with offices in Kerala, Hyderabad, and Bangalore. We have a presence in Delaware, US. Our London office opens in September 2026. We work with clients across India and the US, and remotely with businesses wherever they're based.",
+      "We're headquartered in Chennai, India, with offices in Kerala, Hyderabad, and Bangalore as well. We opened in London, UK in August 2026, and we're now doing business here. We work with clients across India, the US, and the UK, and remotely with businesses wherever they're based.",
   },
 ];
 
@@ -181,14 +182,7 @@ export function AwsGenAiPage() {
           <div className="svc-grid" data-reveal="0">
             {SERVICE_CARDS.map(({ icon: CardIcon, heading, body }) => (
               <div className="tile-prev svc-tile" key={heading}>
-                <div className="tile-icon-w" aria-hidden="true">
-                  <span className="ti-stroke">
-                    <CardIcon size={16} weight="regular" />
-                  </span>
-                  <span className="ti-fill">
-                    <CardIcon size={16} weight="fill" />
-                  </span>
-                </div>
+                <IconTile icon={CardIcon} />
                 <p className="tile-name-w">{heading}</p>
                 <p className="tile-desc-w">{body}</p>
               </div>
@@ -203,105 +197,107 @@ export function AwsGenAiPage() {
             <div className="section-header-block">
               <p className="sec-eyebrow-d">Case Studies</p>
               <h2 className="sec-heading-d" id="aws-genai-cs-heading">
-                Proof it works
+                Take a look at what we&apos;re building
               </h2>
+              <p className="sec-sub-d">
+                We&apos;re building AI-powered solutions for the repetitive,
+                manual work businesses deal with every day. Here&apos;s one
+                of them.
+              </p>
             </div>
           </div>
 
-          <div data-reveal="0">
-            <div className="cs-card">
-              <div className="cs-badge" aria-hidden="true">
-                <svg
-                  className="cs-badge-stroke"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
-                </svg>
-                <svg
-                  className="cs-badge-fill"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  stroke="none"
-                >
-                  <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
-                </svg>
+          <div className="cs-card-genai-outer" data-reveal="0">
+            <div className="cs-card-genai-outer-label">
+              <div className="cs-card-genai-outer-label-row">
+                <p className="tile-name-d cs-card-genai-subheading">
+                  Document Processing
+                </p>
+                <div className="cs-card-genai-label-line" aria-hidden="true" />
+              </div>
+              <p className="cs-card-genai-label cs-card-genai-label-desc">
+                AI that reads, extracts, and compares data across
+                invoices, purchase orders, and other documents, connected
+                directly to the systems you already use.
+              </p>
+            </div>
+
+            <div className="cs-card cs-card-genai">
+              <p className="cs-stat cs-card-genai-headline">
+                A global manufacturer processed{" "}
+                <span className="amber">100 invoices a day, by hand</span>.
+              </p>
+
+              <p className="tile-name-d cs-card-genai-solution">
+                So we built them an AI-powered document processing
+                solution.
+              </p>
+
+              <div className="cs-card-genai-divider" aria-hidden="true" />
+
+              <div className="cs-card-genai-inner-row">
+                <div className="cs-card-genai-stats-col">
+                  <div className="cs-card-genai-stat-box">
+                    <p className="cs-stat">10x</p>
+                    <p className="cs-stat-caption">faster per invoice</p>
+                  </div>
+                  <div className="cs-card-genai-stat-box">
+                    <p className="cs-stat">Zero</p>
+                    <p className="cs-stat-caption">failures (first batch)</p>
+                  </div>
+                </div>
+
+                <div className="cs-card-genai-quote-col">
+                  <p className="cs-quote-attribution cs-card-genai-quote-intro">
+                    From their Head of IT:
+                  </p>
+                  <p className="cs-quote-text">
+                    &ldquo;Leadership wants to see automation actually
+                    happening, not the technical details. That&apos;s when
+                    it hit me. Our data was scattered across the network, a
+                    lot of it duplicated, and every day we had around 100
+                    invoices coming in with people doing pure data
+                    entry.&rdquo;
+                  </p>
+                </div>
               </div>
 
-              <div className="dci-pillar-grid">
-                <div>
-                  <p className="cs-eyebrow">Document Processing</p>
-                  <p className="cs-stat">From 10 minutes to under a minute</p>
-                  <p className="cs-stat-caption">
-                    First production batch: 53 invoices, zero failures
-                  </p>
-                  <p className="cs-body">
-                    A global manufacturer of construction equipment in India
-                    was processing around 100 invoices a day by hand,
-                    feeding the data manually into SAP. We built an
-                    AI-powered document processing platform on Amazon
-                    Bedrock to handle it instead.
-                  </p>
-                  <a
-                    href="https://uniware.ai/case-studies/global-manufacturer-india-invoice-processing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="link-text link-text-dark link-text-md link-text--external"
+              <a
+                href="https://uniware.ai/case-studies/global-manufacturer-india-invoice-processing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-text link-text-dark link-text-md link-text--external cs-card-genai-link"
+              >
+                Read the case study
+                <span className="link-text-arrow-wrap">
+                  <svg
+                    className="link-text-arrow-default"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
-                    Read the case study
-                    <span className="link-text-arrow-wrap">
-                      <svg
-                        className="link-text-arrow-default"
-                        width="12"
-                        height="12"
-                        viewBox="0 0 14 14"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" />
-                      </svg>
-                      <svg
-                        className="link-text-arrow-hover"
-                        width="12"
-                        height="12"
-                        viewBox="0 0 14 14"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M3 11L11 3M11 3H5M11 3V9" />
-                      </svg>
-                    </span>
-                  </a>
-                </div>
-
-                <div>
-                  <p className="cs-body">
-                    &ldquo;That&apos;s when it hit me. Our data was
-                    scattered across the network, a lot of it duplicated,
-                    and every day we had around 100 invoices coming in with
-                    people doing pure data entry to feed that into
-                    SAP.&rdquo;
-                  </p>
-                  <p className="cs-stat-caption">
-                    Head of IT Infrastructure &amp; Cybersecurity, a leading
-                    global manufacturer of construction equipment
-                  </p>
-                </div>
-              </div>
+                    <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" />
+                  </svg>
+                  <svg
+                    className="link-text-arrow-hover"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M3 11L11 3M11 3H5M11 3V9" />
+                  </svg>
+                </span>
+              </a>
             </div>
           </div>
         </div>

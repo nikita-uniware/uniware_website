@@ -1,68 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Pulse,
-  Stack,
-  ShieldCheck,
-  ChartBar,
-  ClockCounterClockwise,
-  FrameCorners,
-  GearSix,
-  type Icon,
-} from "@phosphor-icons/react";
+import { Gauge, Pulse, ShieldCheck, Timer, type Icon } from "@phosphor-icons/react";
 import { useReveal } from "@/hooks/useReveal";
 import { CircleGroup } from "@/components/CircleGroup";
 import { SplitCTA } from "@/components/SplitCTA";
 import { IconTile } from "@/components/IconTile";
 import "@/styles/data-centre-infrastructure.page.css";
 import "@/styles/cybersecurity.page.css";
-import "@/styles/aws-migration.page.css";
-import "@/styles/aws-managed-services.page.css";
+import "@/styles/cloud-operations.page.css";
 
-type ServiceCard = {
-  icon: Icon;
-  heading: string;
-  body: string;
-};
-
-const SERVICE_CARDS: ServiceCard[] = [
-  {
-    icon: Pulse,
-    heading: "24/7 Monitoring & Support",
-    body: "Real-time tracking of server health and performance, with issues caught and resolved before they affect your operations.",
-  },
-  {
-    icon: Stack,
-    heading: "Cloud Infrastructure Management",
-    body: "Day-to-day handling of servers, load balancing, and resource management, keeping performance steady regardless of traffic.",
-  },
-  {
-    icon: ShieldCheck,
-    heading: "Security & Compliance",
-    body: "Ongoing security configuration, encryption, and compliance management aligned to what your industry actually requires.",
-  },
-  {
-    icon: ChartBar,
-    heading: "Cost Optimization",
-    body: "Continuous review of your AWS usage to eliminate waste, right-size resources, and reduce unnecessary spend.",
-  },
-  {
-    icon: ClockCounterClockwise,
-    heading: "Backup & Disaster Recovery",
-    body: "Automated backups and a tested recovery plan, so a failure means minutes of disruption, not days.",
-  },
-  {
-    icon: FrameCorners,
-    heading: "Scaling & Auto-Provisioning",
-    body: "Resources that adjust automatically to real demand, so you're never over-provisioned or caught short.",
-  },
-  {
-    icon: GearSix,
-    heading: "DevOps & Automation Support",
-    body: "Automated deployment and provisioning tooling that reduces manual work and speeds up your release cycle.",
-  },
-];
+const CheckIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    aria-hidden="true"
+  >
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
 
 const ArrowIcon = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -87,31 +47,96 @@ const PlusIcon = () => (
   </svg>
 );
 
+type BestPractice = {
+  title: string;
+  body: string;
+};
+
+const BEST_PRACTICES: BestPractice[] = [
+  {
+    title: "Set up a deployment plan",
+    body: "Develop a structured deployment plan tailored to your cloud architecture, network, and business needs, so applications roll out without disruptions.",
+  },
+  {
+    title: "Automate cloud processes",
+    body: "Identify repetitive tasks like backups and scans, then automate them so your team can focus on higher-value work.",
+  },
+  {
+    title: "Build and maintain redundancy",
+    body: "Duplicate critical components across a multilayered system, so a single failure doesn't take down the service.",
+  },
+  {
+    title: "Set appropriate resource limits",
+    body: "Track demand during peak and off-peak periods, so resources are provisioned correctly, not over- or under-provisioned.",
+  },
+  {
+    title: "Evaluate multi-cloud or hybrid-cloud fit regularly",
+    body: "Combine multiple providers, or mix on-premises and cloud, for more flexibility and less vendor lock-in.",
+  },
+  {
+    title: "Implement cloud governance and security policies",
+    body: "Enforce policies that keep cloud usage aligned with your organization's goals and compliance requirements.",
+  },
+  {
+    title: "Implement robust disaster recovery plans",
+    body: "Set clear failover strategies and regular backups, so downtime stays minimal if something goes wrong.",
+  },
+  {
+    title: "Monitor cloud costs",
+    body: "Regularly review spend to catch overprovisioning and unused resources before they become a problem.",
+  },
+];
+
+const BEST_PRACTICES_COL_1 = BEST_PRACTICES.slice(0, 4);
+const BEST_PRACTICES_COL_2 = BEST_PRACTICES.slice(4);
+
+type ServiceCard = {
+  icon: Icon;
+  heading: string;
+  body: string;
+};
+
+const SERVICE_CARDS: ServiceCard[] = [
+  {
+    icon: Gauge,
+    heading: "Improve Service Delivery",
+    body: "Automating report generation, quality checks, and provisioning improves IT productivity and operational efficiency.",
+  },
+  {
+    icon: Pulse,
+    heading: "Maintain Cloud Availability",
+    body: "Real-time scaling, monitoring, and automation keep your cloud services running, wherever they're hosted.",
+  },
+  {
+    icon: ShieldCheck,
+    heading: "Strengthen Data Security",
+    body: "Encryption, malware scanning, firewalls, and compliance management, to prevent breaches and meet legal standards.",
+  },
+  {
+    icon: Timer,
+    heading: "Facilitate Disaster Recovery",
+    body: "Automated backups and recovery tools restore lost data and systems, so business continuity isn't at risk.",
+  },
+];
+
 // DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet. Replace
-// with real Sanity content once available, same pattern as the Migration
-// page's own case-study placeholders.
+// with real content once the case studies are live.
 type CaseStudyPlaceholder = {
   eyebrow: string;
   stat: string;
-  statCaption: string;
   body: string;
-  pills: [string, string];
 };
 
 const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   {
-    eyebrow: "AWS Managed Services",
+    eyebrow: "Cloud Operations",
     stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: ongoing AWS management for a mid-market client, timeline and outcome to confirm.",
-    pills: ["AWS", "Managed Services"],
+    body: "Draft: multi-cloud operations engagement for a mid-market client, timeline and outcome to confirm.",
   },
   {
-    eyebrow: "Cost Optimization",
+    eyebrow: "Disaster Recovery",
     stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: AWS cost reduction engagement for an established client, timeline and outcome to confirm.",
-    pills: ["AWS", "Cost Optimization"],
+    body: "Draft: disaster recovery planning engagement for an established client, timeline and outcome to confirm.",
   },
 ];
 
@@ -119,29 +144,24 @@ type FaqItem = { question: string; answer: string };
 
 const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "What's included in your 24/7 monitoring?",
+    question: "What's the difference between Cloud Operations and Managed Services?",
     answer:
-      "Real-time tracking of server health, automated threat detection, performance benchmarking, and proactive issue resolution, all without disrupting your internal IT team.",
+      "Managed Services is specifically for AWS environments. Cloud Operations covers multi-cloud and hybrid setups too, wherever your workloads actually run.",
   },
   {
-    question: "How does this actually reduce my AWS billing?",
+    question: "Do you support multi-cloud environments?",
     answer:
-      "We review your compute usage, storage tiers, and network traffic to find waste. Right-sizing instances, using reserved capacity where it makes sense, and automating scaling all bring cost down without touching performance.",
+      "Yes. We manage operations across AWS, Azure, on-premises, or a mix, depending on your setup.",
   },
   {
-    question: "Can you manage security and compliance for an enterprise environment?",
+    question: "What happens if something goes down?",
     answer:
-      "Yes. Strict access controls, continuous vulnerability scanning, and encryption at rest, with your setup held to whatever regional or industry compliance standards actually apply to you.",
+      "We build disaster recovery and failover plans in advance, so downtime stays minimal and recovery is fast when something does go wrong.",
   },
   {
-    question: "What's the difference between AWS Support and Uniware Managed Services?",
+    question: "How do you handle governance and compliance across multiple clouds?",
     answer:
-      "AWS Support is Amazon's own tier-based support, it covers issues with AWS platform services themselves. Managed Services is the layer above that: someone who knows your specific environment, monitors it proactively, handles your configuration and patching, manages your costs, and responds when something goes wrong. Amazon's support answers questions about the platform. We're accountable for your environment running properly on it.",
-  },
-  {
-    question: "What does onboarding look like when we sign up?",
-    answer:
-      "We start with an environment audit, mapping what's running and how it's configured. From there we set up monitoring tools with your access credentials, configure alerting thresholds, and establish a communication cadence. Most clients are fully onboarded within two to three weeks. We coordinate directly with your internal IT team throughout to make sure nothing disrupts your existing operations.",
+      "We enforce cloud governance and security policies that keep usage aligned with your organization's goals, wherever those workloads are running.",
   },
   {
     question: "Where do you operate?",
@@ -150,30 +170,26 @@ const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
-export function AwsManagedServicesPage() {
+export function CloudOperationsPage() {
   useReveal();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="aws-managed-services-page">
-      <section className="hero" aria-labelledby="aws-managed-services-hero-heading">
+    <div className="cloud-operations-page">
+      <section className="hero" aria-labelledby="cloud-ops-hero-heading">
         <div className="container">
           <p className="hero-eyebrow" data-reveal="0">
-            AWS MANAGED SERVICES
+            CLOUD OPERATIONS
           </p>
-          <h1
-            className="hero-headline"
-            data-reveal="80"
-            id="aws-managed-services-hero-heading"
-          >
-            Your AWS environment,
+          <h1 className="hero-headline" data-reveal="80" id="cloud-ops-hero-heading">
+            Cloud operations,
             <br />
-            <span className="amber">run by people watching it every day.</span>
+            <span className="amber">managed across every environment you run.</span>
           </h1>
           <p className="hero-subtext" data-reveal="160">
-            24/7 monitoring, security, cost control, and support for AWS
-            environments already in production. Whether we migrated you or
-            someone else did.
+            For businesses running workloads across AWS, Azure, on-premises,
+            or a mix of all three, needing deployment, automation,
+            governance, and disaster recovery handled properly.
           </p>
           <span data-reveal="240">
             <a
@@ -209,66 +225,79 @@ export function AwsManagedServicesPage() {
 
             <div className="dci-badge">
               <img
-                src="/partners/aws-certified-security-specialty.png"
-                alt="AWS Certified Security – Specialty"
+                src="/partners/aws-well-architected-proficient.png"
+                alt="AWS Well-Architected Proficient"
                 className="h-16 w-auto"
               />
               <div className="dci-badge-text">
                 <p className="dci-badge-label">Certified</p>
-                <p className="dci-badge-tier text-[#232F3E]">AWS Certified Security – Specialty</p>
+                <p className="dci-badge-tier text-[#232F3E]">Well-Architected Proficient</p>
               </div>
             </div>
 
             <div className="dci-badge">
               <img
-                src="/partners/aws-cloud-economics-essentials.png"
-                alt="AWS Cloud Economics Essentials Partner"
+                src="/partners/dell-platinum-partner.png"
+                alt="Dell Technologies Platinum Partner"
                 className="h-16 w-auto"
               />
               <div className="dci-badge-text">
                 <p className="dci-badge-label">Certified</p>
-                <p className="dci-badge-tier text-[#232F3E]">AWS Cloud Economics Essentials Partner</p>
+                <p className="dci-badge-tier text-[#0076CE]">Dell Technologies Platinum Partner</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="stats stats--dark" aria-label="Who this is for">
+      <section className="recovery" aria-labelledby="cloud-ops-practices-heading">
         <div className="container">
-          <div className="stats-grid">
-            <div className="stats-left" data-reveal="0">
-              <p className="stats-eyebrow">Track Record</p>
-              <h2 className="stats-heading">
-                11 years keeping AWS environments running.
+          <div data-reveal="0">
+            <div className="section-header-block">
+              <p className="sec-eyebrow-d">Best Practices</p>
+              <h2 className="sec-heading-d" id="cloud-ops-practices-heading">
+                Cloud operation best practices
               </h2>
-              <p className="stats-body">
-                Since 2015, we&apos;ve supported AWS environments with
-                monitoring, security, and cost management, not a one-time
-                setup and a walk away, ongoing accountability for what&apos;s
-                actually running in production.
+              <p className="sec-sub-d">
+                The habits that keep a cloud environment reliable, secure,
+                and cost-efficient over time.
               </p>
             </div>
-            <div className="stats-right">
-              <div className="stat-card" data-reveal="0">
-                <div className="stat-number">4-hour</div>
-                <div className="stat-label">Average incident response time</div>
-              </div>
-              <div className="stat-card" data-reveal="80">
-                <div className="stat-number">11+</div>
-                <div className="stat-label">Years offering AWS managed services</div>
-              </div>
-            </div>
+          </div>
+
+          <div className="best-practices-grid" data-reveal="0">
+            <ul className="cs-results">
+              {BEST_PRACTICES_COL_1.map((p) => (
+                <li key={p.title}>
+                  <CheckIcon />
+                  <span>
+                    <span className="cs-results-title">{p.title}</span> —{" "}
+                    {p.body}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <ul className="cs-results">
+              {BEST_PRACTICES_COL_2.map((p) => (
+                <li key={p.title}>
+                  <CheckIcon />
+                  <span>
+                    <span className="cs-results-title">{p.title}</span> —{" "}
+                    {p.body}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      <section className="prevention svc-grid-section" aria-labelledby="managed-services-included-heading">
+      <section className="prevention svc-grid-section" aria-labelledby="cloud-ops-benefits-heading">
         <div className="container">
           <div className="section-header-block" data-reveal="0">
-            <p className="sec-eyebrow-l">What&apos;s Included</p>
-            <h2 className="sec-heading-l" id="managed-services-included-heading">
-              What&apos;s included in ongoing support.
+            <p className="sec-eyebrow-l">Benefits</p>
+            <h2 className="sec-heading-l" id="cloud-ops-benefits-heading">
+              What optimized cloud operations gets you
             </h2>
           </div>
 
@@ -285,24 +314,23 @@ export function AwsManagedServicesPage() {
       </section>
 
       {/* DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet.
-          Swap CASE_STUDY_PLACEHOLDERS above for real Sanity content once
-          it's live, same as the Migration page's own placeholder case
-          studies. */}
-      <section id="case-studies" className="cs" aria-labelledby="aws-managed-services-cs-heading">
+          Swap CASE_STUDY_PLACEHOLDERS above for real content once it's
+          live (per Cloud_Operations_Page_Build.md, open item 2). */}
+      <section id="case-studies" className="cs" aria-labelledby="cloud-ops-cs-heading">
         <div className="container">
           <div data-reveal="0">
             <div className="section-header-block">
               <p className="sec-eyebrow-d">Case Studies</p>
-              <h2 className="sec-heading-d" id="aws-managed-services-cs-heading">
+              <h2 className="sec-heading-d" id="cloud-ops-cs-heading">
                 Placeholder — replace once cloud case studies are live
               </h2>
             </div>
           </div>
 
-          <div className="cs-grid">
-            {CASE_STUDY_PLACEHOLDERS.map((c) => (
-              <div data-reveal="0" key={c.eyebrow}>
-                <div className="cs-card">
+          <div className="dci-cs-grid">
+            <div className="dci-cs-support-row">
+              {CASE_STUDY_PLACEHOLDERS.map((c) => (
+                <div className="cs-card" data-reveal="0" key={c.eyebrow}>
                   <a
                     href="#"
                     className="card-overlay-link"
@@ -337,12 +365,7 @@ export function AwsManagedServicesPage() {
                   </div>
                   <p className="cs-eyebrow">{c.eyebrow}</p>
                   <p className="cs-stat">{c.stat}</p>
-                  <p className="cs-stat-caption">{c.statCaption}</p>
                   <p className="cs-body">{c.body}</p>
-                  <div className="cs-pills">
-                    <span className="cs-pill">{c.pills[0]}</span>
-                    <span className="cs-pill">{c.pills[1]}</span>
-                  </div>
                   <div className="cs-cta card-cta">
                     <a
                       href="#"
@@ -381,8 +404,8 @@ export function AwsManagedServicesPage() {
                     </a>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -395,7 +418,7 @@ export function AwsManagedServicesPage() {
                 FAQ
               </p>
               <h2 className="sec-heading-l" id="faq-heading" data-reveal="0">
-                Questions people ask about ongoing support
+                Questions people ask about cloud operations
               </h2>
             </div>
 
@@ -444,17 +467,17 @@ export function AwsManagedServicesPage() {
         category="cloud"
         primary={{
           eyebrow: "Get Started",
-          heading: "Done managing your AWS environment yourself?",
-          body: "Tell us what you're running on AWS. We'll take monitoring, patching, and cost control off your plate.",
+          heading: "Need your cloud environment properly managed?",
+          body: "Tell us what you're running, and where. We'll take deployment, automation, and monitoring off your plate.",
           buttonText: "Talk to an expert",
           buttonLink: "/contact",
         }}
         secondary={{
-          eyebrow: "Not Migrated Yet",
-          heading: "Start with Migration",
-          body: "If you're not on AWS yet, that's a different conversation, planning the move itself.",
-          buttonText: "See how migration works",
-          buttonLink: "/solutions/cloud/aws/services/migration",
+          eyebrow: "Already On AWS",
+          heading: "See Managed Services",
+          body: "If you're fully on AWS, our Managed Services page covers day-to-day AWS operations specifically.",
+          buttonText: "Explore Managed Services",
+          buttonLink: "/solutions/cloud/aws/services/managed-services/",
         }}
         primaryContact={{
           name: "Yogeshwaran",

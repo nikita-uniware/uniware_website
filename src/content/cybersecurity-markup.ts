@@ -160,8 +160,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 
         <div class="pillar-card crossbar-reveal">
           <div class="card-icon" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-4zm-1 11.59-2.54-2.55a1 1 0 0 0-1.42 1.42l3.25 3.25a1 1 0 0 0 1.42 0l5.25-5.25a1 1 0 0 0-1.42-1.42L11 12.59z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-4zm-1 11.59-2.54-2.55a1 1 0 0 0-1.42 1.42l3.25 3.25a1 1 0 0 0 1.42 0l5.25-5.25a1 1 0 0 0-1.42-1.42L11 12.59z"/></svg>
           </div>
           <p class="card-eyebrow">Prevention</p>
           <h4 class="card-heading">Keep threats out.</h4>
@@ -184,8 +183,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
 
         <div class="pillar-card crossbar-reveal" style="--reveal-delay:120ms">
           <div class="card-icon" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.6"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8h-2a6 6 0 1 1-1.46-3.9L14 10h6V4l-2.08 2.08A8 8 0 0 0 12 4z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8h-2a6 6 0 1 1-1.46-3.9L14 10h6V4l-2.08 2.08A8 8 0 0 0 12 4z"/></svg>
           </div>
           <p class="card-eyebrow">Recovery</p>
           <h4 class="card-heading">Stay operational, no matter what.</h4>
@@ -239,8 +237,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 1: Network security -->
         <div class="tile-prev">
           <div class="tile-icon-w" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M18 10V7a6 6 0 0 0-12 0v3H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1zm-5.5 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3.5-8.5H8V7a4 4 0 0 1 8 0v3z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M18 10V7a6 6 0 0 0-12 0v3H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1zm-5.5 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3.5-8.5H8V7a4 4 0 0 1 8 0v3z"/></svg>
           </div>
           <p class="tile-name-w">Network security</p>
           <p class="tile-desc-w">Next-generation firewall on every site. Web application firewall for customer-facing services. Blocks malicious traffic before it reaches your systems.</p>
@@ -256,8 +253,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 2: Endpoint protection -->
         <div class="tile-prev">
           <div class="tile-icon-w" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M20 2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7v2H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 12H4V4h16v10z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="M232,168h-8V72a24,24,0,0,0-24-24H56A24,24,0,0,0,32,72v96H24a8,8,0,0,0-8,8v16a24,24,0,0,0,24,24H216a24,24,0,0,0,24-24V176A8,8,0,0,0,232,168ZM112,72h32a8,8,0,0,1,0,16H112a8,8,0,0,1,0-16ZM224,192a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8v-8H224Z"/></svg>
           </div>
           <p class="tile-name-w">Endpoint protection</p>
           <p class="tile-desc-w">Watches behaviour on every laptop and server. Stops ransomware before it spreads — not after.</p>
@@ -273,8 +269,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 3: Email security -->
         <div class="tile-prev">
           <div class="tile-icon-w" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.02L4 8.7V6.16l8 5.02 8-5.02V8.7z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.02L4 8.7V6.16l8 5.02 8-5.02V8.7z"/></svg>
           </div>
           <p class="tile-name-w">Email security</p>
           <p class="tile-desc-w">Filters every incoming message before it reaches anyone's inbox. Malicious links, infected attachments, and impersonation attempts blocked automatically. Fully managed.</p>
@@ -290,8 +285,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 4: Identity and access -->
         <div class="tile-prev">
           <div class="tile-icon-w" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm-7 9a7 7 0 1 1 14 0H5z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm-7 9a7 7 0 1 1 14 0H5z"/></svg>
           </div>
           <p class="tile-name-w">Identity and access</p>
           <p class="tile-desc-w">Zero Trust verifies every login against identity, device health, and location. Access granted only to what is needed — nothing more.</p>
@@ -305,8 +299,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 5: Data protection -->
         <div class="tile-prev">
           <div class="tile-icon-w" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="13" r="4"/><line x1="11" y1="13" x2="21" y2="13"/><line x1="19" y1="11" x2="19" y2="15"/><line x1="16" y1="11" x2="16" y2="13"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M7 9a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm7 3h7a1 1 0 0 1 0 2h-1v2a1 1 0 0 1-2 0v-2h-1v2a1 1 0 0 1-2 0v-2h-1a1 1 0 0 1 0-2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M7 9a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm7 3h7a1 1 0 0 1 0 2h-1v2a1 1 0 0 1-2 0v-2h-1v2a1 1 0 0 1-2 0v-2h-1a1 1 0 0 1 0-2z"/></svg>
           </div>
           <p class="tile-name-w">Data protection</p>
           <p class="tile-desc-w">Monitors what moves and where. Blocks transfers that should not happen. Every company device encrypted and wipeable remotely.</p>
@@ -320,8 +313,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 6: Cloud security -->
         <div class="tile-prev">
           <div class="tile-icon-w" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           </div>
           <p class="tile-name-w">Cloud security</p>
           <p class="tile-desc-w">Continuous compliance scanning across AWS and Azure. Microsoft 365 security settings reviewed and tightened beyond defaults.</p>
@@ -329,13 +321,16 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
           <div class="tile-pills">
             <span class="pill-w">CrowdStrike CSPM</span>
           </div>
+          <a href="/solutions/cloud/security/" class="link-text link-text-light link-text-md tile-footer-link">
+            Learn more about cloud security
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5"/></svg>
+          </a>
         </div>
 
         <!-- Tile 7: Security assessment -->
         <div class="tile-prev">
           <div class="tile-icon-w" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M21.71 20.29l-4.1-4.09A8 8 0 1 0 4 11a8 8 0 0 0 13.2 6.62l4.09 4.09a1 1 0 0 0 1.42-1.42zM11 17a6 6 0 1 1 0-12 6 6 0 0 1 0 12z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM117.66,149.66l-32,32a8,8,0,0,1-11.32,0l-16-16a8,8,0,0,1,11.32-11.32L80,164.69l26.34-26.35a8,8,0,0,1,11.32,11.32Zm0-64-32,32a8,8,0,0,1-11.32,0l-16-16A8,8,0,0,1,69.66,90.34L80,100.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM192,168H144a8,8,0,0,1,0-16h48a8,8,0,0,1,0,16Zm0-64H144a8,8,0,0,1,0-16h48a8,8,0,0,1,0,16Z"/></svg>
           </div>
           <p class="tile-name-w">Security assessment</p>
           <p class="tile-desc-w">Clear picture of where the gaps are and what to fix first. Structured assessments using recognised frameworks. Penetration testing via specialist consultants.</p>
@@ -409,8 +404,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 1: Immutable backup — HAS partners -->
         <div class="tile-rec">
           <div class="tile-icon-d" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.6"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8h-2a6 6 0 1 1-1.46-3.9L14 10h6V4l-2.08 2.08A8 8 0 0 0 12 4z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="M216,40H40A16,16,0,0,0,24,56V192a16,16,0,0,0,16,16H56v16a8,8,0,0,0,16,0V208H184v16a8,8,0,0,0,16,0V208h16a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm-8,96H179.09a36,36,0,1,1,0-16H208a8,8,0,0,1,0,16Zm-44-8a20,20,0,1,1-20-20A20,20,0,0,1,164,128Z"/></svg>
           </div>
           <p class="tile-name-d">Immutable backup</p>
           <p class="tile-desc-d">Cannot be modified or deleted — even by an administrator. Stored in a separate, air-gapped environment. The backup survives. The ransom threat does not.</p>
@@ -424,8 +418,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 2: Recovery planning — NO connector, NO pills -->
         <div class="tile-rec">
           <div class="tile-icon-d" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-1.5h8V18zm0-4H8v-1.5h8V14zm-3-6V3.5L18.5 9H13z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-1.5h8V18zm0-4H8v-1.5h8V14zm-3-6V3.5L18.5 9H13z"/></svg>
           </div>
           <p class="tile-name-d">Recovery planning</p>
           <p class="tile-desc-fill">Before anything happens, we classify your entire environment with your team. Which systems are critical. How much data loss is acceptable. Management signs off on those answers. No decisions under pressure.</p>
@@ -434,8 +427,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 3: Infrastructure rebuild — NO connector, NO pills -->
         <div class="tile-rec">
           <div class="tile-icon-d" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M4 2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 11h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2zm1-7.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zm0 11a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M4 2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 11h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2zm1-7.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zm0 11a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0z"/></svg>
           </div>
           <p class="tile-name-d">Infrastructure rebuild</p>
           <p class="tile-desc-fill">Most security companies cannot rebuild after a breach. They did not build the environment. We did. We rebuild from the last clean backup, in the right order, starting immediately.</p>
@@ -444,8 +436,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
         <!-- Tile 4: Cyber recovery — NO connector, NO pills -->
         <div class="tile-rec">
           <div class="tile-icon-d" aria-hidden="true">
-            <svg class="ti-stroke" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            <svg class="ti-fill" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-4zm-1 11.59-2.54-2.55a1 1 0 0 0-1.42 1.42l3.25 3.25a1 1 0 0 0 1.42 0l5.25-5.25a1 1 0 0 0-1.42-1.42L11 12.59z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm-34.32,69.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></svg>
           </div>
           <p class="tile-name-d">Cyber recovery</p>
           <p class="tile-desc-fill">Attackers often corrupt backups before triggering encryption. We test backward through backup history to find the last genuinely clean copy. This is the step most providers skip. We do not.</p>
@@ -676,7 +667,7 @@ export const cybersecurityMarkup = `<!-- ═══ HERO ════════
             </span>
           </summary>
           <div class="faq-answer-inner">
-            <p>We're headquartered in Chennai, India, with offices in Kerala, Hyderabad, and Bangalore. We have a presence in Delaware, US. Our London office opens in September 2026. We work with clients across India and the US, and remotely with businesses wherever they're based.</p>
+            <p>We're headquartered in Chennai, India, with offices in Kerala, Hyderabad, and Bangalore as well. We opened in London, UK in August 2026, and we're now doing business here. We work with clients across India, the US, and the UK, and remotely with businesses wherever they're based.</p>
           </div>
         </details>
       </div>

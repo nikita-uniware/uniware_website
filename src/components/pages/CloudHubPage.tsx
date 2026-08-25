@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { Stack, ShareNetwork, Gauge, ShieldCheck, Cloud } from "@phosphor-icons/react";
 import { useReveal } from "@/hooks/useReveal";
-import { useScrollSyncHighlight } from "@/hooks/useScrollSyncHighlight";
 import { CircleGroup } from "@/components/CircleGroup";
-import { SplitCTA } from "@/components/SplitCTA";
+import { DirectoryTile } from "@/components/DirectoryTile";
+import { PrimaryCTA } from "@/components/PrimaryCTA";
 import "@/styles/data-centre-infrastructure.page.css";
 import "@/styles/cybersecurity.page.css";
-import "@/styles/aws-migration.page.css";
+import "@/styles/cloud-hub.page.css";
 
 const ArrowIcon = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -32,31 +33,69 @@ const PlusIcon = () => (
   </svg>
 );
 
+const DIRECTORY_CARDS = [
+  {
+    icon: Stack,
+    heading: "Infrastructure",
+    body: "Private, public, and hybrid cloud infrastructure, designed to fit how your business actually runs.",
+    href: "/solutions/cloud/infrastructure/",
+    linkText: "Explore Infrastructure",
+  },
+  {
+    icon: ShareNetwork,
+    heading: "Networking",
+    body: "VPN, Direct Connect, and SD-WAN, so your business connects to the cloud securely and reliably.",
+    href: "/solutions/cloud/networking/",
+    linkText: "Explore Networking",
+  },
+  {
+    // DRAFT — no old-site content, no page built yet, needs review with
+    // Dhana (per Cloud_Hub_Page_Build.md, open item 1).
+    icon: Gauge,
+    heading: "Operations",
+    body: "Ongoing monitoring, performance tuning, and day-to-day management for cloud environments already in production.",
+    href: "/solutions/cloud/operations/",
+    linkText: "Explore Operations",
+  },
+  {
+    // DRAFT — no page built yet, needs review with Dhana on relationship
+    // to the Cybersecurity page (per Cloud_Hub_Page_Build.md, open item 1).
+    icon: ShieldCheck,
+    heading: "Security",
+    body: "Security built into your cloud environment, not bolted on afterward.",
+    href: "/solutions/cloud/security/",
+    linkText: "Explore Security",
+  },
+  {
+    // DEV PLACEHOLDER — no literal AWS logo exists in Phosphor's icon set;
+    // Cloud is the closest brand-neutral equivalent, pending Niki's
+    // confirmation (per Cloud_Hub_Page_Build.md, open item 3).
+    icon: Cloud,
+    heading: "AWS",
+    body: "Migration, managed services, consulting, and specific AWS products, all under one AWS Advanced Tier Partner.",
+    href: "/solutions/cloud/aws/",
+    linkText: "Explore AWS",
+  },
+];
+
 // DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet. Replace
-// with real Sanity content once available, same pattern as the Cloud
-// Infrastructure page's own case-study placeholders.
+// with real content once the case studies are live.
 type CaseStudyPlaceholder = {
   eyebrow: string;
   stat: string;
-  statCaption: string;
   body: string;
-  pills: [string, string];
 };
 
 const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   {
-    eyebrow: "AWS Migration",
+    eyebrow: "Cloud Infrastructure",
     stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: infrastructure migration for a mid-market services company, timeline and outcome to confirm.",
-    pills: ["AWS", "Migration"],
+    body: "Draft: cloud infrastructure engagement for a mid-market client, timeline and outcome to confirm.",
   },
   {
-    eyebrow: "Microsoft Workloads",
+    eyebrow: "AWS",
     stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: Microsoft workload migration for an established client, timeline and outcome to confirm.",
-    pills: ["Microsoft", "Workloads"],
+    body: "Draft: AWS engagement for an established client, timeline and outcome to confirm.",
   },
 ];
 
@@ -64,34 +103,18 @@ type FaqItem = { question: string; answer: string };
 
 const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "How do you ensure minimal downtime during migration?",
+    question: "Which cloud service is right for us?",
     answer:
-      "We use real-time data sync and pre-migration testing, then cut over during off-peak hours. Your team and customers shouldn't notice the move happened.",
+      "It depends on where you are. If you need infrastructure design, start there. If you're already running on AWS and need it managed, Managed Services is the fit. If security is the priority, that's its own conversation. We'll help you figure out the right starting point.",
   },
   {
-    question: "What types of migrations do you handle?",
-    answer:
-      "Everything from simple lift-and-shift server moves to complex database migrations and full application deployment on AWS, including hybrid deployments for enterprise compliance needs.",
+    question: "Are you an AWS partner?",
+    answer: "Yes, Uniware is an AWS Advanced Tier Partner.",
   },
   {
-    question: "Is my data secure during the move?",
+    question: "Do you support hybrid and multi-cloud environments?",
     answer:
-      "Yes. End-to-end encryption, strict access controls, and hardened configurations apply throughout transit and deployment, not just once you're settled on AWS.",
-  },
-  {
-    question: "Do you handle Microsoft-specific workload migrations?",
-    answer:
-      "Yes. We deploy and migrate .NET applications, IIS Server environments, SQL Server databases, SharePoint, Exchange, and Windows Server workloads to AWS, alongside the cost and performance benefits of moving off on-premises Microsoft infrastructure.",
-  },
-  {
-    question: "How long does an AWS migration typically take?",
-    answer:
-      "Depends on scope. A simple workload migration, a few servers with no complex dependencies, can complete in days. A full enterprise environment, including discovery, planning, testing, and a phased cutover, typically runs four to twelve weeks. We scope every migration before committing to a timeline, since underscoping is the main reason migrations run late.",
-  },
-  {
-    question: "How do you approach scoping and pricing for a migration?",
-    answer:
-      "We do a scoping assessment before quoting, since the cost depends on your current environment, number of workloads, complexity of dependencies, and how quickly you need to move. The assessment usually takes one to two sessions and gives us everything we need to quote accurately. Talk to us to get started.",
+      "We design and manage private, public, and hybrid cloud infrastructure. Our AWS work is currently AWS-specific, we don't yet support multi-cloud connectivity across other providers.",
   },
   {
     question: "Where do you operate?",
@@ -100,36 +123,25 @@ const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
-export function AwsMigrationPage() {
+export function CloudHubPage() {
   useReveal();
-  useScrollSyncHighlight({
-    triggerSelector: "[data-step-trigger].wts-card",
-    triggerAttr: "step-trigger",
-    activeClass: "is-current",
-    requireIntersection: true,
-  });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="aws-migration-page">
-      <section className="hero" aria-labelledby="aws-migration-hero-heading">
+    <div className="cloud-hub-page">
+      <section className="hero" aria-labelledby="cloud-hub-hero-heading">
         <div className="container">
           <p className="hero-eyebrow" data-reveal="0">
-            AWS MIGRATION
+            CLOUD SERVICES
           </p>
-          <h1
-            className="hero-headline"
-            data-reveal="80"
-            id="aws-migration-hero-heading"
-          >
-            Your AWS migration,
+          <h1 className="hero-headline" data-reveal="80" id="cloud-hub-hero-heading">
+            Cloud services and infrastructure,
             <br />
-            <span className="amber">handled by people who&apos;ve done it before.</span>
+            <span className="amber">built for how you work.</span>
           </h1>
           <p className="hero-subtext" data-reveal="160">
-            Minimal-downtime migration to AWS, planned and executed by certified
-            engineers. For businesses that already know they&apos;re moving
-            and need it done properly.
+            Infrastructure, networking, security, and AWS expertise for
+            mid-market and enterprise businesses across India and the US.
           </p>
           <span data-reveal="240">
             <a
@@ -165,150 +177,99 @@ export function AwsMigrationPage() {
 
             <div className="dci-badge">
               <img
-                src="/partners/aws-solutions-architect-professional.png"
-                alt="AWS Certified Solutions Architect – Professional"
+                src="/partners/dell-platinum-partner.png"
+                alt="Dell Technologies Platinum Partner"
                 className="h-16 w-auto"
               />
               <div className="dci-badge-text">
                 <p className="dci-badge-label">Certified</p>
-                <p className="dci-badge-tier text-[#232F3E]">Solutions Architect Professional</p>
+                <p className="dci-badge-tier text-[#0076CE]">Dell Technologies Platinum Partner</p>
               </div>
             </div>
 
             <div className="dci-badge">
               <img
-                src="/partners/aws-cloud-economics-essentials.png"
-                alt="AWS Cloud Economics Essentials Partner"
+                src="/partners/commvault-premier-solutions-partner.png"
+                alt="Commvault Premier Solutions Partner"
                 className="h-16 w-auto"
               />
               <div className="dci-badge-text">
                 <p className="dci-badge-label">Certified</p>
-                <p className="dci-badge-tier text-[#232F3E]">AWS Cloud Economics Essentials Partner</p>
+                <p className="dci-badge-tier text-[#6B2D8B]">Commvault Premier Solutions Partner</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="stats stats--dark" aria-label="Who this is for">
+      <section className="stats stats--dark" aria-label="Track record">
         <div className="container">
           <div className="stats-grid">
             <div className="stats-left" data-reveal="0">
               <p className="stats-eyebrow">Track Record</p>
               <h2 className="stats-heading">
-                11 years of moving businesses onto AWS.
+                Over 200 companies have trusted us with their cloud.
               </h2>
               <p className="stats-body">
-                Since 2015, we&apos;ve completed 50+ large-scale AWS
-                migrations, from single-server moves to full enterprise
-                environments.
+                Thirty years in IT infrastructure, now applied to cloud,
+                on-prem, and everything in between. We&apos;ve supported
+                businesses across India and the US with infrastructure,
+                networking, security, and AWS work.
               </p>
             </div>
             <div className="stats-right">
               <div className="stat-card" data-reveal="0">
-                <div className="stat-number">50+</div>
-                <div className="stat-label">Large-scale AWS migrations completed</div>
+                <div className="stat-number">200+</div>
+                <div className="stat-label">Companies trusted us</div>
               </div>
               <div className="stat-card" data-reveal="80">
-                <div className="stat-number">11+</div>
-                <div className="stat-label">Years doing AWS migration work specifically</div>
+                <div className="stat-number">30 years</div>
+                <div className="stat-label">In IT infrastructure</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="migration-process" className="wts" aria-labelledby="migration-process-heading">
+      <section className="prevention svc-grid-section" aria-labelledby="cloud-hub-directory-heading">
         <div className="container">
-          <div className="wts-layout">
-            <div className="section-header-block mig-process-sticky">
-              <p className="sec-eyebrow-l" data-reveal="0">
-                How It Works
-              </p>
-              <h2 className="sec-heading-l" id="migration-process-heading" data-reveal="0">
-                Four steps. No surprises.
-              </h2>
-              <p className="sec-sub-l" data-reveal="0">
-                Every migration follows the same structure, adjusted to what
-                you&apos;re actually moving.
-              </p>
-            </div>
+          <div className="section-header-block" data-reveal="0">
+            <p className="sec-eyebrow-l">Cloud Services</p>
+            <h2 className="sec-heading-l" id="cloud-hub-directory-heading">
+              Cloud services, by area
+            </h2>
+            <p className="sec-sub-l">
+              Five ways we help, depending on what your business needs right
+              now.
+            </p>
+          </div>
 
-            <div className="wts-cards">
-              <div className="wts-card" data-step-trigger="1" data-reveal="0">
-                <p className="wts-card-eyebrow">Step 1</p>
-                <h3 className="wts-card-heading">Assessment &amp; Planning</h3>
-                <p className="wts-card-body">
-                  A thorough review of your current infrastructure,
-                  applications, and workloads, using AWS&apos;s 7 R&apos;s
-                  framework (Retain, Retire, Relocate, Rehost, Repurchase,
-                  Re-platform, Refactor) to identify the right approach for
-                  each workload, not a one-size-fits-all move.
-                </p>
-              </div>
-
-              <div className="wts-connector" aria-hidden="true" />
-
-              <div className="wts-card" data-step-trigger="2" data-reveal="0">
-                <p className="wts-card-eyebrow">Step 2</p>
-                <h3 className="wts-card-heading">Strategy &amp; Design</h3>
-                <p className="wts-card-body">
-                  Based on that assessment, we build a roadmap specific to
-                  what you&apos;re moving, whether that&apos;s a
-                  straightforward lift-and-shift or a more complex database
-                  migration.
-                </p>
-              </div>
-
-              <div className="wts-connector" aria-hidden="true" />
-
-              <div className="wts-card" data-step-trigger="3" data-reveal="0">
-                <p className="wts-card-eyebrow">Step 3</p>
-                <h3 className="wts-card-heading">Migration Execution</h3>
-                <p className="wts-card-body">
-                  Our team handles the move using proven AWS tools and
-                  methodology, including specific experience with Microsoft
-                  workloads. Minimal downtime, data integrity checked at
-                  every step, configurations optimized to take full
-                  advantage of AWS-native services along the way.
-                </p>
-              </div>
-
-              <div className="wts-connector" aria-hidden="true" />
-
-              <div className="wts-card" data-step-trigger="4" data-reveal="0">
-                <p className="wts-card-eyebrow">Step 4</p>
-                <h3 className="wts-card-heading">Optimization &amp; Monitoring</h3>
-                <p className="wts-card-body">
-                  We don&apos;t hand over the keys and leave. Ongoing tuning
-                  and continuous monitoring catch issues early and keep your
-                  environment cost-efficient after the move is done.
-                </p>
-              </div>
-            </div>
+          <div className="svc-grid" data-reveal="0">
+            {DIRECTORY_CARDS.map((card) => (
+              <DirectoryTile key={card.heading} variant="light" {...card} />
+            ))}
           </div>
         </div>
       </section>
 
       {/* DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet.
-          Swap CASE_STUDY_PLACEHOLDERS above for real Sanity content once
-          it's live, same as the Cloud Infrastructure page's own
-          placeholder case studies. */}
-      <section id="case-studies" className="cs" aria-labelledby="aws-migration-cs-heading">
+          Swap CASE_STUDY_PLACEHOLDERS above for real content once it's
+          live (per Cloud_Hub_Page_Build.md, open item 2). */}
+      <section id="case-studies" className="cs" aria-labelledby="cloud-hub-cs-heading">
         <div className="container">
           <div data-reveal="0">
             <div className="section-header-block">
               <p className="sec-eyebrow-d">Case Studies</p>
-              <h2 className="sec-heading-d" id="aws-migration-cs-heading">
+              <h2 className="sec-heading-d" id="cloud-hub-cs-heading">
                 Placeholder — replace once cloud case studies are live
               </h2>
             </div>
           </div>
 
-          <div className="cs-grid">
-            {CASE_STUDY_PLACEHOLDERS.map((c) => (
-              <div data-reveal="0" key={c.eyebrow}>
-                <div className="cs-card">
+          <div className="dci-cs-grid">
+            <div className="dci-cs-support-row">
+              {CASE_STUDY_PLACEHOLDERS.map((c) => (
+                <div className="cs-card" data-reveal="0" key={c.eyebrow}>
                   <a
                     href="#"
                     className="card-overlay-link"
@@ -343,12 +304,7 @@ export function AwsMigrationPage() {
                   </div>
                   <p className="cs-eyebrow">{c.eyebrow}</p>
                   <p className="cs-stat">{c.stat}</p>
-                  <p className="cs-stat-caption">{c.statCaption}</p>
                   <p className="cs-body">{c.body}</p>
-                  <div className="cs-pills">
-                    <span className="cs-pill">{c.pills[0]}</span>
-                    <span className="cs-pill">{c.pills[1]}</span>
-                  </div>
                   <div className="cs-cta card-cta">
                     <a
                       href="#"
@@ -387,8 +343,8 @@ export function AwsMigrationPage() {
                     </a>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -401,7 +357,7 @@ export function AwsMigrationPage() {
                 FAQ
               </p>
               <h2 className="sec-heading-l" id="faq-heading" data-reveal="0">
-                Questions people ask before moving
+                Questions people ask about cloud
               </h2>
             </div>
 
@@ -445,24 +401,19 @@ export function AwsMigrationPage() {
         </div>
       </section>
 
-      <SplitCTA
-        id="get-started"
+      {/* Contact person NEEDS CONFIRMATION per Cloud_Hub_Page_Build.md —
+          Yogeshwaran is used elsewhere on AWS pages, used here as the
+          confirmed contact for this hub-level page. */}
+      <PrimaryCTA
+        heading="Not sure which cloud service fits?"
+        body="Tell us what you're working on. We'll point you to the right part of our cloud practice."
+        buttonText="Talk to an expert"
+        buttonLink="/contact"
         category="cloud"
-        primary={{
-          eyebrow: "Get Started",
-          heading: "Ready to plan your migration?",
-          body: "Tell us what you're running, or what you're trying to move. We'll bring in the right person.",
-          buttonText: "Talk to an expert",
-          buttonLink: "/contact",
+        contactLine={{
+          name: "Yogeshwaran",
+          phone: "+91 73587 83739",
         }}
-        secondary={{
-          eyebrow: "Already Migrated",
-          heading: "See Managed Services",
-          body: "If you're already running on AWS and need someone watching it day to day, monitoring, patching, cost control, that's a different conversation.",
-          buttonText: "See Managed Services",
-          buttonLink: "/solutions/cloud/aws/services/managed-services",
-        }}
-        primaryContact={{ name: "Yogeshwaran", phone: "+91 73587 83739" }}
       />
     </div>
   );

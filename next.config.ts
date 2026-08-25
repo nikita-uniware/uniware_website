@@ -28,12 +28,6 @@ const nextConfig: NextConfig = {
    */
   async redirects() {
     return [
-      // No homepage yet — temporary until / is built
-      {
-        source: "/",
-        destination: "/solutions/cybersecurity",
-        permanent: false, // 307
-      },
       // Old /company/contact → /contact (Niki contact page ship)
       {
         source: "/company/contact",

@@ -11,14 +11,16 @@ export function SiteFooter() {
       role="contentinfo"
     >
       <div className="site-footer-inner">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/brand/logo-wordmark.svg"
-          alt="Uniware Systems"
-          className="footer-logo"
-          width={160}
-          height={40}
-        />
+        <Link href="/" aria-label="Uniware Systems — home">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-wordmark.svg"
+            alt="Uniware Systems"
+            className="footer-logo"
+            width={160}
+            height={40}
+          />
+        </Link>
         <p className="footer-tagline">Adaptive Technology Integrators</p>
         <nav className="footer-links" aria-label="Footer navigation">
           <Link href="/solutions/cybersecurity" className="footer-link">

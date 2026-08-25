@@ -42,7 +42,6 @@
 .cloud-networking-page .faq-list{ display: flex; flex-direction: column; }
 
 .cloud-networking-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
-.cloud-networking-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
 
 .cloud-networking-page .faq-question-wrap{ margin: 0; }
 .cloud-networking-page .faq-question{

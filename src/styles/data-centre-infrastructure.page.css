@@ -169,7 +169,6 @@
 .dci-page .faq-list{ display: flex; flex-direction: column; }
 
 .dci-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
-.dci-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
 
 .dci-page .faq-question-wrap{ margin: 0; }
 .dci-page .faq-question{

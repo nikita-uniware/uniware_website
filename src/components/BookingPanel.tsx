@@ -40,6 +40,7 @@ export function BookingPanel() {
   const [datacenterTopics, setDatacenterTopics] = useState<
     DatacenterBookingTopic[]
   >([]);
+  const [cloudTopic, setCloudTopic] = useState<CloudBookingTopic | "">("");
   const [topicError, setTopicError] = useState("");
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -50,8 +51,13 @@ export function BookingPanel() {
       setConfig(nextConfig);
       setDatacenterTopics(
         nextConfig === "datacenter" && preselectedTopic
-          ? [preselectedTopic]
+          ? [preselectedTopic as DatacenterBookingTopic]
           : []
+      );
+      setCloudTopic(
+        nextConfig === "cloud" && preselectedTopic
+          ? (preselectedTopic as CloudBookingTopic)
+          : ""
       );
       setTopicError("");
       setSent(false);
@@ -326,7 +332,10 @@ export function BookingPanel() {
                         id="pf-topic"
                         name="topic"
                         required
-                        defaultValue=""
+                        value={cloudTopic}
+                        onChange={(e) =>
+                          setCloudTopic(e.target.value as CloudBookingTopic)
+                        }
                       >
                         <option value="" disabled>
                           Select a topic

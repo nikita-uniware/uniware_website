@@ -65,7 +65,6 @@
 .aws-hub-page .faq-list{ display: flex; flex-direction: column; }
 
 .aws-hub-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
-.aws-hub-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
 
 .aws-hub-page .faq-question-wrap{ margin: 0; }
 .aws-hub-page .faq-question{

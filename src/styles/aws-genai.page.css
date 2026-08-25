@@ -1,4 +1,143 @@
 /* ══════════════════════════════════════════════════════
+   CASE STUDY — section subtext under the H2 reuses .sec-sub-d
+   verbatim (the site's existing "muted section subtext on a
+   dark surface" pattern, --text-body-lg-sm, --uw-text-on-dark-muted).
+   Its own margin-bottom is --space-7 (28px), the default
+   .section-header-block spacing used everywhere on the site —
+   this section instead needs --space-12 (48px) before the row
+   below, so that's overridden explicitly, scoped to just this
+   section's header block (not the shared global class).
+
+   Outer split (label+blurb / card) is 2fr/3fr, gap:0 at the
+   768px tier — the horizontal line in the label column uses
+   flex:1 to fill the column's remaining width, and with the
+   grid gap removed, the line's right edge lands exactly on the
+   card's left edge (no visible seam between them).
+
+   Card itself reuses the base .cs-card shell as-is
+   (background --surface-dark-card, border
+   --border-chrome-light, radius, padding — no overrides).
+
+   "Document Processing" sub-heading reuses .tile-name-d
+   (semibold, white, --text-h4-sm/--text-h4) — same "small
+   heading on a dark surface" pattern already used for the
+   card's own "So we built them..." solution line. The blurb
+   below it reuses --text-body (16px) in --uw-text-on-dark-muted
+   — the same construction the old single-line label used,
+   repositioned as a second line instead of the only line.
+
+   Headline stays at the BASE .cs-stat size (--text-display-sm,
+   40px) — unchanged.
+
+   Solution line reuses .tile-name-d — unchanged.
+
+   Divider reuses --border-chrome-light — unchanged.
+
+   Inner stat/quote split, stat boxes, and quote block are
+   unchanged from the previous pass.
+
+   "More examples coming soon" and its dashed connector are
+   removed entirely per this round's instructions — the card is
+   now the section's last element.
+══════════════════════════════════════════════════════ */
+.aws-genai-page .cs .section-header-block { margin-bottom: var(--space-12); }
+
+.aws-genai-page .cs-card-genai-outer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+@media(min-width:768px){
+  .aws-genai-page .cs-card-genai-outer { grid-template-columns: 2fr 3fr; gap: 0; align-items: start; }
+}
+
+.aws-genai-page .cs-card-genai-outer-label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.aws-genai-page .cs-card-genai-label {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-body);
+  color: var(--uw-text-on-dark-muted);
+}
+
+.aws-genai-page .cs-card-genai-label-desc { max-width: 360px; }
+
+.aws-genai-page .cs-card-genai-label-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-chrome-light);
+}
+
+.aws-genai-page .cs-card-genai-subheading { margin-bottom: 0; }
+
+.aws-genai-page .cs-card-genai-headline { margin-bottom: var(--space-3); }
+.aws-genai-page .cs-card-genai-headline .amber { color: var(--uw-amber-dark); }
+
+.aws-genai-page .cs-card-genai-solution { margin-bottom: 0; }
+
+.aws-genai-page .cs-card-genai-divider {
+  border-top: 1px solid var(--border-chrome-light);
+  margin: var(--space-5) 0;
+}
+
+.aws-genai-page .cs-card-genai-inner-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+@media(min-width:768px){
+  .aws-genai-page .cs-card-genai-inner-row { grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: start; }
+}
+
+.aws-genai-page .cs-card-genai-stats-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.aws-genai-page .cs-card-genai-stat-box {
+  background: var(--surface-dark-subtle);
+  border-radius: 12px;
+  padding: var(--space-5) var(--space-6);
+}
+.aws-genai-page .cs-card-genai-stat-box .cs-stat-caption { margin-bottom: 0; }
+
+.aws-genai-page .cs-card-genai-quote-intro { margin-bottom: var(--space-3); }
+
+/* Quote text — the site's display face (Space Grotesk) is the closest
+   thing to a "voice" font here; no serif/italic pull-quote pattern
+   exists elsewhere on the site, so this reuses that existing family,
+   set in italic, at --text-body-lg (20px, an existing token) rather
+   than introducing a new typeface or a one-off size. Line-height
+   matches the one other pull-quote treatment on the site
+   (.cs-quote-block-text in case-study.page.css). */
+.aws-genai-page .cs-quote-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-body-lg);
+  line-height: 1.5;
+  color: var(--uw-white);
+  margin-bottom: 0;
+}
+
+/* Small muted attribution label — deliberately smaller and more
+   muted than .cs-stat-caption so it reads as clearly secondary. */
+.aws-genai-page .cs-quote-attribution {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-caption);
+  color: var(--uw-text-on-dark-faint);
+}
+
+.aws-genai-page .cs-card-genai-link { margin-top: var(--space-6); }
+
+/* ══════════════════════════════════════════════════════
    WHAT WE BUILD — fixed grid, not a carousel. Reuses the
    .prevention section shell and the .tile-prev card unit
    (icon/heading/description) as-is; only the layout wrapper
@@ -40,7 +179,6 @@
 .aws-genai-page .faq-list{ display: flex; flex-direction: column; }
 
 .aws-genai-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
-.aws-genai-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
 
 .aws-genai-page .faq-question-wrap{ margin: 0; }
 .aws-genai-page .faq-question{

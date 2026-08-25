@@ -61,6 +61,7 @@ const SERVICE_CARDS = [
 
 const WORKLOAD_CARDS = [
   {
+    logoSrc: "/partners/amazon-rds.svg",
     heading: "Amazon RDS",
     body: "Amazon RDS database setup, tuning, and ongoing management, so your data layer stays fast and reliable.",
     href: "/solutions/cloud/aws/workloads/rds/",
@@ -69,6 +70,7 @@ const WORKLOAD_CARDS = [
   {
     // DRAFT — needs review, pending scope decision on relationship to the
     // UniDocs AI page (per AWS_Hub_Page_Build.md, open item 4).
+    logoSrc: "/partners/amazon-bedrock.svg",
     heading: "Generative AI (Amazon Bedrock)",
     body: "Custom AI and document automation built on Amazon Bedrock, tailored to your business.",
     href: "/solutions/cloud/aws/workloads/genai/",
@@ -96,7 +98,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Where do you operate?",
     answer:
-      "We're headquartered in Chennai, India, with offices in Kerala, Hyderabad, and Bangalore. We have a presence in Delaware, US. Our London office opens in September 2026. We work with clients across India and the US, and remotely with businesses wherever they're based.",
+      "We're headquartered in Chennai, India, with offices in Kerala, Hyderabad, and Bangalore as well. We opened in London, UK in August 2026, and we're now doing business here. We work with clients across India, the US, and the UK, and remotely with businesses wherever they're based.",
   },
 ];
 

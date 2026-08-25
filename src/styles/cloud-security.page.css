@@ -1,0 +1,68 @@
+/* ══════════════════════════════════════════════════════
+   WHAT WE COVER — reuses the exact Cybersecurity Prevention
+   card unit (.tile-prev/.tile-icon-w/.tile-name-w/.tile-desc-w/
+   .tile-connector/.tile-pills/.pill-w, all from
+   cybersecurity.page.css) but in a fixed 3-column grid instead
+   of the horizontally-scrolling carousel those tiles normally
+   sit in — 3 cards don't need carousel machinery. Only the
+   width/flex-shrink is overridden so each card fills its grid
+   column instead of the carousel's fixed 280px width; the
+   card's own internal layout (icon, heading, description,
+   connector, pills) is untouched.
+══════════════════════════════════════════════════════ */
+.cloud-security-page .cover-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media(min-width:768px){ .cloud-security-page .cover-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.cloud-security-page .cover-grid .tile-prev {
+  width: auto;
+  max-width: none;
+  flex-shrink: 1;
+}
+
+/* ══════════════════════════════════════════════════════
+   FAQ — copied from the Consulting/RDS/GenAI/Cloud
+   Operations pages' identical override. Same 1/2:1/2 split,
+   left column not sticky.
+══════════════════════════════════════════════════════ */
+.cloud-security-page .faq { background: var(--uw-white); border-top: 1px solid var(--section-divider); border-bottom: 1px solid var(--section-divider); }
+.cloud-security-page .faq .container { padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+@media(min-width:768px){ .cloud-security-page .faq .container{ padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); } }
+@media(min-width:1024px){ .cloud-security-page .faq .container{ padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); } }
+
+.cloud-security-page .faq-layout { display: block; }
+@media(min-width:1024px){
+  .cloud-security-page .faq-layout{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: start; }
+}
+
+.cloud-security-page .faq-list{ display: flex; flex-direction: column; }
+
+.cloud-security-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
+
+.cloud-security-page .faq-question-wrap{ margin: 0; }
+.cloud-security-page .faq-question{
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+  padding: var(--space-6) 0; background: none; border: none; text-align: left; cursor: pointer;
+  font-family: var(--font-display); font-weight: var(--font-weight-semibold); font-size: var(--text-h4-sm);
+  line-height: 1.30; color: var(--uw-black);
+}
+@media(min-width:1024px){ .cloud-security-page .faq-question{ font-size: var(--text-h4); } }
+
+.cloud-security-page .faq-icon{
+  flex-shrink: 0; width: var(--space-9); height: var(--space-9); border-radius: 50%;
+  border: 1px solid var(--border-light-medium); color: var(--uw-text-on-light-ghost);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease;
+}
+.cloud-security-page .faq-icon.is-open{ transform: rotate(45deg); border-color: var(--uw-amber-border); color: var(--uw-wts-ring-current); }
+
+.cloud-security-page .faq-answer{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--uw-transition-hover) ease; }
+.cloud-security-page .faq-answer.is-open{ grid-template-rows: 1fr; }
+.cloud-security-page .faq-answer-inner{ overflow: hidden; }
+.cloud-security-page .faq-answer-inner p{
+  font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body);
+  line-height: 1.65; color: var(--uw-body-text); max-width: 640px; padding-bottom: var(--space-6);
+}

@@ -22,7 +22,7 @@ declare global {
   interface Window {
     openBookingPanel: (
       config: BookingPanelConfig,
-      preselectedTopic?: DatacenterBookingTopic
+      preselectedTopic?: DatacenterBookingTopic | CloudBookingTopic
     ) => void;
     closeBookingPanel: () => void;
   }

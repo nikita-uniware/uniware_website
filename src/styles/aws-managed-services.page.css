@@ -37,7 +37,6 @@
 .aws-managed-services-page .faq-list{ display: flex; flex-direction: column; }
 
 .aws-managed-services-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
-.aws-managed-services-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
 
 .aws-managed-services-page .faq-question-wrap{ margin: 0; }
 .aws-managed-services-page .faq-question{

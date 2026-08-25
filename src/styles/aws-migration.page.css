@@ -67,7 +67,6 @@
    first also gets a border-top via the adjacent-sibling selector, so
    the rule reads as one continuous line down the full list. */
 .aws-migration-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
-.aws-migration-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
 
 .aws-migration-page .faq-question-wrap{ margin: 0; }
 .aws-migration-page .faq-question{

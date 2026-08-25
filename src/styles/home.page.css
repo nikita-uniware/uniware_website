@@ -1,0 +1,415 @@
+/* ══════════════════════════════════════════════════════
+   HERO STAT ROW — reuses the .stat-card/.stat-number/.stat-label
+   unit from the Track Record pattern (cybersecurity.page.css),
+   but placed inline inside the hero itself (three cards, not the
+   usual two-card .stats-right half of a .stats-grid section).
+   Dark-surface retint matches the exact tokens every other page's
+   .stats--dark override already uses for this same light->dark
+   pairing (--surface-dark-subtle bg, --uw-white number, dark
+   secondary-text label).
+══════════════════════════════════════════════════════ */
+.home-page .hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-9);
+  position: relative;
+  z-index: 2;
+}
+.home-page .hero-stats .stat-card {
+  background: var(--surface-dark-subtle);
+  border: 1px solid var(--border-dark);
+  /* Hug content instead of the base .stat-card's flex:1 stretch —
+     three cards with very different label lengths should size to
+     their own content, not share equal-width columns. */
+  flex: 0 0 auto;
+}
+/* Mobile only: once the row wraps to a vertical stack, each card
+   should fill the row rather than hug its own content width. */
+@media(max-width:767px){
+  .home-page .hero-stats .stat-card { width: 100%; }
+}
+/* One tier down from the base .stat-number scale (--text-h2/48px base,
+   --text-stat-lg/56px desktop — the exact size Migration/Managed
+   Services use) — next size down within the same --text-stat-* scale:
+   --text-stat-sm/40px base, --text-stat-md/48px desktop. */
+.home-page .hero-stats .stat-number { color: var(--uw-white); font-size: var(--text-stat-sm); }
+@media(min-width:1024px){ .home-page .hero-stats .stat-number { font-size: var(--text-stat-md); } }
+.home-page .hero-stats .stat-label { color: var(--uw-text-on-dark-secondary); }
+
+/* ══════════════════════════════════════════════════════
+   OUR STORY — direct reuse of the "Where to Start" scroll-
+   sync pattern (useScrollSyncHighlight + .wts-card + its
+   existing .is-current amber-highlight behaviour), NOT a
+   bespoke component. Only the section shell is dark here
+   (unlike the white .wts section every existing usage sits
+   on), so the card's own light/dark tokens are retinted with
+   the same light->dark token pairs already used throughout
+   the site's other dark-surface variants (--uw-white heading,
+   --uw-text-on-dark-muted body, --surface-dark-subtle/
+   --border-dark inactive card, --uw-amber-dark eyebrow) —
+   the .is-current highlight itself is untouched (the existing
+   warm amber/yellow card already reads correctly on any
+   background, exactly as it does today wherever a FAQ/wts
+   icon highlight appears regardless of section colour).
+
+   .wts-layout/.wts-head/.wts-rings are NOT reused — those
+   exist only to pair cards with the concentric ring diagram,
+   which has no equivalent here. Section header instead uses
+   the plain .section-header-block + .sec-eyebrow-d/.sec-heading-d
+   pattern every other dark section on the site already uses,
+   and .wts-cards is rendered as a single flow, full width.
+
+   Connector fill: the real .wts-connector is a static, non-
+   animated line hidden entirely above 1024px (rings carry the
+   progression signal there instead). Confirmed with Niki:
+   since this section has no rings, the connector stays visible
+   at every breakpoint, and gets a small is-current-driven fill
+   added (--border-chrome-strong, a muted-white tone rather than
+   the amber used elsewhere in this family — this line reads as
+   progress being drawn downward, not a selection highlight) —
+   a small consistent addition, not a new mechanism.
+══════════════════════════════════════════════════════ */
+.home-page .wts-cards { margin-top: var(--section-head-gap); }
+
+/* No subtext under this section's heading (unlike every section that
+   has one, where the subtext's own margin already provides the gap
+   before the content below) — enforce the standard 48px gap directly
+   on the heading itself so the cards don't sit too close under it. */
+#home-story-heading { margin-bottom: var(--space-12); }
+
+/* Ghost/inactive card: no fill, border only, recedes into the dark
+   section. Border reuses --border-dark, the same subtle token .cs-card
+   and every other dark card border already uses. */
+html.is-ready .home-page .wts-card:not(.is-current) { background: transparent; border-color: var(--border-dark); }
+html.is-ready .home-page .wts-card:not(.is-current) .wts-card-eyebrow { color: var(--uw-amber-dark); }
+html.is-ready .home-page .wts-card:not(.is-current) .wts-card-heading { color: var(--uw-white); }
+html.is-ready .home-page .wts-card:not(.is-current) .wts-card-body { color: var(--uw-text-on-dark-muted); }
+
+/* Active card: the standard dark-card surface fill (--surface-dark-card,
+   the exact token .cs-card and the Recognition cards already use) — no
+   amber/gold. Needs the same html.is-ready prefix as the base .is-current
+   rule it's overriding, to win on specificity rather than source order. */
+html.is-ready .home-page .wts-card.is-current {
+  background: var(--surface-dark-card);
+  border-color: var(--border-dark);
+}
+html.is-ready .home-page .wts-card.is-current .wts-card-eyebrow { color: var(--uw-amber-dark); }
+html.is-ready .home-page .wts-card.is-current .wts-card-heading { color: var(--uw-white); }
+html.is-ready .home-page .wts-card.is-current .wts-card-body { color: var(--uw-text-on-dark-muted); }
+
+/* Hover — active card only (the selector requires .is-current, so
+   ghost/inactive cards get no hover treatment at all; the "Explore"
+   link's own .link-text-dark:hover rule already handles its own
+   underline independently of the card). Same escalation .cs-card:hover
+   already uses elsewhere for dark cards. */
+html.is-ready .home-page .wts-card.is-current:hover {
+  background: var(--surface-dark-card-hover);
+  border-color: var(--border-chrome-heavy);
+}
+
+/* Card max-width, left-aligned (not centered — no auto margins, this
+   is just the natural block-start alignment of a capped-width flex
+   item in a column flex container). Base pattern already applies
+   640px below 1024px (paired with its own 2-column ring layout at
+   desktop, which this page doesn't use), so this page needs it kept
+   at every breakpoint instead of dropped at 1024px. */
+@media(min-width:1024px){
+  .home-page .wts-card { max-width: 640px; }
+}
+
+/* No margin-bottom on the card itself — the .wts-connector between
+   items is the only spacing, so the connector line reads as one
+   continuous thread rather than being broken up by a dead gap. */
+.home-page .wts-card { margin-bottom: 0; }
+
+.home-page .wts-card-link { margin-top: var(--space-1); }
+
+/* Connector — visible at every breakpoint (no rings here to take
+   over the progression role on desktop), retinted for the dark
+   section, with an is-current-driven muted-white fill. */
+.home-page .wts-connector {
+  display: block;
+  height: var(--space-14);
+  background: var(--border-chrome-light);
+  transition: background-color var(--uw-transition-hover) ease;
+}
+.home-page .wts-connector.is-filled { background: var(--border-chrome-strong); }
+
+/* ══════════════════════════════════════════════════════
+   OUR CLIENTS — reuses the technology-partner marquee
+   mechanism verbatim (.pf-marquee-col/-track/-row/-row--ltr/
+   -row--rtl/.pf-logo-item, all already defined once in
+   cybersecurity.page.css and imported here). Only the
+   section shell around it is new: eyebrow+heading sit inside
+   the normal .container (standard section-pad top, no bottom
+   padding of its own), then the marquee runs as a direct
+   section child — no .container, no side padding — so it's
+   genuinely full-bleed, with the section's own bottom padding
+   living on the marquee wrapper instead so the section still
+   ends with normal spacing.
+══════════════════════════════════════════════════════ */
+.home-page .our-clients { background: var(--uw-white); overflow: hidden; }
+.home-page .our-clients .container { padding-top: var(--section-pad-sm); padding-bottom: 0; }
+@media(min-width:768px){ .home-page .our-clients .container { padding-top: var(--section-pad-md); } }
+@media(min-width:1024px){ .home-page .our-clients .container { padding-top: var(--section-pad-lg); } }
+
+.home-page .our-clients-marquee {
+  margin-top: var(--section-head-gap);
+  padding-bottom: var(--section-pad-sm);
+}
+@media(min-width:768px){ .home-page .our-clients-marquee { padding-bottom: var(--section-pad-md); } }
+@media(min-width:1024px){ .home-page .our-clients-marquee { padding-bottom: var(--section-pad-lg); } }
+
+.home-page .our-clients-logo-placeholder { color: var(--uw-text-on-light-ghost); opacity: 0.7; }
+
+/* Top/bottom borders so the strip reads as contained — same
+   var(--section-divider) token .dci-badges already uses for its own
+   top+bottom rule. The row-to-row divider between the two tracks is
+   already inherited unchanged from the base .pf-marquee-col rule. */
+.home-page .our-clients-marquee .pf-marquee-track:first-child { border-top: 1px solid var(--section-divider); }
+.home-page .our-clients-marquee .pf-marquee-track:last-child { border-bottom: 1px solid var(--section-divider); }
+
+/* ══════════════════════════════════════════════════════
+   RECOGNITION — horizontal scroll carousel, reusing the exact
+   .carousel-wrap/.carousel-wrap-d/.carousel-track/.sec-header-flex/
+   .sec-arrows/.arrow-btn/.arrow-btn-d shell from the Cybersecurity
+   page's Recovery section (all unscoped, already imported here via
+   cybersecurity.page.css — no page-scoped overrides needed for the
+   shell itself). Card internals (.rec-card and children) are bespoke
+   two-column layouts, not the shared .tile-rec pattern.
+══════════════════════════════════════════════════════ */
+
+/* Wider gap than the shared .carousel-track default, and right padding
+   so the second card's trailing edge peeks in clearly rather than
+   getting cut flush at the container edge. Scoped by id since
+   .carousel-track itself is the shared, unscoped shell class. */
+.home-page #recognition-track {
+  gap: var(--space-6);
+  padding-right: var(--space-10);
+}
+
+/* Card shell — ~80vw wide so ~1.25 cards show at typical desktop
+   widths, capped at 720px. Same dark-card token pair used everywhere
+   else on this page (--surface-dark-card / --border-chrome-light). */
+.home-page .rec-card {
+  flex-shrink: 0;
+  width: 80vw;
+  /* Tuned so ~1.25 cards show at 1280px viewport width (container is
+     1120px there) — 720px would leave ~1.54 cards visible instead. */
+  max-width: 880px;
+  background: var(--surface-dark-card);
+  border: 1px solid var(--border-chrome-light);
+  border-radius: 12px;
+  display: flex;
+  scroll-snap-align: start;
+}
+
+.home-page .rec-card-left {
+  width: 32%;
+  flex-shrink: 0;
+  padding: var(--space-7);
+  border-right: 1px solid var(--border-chrome-light);
+  display: flex;
+  flex-direction: column;
+  /* Explicit left/flex-start (not the flex default of stretch) so the
+     kicker and logo never get centered or stretched to the column's
+     full cross-axis width. */
+  align-items: flex-start;
+}
+.home-page .rec-card-right {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  padding: var(--space-7);
+  /* Column layout so the trailing element (link/footer) can pin to
+     the bottom via margin-top:auto — both cards sit in the same flex
+     row and stretch to the taller card's height, so without this the
+     shorter card's content would leave dead space below it. */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Kicker + logo replace the old "Recognized by X" text heading — the
+   logo itself does the naming job. Sized as the smallest heading
+   token in the type scale (--text-h4-sm) so it reads as a proper
+   small heading, not a caption/eyebrow. */
+.home-page .rec-card-kicker {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-h4-sm);
+  line-height: 1.3;
+  color: var(--uw-text-on-dark-secondary);
+  text-align: left;
+  margin-bottom: var(--space-3);
+}
+/* Height-only sizing — width is never set, so the logo always scales
+   proportionately and never stretches or distorts. Dell and Commvault
+   render at visibly different widths at the same 32px height; that's
+   each logo's own proportions, not a bug. */
+.home-page .rec-card-logo { display: block; height: 32px; width: auto; margin: 0 0 var(--space-5); }
+.home-page .rec-card-desc {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
+  /* One tier up from the base --text-body-sm this used to sit at,
+     within the existing --text-body-* scale. */
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: var(--uw-text-on-dark-muted);
+  text-align: left;
+  margin-bottom: var(--space-5);
+}
+
+/* Mobile: columns stack (left column on top), so the row layout,
+   fixed 32% left-column width, and the divider between columns (which
+   would read as a stray vertical line in a single-column stack) all
+   need to drop below 768px, matching the site's standard breakpoint. */
+@media(max-width:767px){
+  .home-page .rec-card { flex-direction: column; width: 88vw; }
+  .home-page .rec-card-left {
+    width: 100%;
+    border-right: none;
+  }
+}
+/* Card 1's link now lives in the right column, below the stats grid —
+   left column no longer pins it via margin-top:auto. */
+.home-page .rec-card-right .rec-card-link { display: inline-flex; margin-top: auto; padding-top: var(--space-5); }
+
+.home-page .rec-card-right .cs-media-video {
+  display: block; width: 100%; border-radius: 12px;
+  border: 1px solid var(--border-chrome-light); background: var(--surface-dark-subtle);
+  margin-bottom: var(--space-5);
+}
+.home-page .rec-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+.home-page .rec-stat { background: var(--surface-dark-subtle); border-radius: 10px; padding: var(--space-4); }
+.home-page .rec-stat-number { font-family: var(--font-display); font-weight: var(--font-weight-bold); font-size: var(--text-h3-sm); color: var(--uw-white); margin-bottom: var(--space-1); }
+.home-page .rec-stat-label { font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body-sm); line-height: 1.5; color: var(--uw-text-on-dark-muted); }
+
+/* Card 2 — award-recipient label + row list. Rows are separated by
+   divider lines only (no per-row card), using --border-chrome-light,
+   the dark-context equivalent of --section-divider (which is a
+   light-surface token and would be nearly invisible here). */
+.home-page .rec-award-label {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-eyebrow);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--uw-text-on-dark-secondary);
+  margin-bottom: var(--space-2);
+}
+.home-page .rec-award-list { display: flex; flex-direction: column; }
+.home-page .rec-award-row {
+  display: flex;
+  /* Top-aligned (not centered) at every breakpoint, so the photo stays
+     anchored to the name rather than floating to the middle once the
+     row grows taller on mobile (badge wrapping below the text). */
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-chrome-light);
+}
+.home-page .rec-award-row:last-child { border-bottom: none; padding-bottom: 0; }
+.home-page .rec-award-photo {
+  width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+  border: 1px solid var(--border-chrome-light);
+}
+.home-page .rec-award-info { flex: 1; min-width: 0; }
+
+/* Mobile: badge moves below name/role instead of sitting inline to
+   the right (where it squeezed the text). Grid (not flex-wrap) so the
+   badge lands indented under the text, not under the photo — photo
+   spans both rows via the repeated "photo" area, staying top-aligned
+   next to the name. Photo size is untouched (still 38px). */
+@media(max-width:767px){
+  .home-page .rec-award-row {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    grid-template-areas: "photo info" "photo badge";
+    column-gap: var(--space-4);
+    row-gap: var(--space-1_5);
+  }
+  .home-page .rec-award-photo { grid-area: photo; }
+  .home-page .rec-award-info { grid-area: info; }
+  .home-page .rec-award-badge { grid-area: badge; justify-self: start; }
+}
+.home-page .rec-award-name { font-family: var(--font-body); font-weight: var(--font-weight-medium); font-size: var(--text-body-sm); color: var(--uw-white); }
+.home-page .rec-award-role { font-family: var(--font-body); font-weight: var(--font-weight-regular); font-size: var(--text-caption); color: var(--uw-text-on-dark-muted); }
+.home-page .rec-award-badge {
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-caption);
+  color: var(--uw-text-on-dark-secondary);
+  background: var(--surface-dark-subtle);
+  border: 1px solid var(--border-chrome-light);
+  border-radius: 20px;
+  padding: var(--space-1_5) var(--space-3);
+  white-space: nowrap;
+}
+
+/* Bottom link section — fills the space below the award rows instead
+   of leaving it empty. */
+.home-page .rec-award-footer {
+  margin-top: auto;
+  padding-top: var(--space-5);
+  /* --border-chrome-light, not --section-divider (a light-surface
+     token that's effectively invisible on this dark card) — same
+     substitution already used for every other divider in these cards. */
+  border-top: 1px solid var(--border-chrome-light);
+}
+.home-page .rec-award-footer-desc {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
+  font-size: var(--text-body-sm);
+  line-height: 1.5;
+  color: var(--uw-text-on-dark-muted);
+  margin-bottom: var(--space-3);
+}
+
+/* ══════════════════════════════════════════════════════
+   FAQ — direct reuse of the standard 1/2:1/2 pattern. Back
+   to the normal border-top + border-bottom shell (unlike an
+   earlier pass on this page): Recognition is now a dark
+   section, so FAQ once again follows a colour change like
+   every other page, and no longer needs the white-on-white
+   border-top omission that applied before.
+══════════════════════════════════════════════════════ */
+.home-page .faq { background: var(--uw-white); border-top: 1px solid var(--section-divider); border-bottom: 1px solid var(--section-divider); }
+.home-page .faq .container { padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+@media(min-width:768px){ .home-page .faq .container{ padding-top: var(--section-pad-md); padding-bottom: var(--section-pad-md); } }
+@media(min-width:1024px){ .home-page .faq .container{ padding-top: var(--section-pad-lg); padding-bottom: var(--section-pad-lg); } }
+
+.home-page .faq-layout { display: block; }
+@media(min-width:1024px){
+  .home-page .faq-layout{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: start; }
+}
+
+.home-page .faq-list{ display: flex; flex-direction: column; }
+
+.home-page .faq-item{ border-bottom: 1px solid var(--section-divider); }
+
+.home-page .faq-question-wrap{ margin: 0; }
+.home-page .faq-question{
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+  padding: var(--space-6) 0; background: none; border: none; text-align: left; cursor: pointer;
+  font-family: var(--font-display); font-weight: var(--font-weight-semibold); font-size: var(--text-h4-sm);
+  line-height: 1.30; color: var(--uw-black);
+}
+@media(min-width:1024px){ .home-page .faq-question{ font-size: var(--text-h4); } }
+
+.home-page .faq-icon{
+  flex-shrink: 0; width: var(--space-9); height: var(--space-9); border-radius: 50%;
+  border: 1px solid var(--border-light-medium); color: var(--uw-text-on-light-ghost);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--uw-transition-hover) ease, border-color var(--uw-transition-hover) ease, color var(--uw-transition-hover) ease;
+}
+.home-page .faq-icon.is-open{ transform: rotate(45deg); border-color: var(--uw-amber-border); color: var(--uw-wts-ring-current); }
+
+.home-page .faq-answer{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--uw-transition-hover) ease; }
+.home-page .faq-answer.is-open{ grid-template-rows: 1fr; }
+.home-page .faq-answer-inner{ overflow: hidden; }
+.home-page .faq-answer-inner p{
+  font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body);
+  line-height: 1.65; color: var(--uw-body-text); max-width: 640px; padding-bottom: var(--space-6);
+}

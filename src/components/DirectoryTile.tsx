@@ -8,14 +8,17 @@ import "@/styles/directory-tile.css";
  * built from globals.css/cybersecurity.page.css tokens only — this
  * component is fully independent of any page-scoped CSS.
  *
- * Icon slot is one flexible prop: pass `icon` for a normal Phosphor
- * icon (Regular, Fill on hover). Omit it for the AWS-logo placeholder
- * slot instead — used until real AWS Architecture Icons are supplied
- * for the Workloads directory.
+ * Icon slot is one of three states: pass `icon` for a normal Phosphor
+ * icon (Fill weight, no hover state); pass `logoSrc` for a real product
+ * logo image (e.g. an AWS Architecture Icon — square-cornered source
+ * art, clipped to the icon box's own radius via overflow:hidden so it
+ * reads as consistent with the rest of the rounded card system); omit
+ * both for the generic "logo coming soon" placeholder glyph.
  */
 type DirectoryTileProps = {
   variant: "light" | "dark";
   icon?: Icon;
+  logoSrc?: string;
   heading: string;
   body: string;
   href: string;
@@ -59,6 +62,7 @@ const ArrowDiagonal = ({ className }: { className: string }) => (
 export function DirectoryTile({
   variant,
   icon: TileIcon,
+  logoSrc,
   heading,
   body,
   href,
@@ -74,14 +78,9 @@ export function DirectoryTile({
     <a href={href} className={`directory-tile directory-tile--${variant}`}>
       <div className={`directory-tile-icon directory-tile-icon--${variant}`} aria-hidden="true">
         {TileIcon ? (
-          <>
-            <span className="directory-tile-icon-stroke">
-              <TileIcon size={16} weight="regular" />
-            </span>
-            <span className="directory-tile-icon-fill">
-              <TileIcon size={16} weight="fill" />
-            </span>
-          </>
+          <TileIcon size={16} weight="fill" />
+        ) : logoSrc ? (
+          <img src={logoSrc} alt="" className="directory-tile-logo" />
         ) : (
           // DEV PLACEHOLDER — AWS logo to be swapped in — source: AWS
           // Architecture Icons. ImageSquare here is a deliberate "logo

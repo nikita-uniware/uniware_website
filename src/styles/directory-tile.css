@@ -49,6 +49,7 @@
   width: var(--space-12);
   height: var(--space-12);
   border-radius: 10px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,19 +63,19 @@
 .directory-tile--light:hover .directory-tile-icon--light { color: var(--uw-wts-ring-current); }
 .directory-tile--dark:hover  .directory-tile-icon--dark  { color: var(--uw-text-on-dark-bright); }
 
-/* Two-SVG swap: stroke shown by default, fill shown on hover — same
-   .ti-stroke/.ti-fill technique as .tile-prev:hover/.tile-rec:hover.
-   Phosphor icon cards only; the logo-placeholder slot has no swap. */
-.directory-tile-icon-fill { display: none; }
-.directory-tile:hover .directory-tile-icon-stroke { display: none; }
-.directory-tile:hover .directory-tile-icon-fill { display: block; }
-
 /* Logo placeholder — Workloads directory only. AWS logo to be
    swapped in — source: AWS Architecture Icons. Sized identically to
    the icon slot (same .directory-tile-icon box); the reduced opacity
    marks it as an intentional "logo coming soon" placeholder, not
    meant to read as the product's real icon. */
 .directory-tile-logo-placeholder { opacity: 0.7; }
+
+/* Real product logo (e.g. an AWS Architecture Icon) — fills the same
+   .directory-tile-icon box completely; the box's own border-radius +
+   overflow:hidden (above) clips the logo's square source-art corners
+   so they read as consistent with the rest of the rounded card
+   system, rather than clipping the SVG file itself. */
+.directory-tile-logo { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ── Heading — reuses .tile-name-w / .tile-name-d ── */
 .directory-tile-heading {

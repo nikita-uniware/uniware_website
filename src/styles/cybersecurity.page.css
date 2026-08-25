@@ -522,13 +522,19 @@ html.is-ready .wts-card.is-current .wts-card-audience{ color:var(--uw-body-text)
 .tc-line-d { width:1px; height:100%; background:var(--border-chrome-scrollbar); border-radius:1px; }
 
 /* ── Partner pills ── */
-.tile-prev .tile-icon-w { background:var(--amber-tint-bg); border-color:var(--amber-tint-border-strong); color:var(--uw-amber-icon-tint); }
+.tile-prev .tile-icon-w { background:var(--amber-tint-bg); border-color:var(--amber-tint-border-strong); color:var(--uw-wts-ring-current); }
 .tile-prev .pill-w { background:var(--amber-tint-bg-strong); border-color:var(--amber-tint-border); color:var(--uw-wts-ring-current); }
 .tile-prev .tile-name-w { color:var(--uw-black); }
 .tile-prev .tile-desc-w { color:var(--uw-body-text); }
 .tile-pills { display:flex; gap:var(--space-1); flex-wrap:wrap; flex-shrink:0; }
 .pill-w { font-family:var(--font-body); font-size:var(--text-eyebrow); font-weight:var(--font-weight-medium); color:var(--uw-text-on-light-muted); background:var(--surface-light-pill); border:1px solid var(--section-divider); border-radius:4px; padding:var(--space-px-3) var(--space-2); white-space:nowrap; }
 .pill-d { font-family:var(--font-body); font-size:var(--text-eyebrow); font-weight:var(--font-weight-medium); color:var(--uw-text-on-dark); background:var(--surface-dark-muted); border:1px solid var(--border-chrome-pill-idle); border-radius:4px; padding:var(--space-px-3) var(--space-2); white-space:nowrap; }
+
+/* Footer link — sits below the pill row as its own element, on the
+   "Cloud security" tile only. Doesn't touch the shared paragraph-to-
+   pills spacing every Prevention tile relies on; just adds its own
+   top margin after the pills, same as any other stacked flex child. */
+.tile-footer-link { margin-top:var(--space-3); flex-shrink:0; }
 
 /* ── OT callout ── */
 .ot-callout { background:var(--surface-light-subtle); border:1px solid var(--surface-light-faint); border-left:3px solid var(--uw-amber-light); border-radius:0 10px 10px 0; padding:var(--space-5) var(--space-6); margin-bottom:var(--space-7); max-width:680px; }
@@ -634,21 +640,10 @@ html.is-ready .sec-arrows {
   }
 }
 
-/* ══ ICON HOVER: fill weight on hover. No scale. No bg/border change on non-clickable cards. ══ */
+/* ══ ICON BOX: Fill weight always, no hover swap. No scale. No bg/border change on non-clickable cards. ══ */
 .tile-icon-w,
 .tile-icon-d,
 .card-icon { cursor: default; }
-
-/* Two-SVG swap: stroke shown by default, fill shown on hover */
-.ti-fill { display: none; }
-
-.tile-prev:hover .ti-stroke,
-.tile-rec:hover  .ti-stroke,
-.pillar-card:hover .ti-stroke { display: none; }
-
-.tile-prev:hover .ti-fill,
-.tile-rec:hover  .ti-fill,
-.pillar-card:hover .ti-fill { display: block; }
 
 /* Color on hover — same family as at rest, full opacity */
 .tile-prev:hover .tile-icon-w   { color: var(--uw-wts-ring-current); }
@@ -679,7 +674,6 @@ html.is-ready .sec-arrows {
 .cyber-page .faq-list{ display: flex; flex-direction: column; }
 
 .cyber-page .faq-item{ border-bottom: 1px solid var(--section-divider); margin: 0; }
-.cyber-page .faq-item + .faq-item{ border-top: 1px solid var(--section-divider); }
 
 .cyber-page .faq-question{
   width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
