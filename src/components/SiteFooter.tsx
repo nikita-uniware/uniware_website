@@ -38,6 +38,13 @@ export function SiteFooter() {
             Data Centre Infrastructure
           </Link>
           <span className="footer-sep" aria-hidden="true" />
+          <Link
+            href="/solutions/cloud/aws/workloads/genai"
+            className="footer-link"
+          >
+            AI Solutions
+          </Link>
+          <span className="footer-sep" aria-hidden="true" />
           <Link href="/resources/case-studies" className="footer-link">
             Case studies
           </Link>

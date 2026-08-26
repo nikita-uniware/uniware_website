@@ -275,7 +275,12 @@ export function SiteNav() {
             <p className="site-nav-mobile-heading">Solutions</p>
             <Link
               href="/solutions/cybersecurity"
-              className="site-nav-mobile-link"
+              className={`site-nav-mobile-link${
+                pathname.startsWith("/solutions/cybersecurity") ? " is-active" : ""
+              }`}
+              aria-current={
+                pathname.startsWith("/solutions/cybersecurity") ? "page" : undefined
+              }
             >
               Cybersecurity
             </Link>
@@ -301,25 +306,49 @@ export function SiteNav() {
               className="site-nav-mobile-cloud-links"
               hidden={!mobileCloudOpen}
             >
-              {CLOUD_SOLUTIONS.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="site-nav-mobile-sublink"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {CLOUD_SOLUTIONS.map((item) => {
+                const active =
+                  pathname === item.href ||
+                  pathname.startsWith(`${item.href}/`);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`site-nav-mobile-sublink${active ? " is-active" : ""}`}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </div>
             <Link
               href="/solutions/data-centre-infrastructure"
-              className="site-nav-mobile-link"
+              className={`site-nav-mobile-link${
+                pathname.startsWith("/solutions/data-centre-infrastructure")
+                  ? " is-active"
+                  : ""
+              }`}
+              aria-current={
+                pathname.startsWith("/solutions/data-centre-infrastructure")
+                  ? "page"
+                  : undefined
+              }
             >
               Data Centre Infrastructure
             </Link>
             <Link
               href="/solutions/cloud/aws/workloads/genai"
-              className="site-nav-mobile-link"
+              className={`site-nav-mobile-link${
+                pathname.startsWith("/solutions/cloud/aws/workloads/genai")
+                  ? " is-active"
+                  : ""
+              }`}
+              aria-current={
+                pathname.startsWith("/solutions/cloud/aws/workloads/genai")
+                  ? "page"
+                  : undefined
+              }
             >
               AI Solutions
             </Link>
@@ -329,7 +358,12 @@ export function SiteNav() {
             <p className="site-nav-mobile-heading">Resources</p>
             <Link
               href="/resources/case-studies"
-              className="site-nav-mobile-link"
+              className={`site-nav-mobile-link${
+                pathname.startsWith("/resources/case-studies") ? " is-active" : ""
+              }`}
+              aria-current={
+                pathname.startsWith("/resources/case-studies") ? "page" : undefined
+              }
             >
               Case studies
             </Link>
