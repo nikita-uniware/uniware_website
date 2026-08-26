@@ -7,6 +7,7 @@ import { useReveal } from "@/hooks/useReveal";
 import { useScrollSyncHighlight } from "@/hooks/useScrollSyncHighlight";
 import { CircleGroup } from "@/components/CircleGroup";
 import { PrimaryCTA } from "@/components/PrimaryCTA";
+import type { CustomerLogo } from "@/lib/sanity";
 import "@/styles/data-centre-infrastructure.page.css";
 import "@/styles/cybersecurity.page.css";
 import "@/styles/home.page.css";
@@ -34,24 +35,39 @@ const PlusIcon = () => (
   </svg>
 );
 
-// DEV-ONLY PLACEHOLDER — see the dev comment at the "Our Clients"
-// section below for the real Sanity data source this connects to.
+// Placeholder count when Sanity has no Customers tagged for homepage yet.
 const CLIENT_LOGO_PLACEHOLDER_COUNT = 8;
 
-function ClientLogoRow({ direction }: { direction: "ltr" | "rtl" }) {
+function ClientLogoRow({
+  direction,
+  customers,
+}: {
+  direction: "ltr" | "rtl";
+  customers: CustomerLogo[];
+}) {
   // ×4 repeat, same seamless-loop convention buildPartnerStripHtml
   // already uses for the tech-partner marquee (1 primary set + 3
   // aria-hidden copies against the -25% scroll transform).
-  const items = Array.from(
-    { length: CLIENT_LOGO_PLACEHOLDER_COUNT * 4 },
-    (_, i) => i
-  );
+  const source =
+    customers.length > 0
+      ? customers
+      : Array.from({ length: CLIENT_LOGO_PLACEHOLDER_COUNT }, (_, i) => ({
+          name: `Client ${i + 1}`,
+          slug: `placeholder-${i}`,
+          logoUrl: "",
+        }));
+  const items = Array.from({ length: source.length * 4 }, (_, i) => source[i % source.length]);
+
   return (
     <div className="pf-marquee-track">
       <div className={`pf-marquee-row pf-marquee-row--${direction}`}>
-        {items.map((i) => (
-          <div className="pf-logo-item" aria-hidden="true" key={`${direction}-${i}`}>
-            <Buildings size={24} weight="regular" className="our-clients-logo-placeholder" />
+        {items.map((customer, i) => (
+          <div className="pf-logo-item" aria-hidden="true" key={`${direction}-${customer.slug}-${i}`}>
+            {customer.logoUrl ? (
+              <img src={customer.logoUrl} alt="" loading="lazy" />
+            ) : (
+              <Buildings size={24} weight="regular" className="our-clients-logo-placeholder" />
+            )}
           </div>
         ))}
       </div>
@@ -118,7 +134,7 @@ const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
-export function HomePage() {
+export function HomePage({ customers = [] }: { customers?: CustomerLogo[] }) {
   useReveal();
   useScrollSyncHighlight({
     triggerSelector: "[data-step-trigger].wts-card",
@@ -319,14 +335,11 @@ export function HomePage() {
           </div>
         </div>
 
-        {/* DEV-ONLY PLACEHOLDER — no real client logos yet. Wire this up
-            to the Sanity "Customers" content type once Srimathi builds
-            it; swap CLIENT_LOGO_PLACEHOLDER_COUNT's generic Buildings
-            glyphs for actual logoUrl images at that point, same pattern
-            partnerStrip.ts already uses for the tech-partner marquee. */}
+        {/* Customers from Sanity (pages includes "homepage"). Falls back
+            to placeholder glyphs until logos are uploaded in Studio. */}
         <div className="pf-marquee-col our-clients-marquee" data-reveal="0">
-          <ClientLogoRow direction="ltr" />
-          <ClientLogoRow direction="rtl" />
+          <ClientLogoRow direction="ltr" customers={customers} />
+          <ClientLogoRow direction="rtl" customers={customers} />
         </div>
       </section>
 

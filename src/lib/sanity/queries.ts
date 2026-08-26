@@ -143,3 +143,12 @@ export const cloudInfrastructureTechnologiesQuery = `*[
   "logoUrl": logo.asset->url,
   cloudModels
 }`;
+
+/** Customer logos for a given website page (e.g. homepage Our Clients strip). */
+export const customersByPageQuery = `*[_type == "customer" && defined(name) && defined(logo.asset) && $page in pages] | order(name asc){
+  _id,
+  name,
+  "slug": slug.current,
+  "logoUrl": logo.asset->url,
+  pages
+}`;

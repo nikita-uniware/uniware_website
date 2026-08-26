@@ -109,7 +109,7 @@ export function AwsGenAiPage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel("cloud");
+                window.openBookingPanel("aws-workloads");
               }}
             >
               Talk to an expert
@@ -360,7 +360,7 @@ export function AwsGenAiPage() {
         body="Tell us the problem you're trying to solve. We'll tell you honestly whether generative AI is the right tool for it."
         buttonText="Talk to an expert"
         buttonLink="/contact"
-        category="cloud"
+        category="aws-workloads"
         contactLine={{
           name: "Yogeshwaran",
           phone: "+91 73587 83739",

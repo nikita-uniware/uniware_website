@@ -10,7 +10,12 @@ export type BookingRequestEmailPayload = {
   email: string;
   company: string;
   country: string;
-  booking_context: "cybersecurity" | "datacenter" | "cloud";
+  booking_context:
+    | "cybersecurity"
+    | "datacenter"
+    | "cloud"
+    | "aws"
+    | "aws-workloads";
   topics: string[];
   preferred_time: string[];
   notes: string;
@@ -21,12 +26,16 @@ const FORM_NAMES = {
   cybersecurity: "Book a security review",
   datacenter: "Talk to an infrastructure expert",
   cloud: "Talk about your cloud environment",
+  aws: "Talk about AWS",
+  "aws-workloads": "Talk about AWS workloads",
 } as const;
 
 const FORM_LABELS = {
   cybersecurity: "Booking panel: Book a security review / Book a call",
   datacenter: "Booking panel: Data Centre Infrastructure",
   cloud: "Booking panel: Cloud",
+  aws: "Booking panel: AWS",
+  "aws-workloads": "Booking panel: AWS Workloads",
 } as const;
 
 const TOPIC_LABELS: Record<string, string> = {
@@ -42,8 +51,11 @@ const TOPIC_LABELS: Record<string, string> = {
   "cloud-operations": "Cloud Operations",
   "cloud-security": "Cloud Security",
   "aws-migration": "AWS Migration",
-  "aws-consulting": "AWS Consulting",
   "aws-managed-services": "AWS Managed Services",
+  "aws-consulting": "AWS Consulting",
+  "amazon-rds": "Amazon RDS",
+  "generative-ai": "Generative AI",
+  "aws-enquiry": "General AWS enquiry",
   enquiry: "General enquiry",
 };
 

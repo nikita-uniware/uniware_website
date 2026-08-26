@@ -133,7 +133,7 @@ export function AwsRdsPage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel("cloud");
+                window.openBookingPanel("aws-workloads");
               }}
             >
               Talk to an expert
@@ -362,7 +362,7 @@ export function AwsRdsPage() {
 
       <SplitCTA
         id="get-started"
-        category="cloud"
+        category="aws-workloads"
         primary={{
           eyebrow: "Get Started",
           heading: "Need help with your RDS environment?",

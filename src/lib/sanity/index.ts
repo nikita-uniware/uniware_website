@@ -4,6 +4,7 @@ import {
   caseStudyCardsQuery,
   caseStudySlugsQuery,
   cloudInfrastructureTechnologiesQuery,
+  customersByPageQuery,
   infrastructureTechnologiesQuery,
   technologiesByPageQuery,
 } from "./queries";
@@ -277,6 +278,38 @@ export async function fetchCloudInfrastructureTechnologies(): Promise<
       "[sanity] fetchCloudInfrastructureTechnologies failed:",
       err
     );
+    return [];
+  }
+}
+
+export type CustomerPageId = "homepage";
+
+export type CustomerLogo = TechnologyLogo;
+
+/** Published customer logos for a page strip (filtered by CMS `pages`). */
+export async function fetchCustomers(
+  page: CustomerPageId = "homepage"
+): Promise<CustomerLogo[]> {
+  if (!isSanityConfigured()) return [];
+
+  try {
+    const client = getSanityClient();
+    if (!client) return [];
+
+    const docs = await client.fetch<SanityTechnologyDoc[]>(
+      customersByPageQuery,
+      { page }
+    );
+
+    return (docs ?? [])
+      .filter((doc) => Boolean(doc.logoUrl && doc.name))
+      .map((doc) => ({
+        name: doc.name,
+        slug: normalizeTechSlug(doc.name, doc.slug),
+        logoUrl: doc.logoUrl as string,
+      }));
+  } catch (err) {
+    console.error("[sanity] fetchCustomers failed:", err);
     return [];
   }
 }

@@ -205,6 +205,18 @@ export function SiteNav() {
               >
                 Data Centre Infrastructure
               </Link>
+
+              <Link
+                href="/solutions/cloud/aws/workloads/genai"
+                className={`site-nav-dropdown-item${
+                  pathname.startsWith("/solutions/cloud/aws/workloads/genai")
+                    ? " is-active"
+                    : ""
+                }`}
+                role="menuitem"
+              >
+                AI Solutions
+              </Link>
             </div>
           </div>
           <Link href="/resources/case-studies" className="site-nav-link">
@@ -304,6 +316,12 @@ export function SiteNav() {
               className="site-nav-mobile-link"
             >
               Data Centre Infrastructure
+            </Link>
+            <Link
+              href="/solutions/cloud/aws/workloads/genai"
+              className="site-nav-mobile-link"
+            >
+              AI Solutions
             </Link>
           </div>
 

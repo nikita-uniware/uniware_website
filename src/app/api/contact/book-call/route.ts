@@ -24,11 +24,15 @@ const TOPICS_BY_CONTEXT = {
     "cloud-networking",
     "cloud-operations",
     "cloud-security",
-    "aws-migration",
-    "aws-consulting",
-    "aws-managed-services",
     "enquiry",
   ]),
+  aws: new Set([
+    "aws-migration",
+    "aws-managed-services",
+    "aws-consulting",
+    "aws-enquiry",
+  ]),
+  "aws-workloads": new Set(["amazon-rds", "generative-ai", "aws-enquiry"]),
 } as const;
 
 function resolveBookingContext(
@@ -36,6 +40,8 @@ function resolveBookingContext(
 ): BookingRequestEmailPayload["booking_context"] {
   if (raw === "datacenter" || raw === "infrastructure") return "datacenter";
   if (raw === "cloud") return "cloud";
+  if (raw === "aws") return "aws";
+  if (raw === "aws-workloads") return "aws-workloads";
   return "cybersecurity";
 }
 
@@ -50,10 +56,11 @@ export async function POST(req: NextRequest) {
   const bookingContext = resolveBookingContext(
     String(form.get("booking_context") ?? "cybersecurity")
   );
-  const submittedTopics =
-    bookingContext === "datacenter"
-      ? form.getAll("topic[]").map(String)
-      : [String(form.get("topic") ?? "")];
+  const submittedTopics = form.getAll("topic[]").map(String);
+  // Legacy single-select field still accepted if present.
+  const legacyTopic = String(form.get("topic") ?? "");
+  if (legacyTopic) submittedTopics.push(legacyTopic);
+
   const topics = Array.from(
     new Set(
       submittedTopics.filter((topic) =>

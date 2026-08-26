@@ -286,6 +286,69 @@ export const technology = {
   },
 };
 
+const CUSTOMER_PAGES = [
+  { title: "Homepage", value: "homepage" },
+];
+
+/** Client logos for homepage (and future page strips). Same pattern as Technology. */
+export const customer = {
+  name: "customer",
+  title: "Customer",
+  type: "document",
+  fields: [
+    {
+      name: "name",
+      title: "Name",
+      type: "string",
+      validation: (Rule: { required: () => unknown }) => Rule.required(),
+    },
+    {
+      name: "logo",
+      title: "Logo",
+      type: "image",
+      options: { hotspot: false },
+      description: "Official client logo from their brand/media kit.",
+      validation: (Rule: { required: () => unknown }) => Rule.required(),
+    },
+    {
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "name" },
+      validation: (Rule: { required: () => unknown }) => Rule.required(),
+    },
+    {
+      name: "pages",
+      title: "Show on pages",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        list: CUSTOMER_PAGES,
+        layout: "grid",
+      },
+      description:
+        "Tick the pages where this logo should appear. Leave all unticked to hide it everywhere without deleting.",
+      initialValue: ["homepage"],
+    },
+  ],
+  preview: {
+    select: { title: "name", subtitle: "pages", media: "logo" },
+    prepare: ({
+      title,
+      subtitle,
+    }: {
+      title?: string;
+      subtitle?: string[];
+    }) => ({
+      title: title || "Untitled customer",
+      subtitle:
+        Array.isArray(subtitle) && subtitle.length > 0
+          ? `Pages: ${subtitle.join(", ")}`
+          : "Pages: none selected",
+    }),
+  },
+};
+
 export const caseStudy = {
   name: "caseStudy",
   title: "Case Study",
@@ -1014,4 +1077,4 @@ export const caseStudy = {
   },
 };
 
-export const schemaTypes = [technology, caseStudy];
+export const schemaTypes = [technology, customer, caseStudy];

@@ -181,7 +181,7 @@ export function AwsManagedServicesPage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel("cloud");
+                window.openBookingPanel("aws");
               }}
             >
               Talk to an expert
@@ -441,7 +441,7 @@ export function AwsManagedServicesPage() {
 
       <SplitCTA
         id="get-started"
-        category="cloud"
+        category="aws"
         primary={{
           eyebrow: "Get Started",
           heading: "Done managing your AWS environment yourself?",

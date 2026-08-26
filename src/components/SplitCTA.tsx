@@ -41,7 +41,7 @@ type SplitCTAProps = {
    * mechanism window.openBookingPanel already supports for datacenter
    * pillar pages. Only applies to the primary zone; omit for a SplitCTA
    * with no specific topic to preselect. */
-  primaryPreselectedTopic?: DatacenterBookingTopic | CloudBookingTopic;
+  primaryPreselectedTopic?: BookingTopic;
 };
 
 function SplitCTAButton({
@@ -55,7 +55,7 @@ function SplitCTAButton({
   className: string;
   children: string;
   category: BookingPanelConfig;
-  preselectedTopic?: DatacenterBookingTopic | CloudBookingTopic;
+  preselectedTopic?: BookingTopic;
 }) {
   if (href === "/contact") {
     return (

@@ -3,10 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import "@/styles/booking-panel.css";
 
-const DATACENTER_TOPICS: {
-  value: DatacenterBookingTopic;
-  label: string;
-}[] = [
+type TopicOption<T extends string> = { value: T; label: string };
+
+const CYBERSECURITY_TOPICS: TopicOption<CybersecurityBookingTopic>[] = [
+  { value: "cybersecurity", label: "Cybersecurity" },
+  { value: "backup", label: "Backup and Recovery" },
+  { value: "enquiry", label: "General enquiry" },
+];
+
+const DATACENTER_TOPICS: TopicOption<DatacenterBookingTopic>[] = [
   { value: "server", label: "Server" },
   { value: "storage", label: "Storage" },
   { value: "network", label: "Networking" },
@@ -15,16 +20,56 @@ const DATACENTER_TOPICS: {
   { value: "enquiry", label: "General enquiry" },
 ];
 
-const CLOUD_TOPICS: { value: CloudBookingTopic; label: string }[] = [
+const CLOUD_TOPICS: TopicOption<CloudBookingTopic>[] = [
   { value: "cloud-infrastructure", label: "Cloud Infrastructure" },
   { value: "cloud-networking", label: "Cloud Networking" },
   { value: "cloud-operations", label: "Cloud Operations" },
   { value: "cloud-security", label: "Cloud Security" },
-  { value: "aws-migration", label: "AWS Migration" },
-  { value: "aws-consulting", label: "AWS Consulting" },
-  { value: "aws-managed-services", label: "AWS Managed Services" },
   { value: "enquiry", label: "General enquiry" },
 ];
+
+const AWS_TOPICS: TopicOption<AwsBookingTopic>[] = [
+  { value: "aws-migration", label: "AWS Migration" },
+  { value: "aws-managed-services", label: "AWS Managed Services" },
+  { value: "aws-consulting", label: "AWS Consulting" },
+  { value: "aws-enquiry", label: "General AWS enquiry" },
+];
+
+const AWS_WORKLOADS_TOPICS: TopicOption<AwsWorkloadsBookingTopic>[] = [
+  { value: "amazon-rds", label: "Amazon RDS" },
+  { value: "generative-ai", label: "Generative AI" },
+  { value: "aws-enquiry", label: "General AWS enquiry" },
+];
+
+const TOPIC_QUESTION: Record<BookingPanelConfig, string> = {
+  cybersecurity: "What would you like to discuss",
+  datacenter: "What would you like to discuss",
+  cloud: "What would you like to discuss about your cloud environment?",
+  aws: "What would you like to discuss about AWS?",
+  "aws-workloads": "Which AWS workload are you interested in?",
+};
+
+function topicsForConfig(config: BookingPanelConfig): TopicOption<string>[] {
+  switch (config) {
+    case "cybersecurity":
+      return CYBERSECURITY_TOPICS;
+    case "datacenter":
+      return DATACENTER_TOPICS;
+    case "cloud":
+      return CLOUD_TOPICS;
+    case "aws":
+      return AWS_TOPICS;
+    case "aws-workloads":
+      return AWS_WORKLOADS_TOPICS;
+  }
+}
+
+function isTopicForConfig(
+  config: BookingPanelConfig,
+  topic: string
+): topic is BookingTopic {
+  return topicsForConfig(config).some((option) => option.value === topic);
+}
 
 /**
  * Global booking slide-in panel. Mounted once in root layout.
@@ -37,10 +82,7 @@ export function BookingPanel() {
   const [submitting, setSubmitting] = useState(false);
   const [config, setConfig] =
     useState<BookingPanelConfig>("cybersecurity");
-  const [datacenterTopics, setDatacenterTopics] = useState<
-    DatacenterBookingTopic[]
-  >([]);
-  const [cloudTopic, setCloudTopic] = useState<CloudBookingTopic | "">("");
+  const [selectedTopics, setSelectedTopics] = useState<BookingTopic[]>([]);
   const [topicError, setTopicError] = useState("");
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -49,15 +91,10 @@ export function BookingPanel() {
   useEffect(() => {
     window.openBookingPanel = (nextConfig, preselectedTopic) => {
       setConfig(nextConfig);
-      setDatacenterTopics(
-        nextConfig === "datacenter" && preselectedTopic
-          ? [preselectedTopic as DatacenterBookingTopic]
+      setSelectedTopics(
+        preselectedTopic && isTopicForConfig(nextConfig, preselectedTopic)
+          ? [preselectedTopic]
           : []
-      );
-      setCloudTopic(
-        nextConfig === "cloud" && preselectedTopic
-          ? (preselectedTopic as CloudBookingTopic)
-          : ""
       );
       setTopicError("");
       setSent(false);
@@ -101,7 +138,7 @@ export function BookingPanel() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (config === "datacenter" && datacenterTopics.length === 0) {
+    if (selectedTopics.length === 0) {
       setTopicError("Select at least one topic.");
       return;
     }
@@ -117,12 +154,13 @@ export function BookingPanel() {
       if (!res.ok) throw new Error("submit failed");
       setSent(true);
     } catch {
-      // Fall back to native POST if fetch fails
       form.submit();
     } finally {
       setSubmitting(false);
     }
   }
+
+  const topicOptions = topicsForConfig(config);
 
   return (
     <>
@@ -298,106 +336,53 @@ export function BookingPanel() {
                   </div>
                 </div>
 
-                {config === "cybersecurity" ? (
-                  <div className="panel-field-item">
-                    <label className="panel-field-label" htmlFor="pf-topic">
-                      What would you like to discuss
-                    </label>
-                    <div className="panel-select-wrap">
-                      <select
-                        className="panel-select"
-                        id="pf-topic"
-                        name="topic"
-                        required
-                        defaultValue=""
-                      >
-                        <option value="" disabled>
-                          Select a topic
-                        </option>
-                        <option value="cybersecurity">Cybersecurity</option>
-                        <option value="backup">Backup and Recovery</option>
-                        <option value="enquiry">General enquiry</option>
-                      </select>
-                    </div>
-                  </div>
-                ) : config === "cloud" ? (
-                  <div className="panel-field-item">
-                    <label className="panel-field-label" htmlFor="pf-topic">
-                      What would you like to discuss about your cloud
-                      environment?
-                    </label>
-                    <div className="panel-select-wrap">
-                      <select
-                        className="panel-select"
-                        id="pf-topic"
-                        name="topic"
-                        required
-                        value={cloudTopic}
-                        onChange={(e) =>
-                          setCloudTopic(e.target.value as CloudBookingTopic)
-                        }
-                      >
-                        <option value="" disabled>
-                          Select a topic
-                        </option>
-                        {CLOUD_TOPICS.map((topic) => (
-                          <option key={topic.value} value={topic.value}>
+                <div
+                  className="panel-field-item"
+                  role="group"
+                  aria-labelledby="pf-topic-legend"
+                  aria-describedby={topicError ? "pf-topic-error" : undefined}
+                >
+                  <p id="pf-topic-legend" className="panel-field-label">
+                    {TOPIC_QUESTION[config]}{" "}
+                    <span className="panel-field-optional">
+                      (select all that apply)
+                    </span>
+                  </p>
+                  <div className="pills-track">
+                    {topicOptions.map((topic) => {
+                      const id = `pf-topic-${config}-${topic.value}`;
+                      const value = topic.value as BookingTopic;
+                      return (
+                        <span key={id}>
+                          <input
+                            type="checkbox"
+                            id={id}
+                            name="topic[]"
+                            value={topic.value}
+                            className="pill-input"
+                            checked={selectedTopics.includes(value)}
+                            onChange={(event) => {
+                              setSelectedTopics((current) =>
+                                event.target.checked
+                                  ? [...current, value]
+                                  : current.filter((item) => item !== value)
+                              );
+                              setTopicError("");
+                            }}
+                          />
+                          <label htmlFor={id} className="pill-label">
                             {topic.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                          </label>
+                        </span>
+                      );
+                    })}
                   </div>
-                ) : (
-                  <div
-                    className="panel-field-item"
-                    role="group"
-                    aria-labelledby="pf-topic-legend"
-                    aria-describedby={topicError ? "pf-topic-error" : undefined}
-                  >
-                    <p id="pf-topic-legend" className="panel-field-label">
-                      What would you like to discuss{" "}
-                      <span className="panel-field-optional">
-                        (select all that apply)
-                      </span>
+                  {topicError && (
+                    <p id="pf-topic-error" className="panel-field-error" role="alert">
+                      {topicError}
                     </p>
-                    <div className="pills-track">
-                      {DATACENTER_TOPICS.map((topic) => {
-                        const id = `pf-topic-${topic.value}`;
-                        return (
-                          <span key={topic.value}>
-                            <input
-                              type="checkbox"
-                              id={id}
-                              name="topic[]"
-                              value={topic.value}
-                              className="pill-input"
-                              checked={datacenterTopics.includes(topic.value)}
-                              onChange={(event) => {
-                                setDatacenterTopics((current) =>
-                                  event.target.checked
-                                    ? [...current, topic.value]
-                                    : current.filter(
-                                        (value) => value !== topic.value
-                                      )
-                                );
-                                setTopicError("");
-                              }}
-                            />
-                            <label htmlFor={id} className="pill-label">
-                              {topic.label}
-                            </label>
-                          </span>
-                        );
-                      })}
-                    </div>
-                    {topicError && (
-                      <p id="pf-topic-error" className="panel-field-error" role="alert">
-                        {topicError}
-                      </p>
-                    )}
-                  </div>
-                )}
+                  )}
+                </div>
 
                 <div
                   className="panel-field-item"

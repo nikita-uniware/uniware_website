@@ -140,7 +140,7 @@ export function AwsConsultingPage() {
               className="btn-size-lg btn-surface-dark"
               onClick={(e) => {
                 e.preventDefault();
-                window.openBookingPanel("cloud");
+                window.openBookingPanel("aws");
               }}
             >
               Talk to an expert
@@ -369,7 +369,7 @@ export function AwsConsultingPage() {
 
       <SplitCTA
         id="get-started"
-        category="cloud"
+        category="aws"
         primary={{
           eyebrow: "Get Started",
           heading: "Need a second opinion on your AWS setup?",
