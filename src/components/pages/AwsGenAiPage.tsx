@@ -362,8 +362,8 @@ export function AwsGenAiPage() {
         buttonLink="/contact"
         category="aws-workloads"
         contactLine={{
-          name: "Yogeshwaran",
-          phone: "+91 73587 83739",
+          name: "Natasha",
+          phone: "+91 95000 59739",
         }}
       />
     </div>
