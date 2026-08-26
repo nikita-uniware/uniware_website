@@ -547,7 +547,9 @@ export function HomePage({ customers = [] }: { customers?: CustomerLogo[] }) {
                       aria-labelledby={buttonId}
                     >
                       <div className="faq-answer-inner">
-                        <p>{item.answer}</p>
+                        {item.answer.split("\n\n").map((paragraph, pi) => (
+                          <p key={pi}>{paragraph}</p>
+                        ))}
                       </div>
                     </div>
                   </div>

@@ -56,6 +56,14 @@ const OFFICES = [
     phoneHref: "tel:+917338849085",
   },
   {
+    city: "London, UK",
+    hq: false,
+    addressLines: ["20 Wenlock Road", "London N1 7GU"],
+    contactName: "Nikita",
+    phoneDisplay: "+44 79563 65550",
+    phoneHref: "tel:+447956365550",
+  },
+  {
     city: "Delaware, USA",
     hq: false,
     addressLines: ["8 The Green, Suite A", "Dover, DE 19901-3618"],
