@@ -125,12 +125,12 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "What size businesses do you work with?",
     answer:
-      "We primarily work with small and mid-sized businesses (SMB), though we support enterprise clients too. We've grown alongside companies that started with just 15 to 20 employees and now employ over 500 people.",
+      "We work primarily with small and mid-sized businesses (SMB), and we grow with them into enterprise. Many of our clients started with small teams and have since scaled to hundreds of employees and multiple locations. We've supported that whole journey, from getting the first infrastructure in place to managing complex, multi-site operations. If there's a genuine fit, size isn't what stops the conversation.",
   },
   {
     question: "How is Uniware different from a typical IT vendor or reseller?",
     answer:
-      "We're not just a reseller pointing you at a product. We're certified partners across Dell, AWS, and Commvault, and we stay involved after the sale, managing what we implement, not handing it off. That ongoing relationship is the difference.",
+      "We don't just supply technology. We help you choose the right technology, implement it correctly, and support it through your growth.\n\nMost vendors lead with a product. We start by understanding your environment and where you're headed, then recommend from a shortlist we've already validated. Not everything on the market, just what we know is stable, properly supported by the vendor, and right for your situation long-term.\n\nOur team also stays. Long tenures mean the person who helped design your infrastructure is often still the one answering your call years later. Most of our new business comes through referrals from those relationships, which is the clearest signal we have that the approach is working.",
   },
 ];
 
