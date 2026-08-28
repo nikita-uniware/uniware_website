@@ -208,7 +208,7 @@ export function CloudHubPage() {
             <div className="stats-left" data-reveal="0">
               <p className="stats-eyebrow">Track Record</p>
               <h2 className="stats-heading">
-                Over 200 companies have trusted us with their cloud.
+                Over 500 companies have trusted us with their cloud.
               </h2>
               <p className="stats-body">
                 Thirty years in IT infrastructure, now applied to cloud,
@@ -219,7 +219,7 @@ export function CloudHubPage() {
             </div>
             <div className="stats-right">
               <div className="stat-card" data-reveal="0">
-                <div className="stat-number">200+</div>
+                <div className="stat-number">500+</div>
                 <div className="stat-label">Companies trusted us</div>
               </div>
               <div className="stat-card" data-reveal="80">

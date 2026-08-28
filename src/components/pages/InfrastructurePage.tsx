@@ -10,6 +10,7 @@ import type {
   InfrastructurePillarId,
   InfrastructureTechnologyLogo,
 } from "@/lib/sanity";
+import "@/styles/cybersecurity.page.css";
 import "@/styles/data-centre-infrastructure.page.css";
 
 const CheckIcon = () => (
@@ -327,6 +328,35 @@ export function InfrastructurePage({ technologies }: InfrastructurePageProps) {
               <div className="dci-badge-text">
                 <p className="dci-badge-label">Certified</p>
                 <p className="dci-badge-tier text-[#6B2D8B]">Commvault Premier Solutions Partner</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="stats stats--dark" aria-label="Track record">
+        <div className="container">
+          <div className="stats-grid">
+            <div className="stats-left" data-reveal="0">
+              <p className="stats-eyebrow">Track Record</p>
+              <h2 className="stats-heading">
+                Over 500 companies have trusted us with their infrastructure.
+              </h2>
+              <p className="stats-body">
+                Since 1995, we&apos;ve designed, deployed, and maintained IT
+                infrastructure for SMB and enterprise businesses. Servers,
+                storage, networks, virtualisation, and the data protection
+                that holds it all together.
+              </p>
+            </div>
+            <div className="stats-right">
+              <div className="stat-card" data-reveal="0">
+                <div className="stat-number">500+</div>
+                <div className="stat-label">Companies served</div>
+              </div>
+              <div className="stat-card" data-reveal="80">
+                <div className="stat-number">30 years</div>
+                <div className="stat-label">In IT infrastructure</div>
               </div>
             </div>
           </div>

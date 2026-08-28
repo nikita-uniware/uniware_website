@@ -1,4 +1,23 @@
 /* ══════════════════════════════════════════════════════
+   TRACK RECORD — dark variant of the .stats shell (base
+   rules live in cybersecurity.page.css, imported alongside
+   this file). Same override already used on the Cloud hub
+   and AWS hub/migration pages, copied verbatim.
+══════════════════════════════════════════════════════ */
+.dci-page .stats--dark {
+  background: linear-gradient(90deg, var(--uw-dark-blue), var(--uw-black));
+  border-top: 1px solid var(--border-chrome-muted);
+  border-bottom: 1px solid var(--border-chrome-muted);
+}
+.dci-page .stats--dark .stats-left { border-right-color: var(--border-chrome-muted); }
+.dci-page .stats--dark .stats-eyebrow { color: var(--uw-amber-dark); }
+.dci-page .stats--dark .stats-heading { color: var(--uw-white); }
+.dci-page .stats--dark .stats-body { color: var(--uw-text-on-dark-dim); }
+.dci-page .stats--dark .stat-card { background: var(--surface-dark-subtle); }
+.dci-page .stats--dark .stat-number { color: var(--uw-white); }
+.dci-page .stats--dark .stat-label { color: var(--uw-text-on-dark-secondary); }
+
+/* ══════════════════════════════════════════════════════
    PARTNER ACCREDITATION BADGES
    White, static. Directly under hero. Mobile: stacked
    fully vertical. Tablet: Dell full-width row 1, AWS +

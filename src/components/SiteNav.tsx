@@ -306,6 +306,15 @@ export function SiteNav() {
               className="site-nav-mobile-cloud-links"
               hidden={!mobileCloudOpen}
             >
+              <Link
+                href="/solutions/cloud/"
+                className={`site-nav-mobile-sublink${
+                  pathname === "/solutions/cloud/" ? " is-active" : ""
+                }`}
+                aria-current={pathname === "/solutions/cloud/" ? "page" : undefined}
+              >
+                Overview
+              </Link>
               {CLOUD_SOLUTIONS.map((item) => {
                 const active =
                   pathname === item.href ||
