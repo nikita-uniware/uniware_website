@@ -3,10 +3,8 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useReveal } from "@/hooks/useReveal";
-import {
-  type CaseStudy,
-  renderBoldOnly,
-} from "@/content/case-studies/chemical-manufacturing";
+import { type CaseStudy } from "@/content/case-studies/chemical-manufacturing";
+import { CaseStudyRichText } from "@/components/CaseStudyRichText";
 import { CircleGroup } from "@/components/CircleGroup";
 import MuxPlayer from "@mux/mux-player-react";
 import "@/styles/case-study.page.css";
@@ -105,9 +103,11 @@ function SolutionContentBlocks({ study }: { study: CaseStudy }) {
       {study.solution.contentBlocks.map((block, i) => {
         if (block.type === "text") {
           return (
-            <p className="cs-block-body" data-reveal={String(200 + i * 60)} key={`text-${i}`}>
-              {renderBoldOnly(block.body)}
-            </p>
+            <CaseStudyRichText
+              value={block.body}
+              reveal={String(200 + i * 60)}
+              key={`text-${i}`}
+            />
           );
         }
         if (block.type === "image") {
@@ -257,18 +257,24 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                 <h2 className="cs-h2" data-reveal="80">
                   {study.problem.heading}
                 </h2>
-                {study.problem.body.map((para, i) => (
-                  <p
-                    className="cs-block-body"
-                    data-reveal={String(160 + i * 80)}
-                    key={i}
-                  >
-                    {renderBoldOnly(para)}
-                  </p>
-                ))}
+                <CaseStudyRichText value={study.problem.body} reveal="160" />
               </div>
 
               <QuoteSection notes={study.notesAfterProblem} revealBase={200} />
+
+              {study.additionalSection ? (
+                <div className="cs-block">
+                  {study.additionalSection.heading ? (
+                    <h2 className="cs-h2" data-reveal="0">
+                      {study.additionalSection.heading}
+                    </h2>
+                  ) : null}
+                  <CaseStudyRichText
+                    value={study.additionalSection.body}
+                    reveal="80"
+                  />
+                </div>
+              ) : null}
 
               <div className="cs-block">
                 <p className="cs-eyebrow" data-reveal="0">
@@ -277,9 +283,7 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                 <h2 className="cs-h2" data-reveal="80">
                   {study.solution.heading}
                 </h2>
-                <p className="cs-block-body" data-reveal="160">
-                  {renderBoldOnly(study.solution.body)}
-                </p>
+                <CaseStudyRichText value={study.solution.body} reveal="160" />
 
                 <SolutionContentBlocks study={study} />
 

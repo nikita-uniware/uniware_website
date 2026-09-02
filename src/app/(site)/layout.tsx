@@ -1,6 +1,7 @@
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { BookingPanel } from "@/components/BookingPanel";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 export default function SiteLayout({
   children,
@@ -9,6 +10,7 @@ export default function SiteLayout({
 }>) {
   return (
     <>
+      <GoogleAnalytics />
       <SiteNav />
       <main>{children}</main>
       <SiteFooter />

@@ -4,6 +4,9 @@
 
 const portableBlockProjection = `{
   _type,
+  style,
+  listItem,
+  level,
   children[]{ _type, text, marks },
   markDefs[]{ _key, _type }
 }`;
@@ -71,6 +74,11 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
     outcomes
   },
   noteAfterProblem${noteSlotProjection},
+  additionalSection{
+    show,
+    heading,
+    body[]${portableBlockProjection}
+  },
   noteAfterSolution${noteSlotProjection},
   noteAfterResults${noteSlotProjection},
   showNote,

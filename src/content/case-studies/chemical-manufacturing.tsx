@@ -1,3 +1,9 @@
+import type { CaseStudyPortableTextBlock } from "@/lib/sanity/portableText";
+import {
+  markdownToPortableTextBlocks,
+  paragraphsToPortableTextBlocks,
+} from "@/lib/sanity/portableText";
+
 export type CaseStudyStat = {
   number: string;
   label: string;
@@ -30,7 +36,7 @@ export type CaseStudyNote = {
 };
 
 export type SolutionContentBlock =
-  | { type: "text"; body: string }
+  | { type: "text"; body: CaseStudyPortableTextBlock[] }
   | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "video"; src: string; poster?: string; caption?: string }
   | { type: "muxVideo"; playbackId: string; poster?: string; caption?: string };
@@ -52,11 +58,15 @@ export type CaseStudy = {
   };
   problem: {
     heading: string;
-    body: string[];
+    body: CaseStudyPortableTextBlock[];
+  };
+  additionalSection?: {
+    heading?: string;
+    body: CaseStudyPortableTextBlock[];
   };
   solution: {
     heading: string;
-    body: string;
+    body: CaseStudyPortableTextBlock[];
     contentBlocks: SolutionContentBlock[];
     showSteps: boolean;
     steps: CaseStudyStep[];
@@ -108,15 +118,17 @@ export const chemicalManufacturingCaseStudy: CaseStudy = {
   },
   problem: {
     heading: "A single server failure turned out to be the entire business.",
-    body: [
+    body: paragraphsToPortableTextBlocks([
       "Within hours, staff across all five divisions could not access files, applications, or any business system. The team initially thought one server had failed. Every server across every division had in fact been encrypted overnight, along with the laptops of finance and management staff.",
       "There was no firewall at any location, no multi-factor authentication, and antivirus software that had been disabled by the attacker using standard Windows tools. **The attacker had been inside the network for roughly 14 hours before the ransomware ran.**",
       "The only surviving restore point was a backup taken months earlier by a third-party software vendor during a routine upgrade.",
-    ],
+    ]),
   },
   solution: {
     heading: "A complete rebuild, from zero to fully protected.",
-    body: "Uniware's team followed the NIST Cybersecurity Framework end to end, giving the recovery a documented, auditable structure. **This project took five stages. Others may take three, or six, depending on scope.**",
+    body: markdownToPortableTextBlocks(
+      "Uniware's team followed the NIST Cybersecurity Framework end to end, giving the recovery a documented, auditable structure. **This project took five stages. Others may take three, or six, depending on scope.**"
+    ),
     showSteps: true,
     steps: [
       {

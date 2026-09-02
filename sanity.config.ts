@@ -15,7 +15,37 @@ export default defineConfig({
   basePath: process.env.SANITY_STUDIO_BASE_PATH || "/studio",
   plugins: [structureTool(), visionTool(), muxInput()],
   schema: {
-    types: schemaTypes,
+    // Override Mux video-asset list title: plugin has no preview, so Studio
+    // falls back to the first string field (`status` → "ready"). Prefer filename.
+    types: (prev) => [
+      ...prev.map((type) =>
+        type.name === "mux.videoAsset"
+          ? {
+              ...type,
+              preview: {
+                select: {
+                  filename: "filename",
+                  playbackId: "playbackId",
+                  status: "status",
+                },
+                prepare: ({
+                  filename,
+                  playbackId,
+                  status,
+                }: {
+                  filename?: string;
+                  playbackId?: string;
+                  status?: string;
+                }) => ({
+                  title: filename || playbackId || "Untitled video",
+                  subtitle: status ? `status: ${status}` : undefined,
+                }),
+              },
+            }
+          : type
+      ),
+      ...schemaTypes,
+    ],
   },
   // Next.js postcss.config.mjs (Tailwind) breaks Sanity's Vite — ignore it here.
   vite: {

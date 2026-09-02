@@ -28,6 +28,23 @@ const boldOnlyBlock = {
   },
 };
 
+/** Problem body, Solution body, and Additional Section body — bold, lists, sub-heading. */
+const caseStudyBodyBlock = {
+  type: "block",
+  styles: [
+    { title: "Normal", value: "normal" },
+    { title: "Sub-heading", value: "h4" },
+  ],
+  lists: [
+    { title: "Bullet", value: "bullet" },
+    { title: "Numbered", value: "number" },
+  ],
+  marks: {
+    decorators: [{ title: "Bold", value: "strong" }],
+    annotations: [],
+  },
+};
+
 const noteQuoteFields = [
   {
     name: "source",
@@ -604,18 +621,9 @@ export const caseStudy = {
           name: "body",
           title: "Body",
           type: "array",
-          of: [
-            {
-              type: "block",
-              styles: [],
-              lists: [],
-              marks: {
-                decorators: [{ title: "Bold", value: "strong" }],
-                annotations: [],
-              },
-            },
-          ],
-          description: "1–3 paragraphs. Bold one detail per paragraph max.",
+          of: [caseStudyBodyBlock],
+          description:
+            "If there were multiple challenges, use a bullet list, one per line, instead of one dense paragraph. Easier to scan, and matches how AI tools tend to pull structured problem statements.",
           validation: (Rule: {
             required: () => {
               custom: (
@@ -626,17 +634,10 @@ export const caseStudy = {
             };
           }) =>
             Rule.required().custom((value: PortableBlock[] | undefined) => {
-              if (!Array.isArray(value) || value.length === 0) {
-                return "Add 1–3 paragraphs";
-              }
-              if (value.length > 3) return "Use at most 3 paragraphs";
-              for (const block of value) {
-                const len = (block.children ?? [])
-                  .map((c) => c.text ?? "")
-                  .join("").length;
-                if (len > 500) {
-                  return `Each paragraph must be under 500 characters (found ${len})`;
-                }
+              const len = portableTextLength(value);
+              if (len === 0) return "Add problem body content";
+              if (len > 2000) {
+                return `Keep under 2000 characters (currently ${len})`;
               }
               return true;
             }),
@@ -648,6 +649,58 @@ export const caseStudy = {
       "Quote after Problem",
       "Off by default. Sits directly after Problem on the page."
     ),
+    {
+      name: "additionalSection",
+      title: "Additional Section",
+      type: "object",
+      group: "content",
+      fields: [
+        {
+          name: "show",
+          title: "Show additional section",
+          type: "boolean",
+          initialValue: false,
+          description:
+            "Off by default. Turn on for category-level context that applies beyond this one customer. Most common for AWS or vendor-program case studies, but any team can use it.",
+        },
+        {
+          name: "heading",
+          title: "Heading",
+          type: "string",
+          hidden: ({ parent }: { parent?: { show?: boolean } }) => !parent?.show,
+          description: "e.g. 'Why migrate Microsoft workloads to AWS?'",
+        },
+        {
+          name: "body",
+          title: "Body",
+          type: "array",
+          of: [caseStudyBodyBlock],
+          hidden: ({ parent }: { parent?: { show?: boolean } }) => !parent?.show,
+          description: "General context, not specific to this customer.",
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: PortableBlock[] | undefined,
+                context: { parent?: { show?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                value: PortableBlock[] | undefined,
+                context: { parent?: { show?: boolean } }
+              ) => {
+                if (!context.parent?.show) return true;
+                const len = portableTextLength(value);
+                if (len === 0) {
+                  return "Add body content when this section is shown";
+                }
+                return true;
+              }
+            ),
+        },
+      ],
+    },
     {
       name: "solution",
       title: "Solution",
@@ -666,17 +719,7 @@ export const caseStudy = {
           name: "body",
           title: "Body",
           type: "array",
-          of: [
-            {
-              type: "block",
-              styles: [],
-              lists: [],
-              marks: {
-                decorators: [{ title: "Bold", value: "strong" }],
-                annotations: [],
-              },
-            },
-          ],
+          of: [caseStudyBodyBlock],
           validation: (Rule: { required: () => unknown }) => Rule.required(),
         },
         {
@@ -695,7 +738,7 @@ export const caseStudy = {
                   name: "body",
                   title: "Body",
                   type: "array",
-                  of: [boldOnlyBlock],
+                  of: [caseStudyBodyBlock],
                   validation: (Rule: { required: () => unknown }) =>
                     Rule.required(),
                 },

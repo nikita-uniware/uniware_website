@@ -3,16 +3,10 @@ import type {
   CaseStudyNote,
   SolutionContentBlock,
 } from "@/content/case-studies/chemical-manufacturing";
-import {
-  portableTextBlocksToParagraphs,
-  portableTextToBoldMarkdown,
-} from "./portableText";
+import type { CaseStudyPortableTextBlock } from "./portableText";
+import { portableTextToBoldMarkdown } from "./portableText";
 
-type PortableBlock = {
-  _type?: string;
-  children?: { _type?: string; text?: string; marks?: string[] }[];
-  markDefs?: { _key?: string; _type?: string }[];
-};
+type PortableBlock = CaseStudyPortableTextBlock;
 
 type SanityTech = {
   name?: string | null;
@@ -85,6 +79,11 @@ export type SanityCaseStudyDoc = {
     outcomes?: (string | null)[] | null;
   } | null;
   noteAfterProblem?: SanityNoteSlot | null;
+  additionalSection?: {
+    show?: boolean | null;
+    heading?: string | null;
+    body?: PortableBlock[] | null;
+  } | null;
   noteAfterSolution?: SanityNoteSlot | null;
   noteAfterResults?: SanityNoteSlot | null;
   showNote?: boolean | null;
@@ -145,10 +144,8 @@ function mapContentBlocks(
   const out: SolutionContentBlock[] = [];
   for (const block of blocks ?? []) {
     if (block._type === "solutionText") {
-      const body = portableTextToBoldMarkdown(
-        block.body as PortableBlock[] | string | null | undefined
-      );
-      if (body) out.push({ type: "text", body });
+      const body = block.body as PortableBlock[] | null | undefined;
+      if (body?.length) out.push({ type: "text", body });
       continue;
     }
     if (block._type === "solutionImage" && block.imageUrl) {
@@ -210,10 +207,8 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
   const overviewDescription = portableTextToBoldMarkdown(
     overview?.description as PortableBlock[] | string | null | undefined
   );
-  const problemBody = portableTextBlocksToParagraphs(problem?.body ?? undefined);
-  const solutionBody = portableTextToBoldMarkdown(
-    solution?.body as PortableBlock[] | string | null | undefined
-  );
+  const problemBody = (problem?.body ?? []) as PortableBlock[];
+  const solutionBody = (solution?.body ?? []) as PortableBlock[];
 
   if (
     !overview?.heading ||
@@ -294,6 +289,16 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
 
   if (doc.whatsNext) {
     study.whatsNext = doc.whatsNext;
+  }
+
+  const additional = doc.additionalSection;
+  if (additional?.show && (additional.body?.length ?? 0) > 0) {
+    study.additionalSection = {
+      ...(additional.heading?.trim()
+        ? { heading: additional.heading.trim() }
+        : {}),
+      body: additional.body as PortableBlock[],
+    };
   }
 
   return study;
