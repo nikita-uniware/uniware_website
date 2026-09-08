@@ -70,7 +70,7 @@ function requestUpstream(
         method,
         headers: {
           Host: hostHeader,
-          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          Accept: "*/*",
           "Accept-Encoding": "identity",
           "User-Agent": "UniwareWordPressProxy/1.0",
           Connection: "close",
@@ -117,6 +117,21 @@ function shouldFollowInternally(
   );
 }
 
+/** File with extension — never force a trailing slash (…webp/ → nginx 404). */
+function isStaticAssetPath(pathStr: string): boolean {
+  const last = pathStr.split("/").pop() || "";
+  return /\.[a-z0-9]{1,8}$/i.test(last);
+}
+
+function buildTargetUrl(origin: string, pathStr: string, search: string): string {
+  if (!pathStr) return `${origin}/${search}`;
+  // WP page permalinks prefer trailing slash; static assets must keep the exact path.
+  if (isStaticAssetPath(pathStr) || pathStr.endsWith("/")) {
+    return `${origin}/${pathStr}${search}`;
+  }
+  return `${origin}/${pathStr}/${search}`;
+}
+
 async function proxy(
   req: NextRequest,
   pathSegments: string[]
@@ -129,10 +144,7 @@ async function proxy(
   const fallbackHost = getFallbackHost();
   const pathStr = pathSegments.join("/");
   const search = req.nextUrl.search;
-  // Prefer trailing slash — WP permalinks redirect /career → /career/
-  let targetUrl = pathStr
-    ? `${origin}/${pathStr}${pathStr.endsWith("/") ? "" : "/"}${search}`
-    : `${origin}/${search}`;
+  let targetUrl = buildTargetUrl(origin, pathStr, search);
 
   try {
     for (let i = 0; i < MAX_REDIRECTS; i++) {
@@ -163,7 +175,12 @@ async function proxy(
           Array.isArray(contentType) ? contentType[0] : contentType
         );
       }
-      headers.set("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+      headers.set(
+        "Cache-Control",
+        isStaticAssetPath(pathStr)
+          ? "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800"
+          : "public, s-maxage=60, stale-while-revalidate=300"
+      );
 
       return new NextResponse(new Uint8Array(upstream.body), {
         status: upstream.status,
