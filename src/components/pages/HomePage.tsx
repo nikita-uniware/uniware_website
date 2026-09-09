@@ -8,6 +8,7 @@ import { useScrollSyncHighlight } from "@/hooks/useScrollSyncHighlight";
 import { CircleGroup } from "@/components/CircleGroup";
 import { PrimaryCTA } from "@/components/PrimaryCTA";
 import type { CustomerLogo } from "@/lib/sanity";
+import { splitIntoHalfRows } from "@/lib/sanity/partnerStrip";
 import "@/styles/data-centre-infrastructure.page.css";
 import "@/styles/cybersecurity.page.css";
 import "@/styles/home.page.css";
@@ -48,15 +49,10 @@ function ClientLogoRow({
   // ×4 repeat, same seamless-loop convention buildPartnerStripHtml
   // already uses for the tech-partner marquee (1 primary set + 3
   // aria-hidden copies against the -25% scroll transform).
-  const source =
-    customers.length > 0
-      ? customers
-      : Array.from({ length: CLIENT_LOGO_PLACEHOLDER_COUNT }, (_, i) => ({
-          name: `Client ${i + 1}`,
-          slug: `placeholder-${i}`,
-          logoUrl: "",
-        }));
-  const items = Array.from({ length: source.length * 4 }, (_, i) => source[i % source.length]);
+  const items = Array.from(
+    { length: customers.length * 4 },
+    (_, i) => customers[i % customers.length]
+  );
 
   return (
     <div className="pf-marquee-track">
@@ -145,13 +141,22 @@ export function HomePage({ customers = [] }: { customers?: CustomerLogo[] }) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [currentStory, setCurrentStory] = useState<number | null>(null);
 
+  const clientLogoSource =
+    customers.length > 0
+      ? customers
+      : Array.from({ length: CLIENT_LOGO_PLACEHOLDER_COUNT }, (_, i) => ({
+          name: `Client ${i + 1}`,
+          slug: `placeholder-${i}`,
+          logoUrl: "",
+        }));
+  const { top: clientLogosTop, bottom: clientLogosBottom } =
+    splitIntoHalfRows(clientLogoSource);
+
   // Recognition carousel arrows. Not using useCyberPageBehaviors here —
-  // that hook also wires up subnav tabs, crossbars, and a marquee clone
-  // this page doesn't have (and already clones its own marquee rows in
-  // ClientLogoRow), so a local handler avoids duplicating unrelated
-  // behaviour. Card width is read directly off .rec-card rather than
-  // the shared hook's .tile-prev/.tile-rec selector, since these cards
-  // are a bespoke layout, not a tile.
+  // that hook also wires up subnav tabs and crossbars this page doesn't
+  // need. Card width is read directly off .rec-card rather than the
+  // shared hook's .tile-prev/.tile-rec selector, since these cards are
+  // a bespoke layout, not a tile.
   useEffect(() => {
     const buttons = document.querySelectorAll<HTMLButtonElement>(
       '.arrow-btn[data-carousel-target="recognition-track"]'
@@ -336,10 +341,13 @@ export function HomePage({ customers = [] }: { customers?: CustomerLogo[] }) {
         </div>
 
         {/* Customers from Sanity (pages includes "homepage"). Falls back
-            to placeholder glyphs until logos are uploaded in Studio. */}
+            to placeholder glyphs until logos are uploaded in Studio.
+            First ~50% on the top row (LTR), remainder on the bottom (RTL). */}
         <div className="pf-marquee-col our-clients-marquee" data-reveal="0">
-          <ClientLogoRow direction="ltr" customers={customers} />
-          <ClientLogoRow direction="rtl" customers={customers} />
+          <ClientLogoRow direction="ltr" customers={clientLogosTop} />
+          {clientLogosBottom.length > 0 ? (
+            <ClientLogoRow direction="rtl" customers={clientLogosBottom} />
+          ) : null}
         </div>
       </section>
 

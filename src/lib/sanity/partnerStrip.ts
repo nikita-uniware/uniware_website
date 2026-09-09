@@ -16,6 +16,16 @@ export const LOCAL_TECHNOLOGY_LOGOS: TechnologyLogo[] = [
   { name: "F5", slug: "f5", logoUrl: "/partners/logo-8.svg" },
 ];
 
+/**
+ * Split a logo list into two marquee rows: first ~50% top, remainder bottom.
+ * Odd counts put the extra logo on the top row (e.g. 7 → 4 + 3).
+ */
+export function splitIntoHalfRows<T>(items: T[]): { top: T[]; bottom: T[] } {
+  if (items.length === 0) return { top: [], bottom: [] };
+  const mid = Math.ceil(items.length / 2);
+  return { top: items.slice(0, mid), bottom: items.slice(mid) };
+}
+
 function escapeAttr(value: string) {
   return value
     .replace(/&/g, "&amp;")
@@ -34,27 +44,42 @@ function buildLogoItems(technologies: TechnologyLogo[], decorative: boolean) {
     .join("\n        ");
 }
 
-/**
- * Build the partner marquee HTML.
- * Repeats the set 4× so the CSS -25% scroll loop stays seamless.
- */
-export function buildPartnerStripHtml(technologies: TechnologyLogo[]) {
-  const logos =
-    technologies.length > 0 ? technologies : LOCAL_TECHNOLOGY_LOGOS;
+function buildMarqueeTrack(
+  logos: TechnologyLogo[],
+  direction: "ltr" | "rtl"
+): string {
+  if (logos.length === 0) return "";
 
+  // ×4 repeat so the CSS -25% scroll loop stays seamless.
   const primary = buildLogoItems(logos, false);
   const copies = Array.from({ length: 3 }, () =>
     buildLogoItems(logos, true)
   ).join("\n        ");
 
+  return `<div class="pf-marquee-track">
+    <div class="pf-marquee-row pf-marquee-row--${direction}">
+      ${primary}
+      ${copies}
+    </div>
+  </div>`;
+}
+
+/**
+ * Build the partner marquee HTML.
+ * Top row = first 50% of logos (LTR); bottom row = second 50% (RTL).
+ */
+export function buildPartnerStripHtml(technologies: TechnologyLogo[]) {
+  const logos =
+    technologies.length > 0 ? technologies : LOCAL_TECHNOLOGY_LOGOS;
+  const { top, bottom } = splitIntoHalfRows(logos);
+
+  const topTrack = buildMarqueeTrack(top, "ltr");
+  const bottomTrack = buildMarqueeTrack(bottom, "rtl");
+
   return `<section class="pf" aria-label="Technology ecosystem partners">
   <div class="pf-marquee-col">
-    <div class="pf-marquee-track">
-      <div class="pf-marquee-row pf-marquee-row--ltr">
-        ${primary}
-        ${copies}
-      </div>
-    </div>
+    ${topTrack}
+    ${bottomTrack}
   </div>
 </section>`;
 }
