@@ -82,7 +82,7 @@ const noteQuoteFields = [
     name: "name",
     title: "Name",
     type: "string",
-    validation: (Rule: { required: () => unknown }) => Rule.required(),
+    description: "Optional. Leave blank if the quote should show without a name.",
   },
   {
     name: "designation",

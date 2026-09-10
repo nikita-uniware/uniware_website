@@ -106,19 +106,19 @@ function mapTechs(list: SanityTech[] | null | undefined) {
 }
 
 function mapNoteQuote(raw: SanityNoteQuote | null | undefined): CaseStudyNote | null {
-  if (!raw?.name) return null;
   const quote = portableTextToBoldMarkdown(
-    raw.quote as PortableBlock[] | string | null | undefined
+    raw?.quote as PortableBlock[] | string | null | undefined
   );
   if (!quote) return null;
   const source =
-    raw.source === "client" || raw.source === "team" ? raw.source : "team";
+    raw?.source === "client" || raw?.source === "team" ? raw.source : "team";
+  const name = String(raw?.name ?? "").trim();
   return {
     source,
     quote,
-    name: raw.name,
-    designation: raw.designation ?? "",
-    company: raw.company ?? "",
+    name,
+    designation: raw?.designation ?? "",
+    company: raw?.company ?? "",
   };
 }
 

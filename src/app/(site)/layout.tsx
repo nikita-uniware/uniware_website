@@ -11,9 +11,11 @@ export default function SiteLayout({
   return (
     <>
       <GoogleAnalytics />
-      <SiteNav />
-      <main>{children}</main>
-      <SiteFooter />
+      <div className="site-shell">
+        <SiteNav />
+        <main className="site-main">{children}</main>
+        <SiteFooter />
+      </div>
       <BookingPanel />
     </>
   );

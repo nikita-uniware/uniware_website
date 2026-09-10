@@ -1,0 +1,77 @@
+/* Custom 404 — matches solution-hub dark hero (gradient, circles, white CTA).
+   Content is centered; hubs stay left-aligned via shared .hero styles. */
+
+.not-found-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.not-found-main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.not-found-page.hero {
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.not-found-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  /* Left-aligned like solution-hub heroes (not centered). */
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Large display "404" — same tier as hero/stat numbers, amber on dark. */
+.not-found-code {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-display-sm);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--uw-amber-dark);
+  margin: 0 0 var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .not-found-code {
+    font-size: var(--text-display-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .not-found-code {
+    font-size: var(--text-display);
+  }
+}
+
+.not-found-inner .hero-headline {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.not-found-sub {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: var(--space-9);
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--space-3);
+}
+
+.not-found-actions a {
+  text-decoration: none;
+}

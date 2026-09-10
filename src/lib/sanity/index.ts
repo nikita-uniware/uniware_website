@@ -35,14 +35,16 @@ export async function fetchCaseStudyBySlug(
           caseStudyBySlugQuery,
           { slug }
         );
-        const mapped = mapSanityCaseStudy(doc);
-        if (mapped) {
-          console.info(`[sanity] serving case study "${slug}" from CMS`);
-          return mapped;
+        if (doc) {
+          const mapped = mapSanityCaseStudy(doc);
+          if (mapped) {
+            console.info(`[sanity] serving case study "${slug}" from CMS`);
+            return mapped;
+          }
+          console.error(
+            `[sanity] case study "${slug}" fetched but failed mapping — using local fallback`
+          );
         }
-        console.error(
-          `[sanity] case study "${slug}" fetched but failed mapping — using local fallback`
-        );
       }
     } catch (err) {
       console.error(

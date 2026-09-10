@@ -78,13 +78,15 @@ function QuoteSection({
             ? "A quote from our client"
             : "A quote from our team";
         return (
-          <div className="cs-quote-stack-item" key={`${note.name}-${i}`}>
+          <div className="cs-quote-stack-item" key={`${note.name || "quote"}-${i}`}>
             <p className="cs-eyebrow" data-reveal={String(revealBase + i * 80)}>
               {heading}
             </p>
             <div className="cs-quote-block" data-reveal={String(revealBase + 80 + i * 80)}>
               <p className="cs-quote-block-text">{note.quote}</p>
-              <p className="cs-quote-block-name">{note.name}</p>
+              {note.name ? (
+                <p className="cs-quote-block-name">{note.name}</p>
+              ) : null}
               <p className="cs-quote-block-title">
                 {note.designation}, {note.company}
               </p>
