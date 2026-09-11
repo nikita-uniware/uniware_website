@@ -14,9 +14,9 @@ const ArrowIcon = () => (
 );
 
 /**
- * 404 — same dark hero language as Cloud / solution hubs:
- * hero gradient, amber eyebrow, white + amber headline, white CTA,
- * CircleGroup decoration. Left-aligned like other solution-hub heroes.
+ * 404 — matches design mock / solution-hub heroes:
+ * dark gradient, small amber “404 ERROR” eyebrow, white + amber headline,
+ * white primary CTA + ghost secondary, CircleGroup on the right.
  */
 export function NotFoundContent() {
   return (
@@ -25,7 +25,7 @@ export function NotFoundContent() {
       aria-labelledby="not-found-heading"
     >
       <div className="container not-found-inner">
-        <p className="not-found-code">404</p>
+        <p className="hero-eyebrow">404 Error</p>
         <h1 className="hero-headline" id="not-found-heading">
           This page isn&apos;t here.
           <br />
