@@ -28,8 +28,8 @@ const OFFICES = [
       "Maradu, Ernakulam 682304, India",
     ],
     contactName: "Anish",
-    phoneDisplay: "+91 89393 91816",
-    phoneHref: "tel:+918939391816",
+    phoneDisplay: "+91 86060 18212",
+    phoneHref: "tel:+918606018212",
   },
   {
     city: "Hyderabad, India",

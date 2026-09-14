@@ -5,7 +5,15 @@
    is new, same pattern as the Consulting/Managed Services
    pages. Footer connector and partner pills are simply
    omitted from the markup, not hidden via CSS.
+
+   Background overridden to yellow here (page-scoped only)
+   to preserve the dark/white section alternation after the
+   case studies section was removed from this page, same
+   treatment as Cloud Networking's "Three ways to connect";
+   .tile-prev keeps its own default white background on top.
 ══════════════════════════════════════════════════════ */
+.aws-rds-page .prevention { background: var(--uw-yellow-card); }
+
 .aws-rds-page .svc-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

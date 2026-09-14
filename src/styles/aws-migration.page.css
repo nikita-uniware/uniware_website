@@ -8,6 +8,15 @@
 .aws-migration-page .dci-badge-tier { font-size: var(--text-body); }
 
 /* ══════════════════════════════════════════════════════
+   CASE STUDY CARDS — .cs-stat's own margin-bottom is
+   var(--space-1) (4px) globally; bumped to var(--space-4)
+   (16px) here only, since .cs-stat is shared with other
+   pages (including AWS GenAI's stat boxes) that must keep
+   the tighter spacing.
+══════════════════════════════════════════════════════ */
+.aws-migration-page .cs-stat { margin-bottom: var(--space-4); }
+
+/* ══════════════════════════════════════════════════════
    WHO THIS IS FOR — dark variant of the .stats shell.
    .stats is only ever styled white elsewhere (cybersecurity
    page); this page needs it dark, so this modifier overrides

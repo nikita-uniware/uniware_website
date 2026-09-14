@@ -9,7 +9,14 @@
    column instead of the carousel's fixed 280px width; the
    card's own internal layout (icon, heading, description,
    connector, pills) is untouched.
+
+   Background overridden to yellow here (page-scoped only),
+   same treatment as Cloud Networking's "Three ways to connect"
+   and AWS RDS's "What We Handle on RDS"; .tile-prev keeps its
+   own default white background on top.
 ══════════════════════════════════════════════════════ */
+.cloud-security-page .prevention { background: var(--uw-yellow-card); }
+
 .cloud-security-page .cover-grid {
   display: grid;
   grid-template-columns: 1fr;

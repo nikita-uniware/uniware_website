@@ -9,6 +9,7 @@ import type {
   CloudModelId,
 } from "@/lib/sanity";
 import "@/styles/data-centre-infrastructure.page.css";
+import "@/styles/cybersecurity.page.css";
 import "@/styles/cloud-infrastructure.page.css";
 
 const CheckIcon = () => (
@@ -165,25 +166,25 @@ function resolveModelVendors(
 type CaseStudyPlaceholder = {
   eyebrow: string;
   stat: string;
-  statCaption: string;
   body: string;
   pills: [string, string];
+  url?: string;
 };
 
 const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   {
-    eyebrow: "Cloud Infrastructure",
-    stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: cloud migration for a mid-market manufacturer, timeline and outcome to confirm once the real case study is written.",
-    pills: ["Cloud", "Infrastructure"],
+    eyebrow: "Public Cloud Migration",
+    stat: "Moved to cloud, secured for the first time.",
+    body: "COVID cut off access to their factory floor overnight. We built them cloud hosting, secure remote access, and full security, together.",
+    pills: ["AWS", "Security"],
+    url: "https://www.uniware.net/resources/case-studies/iec-fabchem-cloud-migration-security-aws",
   },
   {
-    eyebrow: "Hybrid Cloud",
-    stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: hybrid environment build for a logistics client.",
-    pills: ["Hybrid", "Cloud"],
+    eyebrow: "Hybrid Backup Strategy",
+    stat: "One point of failure, now backed up in AWS S3.",
+    body: "Their only backup lived on-premises, with no offsite copy. A second copy in AWS S3 means one incident can't take their data down with it, on-prem and cloud working together.",
+    pills: ["AWS", "Hybrid"],
+    url: "https://www.uniware.net/resources/case-studies/fives-cail-kcp-secondary-backup-aws-s3",
   },
 ];
 
@@ -453,7 +454,7 @@ export function CloudInfrastructurePage({
             <div className="section-header-block">
               <p className="sec-eyebrow-d">Case Studies</p>
               <h2 className="sec-heading-d" id="cloud-infra-cs-heading">
-                Placeholder — replace once cloud case studies are live
+                Cloud infrastructure, built and secured.
               </h2>
             </div>
           </div>
@@ -463,11 +464,11 @@ export function CloudInfrastructurePage({
               <div data-reveal="0" key={c.eyebrow}>
                 <div className="cs-card">
                   <a
-                    href="#"
+                    href={c.url ?? "#"}
                     className="card-overlay-link"
                     aria-hidden="true"
                     tabIndex={-1}
-                    onClick={(e) => e.preventDefault()}
+                    onClick={c.url ? undefined : (e) => e.preventDefault()}
                   />
                   <div className="cs-badge" aria-hidden="true">
                     <svg
@@ -496,7 +497,6 @@ export function CloudInfrastructurePage({
                   </div>
                   <p className="cs-eyebrow">{c.eyebrow}</p>
                   <p className="cs-stat">{c.stat}</p>
-                  <p className="cs-stat-caption">{c.statCaption}</p>
                   <p className="cs-body">{c.body}</p>
                   <div className="cs-pills">
                     <span className="cs-pill">{c.pills[0]}</span>
@@ -504,9 +504,9 @@ export function CloudInfrastructurePage({
                   </div>
                   <div className="cs-cta card-cta">
                     <a
-                      href="#"
+                      href={c.url ?? "#"}
                       className="link-text link-text-dark link-text-sm link-text--external"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={c.url ? undefined : (e) => e.preventDefault()}
                     >
                       Read a case study
                       <span className="link-text-arrow-wrap">
@@ -552,6 +552,10 @@ export function CloudInfrastructurePage({
         buttonText="Talk to an expert"
         buttonLink="/contact"
         category="cloud"
+        contactLine={{
+          name: "Yogeshwaran",
+          phone: "+91 73587 83739",
+        }}
       />
     </div>
   );

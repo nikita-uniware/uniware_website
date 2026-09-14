@@ -62,28 +62,6 @@ const PlusIcon = () => (
   </svg>
 );
 
-// DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet. Replace
-// with real Sanity content once available, same pattern as the other
-// AWS/cloud pages' own case-study placeholders.
-type CaseStudyPlaceholder = {
-  eyebrow: string;
-  stat: string;
-  body: string;
-};
-
-const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
-  {
-    eyebrow: "Hybrid Connectivity",
-    stat: "Placeholder",
-    body: "Draft: cloud network setup replicating an on-premise network structure with multiple VLANs and network segmentation for a mid-market client. Timeline and outcome to confirm.",
-  },
-  {
-    eyebrow: "SD-WAN",
-    stat: "Placeholder",
-    body: "Draft: multi-site SD-WAN deployment using Fortinet for an established client with multiple office locations. Timeline and outcome to confirm.",
-  },
-];
-
 type FaqItem = { question: string; answer: string };
 
 const FAQ_ITEMS: FaqItem[] = [
@@ -219,74 +197,6 @@ export function CloudNetworkingPage() {
         </div>
       </section>
 
-      {/* DEV-ONLY PLACEHOLDER — no cloud-tagged case studies exist yet.
-          Swap CASE_STUDY_PLACEHOLDERS above for real Sanity content once
-          it's live, same as the other cloud pages' own placeholder case
-          studies. */}
-      <section id="case-studies" className="cs" aria-labelledby="cloud-networking-cs-heading">
-        <div className="container">
-          <div data-reveal="0">
-            <div className="section-header-block">
-              <p className="sec-eyebrow-d">Case Studies</p>
-              <h2 className="sec-heading-d" id="cloud-networking-cs-heading">
-                Placeholder — replace once cloud case studies are live
-              </h2>
-            </div>
-          </div>
-
-          <div className="dci-cs-grid">
-            <div className="dci-cs-support-row">
-              {CASE_STUDY_PLACEHOLDERS.map((c) => (
-                <a
-                  href="#"
-                  className="cs-card"
-                  data-reveal="0"
-                  key={c.eyebrow}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <p className="cs-eyebrow">{c.eyebrow}</p>
-                  <p className="cs-stat">{c.stat}</p>
-                  <p className="cs-outcome">{c.body}</p>
-                  <div className="cs-cta">
-                    <span className="link-text link-text-dark link-text-md link-text--external">
-                      Read a case study
-                      <span className="link-text-arrow-wrap">
-                        <svg
-                          className="link-text-arrow-default"
-                          width="12"
-                          height="12"
-                          viewBox="0 0 14 14"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" />
-                        </svg>
-                        <svg
-                          className="link-text-arrow-hover"
-                          width="12"
-                          height="12"
-                          viewBox="0 0 14 14"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M3 11L11 3M11 3H5M11 3V9" />
-                        </svg>
-                      </span>
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section id="faq" className="faq" aria-labelledby="faq-heading">
         <div className="container">
           <div className="faq-layout">
@@ -345,6 +255,10 @@ export function CloudNetworkingPage() {
         buttonText="Talk to an expert"
         buttonLink="/contact"
         category="cloud"
+        contactLine={{
+          name: "Yogeshwaran",
+          phone: "+91 73587 83739",
+        }}
       />
     </div>
   );

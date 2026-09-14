@@ -7,3 +7,12 @@
    badge row is untouched.
 ══════════════════════════════════════════════════════ */
 .cloud-infra-page .dci-badge-tier { font-size: var(--text-body); }
+
+/* ══════════════════════════════════════════════════════
+   CASE STUDY CARDS — .cs-stat's own margin-bottom is
+   var(--space-1) (4px) globally; bumped to var(--space-4)
+   (16px) here only, since .cs-stat is shared with other
+   pages (including AWS GenAI's stat boxes) that must keep
+   the tighter spacing.
+══════════════════════════════════════════════════════ */
+.cloud-infra-page .cs-stat { margin-bottom: var(--space-4); }
