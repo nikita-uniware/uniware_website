@@ -12,6 +12,9 @@ import { NextRequest, NextResponse } from "next/server";
  * Use Host = EC2 public DNS, fetch by IP, and follow WP trailing-slash /
  * canonical redirects internally so the browser never bounces to www.
  *
+ * When WordPress has no matching page (404 / soft-404), rewrite to the
+ * branded /not-found-fallback page instead of returning the old WP 404.
+ *
  * Env:
  *   WORDPRESS_FALLBACK_ORIGIN — e.g. https://13.204.192.228
  *   WORDPRESS_FALLBACK_HOST   — EC2 public DNS (NOT www.uniware.net).
@@ -132,13 +135,61 @@ function buildTargetUrl(origin: string, pathStr: string, search: string): string
   return `${origin}/${pathStr}/${search}`;
 }
 
+/** Path we rewrite to when WordPress has no matching page. */
+const BRANDED_NOT_FOUND_PATH = "/not-found-fallback";
+
+/**
+ * True when WordPress has no real page — HTTP 404/410, or a soft-404 HTML
+ * body (old theme returns 200 with “nothing was found at this location”).
+ */
+function isWordPressMissingPage(upstream: UpstreamResult): boolean {
+  if (upstream.status === 404 || upstream.status === 410) return true;
+  if (upstream.status !== 200) return false;
+
+  const contentType = upstream.headers["content-type"];
+  const ct = Array.isArray(contentType) ? contentType[0] : contentType || "";
+  if (!ct.toLowerCase().includes("text/html")) return false;
+
+  const body = upstream.body.toString("utf8").toLowerCase();
+  return body.includes("nothing was found at this location");
+}
+
+/** Serve our branded 404 HTML (keeps the visitor’s original URL via the
+ * outer fallback rewrite; body is our not-found page). */
+async function brandedNotFoundResponse(req: NextRequest): Promise<NextResponse> {
+  const pageUrl = new URL(BRANDED_NOT_FOUND_PATH, req.nextUrl.origin);
+  try {
+    const pageRes = await fetch(pageUrl, {
+      headers: {
+        Accept: "text/html",
+        "x-forwarded-host": req.headers.get("host") || req.nextUrl.host,
+        "x-forwarded-proto":
+          req.headers.get("x-forwarded-proto") || req.nextUrl.protocol.replace(":", ""),
+      },
+      cache: "no-store",
+    });
+    const html = await pageRes.text();
+    return new NextResponse(html, {
+      status: 404,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "private, no-store",
+      },
+    });
+  } catch (err) {
+    console.error("[wordpress-proxy] branded 404 fetch failed", pageUrl.href, err);
+    // Last resort: send the browser to the branded path (URL will change).
+    return NextResponse.redirect(pageUrl, 302);
+  }
+}
+
 async function proxy(
   req: NextRequest,
   pathSegments: string[]
 ): Promise<NextResponse> {
   const origin = getOrigin();
   if (!origin) {
-    return new NextResponse("Not Found", { status: 404 });
+    return brandedNotFoundResponse(req);
   }
 
   const fallbackHost = getFallbackHost();
@@ -165,6 +216,14 @@ async function proxy(
 
         // Genuine external redirect
         return NextResponse.redirect(next, upstream.status as 301 | 302 | 307 | 308);
+      }
+
+      // WP has no page → branded 404 (HTML only; assets stay a plain 404)
+      if (isWordPressMissingPage(upstream)) {
+        if (isStaticAssetPath(pathStr)) {
+          return new NextResponse("Not Found", { status: 404 });
+        }
+        return brandedNotFoundResponse(req);
       }
 
       const headers = new Headers();
