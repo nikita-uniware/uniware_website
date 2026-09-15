@@ -7,6 +7,15 @@ import { CircleGroup } from "@/components/CircleGroup";
  * by .dci-cta/.dci-cta-row/.dci-cta-heading/.dci-cta-sub in
  * data-centre-infrastructure.page.css — pages only supply content
  * and a link.
+ *
+ * ── CTA click convention (PrimaryCTA + SplitCTA + inline heroes) ──
+ * - Navigate to a page (e.g. homepage → /contact): buttonAction="navigate"
+ *   or any buttonLink that is not handled as a panel open.
+ * - Open the booking side panel: buttonAction="booking-panel" (or the
+ *   default when buttonLink is "/contact" on solution pages) and pass
+ *   category. Prefer an explicit openBookingPanel() call on raw <a>/<button>
+ *   so intent is obvious in the markup.
+ * Never attach openBookingPanel to a link that should leave the page.
  */
 type PrimaryCTAContact = {
   name: string;
@@ -22,10 +31,18 @@ type PrimaryCTAProps = {
   body: string;
   buttonText: string;
   buttonLink: string;
-  /** Which booking-panel category this page's CTA falls under —
-   * PrimaryCTA is reused across page types, so the category can't be
-   * hardcoded here. Only relevant when buttonLink is "/contact". */
-  category: BookingPanelConfig;
+  /**
+   * How the button behaves:
+   * - "navigate" — follow buttonLink (use on homepage / marketing CTAs
+   *   that should land on the contact page).
+   * - "booking-panel" — open the side panel (solution-page CTAs).
+   * Default: "booking-panel" when buttonLink is "/contact", otherwise
+   * "navigate". Pass "navigate" explicitly when /contact must be a
+   * real page navigation.
+   */
+  buttonAction?: "navigate" | "booking-panel";
+  /** Booking-panel category. Required when the button opens the panel. */
+  category?: BookingPanelConfig;
   /** Optional "prefer to call" line, rendered between the body copy
    * and the button. Per-page decision, not a default — omit entirely
    * for a PrimaryCTA with no phone contact. Same pattern as SplitCTA's
@@ -34,25 +51,37 @@ type PrimaryCTAProps = {
   contactLine?: PrimaryCTAContact;
 };
 
+function resolveButtonAction(
+  href: string,
+  buttonAction?: "navigate" | "booking-panel"
+): "navigate" | "booking-panel" {
+  if (buttonAction) return buttonAction;
+  return href === "/contact" ? "booking-panel" : "navigate";
+}
+
 function PrimaryCTAButton({
   href,
   className,
   children,
   category,
+  buttonAction,
 }: {
   href: string;
   className: string;
   children: string;
-  category: BookingPanelConfig;
+  category?: BookingPanelConfig;
+  buttonAction?: "navigate" | "booking-panel";
 }) {
-  if (href === "/contact") {
+  const action = resolveButtonAction(href, buttonAction);
+
+  if (action === "booking-panel") {
     return (
       <a
         href={href}
         className={className}
         onClick={(e) => {
           e.preventDefault();
-          window.openBookingPanel(category);
+          if (category) window.openBookingPanel(category);
         }}
       >
         {children}
@@ -68,6 +97,7 @@ function PrimaryCTAButton({
       </a>
     );
   }
+
   return (
     <a href={href} className={className}>
       {children}
@@ -90,6 +120,7 @@ export function PrimaryCTA({
   body,
   buttonText,
   buttonLink,
+  buttonAction,
   category,
   contactLine,
 }: PrimaryCTAProps) {
@@ -124,7 +155,12 @@ export function PrimaryCTA({
             )}
           </div>
           <span className="dci-cta-button-wrap" data-reveal="160">
-            <PrimaryCTAButton href={buttonLink} className="btn-size-lg btn-surface-amber" category={category}>
+            <PrimaryCTAButton
+              href={buttonLink}
+              className="btn-size-lg btn-surface-amber"
+              category={category}
+              buttonAction={buttonAction}
+            >
               {buttonText}
             </PrimaryCTAButton>
           </span>

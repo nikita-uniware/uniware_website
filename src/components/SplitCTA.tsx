@@ -6,6 +6,11 @@
  * in globals.css — pages only supply content and links.
  *
  * Stacks below 1024px (mobile and tablet); side by side at 1024px+.
+ *
+ * ── CTA click convention (keep in sync with PrimaryCTA) ──
+ * - Navigate to a page: do not intercept /contact. Use a plain <a href="...">.
+ * - Open the booking side panel: call window.openBookingPanel(category)
+ *   (and preventDefault). Never silently hijack a link that should navigate.
  */
 type SplitCTAZone = {
   eyebrow: string;
