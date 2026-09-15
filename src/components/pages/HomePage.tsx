@@ -573,7 +573,7 @@ export function HomePage({ customers = [] }: { customers?: CustomerLogo[] }) {
         body="Tell us what you're working on, whether it's infrastructure, cloud, cybersecurity, or AI. We'll bring in the right person and help you manage it, so you can manage your business."
         buttonText="Talk to an expert"
         buttonLink="/contact"
-        category="cybersecurity"
+        buttonAction="navigate"
       />
     </div>
   );
