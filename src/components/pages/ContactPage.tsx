@@ -73,12 +73,28 @@ const OFFICES = [
   },
 ] as const;
 
+const ABOUT_OPTIONS = [
+  { value: "cybersecurity", label: "Cybersecurity" },
+  { value: "cloud", label: "Cloud" },
+  { value: "aws", label: "AWS" },
+  { value: "data-centre-infrastructure", label: "Data Centre Infrastructure" },
+  { value: "ai-solutions", label: "AI Solutions" },
+  { value: "backup", label: "Backup and Recovery" },
+  { value: "enquiry", label: "General enquiry" },
+  { value: "partnership", label: "Partnership" },
+] as const;
+
+type AboutValue = (typeof ABOUT_OPTIONS)[number]["value"];
+
 /**
  * Contact page — port of contact-and-panel HTML (panel lives in root layout).
  */
 export function ContactPage({ initialSent = false }: ContactPageProps) {
   const [sent, setSent] = useState(initialSent);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedAbout, setSelectedAbout] = useState<AboutValue[]>([]);
+  const [aboutError, setAboutError] = useState("");
+  const [submitError, setSubmitError] = useState("");
 
   useReveal({ heroSelector: ".contact-intro" });
 
@@ -88,8 +104,14 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (selectedAbout.length === 0) {
+      setAboutError("Select at least one topic.");
+      return;
+    }
+
     const form = e.currentTarget;
     setSubmitting(true);
+    setSubmitError("");
     try {
       const res = await fetch("/contact", {
         method: "POST",
@@ -102,7 +124,9 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
         .getElementById("contact-success")
         ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     } catch {
-      form.submit();
+      setSubmitError(
+        "Something went wrong. Please try again, or email sales@uniware.net.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -225,33 +249,57 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
                         />
                       </div>
 
-                      <div className="field-item">
-                        <label className="field-label" htmlFor="cf-about">
-                          What&rsquo;s this about
-                        </label>
-                        <div className="field-select-wrap">
-                          <select
-                            className="field-select"
-                            id="cf-about"
-                            name="about"
-                            required
-                            defaultValue=""
-                          >
-                            <option value="" disabled>
-                              Select a topic
-                            </option>
-                            <option value="cybersecurity">Cybersecurity</option>
-                            <option value="cloud">Cloud</option>
-                            <option value="aws">AWS</option>
-                            <option value="data-centre-infrastructure">
-                              Data Centre Infrastructure
-                            </option>
-                            <option value="ai-solutions">AI Solutions</option>
-                            <option value="backup">Backup and Recovery</option>
-                            <option value="enquiry">General enquiry</option>
-                            <option value="partnership">Partnership</option>
-                          </select>
+                      <div
+                        className="field-item"
+                        role="group"
+                        aria-labelledby="cf-about-legend"
+                        aria-describedby={aboutError ? "cf-about-error" : undefined}
+                      >
+                        <p id="cf-about-legend" className="field-label">
+                          What&rsquo;s this about{" "}
+                          <span className="field-optional">
+                            (select all that apply)
+                          </span>
+                        </p>
+                        <div className="contact-pills-track">
+                          {ABOUT_OPTIONS.map((option) => {
+                            const id = `cf-about-${option.value}`;
+                            return (
+                              <span key={option.value}>
+                                <input
+                                  type="checkbox"
+                                  id={id}
+                                  name="about[]"
+                                  value={option.value}
+                                  className="contact-pill-input"
+                                  checked={selectedAbout.includes(option.value)}
+                                  onChange={(event) => {
+                                    setSelectedAbout((current) =>
+                                      event.target.checked
+                                        ? [...current, option.value]
+                                        : current.filter(
+                                            (item) => item !== option.value,
+                                          ),
+                                    );
+                                    setAboutError("");
+                                  }}
+                                />
+                                <label htmlFor={id} className="contact-pill-label">
+                                  {option.label}
+                                </label>
+                              </span>
+                            );
+                          })}
                         </div>
+                        {aboutError && (
+                          <p
+                            id="cf-about-error"
+                            className="field-error"
+                            role="alert"
+                          >
+                            {aboutError}
+                          </p>
+                        )}
                       </div>
 
                       <div className="field-item">
@@ -269,6 +317,11 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
                       </div>
 
                       <div>
+                        {submitError && (
+                          <p className="field-error" role="alert">
+                            {submitError}
+                          </p>
+                        )}
                         <button
                           type="submit"
                           className="btn-size-lg btn-surface-light btn-submit-l-layout"

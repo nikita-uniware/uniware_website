@@ -84,6 +84,7 @@ export function BookingPanel() {
     useState<BookingPanelConfig>("cybersecurity");
   const [selectedTopics, setSelectedTopics] = useState<BookingTopic[]>([]);
   const [topicError, setTopicError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const successHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -97,6 +98,7 @@ export function BookingPanel() {
           : []
       );
       setTopicError("");
+      setSubmitError("");
       setSent(false);
       setOpen(true);
     };
@@ -145,6 +147,7 @@ export function BookingPanel() {
 
     const form = e.currentTarget;
     setSubmitting(true);
+    setSubmitError("");
     try {
       const res = await fetch("/contact/book-call", {
         method: "POST",
@@ -154,7 +157,9 @@ export function BookingPanel() {
       if (!res.ok) throw new Error("submit failed");
       setSent(true);
     } catch {
-      form.submit();
+      // Stay in the panel — do not fall back to a full-page POST (that used
+      // to redirect failed cloud/AWS submits to /contact).
+      setSubmitError("Something went wrong. Please try again, or email sales@uniware.net.");
     } finally {
       setSubmitting(false);
     }
@@ -446,6 +451,11 @@ export function BookingPanel() {
                 </div>
 
                 <div>
+                  {submitError && (
+                    <p className="panel-field-error" role="alert">
+                      {submitError}
+                    </p>
+                  )}
                   <button
                     type="submit"
                     className="btn-size-lg btn-surface-amber-fill btn-panel-submit-layout"
