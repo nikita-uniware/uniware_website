@@ -6,6 +6,13 @@ function wantsJson(req: NextRequest) {
   return (req.headers.get("accept") ?? "").includes("application/json");
 }
 
+const LEGACY_ABOUT = new Set([
+  "cybersecurity",
+  "backup",
+  "enquiry",
+  "partnership",
+]);
+
 /**
  * Contact form handler.
  * 1) Save to Supabase contact_submissions
@@ -13,11 +20,22 @@ function wantsJson(req: NextRequest) {
  */
 export async function POST(req: NextRequest) {
   const form = await req.formData();
+
+  // Support single `about` or multi-select `about[]` (comma-joined in DB).
+  const aboutParts = [
+    ...form.getAll("about[]").map(String),
+    ...String(form.get("about") ?? "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean),
+  ];
+  const about = Array.from(new Set(aboutParts)).join(",");
+
   const payload = {
     name: String(form.get("name") ?? "").trim(),
     email: String(form.get("email") ?? "").trim(),
     company: String(form.get("company") ?? "").trim(),
-    about: String(form.get("about") ?? "").trim(),
+    about,
     message: String(form.get("message") ?? "").trim(),
   };
 
@@ -28,13 +46,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(new URL("/contact", req.url), 303);
   }
 
-  const { error } = await supabaseAdmin.from("contact_submissions").insert({
+  let { error } = await supabaseAdmin.from("contact_submissions").insert({
     name: payload.name,
     email: payload.email,
     company: payload.company || null,
     about: payload.about,
     message: payload.message,
   });
+
+  // Older DBs only allow cybersecurity/backup/enquiry/partnership — retry so
+  // Cloud/AWS/AI options still save until the CHECK is dropped.
+  if (error && !LEGACY_ABOUT.has(payload.about)) {
+    console.warn(
+      "[contact] about insert failed; retrying with legacy about=enquiry:",
+      error.message,
+    );
+    const retry = await supabaseAdmin.from("contact_submissions").insert({
+      name: payload.name,
+      email: payload.email,
+      company: payload.company || null,
+      about: "enquiry",
+      message: [`About: ${payload.about}`, payload.message]
+        .filter(Boolean)
+        .join("\n\n"),
+    });
+    error = retry.error;
+  }
 
   if (error) {
     console.error("[contact] supabase insert failed:", error);

@@ -91,15 +91,47 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(new URL("/contact", req.url), 303);
   }
 
-  const { error } = await supabaseAdmin.from("booking_requests").insert({
+  // Prefer comma-joined multi-select topics. Older DBs still have a CHECK that
+  // only allows cybersecurity/backup/enquiry — fall back so cloud/AWS submits
+  // still succeed until that constraint is dropped (see supabase/migrations).
+  const joinedTopics = payload.topics.join(",");
+  const legacyTopicOk =
+    payload.topics.length === 1 &&
+    (payload.topics[0] === "cybersecurity" ||
+      payload.topics[0] === "backup" ||
+      payload.topics[0] === "enquiry");
+  const topicForDb = legacyTopicOk ? payload.topics[0] : joinedTopics;
+  const notesForDb =
+    !legacyTopicOk && payload.topics.length > 0
+      ? [`Topics: ${joinedTopics}`, payload.notes].filter(Boolean).join("\n\n")
+      : payload.notes || null;
+
+  let { error } = await supabaseAdmin.from("booking_requests").insert({
     name: payload.name,
     email: payload.email,
     company: payload.company || null,
     country: payload.country,
-    topic: payload.topics.join(","),
+    topic: topicForDb,
     preferred_times: payload.preferred_time,
-    notes: payload.notes || null,
+    notes: notesForDb,
   });
+
+  if (error && !legacyTopicOk) {
+    console.warn(
+      "[book-call] multi-topic insert failed; retrying with legacy topic=enquiry:",
+      error.message,
+    );
+    const retry = await supabaseAdmin.from("booking_requests").insert({
+      name: payload.name,
+      email: payload.email,
+      company: payload.company || null,
+      country: payload.country,
+      topic: "enquiry",
+      preferred_times: payload.preferred_time,
+      notes: notesForDb,
+    });
+    error = retry.error;
+  }
 
   if (error) {
     console.error("[book-call] supabase insert failed:", error);

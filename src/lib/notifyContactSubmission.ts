@@ -28,7 +28,12 @@ const ABOUT_LABELS: Record<string, string> = {
 };
 
 function aboutLabel(value: string) {
-  return ABOUT_LABELS[value] ?? value;
+  return value
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .map((part) => ABOUT_LABELS[part] ?? part)
+    .join(", ");
 }
 
 /** Best-effort email for Contact page “Get in touch” / Send us a message. */
