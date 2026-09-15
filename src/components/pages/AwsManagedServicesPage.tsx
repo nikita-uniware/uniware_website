@@ -93,25 +93,25 @@ const PlusIcon = () => (
 type CaseStudyPlaceholder = {
   eyebrow: string;
   stat: string;
-  statCaption: string;
   body: string;
   pills: [string, string];
+  url?: string;
 };
 
 const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   {
-    eyebrow: "AWS Managed Services",
-    stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: ongoing AWS management for a mid-market client, timeline and outcome to confirm.",
+    eyebrow: "Ongoing Support",
+    stat: "4x growth. Zero issues. Resized as needed.",
+    body: "We moved their ERP to AWS after their old provider kept failing. Years later, we're still resizing their server as their team grows, zero issues since.",
     pills: ["AWS", "Managed Services"],
+    url: "https://www.uniware.net/resources/case-studies/dra-homes-microsoft-workloads-aws",
   },
   {
-    eyebrow: "Cost Optimization",
-    stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: AWS cost reduction engagement for an established client, timeline and outcome to confirm.",
+    eyebrow: "Elastic Cost Management",
+    stat: "No upfront hardware, pay only as you grow.",
+    body: "Their offsite backup needed to scale, without buying capacity upfront. A secondary copy in AWS S3 means storage grows with their data, and cost grows only with what they actually use.",
     pills: ["AWS", "Cost Optimization"],
+    url: "https://www.uniware.net/resources/case-studies/fives-cail-kcp-secondary-backup-aws-s3",
   },
 ];
 
@@ -294,7 +294,7 @@ export function AwsManagedServicesPage() {
             <div className="section-header-block">
               <p className="sec-eyebrow-d">Case Studies</p>
               <h2 className="sec-heading-d" id="aws-managed-services-cs-heading">
-                Placeholder — replace once cloud case studies are live
+                Real support. Real results.
               </h2>
             </div>
           </div>
@@ -304,11 +304,11 @@ export function AwsManagedServicesPage() {
               <div data-reveal="0" key={c.eyebrow}>
                 <div className="cs-card">
                   <a
-                    href="#"
+                    href={c.url ?? "#"}
                     className="card-overlay-link"
                     aria-hidden="true"
                     tabIndex={-1}
-                    onClick={(e) => e.preventDefault()}
+                    onClick={c.url ? undefined : (e) => e.preventDefault()}
                   />
                   <div className="cs-badge" aria-hidden="true">
                     <svg
@@ -337,7 +337,6 @@ export function AwsManagedServicesPage() {
                   </div>
                   <p className="cs-eyebrow">{c.eyebrow}</p>
                   <p className="cs-stat">{c.stat}</p>
-                  <p className="cs-stat-caption">{c.statCaption}</p>
                   <p className="cs-body">{c.body}</p>
                   <div className="cs-pills">
                     <span className="cs-pill">{c.pills[0]}</span>
@@ -345,9 +344,9 @@ export function AwsManagedServicesPage() {
                   </div>
                   <div className="cs-cta card-cta">
                     <a
-                      href="#"
+                      href={c.url ?? "#"}
                       className="link-text link-text-dark link-text-sm link-text--external"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={c.url ? undefined : (e) => e.preventDefault()}
                     >
                       Read a case study
                       <span className="link-text-arrow-wrap">

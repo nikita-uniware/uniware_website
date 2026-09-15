@@ -28,8 +28,8 @@ const OFFICES = [
       "Maradu, Ernakulam 682304, India",
     ],
     contactName: "Anish",
-    phoneDisplay: "+91 89393 91816",
-    phoneHref: "tel:+918939391816",
+    phoneDisplay: "+91 86060 18212",
+    phoneHref: "tel:+918606018212",
   },
   {
     city: "Hyderabad, India",
@@ -241,9 +241,12 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
                               Select a topic
                             </option>
                             <option value="cybersecurity">Cybersecurity</option>
+                            <option value="cloud">Cloud</option>
+                            <option value="aws">AWS</option>
                             <option value="data-centre-infrastructure">
                               Data Centre Infrastructure
                             </option>
+                            <option value="ai-solutions">AI Solutions</option>
                             <option value="backup">Backup and Recovery</option>
                             <option value="enquiry">General enquiry</option>
                             <option value="partnership">Partnership</option>

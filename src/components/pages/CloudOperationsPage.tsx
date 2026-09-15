@@ -125,18 +125,21 @@ type CaseStudyPlaceholder = {
   eyebrow: string;
   stat: string;
   body: string;
+  url?: string;
 };
 
 const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   {
-    eyebrow: "Cloud Operations",
-    stat: "Placeholder",
-    body: "Draft: multi-cloud operations engagement for a mid-market client, timeline and outcome to confirm.",
+    eyebrow: "Monitoring & Backup",
+    stat: "CloudWatch alarms. Zero downtime since.",
+    body: "We built their cloud environment with CloudWatch monitoring and automated backups from day one. No downtime issues reported since the move.",
+    url: "https://www.uniware.net/resources/case-studies/iec-fabchem-cloud-migration-security-aws",
   },
   {
     eyebrow: "Disaster Recovery",
-    stat: "Placeholder",
-    body: "Draft: disaster recovery planning engagement for an established client, timeline and outcome to confirm.",
+    stat: "One backup. One point of failure.",
+    body: "Their only backup lived in one place, until it didn't. A second copy in AWS S3 means one incident can't take their data down with it.",
+    url: "https://www.uniware.net/resources/case-studies/fives-cail-kcp-secondary-backup-aws-s3",
   },
 ];
 
@@ -322,7 +325,7 @@ export function CloudOperationsPage() {
             <div className="section-header-block">
               <p className="sec-eyebrow-d">Case Studies</p>
               <h2 className="sec-heading-d" id="cloud-ops-cs-heading">
-                Placeholder — replace once cloud case studies are live
+                Cloud operations, proven in production.
               </h2>
             </div>
           </div>
@@ -332,11 +335,11 @@ export function CloudOperationsPage() {
               {CASE_STUDY_PLACEHOLDERS.map((c) => (
                 <div className="cs-card" data-reveal="0" key={c.eyebrow}>
                   <a
-                    href="#"
+                    href={c.url ?? "#"}
                     className="card-overlay-link"
                     aria-hidden="true"
                     tabIndex={-1}
-                    onClick={(e) => e.preventDefault()}
+                    onClick={c.url ? undefined : (e) => e.preventDefault()}
                   />
                   <div className="cs-badge" aria-hidden="true">
                     <svg
@@ -368,9 +371,9 @@ export function CloudOperationsPage() {
                   <p className="cs-body">{c.body}</p>
                   <div className="cs-cta card-cta">
                     <a
-                      href="#"
+                      href={c.url ?? "#"}
                       className="link-text link-text-dark link-text-sm link-text--external"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={c.url ? undefined : (e) => e.preventDefault()}
                     >
                       Read a case study
                       <span className="link-text-arrow-wrap">

@@ -65,3 +65,12 @@
   font-family: var(--font-body); font-weight: var(--font-weight-light); font-size: var(--text-body);
   line-height: 1.65; color: var(--uw-body-text); max-width: 640px; padding-bottom: var(--space-6);
 }
+
+/* ══════════════════════════════════════════════════════
+   CASE STUDY CARDS — .cs-stat's own margin-bottom is
+   var(--space-1) (4px) globally; bumped to var(--space-4)
+   (16px) here only, since .cs-stat is shared with other
+   pages (including AWS GenAI's stat boxes) that must keep
+   the tighter spacing.
+══════════════════════════════════════════════════════ */
+.aws-consulting-page .cs-stat { margin-bottom: var(--space-4); }

@@ -73,18 +73,21 @@ type CaseStudyPlaceholder = {
   eyebrow: string;
   stat: string;
   body: string;
+  url?: string;
 };
 
 const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   {
-    eyebrow: "Well-Architected Review",
-    stat: "Placeholder",
-    body: "Draft: architecture review engagement for a mid-market client, timeline and outcome to confirm.",
+    eyebrow: "Reliability & Monitoring",
+    stat: "No monitoring, no alerts. Now watched around the clock.",
+    body: "IEC FabChem had no visibility into their own infrastructure. We rebuilt it with CloudWatch monitoring and alerting, the kind of operational visibility a proper architecture review looks for.",
+    url: "https://www.uniware.net/resources/case-studies/iec-fabchem-cloud-migration-security-aws",
   },
   {
-    eyebrow: "Cost Optimization",
-    stat: "Placeholder",
-    body: "Draft: AWS cost review engagement for an established client, timeline and outcome to confirm.",
+    eyebrow: "Elastic Cost Management",
+    stat: "No upfront hardware. Pay only as you grow.",
+    body: "Their offsite backup needed to scale, without buying capacity upfront. A secondary copy in AWS S3 means storage grows with their data, and cost grows only with what they actually use.",
+    url: "https://www.uniware.net/resources/case-studies/fives-cail-kcp-secondary-backup-aws-s3",
   },
 ];
 
@@ -227,7 +230,7 @@ export function AwsConsultingPage() {
             <div className="section-header-block">
               <p className="sec-eyebrow-d">Case Studies</p>
               <h2 className="sec-heading-d" id="aws-consulting-cs-heading">
-                Placeholder — replace once cloud case studies are live
+                Real engagements. Real results.
               </h2>
             </div>
           </div>
@@ -237,11 +240,11 @@ export function AwsConsultingPage() {
               {CASE_STUDY_PLACEHOLDERS.map((c) => (
                 <div className="cs-card" data-reveal="0" key={c.eyebrow}>
                   <a
-                    href="#"
+                    href={c.url ?? "#"}
                     className="card-overlay-link"
                     aria-hidden="true"
                     tabIndex={-1}
-                    onClick={(e) => e.preventDefault()}
+                    onClick={c.url ? undefined : (e) => e.preventDefault()}
                   />
                   <div className="cs-badge" aria-hidden="true">
                     <svg
@@ -273,9 +276,9 @@ export function AwsConsultingPage() {
                   <p className="cs-body">{c.body}</p>
                   <div className="cs-cta card-cta">
                     <a
-                      href="#"
+                      href={c.url ?? "#"}
                       className="link-text link-text-dark link-text-sm link-text--external"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={c.url ? undefined : (e) => e.preventDefault()}
                     >
                       Read a case study
                       <span className="link-text-arrow-wrap">

@@ -7,7 +7,14 @@
    since this page only has 3 tiles. Footer connector and
    partner pills are simply omitted from the markup, not
    hidden via CSS.
+
+   Background overridden to yellow here (page-scoped only)
+   to preserve the dark/white section alternation after the
+   case studies section was removed from this page; .tile-prev
+   keeps its own default white background on top of it.
 ══════════════════════════════════════════════════════ */
+.cloud-networking-page .prevention { background: var(--uw-yellow-card); }
+
 .cloud-networking-page .svc-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -38,25 +38,25 @@ const PlusIcon = () => (
 type CaseStudyPlaceholder = {
   eyebrow: string;
   stat: string;
-  statCaption: string;
   body: string;
   pills: [string, string];
+  url?: string;
 };
 
 const CASE_STUDY_PLACEHOLDERS: CaseStudyPlaceholder[] = [
   {
-    eyebrow: "AWS Migration",
-    stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: infrastructure migration for a mid-market services company, timeline and outcome to confirm.",
-    pills: ["AWS", "Migration"],
+    eyebrow: "Cloud Migration & Security",
+    stat: "Migrated to AWS, secured for the first time.",
+    body: "COVID cut off access to their factory floor overnight. We built them cloud hosting, secure remote access, and full security, together.",
+    pills: ["AWS", "Security"],
+    url: "https://www.uniware.net/resources/case-studies/iec-fabchem-cloud-migration-security-aws",
   },
   {
-    eyebrow: "Microsoft Workloads",
-    stat: "Placeholder",
-    statCaption: "Details pending",
-    body: "Draft: Microsoft workload migration for an established client, timeline and outcome to confirm.",
-    pills: ["Microsoft", "Workloads"],
+    eyebrow: "Microsoft Workload Migration",
+    stat: "Moved to AWS overnight, with zero downtime and 4x growth since.",
+    body: "Their old cloud provider kept crashing without warning. We moved their ERP to AWS overnight, and they've grown 4x since with zero issues.",
+    pills: ["AWS", "Migration"],
+    url: "https://www.uniware.net/resources/case-studies/dra-homes-microsoft-workloads-aws",
   },
 ];
 
@@ -300,7 +300,7 @@ export function AwsMigrationPage() {
             <div className="section-header-block">
               <p className="sec-eyebrow-d">Case Studies</p>
               <h2 className="sec-heading-d" id="aws-migration-cs-heading">
-                Placeholder — replace once cloud case studies are live
+                Real migrations. Real results.
               </h2>
             </div>
           </div>
@@ -310,11 +310,11 @@ export function AwsMigrationPage() {
               <div data-reveal="0" key={c.eyebrow}>
                 <div className="cs-card">
                   <a
-                    href="#"
+                    href={c.url ?? "#"}
                     className="card-overlay-link"
                     aria-hidden="true"
                     tabIndex={-1}
-                    onClick={(e) => e.preventDefault()}
+                    onClick={c.url ? undefined : (e) => e.preventDefault()}
                   />
                   <div className="cs-badge" aria-hidden="true">
                     <svg
@@ -343,7 +343,6 @@ export function AwsMigrationPage() {
                   </div>
                   <p className="cs-eyebrow">{c.eyebrow}</p>
                   <p className="cs-stat">{c.stat}</p>
-                  <p className="cs-stat-caption">{c.statCaption}</p>
                   <p className="cs-body">{c.body}</p>
                   <div className="cs-pills">
                     <span className="cs-pill">{c.pills[0]}</span>
@@ -351,9 +350,9 @@ export function AwsMigrationPage() {
                   </div>
                   <div className="cs-cta card-cta">
                     <a
-                      href="#"
+                      href={c.url ?? "#"}
                       className="link-text link-text-dark link-text-sm link-text--external"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={c.url ? undefined : (e) => e.preventDefault()}
                     >
                       Read a case study
                       <span className="link-text-arrow-wrap">

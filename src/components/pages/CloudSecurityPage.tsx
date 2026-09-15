@@ -234,6 +234,10 @@ export function CloudSecurityPage() {
           buttonText: "See our approach",
           buttonLink: "/solutions/cybersecurity/",
         }}
+        primaryContact={{
+          name: "Yogeshwaran",
+          phone: "+91 73587 83739",
+        }}
       />
     </div>
   );
