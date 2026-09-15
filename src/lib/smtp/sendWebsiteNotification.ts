@@ -5,14 +5,14 @@ export const WEBSITE_FORM_CC = ["srimathi.s@uniware.net", "nikita@uniware.net"];
 
 /** Public site host shown in lead subject lines. */
 export const WEBSITE_SOURCE_HOST =
-  process.env.WEBSITE_SOURCE_HOST?.trim() || "global.uniware.net";
+  process.env.WEBSITE_SOURCE_HOST?.trim() || "uniware.net";
 
 /** Shared body heading for lead notifications, e.g. "New lead — Contact form". */
 export function leadHeading(formName: string) {
   return `New lead — ${formName}`;
 }
 
-/** Subject line: heading plus source host, e.g. "… | global.uniware.net". */
+/** Subject line: heading plus source host, e.g. "… | uniware.net". */
 export function leadSubject(formName: string) {
   return `${leadHeading(formName)} | ${WEBSITE_SOURCE_HOST}`;
 }
