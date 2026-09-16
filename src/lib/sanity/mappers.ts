@@ -71,8 +71,12 @@ export type SanityCaseStudyDoc = {
     steps?: { title?: string | null; body?: string | null }[] | null;
     showTechnologies?: boolean | null;
     technologies?: SanityTech[] | null;
+    showAwsNativeServices?: boolean | null;
+    awsNativeServices?: SanityAwsNativeService[] | null;
   } | null;
+  /** @deprecated Prefer solution.showAwsNativeServices — kept for older docs. */
   showAwsNativeServices?: boolean | null;
+  /** @deprecated Prefer solution.awsNativeServices — kept for older docs. */
   awsNativeServices?: SanityAwsNativeService[] | null;
   beforeAfter?: {
     heading?: string | null;
@@ -246,6 +250,12 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
   if (problemBody.length === 0) return null;
 
   const technologies = mapTechs(solution.technologies);
+  const awsNativeServices = mapAwsNativeServices(
+    solution.awsNativeServices ?? doc.awsNativeServices
+  );
+  const showAwsNativeServices = Boolean(
+    solution.showAwsNativeServices ?? doc.showAwsNativeServices
+  );
 
   const study: CaseStudy = {
     slug: doc.slug,
@@ -279,9 +289,9 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
         .map((s) => ({ title: String(s!.title), body: String(s!.body) })),
       showTechnologies: Boolean(solution.showTechnologies),
       technologies,
+      showAwsNativeServices,
+      awsNativeServices,
     },
-    showAwsNativeServices: Boolean(doc.showAwsNativeServices),
-    awsNativeServices: mapAwsNativeServices(doc.awsNativeServices),
     beforeAfter: {
       heading: beforeAfter.heading,
       rows: (beforeAfter.rows ?? [])

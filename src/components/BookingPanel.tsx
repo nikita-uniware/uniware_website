@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { FormSubmitContents } from "@/components/FormSubmitContents";
 import "@/styles/booking-panel.css";
 
 type TopicOption<T extends string> = { value: T; label: string };
@@ -460,21 +461,12 @@ export function BookingPanel() {
                     type="submit"
                     className="btn-size-lg btn-surface-amber-fill btn-panel-submit-layout"
                     disabled={submitting}
+                    aria-busy={submitting}
                   >
-                    Book my call
-                    <svg
-                      width="13"
-                      height="13"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" />
-                    </svg>
+                    <FormSubmitContents
+                      busy={submitting}
+                      idleLabel="Book my call"
+                    />
                   </button>
                 </div>
               </div>

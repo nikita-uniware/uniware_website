@@ -125,11 +125,19 @@ export function ContactFormScreen({
               surface="light"
               variant="primary"
               size="lg"
-              withArrow
+              withArrow={!submitting}
               disabled={submitting}
-              className={submitting ? "opacity-60 pointer-events-none" : ""}
+              aria-busy={submitting}
+              className={submitting ? "opacity-70" : ""}
             >
-              {submitting ? "Sending…" : "See my results"}
+              {submitting ? (
+                <>
+                  <span className="form-submit-spinner" aria-hidden="true" />
+                  Sending…
+                </>
+              ) : (
+                "See my results"
+              )}
             </Button>
           </form>
         </div>

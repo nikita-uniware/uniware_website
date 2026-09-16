@@ -80,13 +80,13 @@ export type CaseStudy = {
     showTechnologies: boolean;
     /** Single source — also powers the sidebar "Technologies used" list. */
     technologies: CaseStudyTechnology[];
+    /**
+     * Optional AWS Partner block under Solution (after Technologies used).
+     * Heading on the page is always "AWS Native Services" when shown.
+     */
+    showAwsNativeServices: boolean;
+    awsNativeServices: CaseStudyAwsNativeService[];
   };
-  /**
-   * Optional AWS Partner block. Off by default; independent of Technology partners.
-   * Page heading is always "AWS Native Services" when shown.
-   */
-  showAwsNativeServices: boolean;
-  awsNativeServices: CaseStudyAwsNativeService[];
   beforeAfter: {
     heading: string;
     rows: BeforeAfterRow[];
@@ -171,10 +171,10 @@ export const chemicalManufacturingCaseStudy: CaseStudy = {
       { name: "Fortinet", type: "Firewall" },
       { name: "Veeam", type: "Backup" },
     ],
+    showAwsNativeServices: false,
+    awsNativeServices: [],
     contentBlocks: [],
   },
-  showAwsNativeServices: false,
-  awsNativeServices: [],
   beforeAfter: {
     heading: "Read row by row, what actually changed.",
     rows: [

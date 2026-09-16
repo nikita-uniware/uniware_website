@@ -1,8 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import {
   notifyBookingRequest,
   type BookingRequestEmailPayload,
 } from "@/lib/notifyBookingRequest";
+import {
+  isCheckConstraintError,
+  isNetworkDbError,
+  withNetworkRetries,
+} from "@/lib/supabase/formInsert";
 import { supabaseAdmin } from "@/lib/supabase/server";
 
 function wantsJson(req: NextRequest) {
@@ -49,6 +54,9 @@ function resolveBookingContext(
  * Booking panel form handler.
  * 1) Save to Supabase booking_requests
  * 2) Best-effort SMTP email to sales (failure does not fail the request)
+ *
+ * If Supabase is unreachable from this network, email-only success so the
+ * lead is not lost (same pattern as /api/contact).
  */
 export async function POST(req: NextRequest) {
   const form = await req.formData();
@@ -91,9 +99,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(new URL("/contact", req.url), 303);
   }
 
-  // Prefer comma-joined multi-select topics. Older DBs still have a CHECK that
-  // only allows cybersecurity/backup/enquiry — fall back so cloud/AWS submits
-  // still succeed until that constraint is dropped (see supabase/migrations).
   const joinedTopics = payload.topics.join(",");
   const legacyTopicOk =
     payload.topics.length === 1 &&
@@ -106,31 +111,65 @@ export async function POST(req: NextRequest) {
       ? [`Topics: ${joinedTopics}`, payload.notes].filter(Boolean).join("\n\n")
       : payload.notes || null;
 
-  let { error } = await supabaseAdmin.from("booking_requests").insert({
-    name: payload.name,
-    email: payload.email,
-    company: payload.company || null,
-    country: payload.country,
-    topic: topicForDb,
-    preferred_times: payload.preferred_time,
-    notes: notesForDb,
-  });
-
-  if (error && !legacyTopicOk) {
-    console.warn(
-      "[book-call] multi-topic insert failed; retrying with legacy topic=enquiry:",
-      error.message,
-    );
-    const retry = await supabaseAdmin.from("booking_requests").insert({
+  let insert = await withNetworkRetries("book-call", () =>
+    supabaseAdmin.from("booking_requests").insert({
       name: payload.name,
       email: payload.email,
       company: payload.company || null,
       country: payload.country,
-      topic: "enquiry",
+      topic: topicForDb,
       preferred_times: payload.preferred_time,
       notes: notesForDb,
-    });
-    error = retry.error;
+    }),
+  );
+  let error = insert.error;
+
+  if (error && !legacyTopicOk && isCheckConstraintError(error)) {
+    console.warn(
+      "[book-call] topic check rejected value; retrying with legacy topic=enquiry:",
+      error.message,
+    );
+    insert = await withNetworkRetries("book-call-legacy", () =>
+      supabaseAdmin.from("booking_requests").insert({
+        name: payload.name,
+        email: payload.email,
+        company: payload.company || null,
+        country: payload.country,
+        topic: "enquiry",
+        preferred_times: payload.preferred_time,
+        notes: notesForDb,
+      }),
+    );
+    error = insert.error;
+  }
+
+  const emailPayload = {
+    ...payload,
+    timestamp: new Date().toISOString(),
+  };
+
+  if (error && isNetworkDbError(error)) {
+    console.error(
+      "[book-call] Supabase unreachable — sending email only so the lead is not lost:",
+      error.message,
+      error.details,
+    );
+    try {
+      await notifyBookingRequest(emailPayload);
+    } catch (emailError) {
+      console.error("[book-call] email notification failed:", emailError);
+      if (wantsJson(req)) {
+        return NextResponse.json(
+          { ok: false, error: "db_unreachable" },
+          { status: 503 },
+        );
+      }
+      return NextResponse.redirect(new URL("/contact", req.url), 303);
+    }
+    if (wantsJson(req)) {
+      return NextResponse.json({ ok: true, persisted: false });
+    }
+    return NextResponse.redirect(new URL("/contact?booked=1", req.url), 303);
   }
 
   if (error) {
@@ -141,17 +180,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(new URL("/contact", req.url), 303);
   }
 
-  try {
-    await notifyBookingRequest({
-      ...payload,
-      timestamp: new Date().toISOString(),
-    });
-  } catch (emailError) {
-    console.error("[book-call] email notification failed:", emailError);
-  }
+  after(() =>
+    notifyBookingRequest(emailPayload).catch((emailError) => {
+      console.error("[book-call] email notification failed:", emailError);
+    }),
+  );
 
   if (wantsJson(req)) {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, persisted: true });
   }
   return NextResponse.redirect(new URL("/contact?booked=1", req.url), 303);
 }

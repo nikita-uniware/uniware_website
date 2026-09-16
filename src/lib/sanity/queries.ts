@@ -63,13 +63,13 @@ export const caseStudyBySlugQuery = `*[_type == "caseStudy" && slug.current == $
       "name": technology->name,
       type,
       "logoUrl": technology->logo.asset->url
+    },
+    showAwsNativeServices,
+    awsNativeServices[]->{
+      name,
+      shortLabel,
+      "iconUrl": icon.asset->url
     }
-  },
-  showAwsNativeServices,
-  awsNativeServices[]->{
-    name,
-    shortLabel,
-    "iconUrl": icon.asset->url
   },
   beforeAfter{
     heading,
