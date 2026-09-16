@@ -39,6 +39,12 @@ type SanityContentBlock = {
   posterUrl?: string | null;
 };
 
+type SanityAwsNativeService = {
+  name?: string | null;
+  shortLabel?: string | null;
+  iconUrl?: string | null;
+};
+
 /** Raw shape returned by caseStudyBySlugQuery */
 export type SanityCaseStudyDoc = {
   slug: string | null;
@@ -66,6 +72,8 @@ export type SanityCaseStudyDoc = {
     showTechnologies?: boolean | null;
     technologies?: SanityTech[] | null;
   } | null;
+  showAwsNativeServices?: boolean | null;
+  awsNativeServices?: SanityAwsNativeService[] | null;
   beforeAfter?: {
     heading?: string | null;
     rows?: {
@@ -102,6 +110,18 @@ function mapTechs(list: SanityTech[] | null | undefined) {
       name: String(t.name),
       ...(t.type ? { type: String(t.type) } : {}),
       ...(t.logoUrl ? { logoUrl: String(t.logoUrl) } : {}),
+    }));
+}
+
+function mapAwsNativeServices(
+  list: SanityAwsNativeService[] | null | undefined
+) {
+  return (list ?? [])
+    .filter((s) => s?.name)
+    .map((s) => ({
+      name: String(s.name),
+      ...(s.shortLabel ? { shortLabel: String(s.shortLabel) } : {}),
+      ...(s.iconUrl ? { iconUrl: String(s.iconUrl) } : {}),
     }));
 }
 
@@ -260,6 +280,8 @@ export function mapSanityCaseStudy(doc: SanityCaseStudyDoc | null): CaseStudy | 
       showTechnologies: Boolean(solution.showTechnologies),
       technologies,
     },
+    showAwsNativeServices: Boolean(doc.showAwsNativeServices),
+    awsNativeServices: mapAwsNativeServices(doc.awsNativeServices),
     beforeAfter: {
       heading: beforeAfter.heading,
       rows: (beforeAfter.rows ?? [])

@@ -49,5 +49,8 @@ next-env.d.ts
 /_extract
 /case-study-body-temp.txt
 
+# Full AWS Architecture icon pack (source only — curated 48px icons live in public/aws-native-services)
+/AWS-Architecture-Service-Icons/
+
 # local npm cache (workaround for root-owned global cache)
 .npm-cache/

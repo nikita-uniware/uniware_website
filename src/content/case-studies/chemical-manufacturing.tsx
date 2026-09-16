@@ -16,6 +16,13 @@ export type CaseStudyTechnology = {
   logoUrl?: string;
 };
 
+/** AWS Architecture Service icons — separate from Technology partners. */
+export type CaseStudyAwsNativeService = {
+  name: string;
+  shortLabel?: string;
+  iconUrl?: string;
+};
+
 export type CaseStudyStep = {
   title: string;
   body: string;
@@ -74,6 +81,12 @@ export type CaseStudy = {
     /** Single source — also powers the sidebar "Technologies used" list. */
     technologies: CaseStudyTechnology[];
   };
+  /**
+   * Optional AWS Partner block. Off by default; independent of Technology partners.
+   * Page heading is always "AWS Native Services" when shown.
+   */
+  showAwsNativeServices: boolean;
+  awsNativeServices: CaseStudyAwsNativeService[];
   beforeAfter: {
     heading: string;
     rows: BeforeAfterRow[];
@@ -160,6 +173,8 @@ export const chemicalManufacturingCaseStudy: CaseStudy = {
     ],
     contentBlocks: [],
   },
+  showAwsNativeServices: false,
+  awsNativeServices: [],
   beforeAfter: {
     heading: "Read row by row, what actually changed.",
     rows: [

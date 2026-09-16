@@ -329,6 +329,39 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                     </div>
                   </>
                 ) : null}
+
+                {study.showAwsNativeServices &&
+                study.awsNativeServices.length > 0 ? (
+                  <div className="cs-aws-native" data-reveal="300">
+                    <p className="cs-tech-label">AWS Native Services</p>
+                    <ul className="cs-aws-native-grid">
+                      {study.awsNativeServices.map((service) => (
+                        <li
+                          className="cs-aws-native-item"
+                          key={service.name}
+                        >
+                          {service.iconUrl ? (
+                            <img
+                              className="cs-aws-native-icon"
+                              src={service.iconUrl}
+                              alt={service.name}
+                              width={48}
+                              height={48}
+                            />
+                          ) : (
+                            <span
+                              className="cs-aws-native-icon-fallback"
+                              aria-hidden="true"
+                            />
+                          )}
+                          <span className="cs-aws-native-name">
+                            {service.shortLabel || service.name}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
               </div>
 
               <QuoteSection notes={study.notesAfterSolution} revealBase={220} />
