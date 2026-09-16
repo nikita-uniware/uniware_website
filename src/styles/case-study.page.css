@@ -144,6 +144,29 @@ html.is-ready [data-reveal].is-visible{opacity:1;transform:translateY(0)}
 .cs-tech-label{font-family:var(--font-body);font-weight:var(--font-weight-medium);font-size:var(--text-caption);letter-spacing:.08em;text-transform:uppercase;color:var(--uw-muted);margin-top:36px;margin-bottom:14px}
 .cs-stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 
+/* AWS Native Services — Architecture icons at 48px (Niki / Yogi confirmed) */
+.cs-aws-native{margin-top:8px}
+.cs-aws-native .cs-tech-label{margin-top:36px}
+.cs-aws-native-grid{
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-wrap:wrap;gap:16px 20px;
+}
+.cs-aws-native-item{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  width:88px;text-align:center;
+}
+.cs-aws-native-icon{
+  display:block;width:48px;height:48px;object-fit:contain;
+}
+.cs-aws-native-icon-fallback{
+  display:block;width:48px;height:48px;border-radius:8px;
+  background:var(--border-light-subtle);
+}
+.cs-aws-native-name{
+  font-family:var(--font-body);font-weight:var(--font-weight-regular);
+  font-size:var(--text-caption-xs);line-height:1.35;color:var(--uw-body-text);
+}
+
 /* Process timeline — cinematic style from Option A. Circular numbered markers
    connected by a vertical line. Variable length: the connector and spacing
    work the same whether there are 3 steps or 6.

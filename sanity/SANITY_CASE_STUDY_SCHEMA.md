@@ -7,7 +7,7 @@ Use this to write / update Sanity schema documentation and to brief editors.
 
 | Area | Path |
 |------|------|
-| Schema | `sanity/schemas/index.ts` (`technology`, `caseStudy`) |
+| Schema | `sanity/schemas/index.ts` (`technology`, `awsNativeService`, `caseStudy`) |
 | Content model (product) | `case-study-content-model-v3.md` |
 | GROQ | `src/lib/sanity/queries.ts` |
 | Mapper | `src/lib/sanity/mappers.ts` |
@@ -38,6 +38,7 @@ Use this to write / update Sanity schema documentation and to brief editors.
 | Client overview (heading, description max 200, location, timeline optional, delivered by, technologies) | Done |
 | Problem (heading + portable text body, 1–3 paras, max 500/para) | Done |
 | Solution (heading, body, showSteps + steps[], showTechnologies + tech refs) with conditional required | Done |
+| AWS Native Services (toggle + refs to `awsNativeService` catalogue; 48px Architecture icons) | Done — independent of Technology partners |
 | Before & After (heading + reorderable rows, min 2) | Done |
 | Results (heading + outcomes[], min 2, max 100 each) | Done |
 | Note section (showNote toggle; source/quote/name/designation/company required when on) | Done |

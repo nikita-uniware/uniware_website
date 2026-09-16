@@ -307,6 +307,77 @@ const CUSTOMER_PAGES = [
   { title: "Homepage", value: "homepage" },
 ];
 
+/**
+ * AWS Architecture Service icons for Partner / program case studies.
+ * Separate from Technology partners — do not mix catalogues.
+ */
+export const awsNativeService = {
+  name: "awsNativeService",
+  title: "AWS Native Service",
+  type: "document",
+  fields: [
+    {
+      name: "name",
+      title: "Name",
+      type: "string",
+      description: 'Full service name, e.g. "Amazon S3", "Amazon EC2".',
+      validation: (Rule: { required: () => unknown }) => Rule.required(),
+    },
+    {
+      name: "shortLabel",
+      title: "Short label",
+      type: "string",
+      description: 'Optional chip label under the icon, e.g. "S3", "EC2".',
+    },
+    {
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "name" },
+      validation: (Rule: { required: () => unknown }) => Rule.required(),
+    },
+    {
+      name: "icon",
+      title: "Architecture icon",
+      type: "image",
+      options: { hotspot: false },
+      description:
+        "Official AWS Architecture Service Icon (SVG, 48px). From the Architecture-Service-Icons package.",
+      validation: (Rule: { required: () => unknown }) => Rule.required(),
+    },
+    {
+      name: "sortOrder",
+      title: "Sort order",
+      type: "number",
+      description: "Lower numbers appear first in Studio lists.",
+      initialValue: 100,
+    },
+  ],
+  orderings: [
+    {
+      title: "Sort order",
+      name: "sortOrderAsc",
+      by: [
+        { field: "sortOrder", direction: "asc" },
+        { field: "name", direction: "asc" },
+      ],
+    },
+  ],
+  preview: {
+    select: { title: "name", subtitle: "shortLabel", media: "icon" },
+    prepare: ({
+      title,
+      subtitle,
+    }: {
+      title?: string;
+      subtitle?: string;
+    }) => ({
+      title: title || "Untitled AWS service",
+      subtitle: subtitle || undefined,
+    }),
+  },
+};
+
 /** Client logos for homepage (and future page strips). Same pattern as Technology. */
 export const customer = {
   name: "customer",
@@ -372,6 +443,7 @@ export const caseStudy = {
   type: "document",
   groups: [
     { name: "content", title: "Content", default: true },
+    { name: "aws", title: "AWS Native Services" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -968,6 +1040,55 @@ export const caseStudy = {
         },
       ],
     },
+    {
+      name: "showAwsNativeServices",
+      title: "Show AWS Native Services",
+      type: "boolean",
+      group: "aws",
+      initialValue: false,
+      description:
+        "Turn on only for AWS Partner / program case studies. Leaves the Technology partners catalogue unchanged.",
+    },
+    {
+      name: "awsNativeServices",
+      title: "AWS Native Services",
+      type: "array",
+      group: "aws",
+      hidden: ({
+        parent,
+      }: {
+        parent?: { showAwsNativeServices?: boolean };
+      }) => !parent?.showAwsNativeServices,
+      description:
+        'Heading on the page is fixed as "AWS Native Services". Pick services from the AWS Native Service catalogue. Drag to reorder.',
+      validation: (Rule: {
+        custom: (
+          fn: (
+            value: unknown,
+            context: { parent?: { showAwsNativeServices?: boolean } }
+          ) => true | string
+        ) => unknown;
+      }) =>
+        Rule.custom(
+          (
+            services: unknown,
+            context: { parent?: { showAwsNativeServices?: boolean } }
+          ) => {
+            if (!context.parent?.showAwsNativeServices) return true;
+            if (!Array.isArray(services) || services.length < 1) {
+              return "Add at least one AWS service when Show AWS Native Services is on";
+            }
+            return true;
+          }
+        ),
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "awsNativeService" }],
+          options: { disableNew: true },
+        },
+      ],
+    },
     quoteSlotField(
       "noteAfterSolution",
       "Quote after Solution",
@@ -1120,4 +1241,9 @@ export const caseStudy = {
   },
 };
 
-export const schemaTypes = [technology, customer, caseStudy];
+export const schemaTypes = [
+  technology,
+  awsNativeService,
+  customer,
+  caseStudy,
+];
