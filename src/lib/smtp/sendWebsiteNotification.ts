@@ -103,7 +103,8 @@ export async function sendWebsiteNotification(opts: {
     tls: { minVersion: "TLSv1.2" },
   });
 
-  await transporter.verify();
+  // Skip transporter.verify() — it adds an extra full SMTP round-trip before
+  // sendMail and was the main reason form submits felt frozen for seconds.
 
   const info = await transporter.sendMail({
     from,

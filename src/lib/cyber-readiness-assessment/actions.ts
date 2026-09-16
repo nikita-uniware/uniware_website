@@ -1,5 +1,6 @@
 "use server";
 
+import { after } from "next/server";
 import type { AnswerValue, TierId } from "@/content/cyber-readiness-assessment-data";
 import { notifyAssessmentSubmission } from "@/lib/notifyAssessmentSubmission";
 
@@ -16,16 +17,17 @@ export type AssessmentSubmission = {
 
 /**
  * Persist/notify assessment submission.
- * Email is best-effort: SMTP failure is logged and does not fail the user flow.
+ * Email is best-effort and runs after the response so the user isn’t blocked
+ * on SMTP latency. SMTP failure is logged and does not fail the user flow.
  */
 export async function submitAssessment(
   submission: AssessmentSubmission,
 ): Promise<{ ok: true }> {
-  try {
-    await notifyAssessmentSubmission(submission);
-  } catch (error) {
-    console.error("[submitAssessment] email notification failed:", error);
-  }
+  after(() =>
+    notifyAssessmentSubmission(submission).catch((error) => {
+      console.error("[submitAssessment] email notification failed:", error);
+    }),
+  );
 
   return { ok: true };
 }

@@ -330,37 +330,32 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
                   </>
                 ) : null}
 
-                {study.showAwsNativeServices &&
-                study.awsNativeServices.length > 0 ? (
-                  <div className="cs-aws-native" data-reveal="300">
+                {study.solution.showAwsNativeServices &&
+                study.solution.awsNativeServices.length > 0 ? (
+                  <>
                     <p className="cs-tech-label">AWS Native Services</p>
-                    <ul className="cs-aws-native-grid">
-                      {study.awsNativeServices.map((service) => (
-                        <li
-                          className="cs-aws-native-item"
-                          key={service.name}
-                        >
-                          {service.iconUrl ? (
-                            <img
-                              className="cs-aws-native-icon"
-                              src={service.iconUrl}
-                              alt={service.name}
-                              width={48}
-                              height={48}
-                            />
-                          ) : (
-                            <span
-                              className="cs-aws-native-icon-fallback"
-                              aria-hidden="true"
-                            />
-                          )}
-                          <span className="cs-aws-native-name">
+                    <div className="cs-stack" data-reveal="300">
+                      {study.solution.awsNativeServices.map((service) => (
+                        <span className="cs-stack-chip" key={service.name}>
+                          <span className="cs-stack-chip-logo cs-stack-chip-logo--aws-icon">
+                            {service.iconUrl ? (
+                              <img
+                                src={service.iconUrl}
+                                alt={service.name}
+                                width={40}
+                                height={40}
+                              />
+                            ) : (
+                              service.shortLabel || service.name
+                            )}
+                          </span>
+                          <span className="cs-stack-chip-qualifier cs-stack-chip-qualifier--plain">
                             {service.shortLabel || service.name}
                           </span>
-                        </li>
+                        </span>
                       ))}
-                    </ul>
-                  </div>
+                    </div>
+                  </>
                 ) : null}
               </div>
 

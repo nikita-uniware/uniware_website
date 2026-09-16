@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
+import { FormSubmitContents } from "@/components/FormSubmitContents";
 import "@/styles/contact.page.css";
 
 type ContactPageProps = {
@@ -326,21 +327,12 @@ export function ContactPage({ initialSent = false }: ContactPageProps) {
                           type="submit"
                           className="btn-size-lg btn-surface-light btn-submit-l-layout"
                           disabled={submitting}
+                          aria-busy={submitting}
                         >
-                          Send message
-                          <svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                          >
-                            <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" />
-                          </svg>
+                          <FormSubmitContents
+                            busy={submitting}
+                            idleLabel="Send message"
+                          />
                         </button>
                       </div>
                     </div>

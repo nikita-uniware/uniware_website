@@ -1163,6 +1163,28 @@ html.is-ready [data-reveal].is-visible {
   outline: 2px solid var(--uw-white);
   outline-offset: 2px;
 }
+.btn-size-lg:disabled,
+.btn-size-md:disabled,
+.btn-size-sm:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+/* Form submit busy indicator — used by FormSubmitContents */
+@keyframes form-submit-spin {
+  to { transform: rotate(360deg); }
+}
+.form-submit-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: form-submit-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
 
 .btn-size-md {
   padding: 11px 22px;
@@ -1320,7 +1342,14 @@ html.is-ready [data-reveal].is-visible {
 .cs-stack-chip{display:flex;align-items:center;gap:10px;border:1px solid var(--border-light-subtle);border-radius:10px;padding:10px 16px;background:var(--uw-white)}
 .cs-stack-chip-logo{font-family:var(--font-display);font-weight:var(--font-weight-bold);font-size:var(--text-body-sm);letter-spacing:-.01em;color:var(--uw-black);display:inline-flex;align-items:center;min-height:24px}
 .cs-stack-chip-logo img{display:block;height:24px;width:auto;min-width:48px;max-width:120px;object-fit:contain}
+/* AWS Architecture icons in the same chip frame — fixed 40×40, no stretch */
+.cs-stack-chip-logo--aws-icon{min-height:40px}
+.cs-stack-chip-logo--aws-icon img{
+  height:40px;width:40px;min-width:40px;max-width:40px;object-fit:contain;
+}
 .cs-stack-chip-qualifier{font-family:var(--font-body);font-weight:var(--font-weight-regular);font-size:var(--text-body-sm);color:var(--uw-muted);padding-left:10px;border-left:1px solid var(--border-light-muted)}
+/* AWS service name in the qualifier slot — same type size, no divider line */
+.cs-stack-chip-qualifier--plain{border-left:none;padding-left:0;color:var(--uw-body-text)}
 
 /* ── Checkmark bullet list — reusable across pages ──
    Promoted from the case study page when the Infrastructure page pillar

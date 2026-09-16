@@ -443,7 +443,6 @@ export const caseStudy = {
   type: "document",
   groups: [
     { name: "content", title: "Content", default: true },
-    { name: "aws", title: "AWS Native Services" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -1038,54 +1037,52 @@ export const caseStudy = {
             },
           ],
         },
-      ],
-    },
-    {
-      name: "showAwsNativeServices",
-      title: "Show AWS Native Services",
-      type: "boolean",
-      group: "aws",
-      initialValue: false,
-      description:
-        "Turn on only for AWS Partner / program case studies. Leaves the Technology partners catalogue unchanged.",
-    },
-    {
-      name: "awsNativeServices",
-      title: "AWS Native Services",
-      type: "array",
-      group: "aws",
-      hidden: ({
-        parent,
-      }: {
-        parent?: { showAwsNativeServices?: boolean };
-      }) => !parent?.showAwsNativeServices,
-      description:
-        'Heading on the page is fixed as "AWS Native Services". Pick services from the AWS Native Service catalogue. Drag to reorder.',
-      validation: (Rule: {
-        custom: (
-          fn: (
-            value: unknown,
-            context: { parent?: { showAwsNativeServices?: boolean } }
-          ) => true | string
-        ) => unknown;
-      }) =>
-        Rule.custom(
-          (
-            services: unknown,
-            context: { parent?: { showAwsNativeServices?: boolean } }
-          ) => {
-            if (!context.parent?.showAwsNativeServices) return true;
-            if (!Array.isArray(services) || services.length < 1) {
-              return "Add at least one AWS service when Show AWS Native Services is on";
-            }
-            return true;
-          }
-        ),
-      of: [
         {
-          type: "reference",
-          to: [{ type: "awsNativeService" }],
-          options: { disableNew: true },
+          name: "showAwsNativeServices",
+          title: "Show AWS Native Services",
+          type: "boolean",
+          initialValue: false,
+          description:
+            "Turn on only for AWS Partner / program case studies. Renders after Technologies used. Leaves the Technology partners catalogue unchanged. (Broader Studio tabs for case-study sections are a future idea — keep this with Solution for now.)",
+        },
+        {
+          name: "awsNativeServices",
+          title: "AWS Native Services",
+          type: "array",
+          hidden: ({
+            parent,
+          }: {
+            parent?: { showAwsNativeServices?: boolean };
+          }) => !parent?.showAwsNativeServices,
+          description:
+            'Heading on the page is fixed as "AWS Native Services". Pick from the AWS Native Service catalogue. Drag to reorder. Required when the toggle above is on.',
+          validation: (Rule: {
+            custom: (
+              fn: (
+                value: unknown,
+                context: { parent?: { showAwsNativeServices?: boolean } }
+              ) => true | string
+            ) => unknown;
+          }) =>
+            Rule.custom(
+              (
+                services: unknown,
+                context: { parent?: { showAwsNativeServices?: boolean } }
+              ) => {
+                if (!context.parent?.showAwsNativeServices) return true;
+                if (!Array.isArray(services) || services.length < 1) {
+                  return "Add at least one AWS service when Show AWS Native Services is on";
+                }
+                return true;
+              }
+            ),
+          of: [
+            {
+              type: "reference",
+              to: [{ type: "awsNativeService" }],
+              options: { disableNew: true },
+            },
+          ],
         },
       ],
     },

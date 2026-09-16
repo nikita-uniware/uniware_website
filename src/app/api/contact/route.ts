@@ -1,5 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { notifyContactSubmission } from "@/lib/notifyContactSubmission";
+import {
+  isCheckConstraintError,
+  isNetworkDbError,
+  withNetworkRetries,
+} from "@/lib/supabase/formInsert";
 import { supabaseAdmin } from "@/lib/supabase/server";
 
 function wantsJson(req: NextRequest) {
@@ -17,6 +22,9 @@ const LEGACY_ABOUT = new Set([
  * Contact form handler.
  * 1) Save to Supabase contact_submissions
  * 2) Best-effort SMTP email to sales (failure does not fail the request)
+ *
+ * If Supabase is unreachable from this network (TLS reset / DNS issues),
+ * we still send the sales email and return success so the lead is not lost.
  */
 export async function POST(req: NextRequest) {
   const form = await req.formData();
@@ -46,52 +54,91 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(new URL("/contact", req.url), 303);
   }
 
-  let { error } = await supabaseAdmin.from("contact_submissions").insert({
-    name: payload.name,
-    email: payload.email,
-    company: payload.company || null,
-    about: payload.about,
-    message: payload.message,
-  });
-
-  // Older DBs only allow cybersecurity/backup/enquiry/partnership — retry so
-  // Cloud/AWS/AI options still save until the CHECK is dropped.
-  if (error && !LEGACY_ABOUT.has(payload.about)) {
-    console.warn(
-      "[contact] about insert failed; retrying with legacy about=enquiry:",
-      error.message,
-    );
-    const retry = await supabaseAdmin.from("contact_submissions").insert({
+  let insert = await withNetworkRetries("contact", () =>
+    supabaseAdmin.from("contact_submissions").insert({
       name: payload.name,
       email: payload.email,
       company: payload.company || null,
-      about: "enquiry",
-      message: [`About: ${payload.about}`, payload.message]
-        .filter(Boolean)
-        .join("\n\n"),
-    });
-    error = retry.error;
+      about: payload.about,
+      message: payload.message,
+    }),
+  );
+  let error = insert.error;
+
+  // Older DBs only allow cybersecurity/backup/enquiry/partnership — retry so
+  // Cloud/AWS/AI options still save until the CHECK is dropped.
+  if (
+    error &&
+    isCheckConstraintError(error) &&
+    !LEGACY_ABOUT.has(payload.about)
+  ) {
+    console.warn(
+      "[contact] about check rejected value; retrying with legacy about=enquiry:",
+      error.message,
+    );
+    insert = await withNetworkRetries("contact-legacy", () =>
+      supabaseAdmin.from("contact_submissions").insert({
+        name: payload.name,
+        email: payload.email,
+        company: payload.company || null,
+        about: "enquiry",
+        message: [`About: ${payload.about}`, payload.message]
+          .filter(Boolean)
+          .join("\n\n"),
+      }),
+    );
+    error = insert.error;
+  }
+
+  const emailPayload = {
+    ...payload,
+    timestamp: new Date().toISOString(),
+  };
+
+  if (error && isNetworkDbError(error)) {
+    console.error(
+      "[contact] Supabase unreachable — sending email only so the lead is not lost:",
+      error.message,
+      error.details,
+    );
+    try {
+      await notifyContactSubmission(emailPayload);
+    } catch (emailError) {
+      console.error("[contact] email notification failed:", emailError);
+      if (wantsJson(req)) {
+        return NextResponse.json(
+          { ok: false, error: "db_unreachable" },
+          { status: 503 },
+        );
+      }
+      return NextResponse.redirect(new URL("/contact", req.url), 303);
+    }
+    if (wantsJson(req)) {
+      return NextResponse.json({ ok: true, persisted: false });
+    }
+    return NextResponse.redirect(new URL("/contact?sent=1", req.url), 303);
   }
 
   if (error) {
     console.error("[contact] supabase insert failed:", error);
     if (wantsJson(req)) {
-      return NextResponse.json({ ok: false, error: "db_insert_failed" }, { status: 500 });
+      return NextResponse.json(
+        { ok: false, error: "db_insert_failed", detail: error.message },
+        { status: 500 },
+      );
     }
     return NextResponse.redirect(new URL("/contact", req.url), 303);
   }
 
-  try {
-    await notifyContactSubmission({
-      ...payload,
-      timestamp: new Date().toISOString(),
-    });
-  } catch (emailError) {
-    console.error("[contact] email notification failed:", emailError);
-  }
+  // Email is best-effort; return as soon as Supabase has the row.
+  after(() =>
+    notifyContactSubmission(emailPayload).catch((emailError) => {
+      console.error("[contact] email notification failed:", emailError);
+    }),
+  );
 
   if (wantsJson(req)) {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, persisted: true });
   }
   return NextResponse.redirect(new URL("/contact?sent=1", req.url), 303);
 }
